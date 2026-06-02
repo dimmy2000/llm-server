@@ -1,12 +1,11 @@
-# Локальный LLM-инференс: Open WebUI + llama.cpp (Gemma 4)
+# Локальный LLM-инференс: llama.cpp (Gemma 4)
 
 ## Описание
 
-Docker Compose-стек для запуска LLM-модели **Gemma 4 (26B)** локально на GPU через [llama.cpp](https://github.com/ggml-org/llama.cpp) с веб-интерфейсом [Open WebUI](https://github.com/open-webui/open-webui).
+Docker Compose-стек для запуска LLM-модели **Gemma 4 (26B)** локально на GPU через [llama.cpp](https://github.com/ggml-org/llama.cpp).
 
-Стек состоит из двух сервисов:
+Стек состоит из одного сервиса:
 
-- **open-webui** — веб-интерфейс для общения с моделью, а также для загрузки файлов, работы с мультимодальными данными и голосового ввода (STT).
 - **llama-server** (контейнер `gemma4`) — инференс-сервер на базе `llama.cpp` с GPU-ускорением NVIDIA CUDA. Запускает квантованную модель Gemma 4 26B (IQ4_XS).
 
 ## Требования
@@ -24,11 +23,10 @@ llm-server/
 ├── models/                      # каталог с файлами моделей (GGUF)
 │   ├── gemma-4-26B-A4B-it-UD-IQ4_XS.gguf
 │   └── gemma-4-26B-A4B-it-mmproj-F32.gguf
-├── open-webui/data/             # persistent-данные Open WebUI
 └── tool_chat_template_gemma4.jinja  # Jinja2-шаблон chat template
 ```
 
-> **Примечание:** каталоги `models/` и `open-webui/data/` необходимо создать вручную и поместить в них файлы моделей. Шаблон `tool_chat_template_gemma4.jinja` должен лежать рядом с `docker-compose.yaml`.
+> **Примечание:** каталог `models/` необходимо создать вручную и поместить в него файлы моделей. Шаблон `tool_chat_template_gemma4.jinja` должен лежать рядом с `docker-compose.yaml`.
 
 ## Запуск
 
@@ -50,21 +48,9 @@ docker compose -f docker-compose.yaml restart llama-server
 
 | Сервис        | Адрес                         |
 |---------------|-------------------------------|
-| Open WebUI    | http://localhost:3000          |
 | llama-server  | http://localhost:8080          |
 
 ## Сервисы
-
-### Open WebUI (`open-webui:0.9.5`)
-
-- **Порт:** `3000 → 8080` (внутренний порт контейнера)
-- **Данные:** монтируются в `./open-webui/data:/app/backend/data`
-- **Ключ:** `WEBUI_SECRET_KEY` — секретный ключ для сессий (сгенерирован случайно, при необходимости заменить)
-- **STT (Speech-to-Text):**
-  - Движок: OpenAI-совместимый API
-  - Эндпоинт: `http://192.168.17.69:3333/v1`
-  - Модель: `small`
-  - Поддерживаемые форматы: MP3, WAV, MP4, WebM, OGG, FLAC, MPGA и видео
 
 ### llama-server / Gemma 4 (`ghcr.io/ggml-org/llama.cpp:server-cuda13`)
 
@@ -100,16 +86,9 @@ docker compose -f docker-compose.yaml restart llama-server
 
 ## Логирование
 
-Оба сервиса используют драйвер `json-file` с ротацией:
+Сервис использует драйвер `json-file` с ротацией:
 - Максимальный размер файла: 100 MB
 - Количество архивов: 5
-
-## Speech-to-Text (STT)
-
-Open WebUI настроен на внешний OpenAI-совместимый STT-сервер по адресу `http://192.168.17.69:3333/v1` с моделью `small`. Аудио передаётся напрямую в WebUI и пересылается на STT-эндпоинт. Поддерживаются:
-
-- Аудио: MP3, WAV, MP4, WebM, OGG, FLAC, MPGA
-- Видео: MP4, WebM, QuickTime, AVI, MPEG
 
 ## Мониторинг
 

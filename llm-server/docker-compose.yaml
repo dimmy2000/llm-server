@@ -1,26 +1,4 @@
 services:
-  open-webui:
-    image: openwebui/open-webui:0.9.5
-    container_name: open-webui
-    ports:
-      - "3000:8080"
-    volumes:
-      - ./open-webui/data:/app/backend/data
-    environment:
-      - WEBUI_SECRET_KEY=ba69155fbb3f8b7e2f52df78ea57ec65da63ca5ee7acbbf39736d74c9c46b625
-      - USER_AGENT=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 YaBrowser/26.3.0.0 Safari/537.36
-      - AUDIO_STT_ENGINE=openai
-      - AUDIO_STT_OPENAI_API_BASE_URL=http://192.168.17.69:3333/v1
-      - AUDIO_STT_OPENAI_API_KEY=dummy
-      - AUDIO_STT_MODEL=small
-      - AUDIO_STT_SUPPORTED_CONTENT_TYPES=audio/mpeg,audio/mp3,audio/wav,audio/x-wav,audio/mp4,audio/x-m4a,audio/webm,audio/ogg,audio/flac,audio/mpga,video/mp4,video/webm,video/x-matroska,video/quicktime,video/x-msvideo,video/mpeg
-    restart: unless-stopped
-    logging:
-      driver: json-file
-      options:
-        max-size: "100m"
-        max-file: "5"
-
   llama-server:
     image: ghcr.io/ggml-org/llama.cpp:server-cuda13
     container_name: gemma4
@@ -34,7 +12,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./models:/models
+      - /opt/models:/models
       - ./tool_chat_template_gemma4.jinja:/models/gemma4.tmpl
     environment:
       - NVIDIA_VISIBLE_DEVICES=all
@@ -46,7 +24,7 @@ services:
       --no-warmup
       --alias gemma4
       --temp 1.0
-      --top-p 0.95 
+      --top-p 0.95
       --top-k 64
       --n-gpu-layers 99
       --cache-ram 0
