@@ -16,7 +16,7 @@ services:
       - "8080:8080"
     volumes:
       - /opt/models:/models
-      - ./models.ini:/models.ini
+      - ./models.ini:/models.ini:ro
     environment:
       - NVIDIA_VISIBLE_DEVICES=all
     command: >
