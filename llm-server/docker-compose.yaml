@@ -1,7 +1,10 @@
 services:
   llama-server:
-    image: ghcr.io/ggml-org/llama.cpp:server-cuda13
-    container_name: gemma4
+    build:
+      context: .
+      dockerfile: Dockerfile.llama-mtp
+    image: local/llama-server:mtp-gemma4
+    container_name: llama-server
     deploy:
       resources:
         reservations:
@@ -13,34 +16,14 @@ services:
       - "8080:8080"
     volumes:
       - /opt/models:/models
-      - ./tool_chat_template_gemma4.jinja:/models/gemma4.tmpl
+      - ./models.ini:/models.ini
     environment:
       - NVIDIA_VISIBLE_DEVICES=all
     command: >
-      --model /models/gemma-4-26B-A4B-it-UD-IQ4_XS.gguf
-      --mmproj /models/gemma-4-26B-A4B-it-mmproj-F32.gguf
-      --no-mmproj-offload
-      --no-kv-offload
-      --no-warmup
-      --alias gemma4
-      --temp 1.0
-      --top-p 0.95
-      --top-k 64
-      --n-gpu-layers 99
-      --cache-ram 0
-      --ctx-size 65536
-      --parallel 1
-      --cache-type-k q8_0
-      --cache-type-v q8_0
-      --batch-size 2048
-      --ubatch-size 1024
-      --threads 9
-      --threads-batch 9
-      --flash-attn on
+      --models-preset /models.ini
+      --models-max 1
       --host 0.0.0.0
       --port 8080
-      --jinja
-      --chat-template-file /models/gemma4.tmpl
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
