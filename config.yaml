@@ -11,7 +11,7 @@ models:
     name: "gemma4"
     # Llama-swap просто пересылает запросы в соседний контейнер по имени сервиса
     proxy: "http://llama-server:8080"
-    cmd: "sleep 99999999"
+    cmd: "sleep infinity"
     checkEndpoint: "none"
 
     filters:
@@ -19,35 +19,39 @@ models:
       stripParams: "temperature, top_p, top_k, min_p, presence_penalty, repeat_penalty"
 
       setParamsByID:
-        # Режим 1: чат с reasoning, мультимодальность
+        # Режим 1: чат с reasoning
         "gemma4-thinking":
-          temperature: 1.0
+          temperature: 0.6
           top_p: 0.95
-          top_k: 64
-          repeat_penalty: 1.15
+          top_k: 20
+          min_p: 0.0
+          repeat_penalty: 1.05
           reasoning: "on"
 
         # Режим 2: быстрые ответы
         "gemma4-instruct":
-          temperature: 1.0
-          top_p: 0.95
-          top_k: 64
-          repeat_penalty: 1.0
+          temperature: 0.7
+          top_p: 0.8
+          top_k: 20
+          min_p: 0.0
+          repeat_penalty: 1.05
+          reasoning-budget: 0
           reasoning: "off"
           chat_template_kwargs:
             enable_thinking: false
 
         # Режим 3: агентное планирование
         "gemma4-agent-plan":
-          temperature: 0.7
+          temperature: 0.6
           top_p: 0.9
-          top_k: 40
-          repeat_penalty: 1.1
+          top_k: 20
+          min_p: 0.0
+          repeat_penalty: 1.05
           reasoning: "on"
 
         # Режим 4: агентная разработка кода
         "gemma4-agent-code":
-          temperature: 0.6
+          temperature: 0.5
           top_p: 0.95
           top_k: 20
           min_p: 0.0
