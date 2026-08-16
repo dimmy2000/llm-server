@@ -1,0 +1,39 @@
+services:
+  vllm-server:
+    profiles: [vllm]
+    image: vllm/vllm-openai:qwen38@sha256:4a2f33a884222f7049b983263ad9976f89452bb81affecf5b67d89ad35c1bc31
+    container_name: vllm-server
+    ipc: host
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    ports:
+      - "8080:8000"
+    volumes:
+      - /opt/models:/models:ro
+      - ./config.yaml:/etc/vllm/config.yaml:ro
+      - vllm-cache:/root/.cache/vllm
+      - flashinfer-cache:/root/.cache/flashinfer
+    environment:
+      NVIDIA_VISIBLE_DEVICES: all
+      NVIDIA_DRIVER_CAPABILITIES: compute,utility
+      NCCL_P2P_DISABLE: "1"
+      HF_HUB_OFFLINE: "1"
+      TRANSFORMERS_OFFLINE: "1"
+    command: ["--config", "/etc/vllm/config.yaml"]
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "--silent", "--show-error", "http://localhost:8000/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 20
+      start_period: 20m
+    stop_grace_period: 2m
+    restart: unless-stopped
+
+volumes:
+  vllm-cache:
+  flashinfer-cache:
