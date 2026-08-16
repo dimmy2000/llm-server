@@ -24,6 +24,7 @@ services:
       NCCL_P2P_DISABLE: "1"
       HF_HUB_OFFLINE: "1"
       TRANSFORMERS_OFFLINE: "1"
+      VLLM_EXECUTE_MODEL_TIMEOUT_SECONDS: "120"
     command: ["--config", "/etc/vllm/config.yaml"]
     healthcheck:
       test: ["CMD", "curl", "--fail", "--silent", "--show-error", "http://localhost:8000/health"]

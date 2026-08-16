@@ -57,12 +57,15 @@ docker compose --profile llama --profile vllm down --remove-orphans
 - Аргументы `vllm serve` находятся в `vllm/config.yaml`.
 - Модель хоста: `/opt/models/Qwen3.8-27B-NVFP4/`, внутри контейнера
   `/models/Qwen3.8-27B-NVFP4`.
-- Публичный model-ID: `qwen3.8`.
+- Публичный model-ID: `qwen3.8-27b`.
 - Используются обе RTX 5070 Ti через tensor parallelism 2.
 - Vision encoder отключен флагом `language-model-only`, чтобы оставить VRAM
   под FP8 KV-cache.
-- `gpu-memory-utilization: 0.88` оставляет место графической сессии на второй
-  GPU. На проверенном запуске vLLM выделяет KV-cache на 132578 токенов.
+- Базовый профиль использует `max-model-len: 49152`,
+  `max-num-seqs: 1`, `max-num-batched-tokens: 1024` и
+  `gpu-memory-utilization: 0.85`, чтобы оставить место графической сессии на
+  второй GPU. Под пиковой нагрузкой на GPU1 должно оставаться не менее 512 MiB
+  физически свободной VRAM.
 - FlashInfer autotune отключен: его временная аллокация вызывает OOM и
   зависание startup на GPU с графической сессией.
 - Клиентские sampling-параметры не удаляются.
@@ -72,9 +75,11 @@ docker compose --profile llama --profile vllm down --remove-orphans
 
 Не включать MTP, TurboQuant KV-cache, prefix caching или FlashInfer autotune
 без отдельной проверки длинных streaming-ответов и запаса VRAM.
-`max-num-seqs: 2` ограничивает scheduler, но не гарантирует одновременное
-размещение двух полностью заполненных 128K контекстов: ориентироваться на
-размер KV-cache в startup-логах.
+`max-num-seqs: 1` означает, что второй конкурентный запрос ожидает scheduler.
+Не повышать `gpu-memory-utilization` только ради startup-проверки KV cache.
+Максимальный стабильный context limit определяется отдельным cold-start и
+нагрузочным тестом. На текущей машине проверен limit `49152`; `65536` не
+проходит startup из-за недостаточного KV cache.
 
 Изменение `vllm/config.yaml` требует перезапуска `vllm-server`.
 
