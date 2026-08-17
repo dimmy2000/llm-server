@@ -7,8 +7,8 @@ sendLoadingState: true
 includeAliasesInList: true
 
 models:
-  gemma4:
-    name: "gemma4"
+  ornith-9b:
+    name: "ornith-9b"
     # Llama-swap просто пересылает запросы в соседний контейнер по имени сервиса
     proxy: "http://llama-server:8080"
     cmd: "sleep infinity"
@@ -20,7 +20,7 @@ models:
 
       setParamsByID:
         # Режим 1: чат с reasoning
-        "gemma4-thinking":
+        "ornith-9b-thinking":
           temperature: 0.6
           top_p: 0.95
           top_k: 20
@@ -29,7 +29,7 @@ models:
           reasoning: "on"
 
         # Режим 2: быстрые ответы
-        "gemma4-instruct":
+        "ornith-9b-instruct":
           temperature: 0.7
           top_p: 0.8
           top_k: 20
@@ -39,22 +39,3 @@ models:
           reasoning: "off"
           chat_template_kwargs:
             enable_thinking: false
-
-        # Режим 3: агентное планирование
-        "gemma4-agent-plan":
-          temperature: 0.6
-          top_p: 0.9
-          top_k: 20
-          min_p: 0.0
-          repeat_penalty: 1.05
-          reasoning: "on"
-
-        # Режим 4: агентная разработка кода
-        "gemma4-agent-code":
-          temperature: 0.5
-          top_p: 0.95
-          top_k: 20
-          min_p: 0.0
-          presence_penalty: 0.0
-          repeat_penalty: 1.0
-          reasoning: "on"

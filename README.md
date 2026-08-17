@@ -7,7 +7,7 @@ OpenAI-совместимым адресом `http://localhost:8080`:
 
 | Профиль | Движок | Модель | Публичный model-ID |
 |---|---|---|---|
-| `llama` | llama.cpp + llama-swap | Ornith 9B Q8_0 | `gemma4-*` |
+| `llama` | llama.cpp + llama-swap | Ornith 9B Q8_0 | `ornith-9b-*` |
 | `vllm` | vLLM | Qwen3.8-27B NVFP4 | `qwen3.8-27b` |
 
 Профили используют один порт и одни GPU, поэтому одновременно запускать их
@@ -34,8 +34,7 @@ llm-server/
 ├── llama/
 │   ├── docker-compose.yaml
 │   ├── config.yaml
-│   ├── Dockerfile.llama-mtp
-│   └── tool_chat_template_gemma4.jinja
+│   └── Dockerfile.llama-mtp
 ├── vllm/
 │   ├── docker-compose.yaml
 │   └── config.yaml
@@ -100,10 +99,8 @@ docker compose --profile llama logs -f llama-server llama-swap
 
 | ID | Назначение |
 |---|---|
-| `gemma4-thinking` | чат с reasoning |
-| `gemma4-instruct` | быстрые ответы без reasoning |
-| `gemma4-agent-plan` | агентное планирование |
-| `gemma4-agent-code` | агентная разработка кода |
+| `ornith-9b-thinking` | чат с reasoning |
+| `ornith-9b-instruct` | быстрые ответы без reasoning |
 
 Параметры ядра llama.cpp находятся в `llama/docker-compose.yaml`. Sampling и
 режим reasoning задаются сервером через `llama/config.yaml`; переданные

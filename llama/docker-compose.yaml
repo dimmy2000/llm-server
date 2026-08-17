@@ -18,7 +18,7 @@ services:
       --host 0.0.0.0
       --port 8080
       --model /models/ornith-9b-Q8_0.gguf
-      --alias gemma4
+      --alias ornith-9b
       --n-gpu-layers 999
       --ctx-size 262144
       --ctx-checkpoints 40

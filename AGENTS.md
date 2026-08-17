@@ -38,16 +38,14 @@ docker compose --profile llama --profile vllm down --remove-orphans
 
 | ID | Назначение | reasoning |
 |---|---|---|
-| `gemma4-thinking` | чат с reasoning | on |
-| `gemma4-instruct` | быстрые ответы | off |
-| `gemma4-agent-plan` | агентное планирование | on |
-| `gemma4-agent-code` | агентная разработка кода | on |
+| `ornith-9b-thinking` | чат с reasoning | on |
+| `ornith-9b-instruct` | быстрые ответы | off |
 
 Изменение `llama/config.yaml` требует перезапуска `llama-swap`. Изменение
 аргументов ядра требует перезапуска `llama-server`.
 
 Модель хоста: `/opt/models/ornith-9b-Q8_0.gguf`, внутри контейнера
-`/models/ornith-9b-Q8_0.gguf`. Алиас llama.cpp: `gemma4`.
+`/models/ornith-9b-Q8_0.gguf`. Алиас llama.cpp: `ornith-9b`.
 
 ## Профиль vLLM
 
@@ -109,9 +107,6 @@ docker compose --profile llama restart llama-swap
 ```bash
 docker build -f llama/Dockerfile.llama-mtp -t local/llama-server:mtp llama
 ```
-
-`llama/tool_chat_template_gemma4.jinja` является референсом и автоматически
-никуда не монтируется.
 
 ## Сопутствующие проекты
 
