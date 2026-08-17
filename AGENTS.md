@@ -23,29 +23,53 @@ docker compose --profile llama --profile vllm down --remove-orphans
 
 ## Профиль llama
 
-- `llama/llama-server` использует образ
-  `ghcr.io/ggml-org/llama.cpp:server-cuda13`.
-- Все параметры ядра (`--model`, `--ctx-size`, `--threads`,
-  `--cache-type-*`, `--flash-attn`, базовый sampling) находятся только в
-  `llama/docker-compose.yaml`.
-- `llama-swap` слушает публичный `:8080`, а `llama-server` доступен только во
-  внутренней Compose-сети.
-- Конфигурация proxy и режимов находится в `llama/config.yaml`.
+- Единственный сервис `llama-swap` использует образ
+  `ghcr.io/mostlygeek/llama-swap:cuda13` и публикует `:8080`; бинарник
+  `llama-server` и CUDA-библиотеки входят в этот образ. Отдельного контейнера
+  `llama-server` нет: обе модели запускаются llama-swap как дочерние процессы
+  через `cmd` (аргументы ядра в секциях `cmd` в `llama/config.yaml`).
+- Параметры ядра (`--model`, `--ctx-size`, `--threads`, `--cache-type-*`,
+  `--flash-attn`, базовый sampling) находятся только в `llama/config.yaml`.
+- Конфигурация моделей и режимов находится в `llama/config.yaml`.
+- На старте прелоадится `qwen3.8-27b` (`hooks.on_startup.preload`).
+- В VRAM одновременно помещается только одна модель (ornith ~9.3 GiB веса +
+  qwen ~15.9 GiB веса + KV не влезают вместе). Переключение явное:
+  `curl -X POST http://localhost:8080/api/models/unload/:model_id`, затем
+  запрос к другой модели (загрузится сама, ~40-60 c для qwen).
 
 `llama-swap` удаляет клиентские параметры `temperature`, `top_p`, `top_k`,
-`min_p`, `presence_penalty`, `repeat_penalty`. Для llama-профиля sampling
-управляется только через `setParamsByID` в `llama/config.yaml`.
+`min_p`, `presence_penalty`, `repeat_penalty`; для `qwen3.8-27b` дополнительно
+`reasoning`, `reasoning_effort`, `chat_template_kwargs`. Для llama-профиля
+sampling и thinking управляются только через `setParamsByID` в
+`llama/config.yaml`.
 
 | ID | Назначение | reasoning |
 |---|---|---|
 | `ornith-9b-thinking` | чат с reasoning | on |
 | `ornith-9b-instruct` | быстрые ответы | off |
+| `qwen3.8-27b-instruct` | быстрые ответы | off |
+| `qwen3.8-27b-chat` | чат, reasoning скрыт (preserve off), effort medium | on |
+| `qwen3.8-27b-agent-code` | агент-кодинг, preserve on, effort medium | on |
+| `qwen3.8-27b-agent-plan` | агент-планирование, preserve on, effort xhigh | on |
 
-Изменение `llama/config.yaml` требует перезапуска `llama-swap`. Изменение
-аргументов ядра требует перезапуска `llama-server`.
+Алиас `qwen3.8` эквивалентен режиму `qwen3.8-27b-agent-plan`. Изменение
+`llama/config.yaml` требует перезапуска `llama-swap`.
 
-Модель хоста: `/opt/models/ornith-9b-Q8_0.gguf`, внутри контейнера
-`/models/ornith-9b-Q8_0.gguf`. Алиас llama.cpp: `ornith-9b`.
+Модели хоста: `/opt/models/ornith-9b-Q8_0.gguf` и
+`/opt/models/Qwen3.8-27B-GGUF/Qwen3.8-27B-Q4_K_M.gguf`, внутри контейнера
+соответственно `/models/ornith-9b-Q8_0.gguf` и
+`/models/Qwen3.8-27B-GGUF/Qwen3.8-27B-Q4_K_M.gguf`. Алиасы llama.cpp:
+`ornith-9b`, `qwen3.8`.
+
+Qwen3.8-27B: 65 слоёв, полное внимание каждые 4 слоя (17 слоёв с KV-cache,
+остальные SSM без KV); Q4_K_M ~15.9 GiB веса, KV q8_0 при `--ctx-size 262144`
+~11.4 GiB, суммарная загрузка VRAM ~0.92 (включая графическую сессию; без неё
+~0.89). `--tensor-split 52,48` слегка смещает модель на GPU0, чтобы на GPU1
+(дисплей) оставалось ≥512 MiB свободной VRAM: под пиковой нагрузкой GPU1
+~700 MiB свободно, GPU0 ~480 MiB. При каждой загрузке llama.cpp сначала
+пытается выделить compute-буферы с pipeline parallelism и получает OOM, затем
+успешно ретраит без него - это нормальный путь загрузки, не ошибка.
+`--ctx-checkpoints` и MTP не включены. `--fit off`: контекст задаётся явно.
 
 ## Профиль vLLM
 
@@ -91,8 +115,7 @@ docker compose --profile vllm restart vllm-server
 
 # llama.cpp
 docker compose --profile llama up -d --wait --wait-timeout 1800
-docker compose --profile llama logs -f llama-server llama-swap
-docker compose --profile llama restart llama-server
+docker compose --profile llama logs -f llama-swap
 docker compose --profile llama restart llama-swap
 ```
 

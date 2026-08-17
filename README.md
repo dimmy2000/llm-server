@@ -7,7 +7,7 @@ OpenAI-совместимым адресом `http://localhost:8080`:
 
 | Профиль | Движок | Модель | Публичный model-ID |
 |---|---|---|---|
-| `llama` | llama.cpp + llama-swap | Ornith 9B Q8_0 | `ornith-9b-*` |
+| `llama` | llama.cpp + llama-swap | Ornith 9B Q8_0, Qwen3.8-27B Q4_K_M | `ornith-9b-*`, `qwen3.8-27b-*` |
 | `vllm` | vLLM | Qwen3.8-27B NVFP4 | `qwen3.8-27b` |
 
 Профили используют один порт и одни GPU, поэтому одновременно запускать их
@@ -19,9 +19,11 @@ OpenAI-совместимым адресом `http://localhost:8080`:
 
 - Docker Engine 24+ с Docker Compose, поддерживающим `include` и `profiles`.
 - NVIDIA Container Toolkit (`nvidia-ctk`).
-- Для профиля `llama`: NVIDIA GPU с 16+ ГиБ VRAM.
+- Для профиля `llama`: две NVIDIA GPU по 16+ ГиБ VRAM (Qwen3.8-27B занимает
+  обе GPU).
 - Для текущего профиля `vllm`: две NVIDIA Blackwell GPU по 16 ГиБ VRAM.
 - `/opt/models/ornith-9b-Q8_0.gguf` для llama.cpp.
+- `/opt/models/Qwen3.8-27B-GGUF/Qwen3.8-27B-Q4_K_M.gguf` для llama.cpp.
 - `/opt/models/Qwen3.8-27B-NVFP4/` для vLLM.
 
 Модели монтируются в контейнеры read-only и в Git не добавляются.
@@ -92,19 +94,42 @@ MTP/speculative decoding, TurboQuant KV-cache и prefix caching намеренн
 ```bash
 docker compose --profile llama --profile vllm down --remove-orphans
 docker compose --profile llama up -d --wait --wait-timeout 1800
-docker compose --profile llama logs -f llama-server llama-swap
+docker compose --profile llama logs -f llama-swap
 ```
 
-Публичной точкой входа остается `llama-swap` на `:8080`. Доступные model-ID:
+Публичной точкой входа остается `llama-swap` на `:8080`. Обе модели
+запускаются llama-swap как дочерние процессы llama-server (бинарник входит в
+образ `llama-swap:cuda13`); отдельный контейнер llama-server не используется.
+В VRAM одновременно помещается только одна модель, поэтому при старте
+прелоадится `qwen3.8-27b` (время загрузки ~40-60 c), а переключение
+выполняется вручную:
+
+```bash
+# Выгрузить текущую модель, затем запросить другую - она загрузится сама
+curl -X POST http://localhost:8080/api/models/unload/qwen3.8-27b
+curl -X POST http://localhost:8080/api/models/unload/ornith-9b
+```
+
+Доступные model-ID:
 
 | ID | Назначение |
 |---|---|
 | `ornith-9b-thinking` | чат с reasoning |
 | `ornith-9b-instruct` | быстрые ответы без reasoning |
+| `qwen3.8-27b-instruct` | быстрые ответы без thinking |
+| `qwen3.8-27b-chat` | чат с thinking (reasoning скрыт), effort medium |
+| `qwen3.8-27b-agent-code` | агент-кодинг, thinking с preserve, effort medium |
+| `qwen3.8-27b-agent-plan` | агент-планирование, thinking с preserve, effort xhigh |
 
-Параметры ядра llama.cpp находятся в `llama/docker-compose.yaml`. Sampling и
-режим reasoning задаются сервером через `llama/config.yaml`; переданные
-клиентом sampling-параметры `llama-swap` удаляет.
+Алиас `qwen3.8` соответствует режиму `qwen3.8-27b-agent-plan`. Параметры ядра
+каждой модели находятся в `llama/config.yaml` (секции `cmd`). Sampling и
+режим reasoning задаются сервером через `setParamsByID`; переданные клиентом
+sampling-параметры и параметры thinking `llama-swap` удаляет.
+
+Qwen3.8-27B запускается с полным контекстом 262144 токена (веса Q4_K_M
+15.9 GiB + KV q8_0 17 full-attention слоёв ≈ 11.4 GiB), суммарная загрузка
+VRAM ≈ 92%, а `--tensor-split 52,48` оставляет на GPU1 (дисплей) ~700 MiB
+свободной VRAM. `--ctx-checkpoints` для неё не включён; MTP не используется.
 
 ## Управление
 
@@ -118,8 +143,7 @@ docker compose --profile vllm up -d --force-recreate
 # Перезапустить vLLM после изменения vllm/config.yaml
 docker compose --profile vllm restart vllm-server
 
-# Перезапустить llama.cpp или только конфигурацию llama-swap
-docker compose --profile llama restart llama-server
+# Перезапустить llama-swap после изменения llama/config.yaml или llama/docker-compose.yaml
 docker compose --profile llama restart llama-swap
 ```
 
@@ -134,4 +158,4 @@ docker build -f llama/Dockerfile.llama-mtp -t local/llama-server:mtp llama
 
 Grafana, Prometheus, Loki и nvidia-smi-exporter находятся в отдельном проекте
 `llm-monitoring`. Его launcher должен передавать активный Compose-профиль и
-использовать имя сервиса выбранного backend: `llama-server` или `vllm-server`.
+использовать имя сервиса выбранного backend: `llama-swap` или `vllm-server`.
