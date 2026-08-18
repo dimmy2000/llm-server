@@ -47,19 +47,26 @@ sampling и thinking управляются только через `setParamsBy
 |---|---|---|
 | `ornith-9b-thinking` | чат с reasoning | on |
 | `ornith-9b-instruct` | быстрые ответы | off |
-| `qwen3.8-27b-instruct` | быстрые ответы | off |
-| `qwen3.8-27b-chat` | чат, reasoning скрыт (preserve off), effort medium | on |
-| `qwen3.8-27b-agent-code` | агент-кодинг, preserve on, effort medium | on |
-| `qwen3.8-27b-agent-plan` | агент-планирование, preserve on, effort xhigh | on |
+| `qwen3.8-27b` | быстрые ответы | off |
+| `qwen3.8-27b-chat-low` | чат, reasoning скрыт (preserve off), effort low | on |
+| `qwen3.8-27b-chat-medium` | чат, reasoning скрыт (preserve off), effort medium | on |
+| `qwen3.8-27b-chat-xhigh` | чат, reasoning скрыт (preserve off), effort xhigh | on |
+| `qwen3.8-27b-agent-low` | агент, preserve on, effort low | on |
+| `qwen3.8-27b-agent-medium` | агент, preserve on, effort medium | on |
+| `qwen3.8-27b-agent-xhigh` | агент, preserve on, effort xhigh | on |
 
-Алиас `qwen3.8` эквивалентен режиму `qwen3.8-27b-agent-plan`. Изменение
-`llama/config.yaml` требует перезапуска `llama-swap`.
+Изменение `llama/config.yaml` требует перезапуска `llama-swap`.
+
+Старые публичные ID (`qwen3.8`, `qwen3.8-27b-instruct`,
+`qwen3.8-27b-chat`, `qwen3.8-27b-agent-code`, `qwen3.8-27b-agent-plan`)
+удалены без backcompat-алиасов; миграция внешних потребителей — отдельный
+процесс.
 
 Модели хоста: `/opt/models/ornith-9b-Q8_0.gguf` и
 `/opt/models/Qwen3.8-27B-GGUF/Qwen3.8-27B-Q4_K_M.gguf`, внутри контейнера
 соответственно `/models/ornith-9b-Q8_0.gguf` и
 `/models/Qwen3.8-27B-GGUF/Qwen3.8-27B-Q4_K_M.gguf`. Алиасы llama.cpp:
-`ornith-9b`, `qwen3.8`.
+`ornith-9b`.
 
 Qwen3.8-27B: 65 слоёв, полное внимание каждые 4 слоя (17 слоёв с KV-cache,
 остальные SSM без KV); Q4_K_M ~15.9 GiB веса, KV q8_0 при `--ctx-size 262144`

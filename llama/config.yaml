@@ -67,11 +67,9 @@ models:
 
   qwen3.8-27b:
     name: "qwen3.8-27b"
-    alias: "qwen3.8"
     cmd: >
       /app/llama-server --host 127.0.0.1 --port ${PORT}
       --model /models/Qwen3.8-27B-GGUF/Qwen3.8-27B-Q4_K_M.gguf
-      --alias qwen3.8
       --n-gpu-layers 999
       --tensor-split 52,48
       --ctx-size 262144
@@ -93,22 +91,8 @@ models:
       stripParams: "temperature, top_p, top_k, min_p, presence_penalty, repeat_penalty, reasoning, reasoning_effort, chat_template_kwargs"
 
       setParamsByID:
-        # Запрос на алиас без суффикса = флагманский режим agent-plan
-        "qwen3.8":
-          temperature: 1.0
-          top_p: 0.95
-          top_k: 20
-          min_p: 0.0
-          presence_penalty: 0.0
-          repeat_penalty: 1.05
-          reasoning: "on"
-          chat_template_kwargs:
-            enable_thinking: true
-            preserve_thinking: true
-            reasoning_effort: xhigh
-
         # Режим 1: быстрые ответы без thinking
-        "qwen3.8-27b-instruct":
+        "qwen3.8-27b":
           temperature: 0.7
           top_p: 0.8
           top_k: 20
@@ -120,8 +104,22 @@ models:
           chat_template_kwargs:
             enable_thinking: false
 
-        # Режим 2: чат с thinking, но без показа reasoning в ответе
-        "qwen3.8-27b-chat":
+        # Режим 2: чат с thinking, reasoning скрыт (preserve off), effort low
+        "qwen3.8-27b-chat-low":
+          temperature: 1.0
+          top_p: 0.95
+          top_k: 20
+          min_p: 0.0
+          presence_penalty: 0.0
+          repeat_penalty: 1.05
+          reasoning: "on"
+          chat_template_kwargs:
+            enable_thinking: true
+            preserve_thinking: false
+            reasoning_effort: low
+
+        # Режим 3: чат с thinking, reasoning скрыт (preserve off), effort medium
+        "qwen3.8-27b-chat-medium":
           temperature: 1.0
           top_p: 0.95
           top_k: 20
@@ -134,8 +132,36 @@ models:
             preserve_thinking: false
             reasoning_effort: medium
 
-        # Режим 3: агент-кодинг, thinking с preserve, medium effort
-        "qwen3.8-27b-agent-code":
+        # Режим 4: чат с thinking, reasoning скрыт (preserve off), effort xhigh
+        "qwen3.8-27b-chat-xhigh":
+          temperature: 1.0
+          top_p: 0.95
+          top_k: 20
+          min_p: 0.0
+          presence_penalty: 0.0
+          repeat_penalty: 1.05
+          reasoning: "on"
+          chat_template_kwargs:
+            enable_thinking: true
+            preserve_thinking: false
+            reasoning_effort: xhigh
+
+        # Режим 5: агент, thinking возвращается (preserve on), effort low
+        "qwen3.8-27b-agent-low":
+          temperature: 1.0
+          top_p: 0.95
+          top_k: 20
+          min_p: 0.0
+          presence_penalty: 0.0
+          repeat_penalty: 1.05
+          reasoning: "on"
+          chat_template_kwargs:
+            enable_thinking: true
+            preserve_thinking: true
+            reasoning_effort: low
+
+        # Режим 6: агент, thinking возвращается (preserve on), effort medium
+        "qwen3.8-27b-agent-medium":
           temperature: 1.0
           top_p: 0.95
           top_k: 20
@@ -148,8 +174,8 @@ models:
             preserve_thinking: true
             reasoning_effort: medium
 
-        # Режим 4: агент-планирование, thinking с preserve, xhigh effort
-        "qwen3.8-27b-agent-plan":
+        # Режим 7: агент, thinking возвращается (preserve on), effort xhigh
+        "qwen3.8-27b-agent-xhigh":
           temperature: 1.0
           top_p: 0.95
           top_k: 20

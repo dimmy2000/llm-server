@@ -116,12 +116,15 @@ curl -X POST http://localhost:8080/api/models/unload/ornith-9b
 |---|---|
 | `ornith-9b-thinking` | чат с reasoning |
 | `ornith-9b-instruct` | быстрые ответы без reasoning |
-| `qwen3.8-27b-instruct` | быстрые ответы без thinking |
-| `qwen3.8-27b-chat` | чат с thinking (reasoning скрыт), effort medium |
-| `qwen3.8-27b-agent-code` | агент-кодинг, thinking с preserve, effort medium |
-| `qwen3.8-27b-agent-plan` | агент-планирование, thinking с preserve, effort xhigh |
+| `qwen3.8-27b` | быстрые ответы без thinking |
+| `qwen3.8-27b-chat-low` | чат с thinking (reasoning скрыт, preserve off), effort low |
+| `qwen3.8-27b-chat-medium` | чат с thinking (reasoning скрыт, preserve off), effort medium |
+| `qwen3.8-27b-chat-xhigh` | чат с thinking (reasoning скрыт, preserve off), effort xhigh |
+| `qwen3.8-27b-agent-low` | агент, thinking с preserve, effort low |
+| `qwen3.8-27b-agent-medium` | агент, thinking с preserve, effort medium |
+| `qwen3.8-27b-agent-xhigh` | агент, thinking с preserve, effort xhigh |
 
-Алиас `qwen3.8` соответствует режиму `qwen3.8-27b-agent-plan`. Параметры ядра
+Параметры ядра
 каждой модели находятся в `llama/config.yaml` (секции `cmd`). Sampling и
 режим reasoning задаются сервером через `setParamsByID`; переданные клиентом
 sampling-параметры и параметры thinking `llama-swap` удаляет.
