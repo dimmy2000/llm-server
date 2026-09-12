@@ -31,7 +31,9 @@ docker compose --profile llama --profile vllm down --remove-orphans
 - Параметры ядра (`--model`, `--ctx-size`, `--threads`, `--cache-type-*`,
   `--flash-attn`, базовый sampling) находятся только в `llama/config.yaml`.
 - Конфигурация моделей и режимов находится в `llama/config.yaml`.
-- На старте прелоадится `qwen3.8-27b` (`hooks.on_startup.preload`).
+- `qwen3.8-27b` загружается лениво по первому запросу
+  (`hooks.on_startup.preload` отключен); переключение с ornith — через
+  `POST /api/models/unload/:model_id`.
 - В VRAM одновременно помещается только одна модель (ornith ~9.3 GiB веса +
   qwen ~15.9 GiB веса + KV не влезают вместе). Переключение явное:
   `curl -X POST http://localhost:8080/api/models/unload/:model_id`, затем
@@ -63,20 +65,25 @@ sampling и thinking управляются только через `setParamsBy
 процесс.
 
 Модели хоста: `/opt/models/ornith-9b-Q8_0.gguf` и
-`/opt/models/Qwen3.8-27B-GGUF/Qwen3.8-27B-Q4_K_M.gguf`, внутри контейнера
-соответственно `/models/ornith-9b-Q8_0.gguf` и
-`/models/Qwen3.8-27B-GGUF/Qwen3.8-27B-Q4_K_M.gguf`. Алиасы llama.cpp:
-`ornith-9b`.
+`/opt/models/Qwen3.8-27B-NVFP4-MTP-GGUF/Qwen3.8-27B-NVFP4-MTP-HIGH.gguf`,
+внутри контейнера соответственно `/models/ornith-9b-Q8_0.gguf` и
+`/models/Qwen3.8-27B-NVFP4-MTP-GGUF/Qwen3.8-27B-NVFP4-MTP-HIGH.gguf`. Алиасы
+llama.cpp: `ornith-9b`.
 
 Qwen3.8-27B: 65 слоёв, полное внимание каждые 4 слоя (17 слоёв с KV-cache,
-остальные SSM без KV); Q4_K_M ~15.9 GiB веса, KV q8_0 при `--ctx-size 262144`
-~11.4 GiB, суммарная загрузка VRAM ~0.92 (включая графическую сессию; без неё
-~0.89). `--tensor-split 52,48` слегка смещает модель на GPU0, чтобы на GPU1
-(дисплей) оставалось ≥512 MiB свободной VRAM: под пиковой нагрузкой GPU1
-~700 MiB свободно, GPU0 ~480 MiB. При каждой загрузке llama.cpp сначала
-пытается выделить compute-буферы с pipeline parallelism и получает OOM, затем
-успешно ретраит без него - это нормальный путь загрузки, не ошибка.
-`--ctx-checkpoints` и MTP не включены. `--fit off`: контекст задаётся явно.
+остальные SSM без KV). В llama-профиле используется NVFP4-MTP квантизация
+тира HIGH (файл ~17.6 GB) со спекулятивным декодированием MTP
+(`--spec-type draft-mtp --spec-draft-n-max 6 --spec-draft-p-min 0.75`).
+Требуются `--split-mode tensor` и `--tensor-split 50,50` в паре: дефолтный
+LAYER-режим копит KV на дисплейной GPU1 и при большом ctx падает OOM на
+первом decode (`cublasCreate_v2` в common.cuh). `--parallel -1` даёт
+4 слота с единым KV-пулом (`kv_unified`). Узкое место VRAM — GPU0: при
+`--ctx-size 262144` и 196608 не проходит даже startup (OOM аллокации
+KV-буфера); проверенный стабильный максимум — `--ctx-size 163840`. Под
+пиковой нагрузкой после серии запросов GPU0 ~1.2 GiB свободно, GPU1 ~0.6 GiB
+(дисплей, требование ≥512 MiB выполнено). `--ctx-checkpoints` не включены;
+MTP включен через `--spec-type draft-mtp`. `--fit off`: контекст задаётся
+явно.
 
 ## Профиль vLLM
 
