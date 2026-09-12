@@ -11,10 +11,10 @@ includeAliasesInList: true
 # В VRAM одновременно помещается только одна модель, поэтому при старте
 # прелоадится qwen3.8-27b, а переключение выполняется вручную через
 # POST /api/models/unload/:model_id.
-hooks:
-  on_startup:
-    preload:
-      - qwen3.8-27b
+# hooks:
+#   on_startup:
+#     preload:
+#       - qwen3.8-27b
 
 models:
   ornith-9b:
