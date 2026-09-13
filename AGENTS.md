@@ -160,3 +160,17 @@ docker build -f llama/Dockerfile.llama-mtp -t local/llama-server:mtp llama
   не внутри WSL или контейнера.
 - Мониторинг находится в отдельном репозитории `llm-monitoring`; его launcher
   должен передавать нужный Compose-профиль.
+
+## Agent skills
+
+### Issue tracker
+
+Issues live as local markdown files under `.scratch/<feature>/` in this repo, one ticket per file. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+The five default triage roles, each label string equal to its name — `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context — one `CONTEXT.md` at the repo root plus `docs/adr/` for architectural decisions. See `docs/agents/domain.md`.
