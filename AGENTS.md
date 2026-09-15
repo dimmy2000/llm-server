@@ -29,7 +29,8 @@ docker compose --profile llama --profile vllm down --remove-orphans
   `llama-server` нет: обе модели запускаются llama-swap как дочерние процессы
   через `cmd` (аргументы ядра в секциях `cmd` в `llama/config.yaml`).
 - Параметры ядра (`--model`, `--ctx-size`, `--threads`, `--cache-type-*`,
-  `--flash-attn`, базовый sampling) находятся только в `llama/config.yaml`.
+  `--cache-ram`, `--cache-idle-slots`, `--flash-attn`, базовый sampling)
+  находятся только в `llama/config.yaml`.
 - Конфигурация моделей и режимов находится в `llama/config.yaml`.
 - `qwen3.8-27b` загружается лениво по первому запросу
   (`hooks.on_startup.preload` отключен); переключение с ornith — через
@@ -72,24 +73,28 @@ llama.cpp: `ornith-9b`.
 
 Qwen3.8-27B: 65 слоёв, полное внимание каждые 4 слоя (17 слоёв с KV-cache,
 остальные SSM без KV). В llama-профиле используется NVFP4-MTP квантизация
-тира HIGH (файл ~17.6 GB) со спекулятивным декодированием MTP
-(`--spec-type draft-mtp --spec-draft-type-k q8_0 --spec-draft-type-v q8_0
---spec-draft-n-max 4 --spec-draft-p-min 0.75`). MTP-draft KV — отдельный
+тира HIGH (файл ~17.6 GB) со спекулятивным декодированием
+(`--spec-type draft-mtp,ngram-mod --spec-draft-type-k q8_0
+--spec-draft-type-v q8_0 --spec-draft-n-max 4 --spec-draft-p-min 0.75
+--spec-ngram-mod-n-match 20 --spec-ngram-mod-n-min 4
+--spec-ngram-mod-n-max 48`). ngram-mod (приоритет 4) работает первым,
+draft-mtp (приоритет 8) — fallback. MTP-draft KV — отдельный
 `llama_kv_cache` на один слой nextn, глубиной в полный ctx, целиком на GPU1;
 по умолчанию он F16, а `--spec-draft-type-k/v q8_0` ужимает его (на 300 MiB
 при ctx 163840 и больше при большем ctx). Требуются `--split-mode tensor` и
 `--tensor-split 50,50` в паре: дефолтный LAYER-режим копит KV на дисплейной
 GPU1 и при большом ctx падает OOM на первом decode (`cublasCreate_v2` в
-common.cuh). `--parallel -1` даёт 4 слота с единым KV-пулом (`kv_unified`).
-Узкое место VRAM — дисплейная GPU1 (9 KV-слоёв: 8 full-attn + nextn): при
-`--ctx-size 262144` и 196608 модель не работает — на 196608 KV-буферы
-аллоцируются, но первый же decode падает OOM (flash-attn workspace);
+common.cuh). `--parallel 1`: один слот, KV строго под ctx, без unified
+KV-пула. Узкое место VRAM — дисплейная GPU1 (9 KV-слоёв: 8 full-attn +
+nextn): при `--ctx-size 262144` и 196608 модель не работает — на 196608
+KV-буферы аллоцируются, но первый же decode падает OOM (flash-attn workspace);
 проверенный стабильный максимум — `--ctx-size 180224`. Под пиковой нагрузкой
 (жатренный prefill 62–159k токенов + генерация) GPU0 ~1.26 GiB свободно,
-GPU1 ~0.83 GiB (дисплей, требование ≥512 MiB выполнено). `--ctx-checkpoints`
-не включены; MTP включен через `--spec-type draft-mtp`. `--fit off`: контекст
-задаётся
-явно.
+GPU1 ~1.75 GiB (дисплей, требование ≥512 MiB выполнено). При `--parallel 1`
+`--cache-idle-slots` и `--cache-ram 40960` сериализуют KV в RAM при
+завершении запроса (prefix reuse для повторных запросов), но НЕ освобождают
+VRAM (освобождение через unified KV — только при `--parallel -1`).
+`--ctx-checkpoints` не включены; `--fit off`: контекст задаётся явно.
 
 ## Профиль vLLM
 
