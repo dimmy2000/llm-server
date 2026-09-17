@@ -35,8 +35,7 @@ llm-server/
 ├── docker-compose.yaml
 ├── llama/
 │   ├── docker-compose.yaml
-│   ├── config.yaml
-│   └── Dockerfile.llama-mtp
+│   └── config.yaml
 ├── vllm/
 │   ├── docker-compose.yaml
 │   └── config.yaml
@@ -148,13 +147,6 @@ docker compose --profile vllm restart vllm-server
 
 # Перезапустить llama-swap после изменения llama/config.yaml или llama/docker-compose.yaml
 docker compose --profile llama restart llama-swap
-```
-
-Альтернативный llama.cpp-образ с экспериментальной поддержкой MTP собирается
-отдельно и не подключен к Compose:
-
-```bash
-docker build -f llama/Dockerfile.llama-mtp -t local/llama-server:mtp llama
 ```
 
 ## Мониторинг

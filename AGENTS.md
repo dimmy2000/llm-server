@@ -155,16 +155,6 @@ docker compose --profile llama restart llama-swap
 сильно отстало от текущих настроек инференса в проекте, предварительно
 выполнить `git pull` в исследуемом репозитории.
 
-## Альтернативный llama.cpp-образ
-
-`llama/Dockerfile.llama-mtp` собирает llama.cpp из PR `${LLAMA_CPP_PR}` для
-экспериментального MTP. `CUDA_ARCH=120` означает Blackwell. Образ не подключен
-к Compose и собирается вручную:
-
-```bash
-docker build -f llama/Dockerfile.llama-mtp -t local/llama-server:mtp llama
-```
-
 ## Сопутствующие проекты
 
 - `scripts/port-forwarding-rules.ps1` запускается в PowerShell Windows-хоста,
