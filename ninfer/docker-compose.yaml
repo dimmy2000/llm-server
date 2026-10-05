@@ -1,0 +1,35 @@
+services:
+  # Имя сервиса обязано отличаться от `llama-swap` в llama/docker-compose.yaml:
+  # compose include молча сливает сервисы с одинаковым именем (проверено на
+  # compose 5.5.1), из-за чего image/cmd/profiles двух профилей схлопнулись бы
+  # в один. Имя контейнера оставлено `llama-swap`, чтобы внешние потребители
+  # (docker logs/exec, дашборды) не зависели от движка за маршрутизатором.
+  ninfer-swap:
+    profiles:
+      - ninfer
+    image: llm-server/ninfer-tp2:v0.4.5
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NINFER_VERSION: v0.4.5
+        NINFER_ASSET: ninfer-tp2-v0.4.5-linux-x86_64-sm120a-ubuntu26.04.tar.gz
+        NINFER_SHA256: 22d0d447be1a6665e0ae6243bfb7c49fe8e3a895c16430fca4ce3607f3b95a1a
+    container_name: llama-swap
+    ports:
+      - "8080:8080"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: -1
+              capabilities:
+                - gpu
+    environment:
+      NVIDIA_VISIBLE_DEVICES: all
+      NVIDIA_DRIVER_CAPABILITIES: compute,utility
+    volumes:
+      - /opt/models:/models:ro
+      - ./config.yaml:/app/config.yaml:ro
+    restart: unless-stopped

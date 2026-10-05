@@ -1,0 +1,78 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mostlygeek/llama-swap/refs/heads/main/config-schema.json
+#
+# Профиль `ninfer`: llama-swap как маршрутизатор, NInfer TP=2 как движок.
+# Параметры движка задаются здесь и только здесь.
+
+healthCheckTimeout: 600
+logLevel: info
+logToStdout: both
+sendLoadingState: true
+# Режимы ниже — алиасы setParamsByID; без этого флага они не видны в /v1/models.
+includeAliasesInList: true
+unloadTimeout: 60
+
+models:
+  qwen3.8-27b:
+    name: "qwen3.8-27b (NInfer TP=2, int8 KV, 196608 ctx)"
+    cmd: |
+      /opt/ninfer/bin/ninfer-serve
+      /models/Qwen3.8-27B-nvfp4-NInfer/qwen3_8_27b_nvfp4.ninfer
+      --host 127.0.0.1 --port ${PORT}
+      --model-id qwen3.8-27b
+      --tp 2 --devices 0,1
+      --kv-dtype int8
+      --max-context 196608
+      --kv-capacity 196608
+      --max-concurrency 1
+      --device-state-slots 4
+      --spec mtp --draft-tokens 3
+      --vision --vision-device 0 --max-vision-tokens 4096
+      --embedding-host
+      --default-max-tokens 32768
+      --pending-timeout-ms 600000
+    # ninfer-serve отклоняет запрос, если request.model != --model-id, поэтому
+    # llama-swap обязан переписывать имя модели для всех алиасов режимов.
+    useModelName: qwen3.8-27b
+    capabilities:
+      in:
+        - text
+        - image
+      out:
+        - text
+      tools: true
+      context: 196608
+    filters:
+      # NInfer сам выбирает пресет сэмплирования по режиму thinking, который
+      # выводится из reasoning_effort клиента: none -> 0.7/0.80/20/0/1.5,
+      # иначе -> 1.0/0.95/20/0/0. Клиентские sampling-параметры отбрасываются,
+      # иначе они ломают инварианты пресета.
+      stripParams: "temperature, top_p, top_k, min_p, presence_penalty, frequency_penalty, repetition_penalty"
+      setParamsByID:
+        # Режим instruct: thinking выключается на стороне движка, клиентский
+        # reasoning_effort не может его включить.
+        "qwen3.8-27b":
+          reasoning_effort: "none"
+        # Режим thinking: клиент управляет effort через reasoning_effort.
+        # enable_thinking намеренно не задаётся — вместе с effort он даёт
+        # conflicting_template_option (401).
+        # preserve_thinking: false — reasoning не возвращается в следующие
+        # запросы диалога (режим чата).
+        "qwen3.8-27b-chat-low":
+          chat_template_kwargs:
+            preserve_thinking: false
+        "qwen3.8-27b-chat-medium":
+          chat_template_kwargs:
+            preserve_thinking: false
+        "qwen3.8-27b-chat-xhigh":
+          chat_template_kwargs:
+            preserve_thinking: false
+        # Режим thinking с сохранением reasoning в контексте диалога (агент).
+        "qwen3.8-27b-agent-low":
+          chat_template_kwargs:
+            preserve_thinking: true
+        "qwen3.8-27b-agent-medium":
+          chat_template_kwargs:
+            preserve_thinking: true
+        "qwen3.8-27b-agent-xhigh":
+          chat_template_kwargs:
+            preserve_thinking: true

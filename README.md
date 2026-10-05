@@ -2,28 +2,31 @@
 
 ## Описание
 
-Репозиторий содержит два взаимозаменяемых Docker Compose-профиля с единым
+Репозиторий содержит три взаимозаменяемых Docker Compose-профиля с единым
 OpenAI-совместимым адресом `http://localhost:8080`:
 
 | Профиль | Движок | Модель | Публичный model-ID |
 |---|---|---|---|
-| `llama` | llama.cpp + llama-swap | Ornith 9B Q8_0, Qwen3.8-27B Q4_K_M | `ornith-9b-*`, `qwen3.8-27b-*` |
+| `llama` | llama.cpp + llama-swap | Ornith 9B Q8_0, Qwen3.8-27B NVFP4-MTP | `ornith-9b-*`, `qwen3.8-27b-*` |
+| `ninfer` | NInfer TP=2 + llama-swap | Qwen3.8-27B NVFP4 (артефакт `.ninfer`) | `qwen3.8-27b-*` |
 | `vllm` | vLLM | Qwen3.8-27B NVFP4 | `qwen3.8-27b` |
 
 Профили используют один порт и одни GPU, поэтому одновременно запускать их
 нельзя. Корневой `docker-compose.yaml` только подключает конфигурации из
-`llama/` и `vllm/`; параметры инференса хранятся внутри соответствующего
-каталога.
+`llama/`, `ninfer/` и `vllm/`; параметры инференса хранятся внутри
+соответствующего каталога.
 
 ## Требования
 
 - Docker Engine 24+ с Docker Compose, поддерживающим `include` и `profiles`.
 - NVIDIA Container Toolkit (`nvidia-ctk`).
-- Для профиля `llama`: две NVIDIA GPU по 16+ ГиБ VRAM (Qwen3.8-27B занимает
-  обе GPU).
+- Для профилей `llama` и `ninfer`: две NVIDIA GPU по 16+ ГиБ VRAM (Qwen3.8-27B
+  занимает обе GPU).
 - Для текущего профиля `vllm`: две NVIDIA Blackwell GPU по 16 ГиБ VRAM.
 - `/opt/models/ornith-9b-Q8_0.gguf` для llama.cpp.
-- `/opt/models/Qwen3.8-27B-GGUF/Qwen3.8-27B-Q4_K_M.gguf` для llama.cpp.
+- `/opt/models/Qwen3.8-27B-NVFP4-MTP-GGUF/Qwen3.8-27B-NVFP4-MTP-HIGH.gguf` для
+  llama.cpp.
+- `/opt/models/Qwen3.8-27B-nvfp4-NInfer/qwen3_8_27b_nvfp4.ninfer` для NInfer.
 - `/opt/models/Qwen3.8-27B-NVFP4/` для vLLM.
 
 Модели монтируются в контейнеры read-only и в Git не добавляются.
@@ -36,6 +39,11 @@ llm-server/
 ├── llama/
 │   ├── docker-compose.yaml
 │   └── config.yaml
+├── ninfer/
+│   ├── Dockerfile
+│   ├── docker-compose.yaml
+│   ├── config.yaml
+│   └── fetch-model.sh
 ├── vllm/
 │   ├── docker-compose.yaml
 │   └── config.yaml
@@ -51,7 +59,7 @@ llm-server/
 запуск включает загрузку большого образа и JIT-компиляцию CUDA-ядер.
 
 ```bash
-docker compose --profile llama --profile vllm down --remove-orphans
+docker compose --profile llama --profile ninfer --profile vllm down --remove-orphans
 docker compose --profile vllm up -d --wait --wait-timeout 1800
 docker compose --profile vllm logs -f vllm-server
 ```
@@ -91,7 +99,7 @@ MTP/speculative decoding, TurboQuant KV-cache и prefix caching намеренн
 ## Запуск llama.cpp
 
 ```bash
-docker compose --profile llama --profile vllm down --remove-orphans
+docker compose --profile llama --profile ninfer --profile vllm down --remove-orphans
 docker compose --profile llama up -d --wait --wait-timeout 1800
 docker compose --profile llama logs -f llama-swap
 ```
@@ -128,16 +136,70 @@ curl -X POST http://localhost:8080/api/models/unload/ornith-9b
 режим reasoning задаются сервером через `setParamsByID`; переданные клиентом
 sampling-параметры и параметры thinking `llama-swap` удаляет.
 
-Qwen3.8-27B запускается с полным контекстом 262144 токена (веса Q4_K_M
-15.9 GiB + KV q8_0 17 full-attention слоёв ≈ 11.4 GiB), суммарная загрузка
-VRAM ≈ 92%, а `--tensor-split 52,48` оставляет на GPU1 (дисплей) ~700 MiB
-свободной VRAM. `--ctx-checkpoints` для неё не включён; MTP не используется.
+Qwen3.8-27B запускается с контекстом 180224 токена (NVFP4-MTP квантизация
+тира HIGH, файл ~17.6 GB) и спекулятивным декодированием: draft-mtp с
+fallback на ngram-mod. Требуется пара `--split-mode tensor` и
+`--tensor-split 50,50`; проверенный стабильный максимум контекста — 180224,
+на 196608 первый же decode падает OOM на дисплейной GPU1. `--ctx-checkpoints`
+не включены. Подробный разбор — в `docs/research/0008-llama-qwen38-mtp-ngram-mod-combo.md`.
+
+## Запуск NInfer TP=2
+
+Профиль `ninfer` отдаёт ту же публичную точку входа `llama-swap` на `:8080`,
+но за ней стоит NInfer с tensor parallelism на две GPU.
+
+```bash
+docker compose --profile llama --profile ninfer --profile vllm down --remove-orphans
+docker compose --profile ninfer build
+./ninfer/fetch-model.sh
+docker compose --profile ninfer up -d --wait --wait-timeout 1800
+docker compose --profile ninfer logs -f ninfer-swap
+```
+
+Движок берётся из готовых бинарников релиза `ninfer-tp2 v0.4.5`: образ
+собирается из `ubuntu:26.04` плюс архив релиза с проверкой SHA-256, а
+llama-swap копируется из образа llama-профиля, поэтому версии маршрутизатора
+совпадают. Compose-сервис называется `ninfer-swap`, контейнер —
+`llama-swap`. Модель — официальный артефакт
+`neroued/Qwen3.8-27B-nvfp4-NInfer` (23.7 GB, скачивается
+`ninfer/fetch-model.sh` с проверкой контрольной суммы).
+
+Базовый профиль движка: `--tp 2 --devices 0,1`, KV `int8`, контекст и пул
+196608 токенов, одна активная последовательность, 4 слота device-state,
+спекулятивное декодирование MTP с 3 draft-токенами, Vision на плате без
+дисплея и вынос таблицы embedding в host RAM. 196608 — верхняя граница для
+этого артефакта с Vision на двух 16 ГиБ платах; на 262144 MTP3 работает, но
+только без Vision и с 4 слотами. Дисплейная GPU1 должна сохранять ≥ 512 MiB
+свободной VRAM.
+
+Проверено на этой машине (2026-10-05, официальный артефакт, v0.4.5): движок
+готов через 6.1 с, веса читаются за 4.5 с; prefill 4597 tok/s на 30k и 3319
+tok/s на 98 849 токенов (TTFT 29.8 с); decode 130.1–131.5 tok/s и 106.3 tok/s
+на контексте 131 830; приём MTP 46–48 %. Минимум свободной VRAM под нагрузкой
+(префилл 165k плюс длинная генерация) — 2018 MiB на GPU0 и 1501 MiB на GPU1,
+то есть запас GPU1 над требованием 512 MiB почти трёхкратный. Для сравнения,
+llama.cpp на тех же картах даёт 1372 tok/s на prefill 90k и 80.5 tok/s на
+генерации — NInfer быстрее в 2.42× и 1.63×.
+
+Публичные model-ID совпадают с llama-профилем: `qwen3.8-27b` (instruct, без
+reasoning) и шесть алиасов `-chat-{low,medium,xhigh}` (thinking, reasoning не
+возвращается в следующие запросы диалога) и `-agent-{low,medium,xhigh}`
+(thinking с сохранением reasoning в контексте). Effort задаёт агент через
+`reasoning_effort`; `low`, `medium` и `xhigh` в имени алиаса — только
+маркер потребителя. `ornith-9b-*` в этом профиле недоступен: NInfer не
+загружает GGUF.
+
+Движок сам выбирает пресет сэмплирования по режиму thinking, поэтому клиентские
+sampling-параметры отбрасываются; `repeat_penalty 1.05` из llama-профиля
+недоступен, потому что NInfer принимает `repetition_penalty` только равный
+1.0. Разбор tp2, бюджет VRAM, сравнение артефактов и замеры против llama.cpp —
+в `docs/research/0009-ninfer-tp2-two-5070ti.md`.
 
 ## Управление
 
 ```bash
 # Остановить любой активный профиль
-docker compose --profile llama --profile vllm down --remove-orphans
+docker compose --profile llama --profile ninfer --profile vllm down --remove-orphans
 
 # Применить изменения Compose или образа vLLM
 docker compose --profile vllm up -d --force-recreate
@@ -147,10 +209,15 @@ docker compose --profile vllm restart vllm-server
 
 # Перезапустить llama-swap после изменения llama/config.yaml или llama/docker-compose.yaml
 docker compose --profile llama restart llama-swap
+
+# Пересобрать образ NInfer после смены версии и перезапустить профиль
+docker compose --profile ninfer build
+docker compose --profile ninfer restart ninfer-swap
 ```
 
 ## Мониторинг
 
 Grafana, Prometheus, Loki и nvidia-smi-exporter находятся в отдельном проекте
 `llm-monitoring`. Его launcher должен передавать активный Compose-профиль и
-использовать имя сервиса выбранного backend: `llama-swap` или `vllm-server`.
+использовать имя сервиса выбранного backend: `llama-swap`, `ninfer-swap` или
+`vllm-server`.
