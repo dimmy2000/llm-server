@@ -27,19 +27,15 @@ docker compose --profile llama --profile ninfer --profile vllm down --remove-orp
 - Единственный сервис `llama-swap` использует образ
   `ghcr.io/mostlygeek/llama-swap:cuda13` и публикует `:8080`; бинарник
   `llama-server` и CUDA-библиотеки входят в этот образ. Отдельного контейнера
-  `llama-server` нет: обе модели запускаются llama-swap как дочерние процессы
+  `llama-server` нет: модель запускается llama-swap как дочерний процесс
   через `cmd` (аргументы ядра в секциях `cmd` в `llama/config.yaml`).
 - Параметры ядра (`--model`, `--ctx-size`, `--threads`, `--cache-type-*`,
   `--cache-ram`, `--cache-idle-slots`, `--flash-attn`, базовый sampling)
   находятся только в `llama/config.yaml`.
-- Конфигурация моделей и режимов находится в `llama/config.yaml`.
-- `qwen3.8-27b` загружается лениво по первому запросу
-  (`hooks.on_startup.preload` отключен); переключение с ornith — через
-  `POST /api/models/unload/:model_id`.
-- В VRAM одновременно помещается только одна модель (ornith ~9.3 GiB веса +
-  qwen ~15.9 GiB веса + KV не влезают вместе). Переключение явное:
-  `curl -X POST http://localhost:8080/api/models/unload/:model_id`, затем
-  запрос к другой модели (загрузится сама, ~40-60 c для qwen).
+- Конфигурация модели и режимов находится в `llama/config.yaml`.
+- В профиле одна модель — `qwen3.8-27b`, она прелоадится при старте
+  (`hooks.on_startup.preload`): прогрев ~40–60 c, дальше первый запрос
+  обслуживается сразу. Переключения моделей и ручного unload больше нет.
 
 `llama-swap` удаляет клиентские параметры `temperature`, `top_p`, `top_k`,
 `min_p`, `presence_penalty`, `repeat_penalty`; для `qwen3.8-27b` дополнительно
@@ -49,8 +45,6 @@ sampling и thinking управляются только через `setParamsBy
 
 | ID | Назначение | reasoning |
 |---|---|---|
-| `ornith-9b-thinking` | чат с reasoning | on |
-| `ornith-9b-instruct` | быстрые ответы | off |
 | `qwen3.8-27b` | быстрые ответы | off |
 | `qwen3.8-27b-chat-low` | чат, reasoning скрыт (preserve off), effort low | on |
 | `qwen3.8-27b-chat-medium` | чат, reasoning скрыт (preserve off), effort medium | on |
@@ -62,15 +56,16 @@ sampling и thinking управляются только через `setParamsBy
 Изменение `llama/config.yaml` требует перезапуска `llama-swap`.
 
 Старые публичные ID (`qwen3.8`, `qwen3.8-27b-instruct`,
-`qwen3.8-27b-chat`, `qwen3.8-27b-agent-code`, `qwen3.8-27b-agent-plan`)
-удалены без backcompat-алиасов; миграция внешних потребителей — отдельный
-процесс.
+`qwen3.8-27b-chat`, `qwen3.8-27b-agent-code`, `qwen3.8-27b-agent-plan`, а также
+`ornith-9b`, `ornith-9b-thinking`, `ornith-9b-instruct`) удалены без
+backcompat-алиасов; миграция внешних потребителей — отдельный процесс.
+Модель Ornith 9B убрана из проекта целиком, решение — ADR-0004.
 
-Модели хоста: `/opt/models/ornith-9b-Q8_0.gguf` и
+Модель хоста:
 `/opt/models/Qwen3.8-27B-NVFP4-MTP-GGUF/Qwen3.8-27B-NVFP4-MTP-HIGH.gguf`,
-внутри контейнера соответственно `/models/ornith-9b-Q8_0.gguf` и
-`/models/Qwen3.8-27B-NVFP4-MTP-GGUF/Qwen3.8-27B-NVFP4-MTP-HIGH.gguf`. Алиасы
-llama.cpp: `ornith-9b`.
+внутри контейнера
+`/models/Qwen3.8-27B-NVFP4-MTP-GGUF/Qwen3.8-27B-NVFP4-MTP-HIGH.gguf`.
+Алиас llama.cpp: `qwen3.8-27b`.
 
 Qwen3.8-27B: 65 слоёв, полное внимание каждые 4 слоя (17 слоёв с KV-cache,
 остальные SSM без KV). В llama-профиле используется NVFP4-MTP квантизация
@@ -210,7 +205,8 @@ VRAM (освобождение через unified KV — только при `--
   отбрасываются (`stripParams`).
 - `repetition_penalty` в NInfer принимается только в значении 1.0, поэтому
   `repeat_penalty 1.05` llama-профиля недоступен.
-- `ornith-9b-*` в профиле `ninfer` отсутствует: NInfer не загружает GGUF.
+- Разрыва совместимости с llama-профилем по списку model-ID больше нет: набор
+  публичных ID одинаков (ADR-0004).
 - Есть только `/v1/chat/completions` (плюс Anthropic Messages и Responses);
   `/v1/completions` нет.
 

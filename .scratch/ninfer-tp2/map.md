@@ -7,15 +7,15 @@ Type: wayfinder:map
 Профиль `ninfer` в `llm-server`, проверенный на этой машине: NInfer TP=2 за
 llama-swap, официальный артефакт Qwen3.8-27B, те же публичные model-ID, что и
 в llama-профиле, замеры против llama.cpp на одинаковых промптах и решение по
-судьбе несовместимых потребителей (`ornith-9b-*`, уровни effort в имени
-модели, `repeat_penalty`).
+судьбе несовместимых потребителей (уровни effort в имени модели,
+`repeat_penalty`).
 
 Профиль запущен и проверен на живом железе 2026-10-05: контейнер `llama-swap`
 из сервиса `ninfer-swap`, официальный артефакт, все 7 ID работают, baseline
 против llama.cpp снят, VRAM-бюджет подтверждён, `nvfp4` KV против `int8`
 измерен. Замеры — в `docs/research/0009-ninfer-tp2-two-5070ti.md` и в
-`AGENTS.md`. Осталось: профиль с DFlash2, миграция потребителей, мониторинг и
-судьба `ornith-9b-*`.
+`AGENTS.md`. Осталось: профиль с DFlash2, миграция потребителей и мониторинг;
+судьба `ornith-9b-*` закрыта — модель удалена из проекта (ADR-0004).
 
 ## Notes
 
@@ -62,7 +62,6 @@ prefill и 1.63× по decode. Проверены также Vision, tool calls,
 
 ## Frontier
 
-- 07 — судьба `ornith-9b-*` и режима instruct
 - 08 — профиль ninfer в мониторинге
 
 ## Decisions so far
@@ -73,7 +72,7 @@ prefill и 1.63× по decode. Проверены также Vision, tool calls,
 - [04 — nvfp4 KV против int8 и контекст 262144](issues/04-nvfp4-kv-tradeoff.md)
 - [05 — Профиль с DFlash2](issues/05-dflash2-profile.md) (resolved)
 - [06 — Effort на стороне агентов](issues/06-agent-side-effort.md) (resolved)
-- [07 — Судьба ornith-9b и instruct-режима](issues/07-ornith-and-instruct.md)
+- [07 — Судьба ornith-9b и instruct-режима](issues/07-ornith-and-instruct.md) (resolved)
 - [08 — Профиль ninfer в мониторинге](issues/08-monitoring-integration.md)
 - [09 — Обновить документацию по результатам замеров](issues/09-update-docs.md)
 - [10 — Вытеснение device-state слотов при нескольких диалогах](issues/10-device-state-slot-eviction.md)
@@ -97,8 +96,12 @@ template артефакта, а дефолт шаблона `xhigh`, поэто�
 утверждение, что конфликт бывает на thinking-режимах — там клиентский
 `chat_template_kwargs` заменяется целиком. Потребители: только
 `~/.config/opencode/opencode.jsonc` (`agent-medium`, `agent-xhigh`) — работает
-без правок; `llm-monitoring` не знает model-ID вообще. Открыты 07 (ornith),
-08 (мониторинг).
+без правок; `llm-monitoring` не знает model-ID вообще. Тикет 07 закрыт:
+модель Ornith 9B удалена из проекта целиком (ADR-0004), быстрые задачи
+обслуживает instruct-режим `qwen3.8-27b` (~106–131 tok/s decode против
+~40–60 у Ornith), агентам показывается единый список `qwen3.8-27b*`; в
+llama-профиле осталась одна модель, поэтому ручное переключение снято и
+включён прелоад. Открыт 08 (мониторинг).
 
 ## Not yet specified
 
@@ -107,8 +110,6 @@ template артефакта, а дефолт шаблона `xhigh`, поэто�
   дополнительный маршрут на уровне порта.
 - Нужен ли отдельный профиль `ninfer-dflash2` как второй compose-профиль или
   как переключаемая конфигурация внутри `ninfer/`.
-- Что делать с агентами, которым нужен именно быстрый instruct-режим без
-  thinking (после решения тикета 07).
 - Тикет 08: launcher `llm-stack.sh` в `infrastructure/llm-monitoring` не имеет
   параметра профиля и ссылается на `docker-compose.monitoring.yml`, тогда как
   файл на диске называется `.yaml`; `AGENTS.md` описывает профиль как

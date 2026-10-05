@@ -6,65 +6,16 @@ logToStdout: both
 sendLoadingState: true
 includeAliasesInList: true
 
-# Обе модели запускаются llama-swap как дочерние процессы llama-server
+# Единственная модель запускается llama-swap как дочерний процесс llama-server
 # (бинарник и CUDA-библиотеки входят в образ llama-swap:cuda13).
-# В VRAM одновременно помещается только одна модель, поэтому при старте
-# прелоадится qwen3.8-27b, а переключение выполняется вручную через
-# POST /api/models/unload/:model_id.
-# hooks:
-#   on_startup:
-#     preload:
-#       - qwen3.8-27b
+# Модель прелоадится при старте: переключать нечего, поэтому первый запрос не
+# ждёт чтения весов с диска.
+hooks:
+  on_startup:
+    preload:
+      - qwen3.8-27b
 
 models:
-  ornith-9b:
-    name: "ornith-9b"
-    cmd: >
-      /app/llama-server --host 127.0.0.1 --port ${PORT}
-      --model /models/ornith-9b-Q8_0.gguf
-      --alias ornith-9b
-      --n-gpu-layers 999
-      --ctx-size 262144
-      --ctx-checkpoints 40
-      --parallel 1
-      --no-cache-idle-slots
-      --cache-ram 0
-      --cache-type-k q8_0
-      --cache-type-v q8_0
-      --batch-size 2048
-      --ubatch-size 512
-      --threads 8
-      --flash-attn on
-      --fit off
-      --jinja
-      --reasoning on
-
-    filters:
-      # Не даём клиенту переопределять сэмплинг - управляем им через setParamsByID
-      stripParams: "temperature, top_p, top_k, min_p, presence_penalty, repeat_penalty"
-
-      setParamsByID:
-        # Режим 1: чат с reasoning
-        "ornith-9b-thinking":
-          temperature: 0.6
-          top_p: 0.95
-          top_k: 20
-          min_p: 0.0
-          repeat_penalty: 1.05
-          reasoning: "on"
-
-        # Режим 2: быстрые ответы
-        "ornith-9b-instruct":
-          temperature: 0.7
-          top_p: 0.8
-          top_k: 20
-          min_p: 0.0
-          repeat_penalty: 1.05
-          reasoning-budget: 0
-          reasoning: "off"
-          chat_template_kwargs:
-            enable_thinking: false
-
   qwen3.8-27b:
     name: "qwen3.8-27b"
     cmd: >

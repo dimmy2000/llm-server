@@ -34,9 +34,9 @@ _Avoid_: веса, чекпоинт, модель
 
 **Публичный model-ID**:
 Строка, которую клиент передаёт в поле `model` запроса и видит в `/v1/models`
-(`ornith-9b-thinking`, `qwen3.8-27b-chat-medium`, `qwen3.8-27b-agent-xhigh`,
-`qwen3.8-27b` и т.д.). В llama-профиле model-ID совпадает с ключом модели
-(`ornith-9b`, `qwen3.8-27b`) или с ID режима этого ключа.
+(`qwen3.8-27b`, `qwen3.8-27b-chat-medium`, `qwen3.8-27b-agent-xhigh`). В
+llama-профиле model-ID совпадает с ключом модели (`qwen3.8-27b`) или с ID
+режима этого ключа.
 _Avoid_: имя модели, идентификатор модели
 
 **Режим**:
@@ -72,12 +72,6 @@ _Avoid_: сохранение thinking
 `chat_template_kwargs` не задаёт, `enable_thinking` доходит и даёт
 `conflicting_template_option`.
 _Avoid_: thinking-режим, режим рассуждений
-
-**Переключение моделей**:
-Ручная смена загруженной в VRAM модели в llama-профиле: `POST
-/api/models/unload/:model_id`, затем запрос к другой модели, которая
-загружается сама. Одновременно обе модели не помещаются в VRAM.
-_Avoid_: перезапуск, выключение
 
 **Загрузка GPU**:
 Доля физической VRAM, занятая моделью и KV-cache (цель 0.85–0.9). На GPU1

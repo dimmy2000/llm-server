@@ -7,7 +7,7 @@ OpenAI-совместимым адресом `http://localhost:8080`:
 
 | Профиль | Движок | Модель | Публичный model-ID |
 |---|---|---|---|
-| `llama` | llama.cpp + llama-swap | Ornith 9B Q8_0, Qwen3.8-27B NVFP4-MTP | `ornith-9b-*`, `qwen3.8-27b-*` |
+| `llama` | llama.cpp + llama-swap | Qwen3.8-27B NVFP4-MTP | `qwen3.8-27b-*` |
 | `ninfer` | NInfer TP=2 + llama-swap | Qwen3.8-27B NVFP4 (артефакт `.ninfer`) | `qwen3.8-27b-*` |
 | `vllm` | vLLM | Qwen3.8-27B NVFP4 | `qwen3.8-27b` |
 
@@ -23,7 +23,6 @@ OpenAI-совместимым адресом `http://localhost:8080`:
 - Для профилей `llama` и `ninfer`: две NVIDIA GPU по 16+ ГиБ VRAM (Qwen3.8-27B
   занимает обе GPU).
 - Для текущего профиля `vllm`: две NVIDIA Blackwell GPU по 16 ГиБ VRAM.
-- `/opt/models/ornith-9b-Q8_0.gguf` для llama.cpp.
 - `/opt/models/Qwen3.8-27B-NVFP4-MTP-GGUF/Qwen3.8-27B-NVFP4-MTP-HIGH.gguf` для
   llama.cpp.
 - `/opt/models/Qwen3.8-27B-nvfp4-NInfer/qwen3_8_27b_nvfp4.ninfer` для NInfer.
@@ -104,25 +103,16 @@ docker compose --profile llama up -d --wait --wait-timeout 1800
 docker compose --profile llama logs -f llama-swap
 ```
 
-Публичной точкой входа остается `llama-swap` на `:8080`. Обе модели
-запускаются llama-swap как дочерние процессы llama-server (бинарник входит в
+Публичной точкой входа остается `llama-swap` на `:8080`. Единственная модель
+запускается llama-swap как дочерний процесс llama-server (бинарник входит в
 образ `llama-swap:cuda13`); отдельный контейнер llama-server не используется.
-В VRAM одновременно помещается только одна модель, поэтому при старте
-прелоадится `qwen3.8-27b` (время загрузки ~40-60 c), а переключение
-выполняется вручную:
-
-```bash
-# Выгрузить текущую модель, затем запросить другую - она загрузится сама
-curl -X POST http://localhost:8080/api/models/unload/qwen3.8-27b
-curl -X POST http://localhost:8080/api/models/unload/ornith-9b
-```
+Модель прелоадится при старте контейнера (время загрузки ~40-60 c), после
+чего первый запрос обслуживается сразу.
 
 Доступные model-ID:
 
 | ID | Назначение |
 |---|---|
-| `ornith-9b-thinking` | чат с reasoning |
-| `ornith-9b-instruct` | быстрые ответы без reasoning |
 | `qwen3.8-27b` | быстрые ответы без thinking |
 | `qwen3.8-27b-chat-low` | чат с thinking (reasoning скрыт, preserve off), effort low |
 | `qwen3.8-27b-chat-medium` | чат с thinking (reasoning скрыт, preserve off), effort medium |
@@ -131,8 +121,7 @@ curl -X POST http://localhost:8080/api/models/unload/ornith-9b
 | `qwen3.8-27b-agent-medium` | агент, thinking с preserve, effort medium |
 | `qwen3.8-27b-agent-xhigh` | агент, thinking с preserve, effort xhigh |
 
-Параметры ядра
-каждой модели находятся в `llama/config.yaml` (секции `cmd`). Sampling и
+Параметры ядра модели находятся в `llama/config.yaml` (секция `cmd`). Sampling и
 режим reasoning задаются сервером через `setParamsByID`; переданные клиентом
 sampling-параметры и параметры thinking `llama-swap` удаляет.
 
@@ -188,8 +177,9 @@ reasoning) и шесть алиасов `-chat-{low,medium,xhigh}` (thinking, re
 возвращается в следующие запросы диалога) и `-agent-{low,medium,xhigh}`
 (thinking с сохранением reasoning в контексте). Уровень reasoning задаёт
 сервер по имени алиаса, как в llama-профиле, клиенту `reasoning_effort`
-передавать не нужно. `ornith-9b-*` в этом профиле недоступен: NInfer не
-загружает GGUF.
+передавать не нужно. Быстрые задачи, которым раньше был нужен отдельный
+небольшой instruct-режим, обслуживает `qwen3.8-27b`: он доступен во всех трёх
+профилях и быстрее по задержке, поэтому отдельный запасной профиль не нужен.
 
 Effort в NInfer — не бюджет токенов, а инструкция в системном промпте,
 которую подставляет chat template артефакта: `xhigh` на длинной задаче дошёл
