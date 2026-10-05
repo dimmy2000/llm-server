@@ -14,6 +14,11 @@ unloadTimeout: 60
 models:
   qwen3.8-27b:
     name: "qwen3.8-27b (NInfer TP=2, int8 KV, 196608 ctx)"
+    # Вариант с nvfp4 KV и контекстом 262144 тоже проверен (2026-10-05):
+    # помещаются Vision и 4 слота, KV-пул 2.98 GiB против 3.87 GiB, свободной
+    # VRAM на 920 MiB больше на плату, префилл −1.3…1.6 %, decode без разницы.
+    # Оставлен int8: 196608 уже больше, чем даёт llama-профиль. Цифры и A/B —
+    # docs/research/0009-ninfer-tp2-two-5070ti.md.
     cmd: |
       /opt/ninfer/bin/ninfer-serve
       /models/Qwen3.8-27B-nvfp4-NInfer/qwen3_8_27b_nvfp4.ninfer

@@ -12,10 +12,10 @@ llama-swap, официальный артефакт Qwen3.8-27B, те же пу�
 
 Профиль запущен и проверен на живом железе 2026-10-05: контейнер `llama-swap`
 из сервиса `ninfer-swap`, официальный артефакт, все 7 ID работают, baseline
-против llama.cpp снят, VRAM-бюджет подтверждён. Замеры — в
-`docs/research/0009-ninfer-tp2-two-5070ti.md` и в `AGENTS.md`. Осталось:
-вытеснение device-state слотов, `nvfp4` KV, DFlash2, миграция потребителей,
-мониторинг и судьба `ornith-9b-*`.
+против llama.cpp снят, VRAM-бюджет подтверждён, `nvfp4` KV против `int8`
+измерен. Замеры — в `docs/research/0009-ninfer-tp2-two-5070ti.md` и в
+`AGENTS.md`. Осталось: профиль с DFlash2, миграция потребителей, мониторинг и
+судьба `ornith-9b-*`.
 
 ## Notes
 
@@ -62,10 +62,10 @@ prefill и 1.63× по decode. Проверены также Vision, tool calls,
 
 ## Frontier
 
-- 04 — `nvfp4` KV против int8 и контекст 262144
 - 05 — профиль с DFlash2
 - 06 — миграция потребителей на `reasoning_effort`
 - 07 — судьба `ornith-9b-*` и режима instruct
+- 08 — профиль ninfer в мониторинге
 
 ## Decisions so far
 
@@ -73,7 +73,7 @@ prefill и 1.63× по decode. Проверены также Vision, tool calls,
 - [02 — Cold-start профиля и baseline против llama.cpp](issues/02-cold-start-and-baseline.md)
 - [03 — VRAM-бюджет под пиковой нагрузкой](issues/03-vram-budget-under-load.md)
 - [04 — nvfp4 KV против int8 и контекст 262144](issues/04-nvfp4-kv-tradeoff.md)
-- [05 — Профиль с DFlash2](issues/05-dflash2-profile.md)
+- [05 — Профиль с DFlash2](issues/05-dflash2-profile.md) (resolved)
 - [06 — Effort на стороне агентов](issues/06-agent-side-effort.md)
 - [07 — Судьба ornith-9b и instruct-режима](issues/07-ornith-and-instruct.md)
 - [08 — Профиль ninfer в мониторинге](issues/08-monitoring-integration.md)
@@ -83,9 +83,15 @@ prefill и 1.63× по decode. Проверены также Vision, tool calls,
 Ответы тикетов 01–03: артефакт цел и грузится; baseline и VRAM подтверждены
 без правок профиля, `--embedding-host` оставлен. Тикет 10: удержание состояния
 измерено — 3 диалога из любого числа, четвёртый префиллится заново, ошибок нет.
-Открыты 04 (`nvfp4` KV), 05 (DFlash2), 06 (effort у агентов), 07 (ornith),
-08 (мониторинг). Тикет 09 закрыт по итогам 02–03: цифры перенесены в research
-0009, `AGENTS.md`, `README.md` и в заметку `/opt/vaults/LLMVault`.
+Тикет 04: A/B снят — `nvfp4` 262144 помещается с Vision и 4 слотами (KV-пул
+2.98 против 3.87 GiB, +920 MiB свободно на плату, префилл −1.3…−1.6 %, decode
+в разбросе), но в базовом профиле оставлен `int8`: 196608 уже больше, чем даёт
+llama-профиль, качество 4-битного KV локально не проверено. Тикет 09 закрыт по
+итогам 02–03: цифры перенесены в research 0009, `AGENTS.md`, `README.md` и в
+заметку `/opt/vaults/LLMVault`. Тикет 05 закрыт: DFlash2 измерен на этой машине;
+в базовый профиль не включается (на `int8` теряет треть контекста и два слота,
+на `nvfp4` — непроверенное качество KV), триггеры возврата зафиксированы.
+Открыты 06 (effort у агентов), 07 (ornith), 08 (мониторинг).
 
 ## Not yet specified
 
