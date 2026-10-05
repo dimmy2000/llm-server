@@ -186,10 +186,19 @@ llama.cpp на тех же картах даёт 1372 tok/s на prefill 90k и 
 Публичные model-ID совпадают с llama-профилем: `qwen3.8-27b` (instruct, без
 reasoning) и шесть алиасов `-chat-{low,medium,xhigh}` (thinking, reasoning не
 возвращается в следующие запросы диалога) и `-agent-{low,medium,xhigh}`
-(thinking с сохранением reasoning в контексте). Effort задаёт агент через
-`reasoning_effort`; `low`, `medium` и `xhigh` в имени алиаса — только
-маркер потребителя. `ornith-9b-*` в этом профиле недоступен: NInfer не
+(thinking с сохранением reasoning в контексте). Уровень reasoning задаёт
+сервер по имени алиаса, как в llama-профиле, клиенту `reasoning_effort`
+передавать не нужно. `ornith-9b-*` в этом профиле недоступен: NInfer не
 загружает GGUF.
+
+Effort в NInfer — не бюджет токенов, а инструкция в системном промпте,
+которую подставляет chat template артефакта: `xhigh` на длинной задаче дошёл
+до лимита `max_tokens: 16000`, `low` закрыл рассуждение сам на 12 254 токенах.
+Движок принимает effort шире (`none, minimal, low, medium, high, xhigh, max,
+adaptive`), но опираться следует на `low | medium | xhigh`. Клиентский
+`enable_thinking` на thinking-режимах до движка не доходит, потому что
+`chat_template_kwargs` задан в конфиге объектом и заменяется целиком; на
+instruct-режиме он доходит и даёт `400 conflicting_template_option`.
 
 Движок сам выбирает пресет сэмплирования по режиму thinking, поэтому клиентские
 sampling-параметры отбрасываются; `repeat_penalty 1.05` из llama-профиля

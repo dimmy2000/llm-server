@@ -173,12 +173,16 @@
 2. Алиасы режимов (`chat-*`, `agent-*`) создаются через `setParamsByID`;
    `includeAliasesInList: true` показывает их в `/v1/models`.
 3. `stripParams`: NInfer сам выбирает пресет сэмплирования из режима thinking,
-   который выведен из клиентского `reasoning_effort`. Клиентские
+   который выведен из `reasoning_effort`. Клиентские
    `temperature`, `top_p`, `top_k`, `min_p`, `presence_penalty`,
    `frequency_penalty`, `repetition_penalty` отбрасываются, иначе пресет
    рассыпается.
-4. `enable_thinking` в `chat_template_kwargs` вместе с `reasoning_effort` даёт
-   401 `conflicting_template_option`. Effort должен оставаться на клиенте.
+4. `enable_thinking` в клиентских `chat_template_kwargs` вместе с
+   `reasoning_effort` даёт `400 conflicting_template_option`. Effort задаёт
+   сервер по имени алиаса, поэтому на thinking-режимах клиентский
+   `chat_template_kwargs` заменяется целиком и конфликт не воспроизводится;
+   на instruct-режиме, где `chat_template_kwargs` не задан, конфликт есть.
+   Подробности и замеры — «Уровень reasoning на стороне сервера» ниже.
 5. `preserve_thinking: false` не скрывает `reasoning_content` от текущего
    запроса — он убирает reasoning из последующих запросов диалога. Влияет
    только на историю, которую переслал клиент: сервер сам ничего в неё не
@@ -283,8 +287,10 @@ VRAM (свободно, MiB): после старта 2480 на GPU0 и 1838 н�
   второго turn (352 → 246 токенов), `true` оставляет (352);
 - `qwen3.8-27b` остаётся instruct даже с клиентским `reasoning_effort:
   medium` (`reasoning_tokens: 0`) — thinking задаёт алиас, а не клиент;
-- `chat-medium`/`agent-xhigh` без effort тоже дают thinking (дефолт движка),
-  Effort из имени ID не подставляется;
+- Effort из имени ID задаётся сервером (тикет 06): `chat-low` даёт 41
+  prompt-токен, `chat-medium` 25, `chat-xhigh` 67, instruct 13, и клиентский
+  `reasoning_effort` эти значения не меняет; см. «Уровень reasoning на стороне
+  сервера»;
 - неизвестный effort отвергается `400` с перечислением допустимых значений;
 - tool calls работают (`finish_reason: tool_calls`);
 - Vision отвечает верно по сгенерированному PNG (красный квадрат слева,
@@ -374,6 +380,81 @@ VRAM на обеих платах ценой ~1.5 % prefill и нулевой (�
 которого не проверено. Решение и триггеры возврата — в тикете
 `.scratch/ninfer-tp2/issues/05-dflash2-profile.md`.
 
+## Уровень reasoning на стороне сервера
+
+Измерено 2026-10-05 на тикет `.scratch/ninfer-tp2/issues/06`. Effort в NInfer
+не является бюджетом токенов: это **инструкция в системном промпте**, которую
+подставляет chat template артефакта (`resource/text/chat_template.jinja`,
+строки 56–67):
+
+```jinja
+{%- if enable_thinking is undefined or enable_thinking is true %}
+    {%- set resolved_reasoning_effort = reasoning_effort|default('xhigh') %}
+    {%- if resolved_reasoning_effort not in ('xhigh', 'medium', 'low') %}
+        {{- raise_exception('Unexpected reasoning effort ' ~ ...) }}
+    {%- endif %}
+    {%- if resolved_reasoning_effort == 'xhigh' %}
+        {%- set reasoning_instructions = 'Reasoning effort is set to xhigh. ...' %}
+    {%- elif resolved_reasoning_effort == 'low' %}
+        {%- set reasoning_instructions = 'Reasoning effort is set to low. ...' %}
+    {%- endif %}
+{%- endif %}
+```
+
+Три следствия, каждое проверено запросом к живому профилю:
+
+1. **Дефолт шаблона — `xhigh`, а не «дефолт движака».** Запрос к
+   `qwen3.8-27b-chat-xhigh` без `reasoning_effort` даёт ровно тот же промпт,
+   что и явный `xhigh`: 67 prompt-токенов в обоих случаях (прогон с двумя
+   разными промптами дал 67/67 и 67/67). Для `medium` инструкции нет вовсе
+   (25 токенов), `low` даёт короткую инструкцию (55). Длина промпта —
+   надёжный идентификатор уровня, потому что инструкция дописывается в
+   системный промпт.
+2. **Бюджета токенов нет ни у одного уровня.** На задаче, заставляющей
+   рассуждать долго, `low` закрыл рассуждение сам на 12 254 токенах
+   (`finish_reason: stop`), а `default` и `xhigh` упёрлись в `max_tokens:
+   16000` (`finish_reason: length`, 16 000 reasoning-токенов). То есть
+   `low` — это просьба быть кратче, а не лимит. Строить бюджет латентности
+   на-effort нельзя.
+3. **Уровень выбирается только из `xhigh | medium | low`.** Движок принимает
+   шире — `none, minimal, low, medium, high, xhigh, max, adaptive`
+   (ошибка перечисляет все восемь, `400 invalid_request_error` при неизвестном
+   значении), но непротиворечиво отображает в свой лог: `minimal` → `low`,
+   `high` → `xhigh`, `max` → `xhigh`, `adaptive` → `xhigh`. Значения вне
+   шаблонной тройки работают, но это недокументированное поведение v0.4.5 —
+   опираться только на `low | medium | xhigh`.
+
+Режим instruct: клиентский `reasoning_effort` любого значения не включает
+thinking — серверный `reasoning_effort: none` перезаписывает его (жёсткий ключ
+`setParamsByID`), `reasoning_tokens: 0` во всех вариантах.
+
+### Что реально перезаписывает llama-swap
+
+Один middleware `applyFilters` (`internal/server/filters.go:130-172`) целиком
+собирает исходящее тело: сначала `useModelName`, потом `stripParams`, потом
+`setParams`, потом `setParamsByID`. Ключи без `?` на конце — жёсткие, значение
+клиента перезаписывается (`filters.go:166`); `key?` — только если ключ у клиента
+отсутствует. Проверено на живом профиле: `chat-low` с клиентским
+`reasoning_effort: xhigh` всё равно даёт `thinking low` и 41 prompt-токен.
+
+`chat_template_kwargs` в YAML задан объектом, поэтому заменяется **целиком**,
+а не по ключам: клиентский `enable_thinking` до движка не доходит. Именно
+поэтому на thinking-режимах 400 `conflicting_template_option` не
+воспроизводится ни в одной комбинации (проверено 11 вариантов × 6 алиасов),
+хотя на instruct-режиме, где `chat_template_kwargs` сервером не задан, клиентский
+`enable_thinking` доходит и конфликтует с серверным `none` — `400
+conflicting_template_option`, HTTP-код 400, не 401.
+
+Прежняя запись в этом документе и в ADR-0003 утверждала обратное (401 на
+thinking-режимах и «effort остаётся на клиенте») — неверно, исправлено
+тикетом 06.
+
+### Решение: уровень reasoning задаёт сервер
+
+`low | medium | xhigh` в имени алиаса задают уровень на сервере, как в
+llama-профиле. Клиенту effort передавать не нужно, и миграция потребителей не
+требуется. Обоснование и альтернативы — ADR-0003, раздел «Решение», пункт 5.
+
 ## Грабли
 
 - Только `/v1/chat/completions` (и Anthropic Messages / Responses),
@@ -424,6 +505,7 @@ VRAM на обеих платах ценой ~1.5 % prefill и нулевой (�
 
 ## Что дальше
 
-Задачи в `.scratch/ninfer-tp2/`: миграция потребителей на `reasoning_effort`,
-интеграция с мониторингом, судьба `ornith-9b`. Профиль с DFlash2 закрыт
-решением тикета 05 (не заводим, триггеры возврата зафиксированы).
+Задачи в `.scratch/ninfer-tp2/`: интеграция с мониторингом, судьба `ornith-9b`.
+Профиль с DFlash2 закрыт решением тикета 05 (не заводим, триггеры возврата
+зафиксированы). Уровень reasoning закрыт тикетом 06: effort задаёт сервер,
+миграция потребителей на `reasoning_effort` не требуется.

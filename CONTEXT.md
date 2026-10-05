@@ -52,8 +52,10 @@ _Avoid_: конфигурация, пресет
 _Avoid_: семейство, категория
 
 **Уровень reasoning**:
-Интенсивность мышления режима: `low`, `medium` или `xhigh` (значение
-`reasoning_effort`).
+Интенсивность мышления режима: `low`, `medium` или `xhigh`. В llama-профиле
+это значение `reasoning_effort` в `setParamsByID`; в профиле `ninfer` — то же
+самое, плюс инструкция в системном промпте от chat template артефакта, а не
+бюджет токенов.
 _Avoid_: effort, интенсивность
 
 **Preserve thinking**:
@@ -63,9 +65,12 @@ _Avoid_: сохранение thinking
 
 **Режим thinking** (профиль `ninfer`):
 Поведение движка, при котором модель возвращает рассуждения. Задаётся
-на клиенте через `reasoning_effort`; `reasoning_effort: none` переводит
-запрос в режим instruct (быстрый ответ без рассуждений). `enable_thinking`
-задавать нельзя: вместе с `reasoning_effort` он даёт конфликт шаблона.
+уровнем reasoning из model-ID на сервере, как в llama-профиле; клиентский
+`reasoning_effort` перезаписывается. `enable_thinking` на thinking-режимах
+задавать бессмысленно: клиентский `chat_template_kwargs` заменяется целиком,
+и ключ до движка не доходит. На instruct-режиме, где сервер
+`chat_template_kwargs` не задаёт, `enable_thinking` доходит и даёт
+`conflicting_template_option`.
 _Avoid_: thinking-режим, режим рассуждений
 
 **Переключение моделей**:

@@ -167,22 +167,35 @@ VRAM (освобождение через unified KV — только при `--
 | ID | Назначение | thinking | preserve_thinking |
 |---|---|---|---|
 | `qwen3.8-27b` | быстрые ответы, instruct | off (`reasoning_effort: none`) | — |
-| `qwen3.8-27b-chat-low` | чат с thinking | on, effort клиента | false |
-| `qwen3.8-27b-chat-medium` | чат с thinking | on, effort клиента | false |
-| `qwen3.8-27b-chat-xhigh` | чат с thinking | on, effort клиента | false |
-| `qwen3.8-27b-agent-low` | агент, thinking в контексте | on, effort клиента | true |
-| `qwen3.8-27b-agent-medium` | агент, thinking в контексте | on, effort клиента | true |
-| `qwen3.8-27b-agent-xhigh` | агент, thinking в контексте | on, effort клиента | true |
+| `qwen3.8-27b-chat-low` | чат с thinking | on, effort low (сервер) | false |
+| `qwen3.8-27b-chat-medium` | чат с thinking | on, effort medium (сервер) | false |
+| `qwen3.8-27b-chat-xhigh` | чат с thinking | on, effort xhigh (сервер) | false |
+| `qwen3.8-27b-agent-low` | агент, thinking в контексте | on, effort low (сервер) | true |
+| `qwen3.8-27b-agent-medium` | агент, thinking в контексте | on, effort medium (сервер) | true |
+| `qwen3.8-27b-agent-xhigh` | агент, thinking в контексте | on, effort xhigh (сервер) | true |
 
 Особенности API-контракта профиля `ninfer`:
 
 - `ninfer-serve` отклоняет запрос, если `request.model` не равен `--model-id`,
   поэтому в конфиге модели обязателен `useModelName: qwen3.8-27b`; все
   алиасы режимов переписываются на каноническое имя.
-- Effort (`low|medium|xhigh`) задаёт агент через `reasoning_effort`, не сервер.
-  `enable_thinking` в `chat_template_kwargs` вместе с `reasoning_effort` даёт
-  401 `conflicting_template_option`, поэтому в thinking-режимах
-  `enable_thinking` не задаётся.
+- Effort (`low|medium|xhigh`) задаёт сервер по имени алиаса, как в
+  llama-профиле: `reasoning_effort` стоит в `setParamsByID` жёстким ключом и
+  перезаписывает клиентское значение. Клиенту effort передавать не нужно.
+  Effort в NInfer — не бюджет токенов, а инструкция в системном промпте,
+  которую подставляет chat template артефакта; дефолт шаблона — `xhigh`
+  (`chat_template.jinja:58`), поэтому клиент без effort получил бы xhigh молча.
+  Движок принимает и `none, minimal, high, max, adaptive`, но опираться
+  следует на `low|medium|xhigh`. Замеры —
+  `docs/research/0009-ninfer-tp2-two-5070ti.md`, раздел «Уровень reasoning на
+  стороне сервера».
+- `chat_template_kwargs` задан в конфиге объектом, поэтому заменяется целиком
+  вместе с клиентскими ключами, и клиентский `enable_thinking` до движка не
+  доходит. На thinking-режимах конфликт `conflicting_template_option` не
+  воспроизводится; на instruct-режиме, где сервер `chat_template_kwargs` не
+  задаёт, клиентский `enable_thinking` доходит и конфликтует с серверным
+  `reasoning_effort: none` — `400 conflicting_template_option` (код 400, не
+  401).
 - `preserve_thinking: false` не скрывает `reasoning_content` от текущего
   запроса — он убирает reasoning из последующих запросов диалога. Это
   отличается от llama-профиля. Флаг действует только на историю, пересланную
@@ -222,6 +235,13 @@ VRAM (освобождение через unified KV — только при `--
 - `preserve_thinking` измеряем: при пересылке `reasoning_content` в истории
   диалога `false` вырезает reasoning из промпта следующего turn (352 → 246
   токенов), `true` оставляет (352).
+- Уровень reasoning измеряем по длине промпта (инструкция effort дописывается
+  в системный промпт): instruct 13, `chat-medium` 25, `chat-low` 41,
+  `chat-xhigh` 67 prompt-токенов. Клиентский `reasoning_effort` эти значения
+  не меняет, клиентский `enable_thinking` на thinking-режимах до движка не
+  доходит. Без effort шаблон даёт тот же промпт, что явный `xhigh`. Effort не
+  ограничивает рассуждение токенами: `xhigh` дошёл до лимита `max_tokens:
+  16000`, `low` закрыл рассуждение сам на 12 254 токенах.
 - `qwen3.8-27b` остаётся instruct даже с клиентским `reasoning_effort:
   medium`; Effort из имени ID не подставляется — `chat-medium` и
   `agent-xhigh` без effort тоже дают thinking (дефолт движка).

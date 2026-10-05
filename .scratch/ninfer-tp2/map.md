@@ -62,8 +62,6 @@ prefill и 1.63× по decode. Проверены также Vision, tool calls,
 
 ## Frontier
 
-- 05 — профиль с DFlash2
-- 06 — миграция потребителей на `reasoning_effort`
 - 07 — судьба `ornith-9b-*` и режима instruct
 - 08 — профиль ninfer в мониторинге
 
@@ -74,7 +72,7 @@ prefill и 1.63× по decode. Проверены также Vision, tool calls,
 - [03 — VRAM-бюджет под пиковой нагрузкой](issues/03-vram-budget-under-load.md)
 - [04 — nvfp4 KV против int8 и контекст 262144](issues/04-nvfp4-kv-tradeoff.md)
 - [05 — Профиль с DFlash2](issues/05-dflash2-profile.md) (resolved)
-- [06 — Effort на стороне агентов](issues/06-agent-side-effort.md)
+- [06 — Effort на стороне агентов](issues/06-agent-side-effort.md) (resolved)
 - [07 — Судьба ornith-9b и instruct-режима](issues/07-ornith-and-instruct.md)
 - [08 — Профиль ninfer в мониторинге](issues/08-monitoring-integration.md)
 - [09 — Обновить документацию по результатам замеров](issues/09-update-docs.md)
@@ -91,7 +89,16 @@ llama-профиль, качество 4-битного KV локально не
 заметку `/opt/vaults/LLMVault`. Тикет 05 закрыт: DFlash2 измерен на этой машине;
 в базовый профиль не включается (на `int8` теряет треть контекста и два слота,
 на `nvfp4` — непроверенное качество KV), триггеры возврата зафиксированы.
-Открыты 06 (effort у агентов), 07 (ornith), 08 (мониторинг).
+Тикет 06 закрыт: effort в NInfer — инструкция в системном промпте от chat
+template артефакта, а дефолт шаблона `xhigh`, поэтому прежняя передача effort
+клиенту означала молчаливую подмену уровня. Effort возвращён на сервер по имени
+алиаса (жёсткий ключ в `setParamsByID`), миграция потребителей не требуется;
+заодно исправлен код 400 (не 401) у `conflicting_template_option` и опровергнуто
+утверждение, что конфликт бывает на thinking-режимах — там клиентский
+`chat_template_kwargs` заменяется целиком. Потребители: только
+`~/.config/opencode/opencode.jsonc` (`agent-medium`, `agent-xhigh`) — работает
+без правок; `llm-monitoring` не знает model-ID вообще. Открыты 07 (ornith),
+08 (мониторинг).
 
 ## Not yet specified
 
@@ -102,6 +109,10 @@ llama-профиль, качество 4-битного KV локально не
   как переключаемая конфигурация внутри `ninfer/`.
 - Что делать с агентами, которым нужен именно быстрый instruct-режим без
   thinking (после решения тикета 07).
+- Тикет 08: launcher `llm-stack.sh` в `infrastructure/llm-monitoring` не имеет
+  параметра профиля и ссылается на `docker-compose.monitoring.yml`, тогда как
+  файл на диске называется `.yaml`; `AGENTS.md` описывает профиль как
+  существующий, а он отсутствует.
 - Проверка длинных streaming-ответов под нагрузкой (общая практика профиля
   vLLM), если она потребуется после первых результатов.
 
