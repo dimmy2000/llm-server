@@ -317,11 +317,18 @@ docker compose --profile ninfer restart ninfer-swap
 
 - `scripts/port-forwarding-rules.ps1` запускается в PowerShell Windows-хоста,
   не внутри WSL или контейнера.
-- Мониторинг находится в отдельном репозитории `llm-monitoring`; его launcher
-  должен передавать нужный Compose-профиль (`llama`, `ninfer`, `vllm`).
+- Мониторинг находится в отдельном репозитории `llm-monitoring`
+  (`infrastructure/llm-monitoring`). Его launcher `llm-stack.sh` принимает
+  профиль вторым аргументом (`./llm-stack.sh up ninfer`) и передаёт его в
+  `docker compose --profile`; базовый файл задаётся через `BASE_COMPOSE`.
   Compose-сервис профиля `ninfer` называется `ninfer-swap`, а контейнер —
   `llama-swap`, поэтому дашборды по имени контейнера `llama-swap` работают для
-  обоих llama-подобных профилей.
+  обоих llama-подобных профилей без изменений.
+  GPU-метрики (nvidia-smi-exporter, `gpus: all`) и promtail/Loki-логи
+  контейнеров не зависят от профиля. Специфичные для llama.cpp панели
+  (метрики сервера llama.cpp, API llama-swap) в дашборде отсутствуют — для
+  `ninfer` это отсутствие, а не деградация; разбор по профилям — в README
+  `llm-monitoring`, раздел «Панели по профилям».
 
 ## Agent skills
 
