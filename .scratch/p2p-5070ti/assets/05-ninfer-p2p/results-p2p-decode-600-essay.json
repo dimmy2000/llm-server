@@ -1,0 +1,39 @@
+{
+  "label": "ninfer-p2p-decode-600-essay",
+  "model": "qwen3.8-27b-chat-medium",
+  "max_tokens": 600,
+  "ttft_s": null,
+  "total_s": 4.485921753000184,
+  "decode_span_s": null,
+  "content_chars": 0,
+  "content_chunks": 0,
+  "completion_tokens": 600,
+  "decode_tok_s_chunks": null,
+  "decode_tok_s_usage": null,
+  "usage": {
+    "completion_tokens": 600,
+    "completion_tokens_details": {
+      "reasoning_tokens": 600
+    },
+    "prompt_tokens": 49,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 649
+  },
+  "timings": {
+    "cache_n": 0,
+    "draft_n": 1569,
+    "draft_n_accepted": 374,
+    "predicted_ms": 4415.354528,
+    "predicted_n": 600,
+    "predicted_per_second": 135.6629453425399,
+    "predicted_per_token_ms": 7.37120956260434,
+    "prompt_ms": 68.94762,
+    "prompt_n": 49,
+    "prompt_per_second": 710.6844297163557,
+    "prompt_per_token_ms": 1.4070942857142856
+  },
+  "finish_reason": "length",
+  "text": ""
+}

@@ -1,0 +1,39 @@
+{
+  "label": "ninfer-615-decode-600-story",
+  "model": "qwen3.8-27b-chat-medium",
+  "max_tokens": 600,
+  "ttft_s": 3.428039207999973,
+  "total_s": 3.793157004999955,
+  "decode_span_s": 348.595583974,
+  "content_chars": 196,
+  "content_chunks": 21,
+  "completion_tokens": 600,
+  "decode_tok_s_chunks": 0.06024172699091416,
+  "decode_tok_s_usage": 1.7211921997404045,
+  "usage": {
+    "completion_tokens": 600,
+    "completion_tokens_details": {
+      "reasoning_tokens": 549
+    },
+    "prompt_tokens": 48,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 648
+  },
+  "timings": {
+    "cache_n": 0,
+    "draft_n": 1421,
+    "draft_n_accepted": 395,
+    "predicted_ms": 3715.417393,
+    "predicted_n": 600,
+    "predicted_per_second": 161.22010978592627,
+    "predicted_per_token_ms": 6.202700155258765,
+    "prompt_ms": 76.08080700000001,
+    "prompt_n": 48,
+    "prompt_per_second": 630.9081342946322,
+    "prompt_per_token_ms": 1.5850168125000001
+  },
+  "finish_reason": "length",
+  "text": "# The Fennbahn\n\n## I. The Valley Station\n\nThe station at Fennmühl sat in a shallow bowl of the valley like a coin dropped into a cup of green water. It was seven in the morning, and the mist still"
+}

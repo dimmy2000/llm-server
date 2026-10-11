@@ -1,0 +1,91 @@
+{
+  "artifact": {
+    "architecture": "Qwen3_5ForCausalLM",
+    "formats": [
+      "bf16",
+      "fp32",
+      "fp8_e4m3fn_row_bf16",
+      "nvfp4"
+    ],
+    "name": "qwen3.8-27b",
+    "path": "/models/Qwen3.8-27B-nvfp4-DFlash2NV-MTPNV-NInfer/qwen3_8_27b_nvfp4.ninfer",
+    "prefill_signature": "2d2058067c927941e686c485264fbb9310478422ef125580960501757a553737"
+  },
+  "corpus": {
+    "id": "custom-corpus-llamacpp.md",
+    "mode": "custom",
+    "source": "/work/corpus-llamacpp.md",
+    "stream_count": 1
+  },
+  "domains": [
+    {
+      "domain": "custom",
+      "mean_nll": 1.005392949718532,
+      "perplexity": 2.7329809859636613,
+      "scored_tokens": 19509,
+      "total_nll": 19614.211056058844
+    }
+  ],
+  "execution": {
+    "context_tokens": 32768,
+    "device": 0,
+    "devices": [
+      0,
+      1
+    ],
+    "embedding_host": true,
+    "kv_dtype": "nvfp4",
+    "prefill_chunk_tokens": 1024,
+    "purpose": "causal_scoring",
+    "score_tile_tokens": 1024,
+    "stride_tokens": 2048,
+    "tp": 2
+  },
+  "metric": {
+    "log_base": "natural",
+    "name": "fixed-window truncated-context causal perplexity"
+  },
+  "overall": {
+    "mean_nll": 1.005392949718532,
+    "perplexity": 2.7329809859636613,
+    "scored_tokens": 19509,
+    "total_nll": 19614.211056058844
+  },
+  "schema_version": 2,
+  "streams": [
+    {
+      "domain": "custom",
+      "id": "corpus-llamacpp.md",
+      "input_tokens": 19510,
+      "mean_nll": 1.005392949718532,
+      "path": "/work/corpus-llamacpp.md",
+      "perplexity": 2.7329809859636613,
+      "scored_tokens": 19509,
+      "seconds": 4.406323688,
+      "total_nll": 19614.211056058844,
+      "unscored_tokens": 1,
+      "windows": [
+        {
+          "first_target": 1,
+          "index": 0,
+          "input_begin": 0,
+          "input_end": 19510,
+          "mean_nll": 1.005392949718532,
+          "perplexity": 2.7329809859636613,
+          "scored_tokens": 19509,
+          "seconds": 4.406321088,
+          "target_begin": 1,
+          "target_end": 19510,
+          "total_nll": 19614.211056058844
+        }
+      ]
+    }
+  ],
+  "timing": {
+    "load_seconds": 4.689452485,
+    "read_and_tokenize_seconds": 0.00344461,
+    "score_seconds": 4.406358808,
+    "scored_tokens_per_second": 4427.465136198232,
+    "total_seconds": 9.58212091
+  }
+}

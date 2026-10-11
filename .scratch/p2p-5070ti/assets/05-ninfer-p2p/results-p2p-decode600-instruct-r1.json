@@ -1,0 +1,39 @@
+{
+  "label": "p2p-instruct-r1",
+  "model": "qwen3.8-27b",
+  "max_tokens": 600,
+  "ttft_s": 0.07169216700003744,
+  "total_s": 4.936198241000056,
+  "decode_span_s": 2503.792616019,
+  "content_chars": 2797,
+  "content_chunks": 249,
+  "completion_tokens": 600,
+  "decode_tok_s_chunks": 0.09944913105299712,
+  "decode_tok_s_usage": 0.23963646036866773,
+  "usage": {
+    "completion_tokens": 600,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 48,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 648
+  },
+  "timings": {
+    "cache_n": 0,
+    "draft_n": 1724,
+    "draft_n_accepted": 351,
+    "predicted_ms": 4864.516074,
+    "predicted_n": 600,
+    "predicted_per_second": 123.1366061675799,
+    "predicted_per_token_ms": 8.12106189315526,
+    "prompt_ms": 70.041743,
+    "prompt_n": 48,
+    "prompt_per_second": 685.3056183938769,
+    "prompt_per_token_ms": 1.4592029791666665
+  },
+  "finish_reason": "length",
+  "text": "The history of alpine railways is a narrative that intertwines the triumph of human engineering over nature, the birth of modern mass tourism, and the geopolitical shifts of Europe. From the mid-19th century to the present day, these lines have served not merely as transport corridors, but as symbols of national identity, economic development, and technological prowess.\n\n### I. The Pioneering Era (1840s–1870s): Conquering the Impossible\n\nThe story begins with the realization that the Alps, once an impassable barrier, could be crossed by steam. This era was defined by monumental civil engineering challenges: tunnels, viaducts, and steep gradients.\n\n#### 1. Engineering Marvels\n*   **The Semmering Railway (Austria, 1854):** Often cited as the first major alpine railway, it connected Vienna to Trieste via Graz. It featured the iconic **Semmering Viaduct** and required extensive tunneling through the Semmering Pass. Engineer Carl von Ettingshausen’s design demonstrated that rail could conquer high-altitude terrain.\n*   **The Gotthard Tunnel (Switzerland, 1882):** A landmark in global engineering. At 14.6 km long, it was the world’s longest railway tunnel upon completion. Its construction involved simultaneous boring from both ends using compressed air drills—a radical innovation. The political will to build it stemmed from Switzerland’s desire to unify its cantons and facilitate trade between northern and southern Europe.\n*   **The Simplon Tunnel (Switzerland/Italy, 1906):** Even more ambitious than the Gotthard, this 19.8 km tunnel connected Italy and Switzerland directly. It was a joint Swiss-Italian project, reflecting growing cross-border cooperation. The engineering challenge included dealing with hot rock masses and groundwater pressure.\n\n#### 2. Political Dimensions\n*   **National Unification:** In Germany and Austria-Hungary, alpine railways were part of broader nation-building efforts. The **Brenner Railway** (completed 1867) linked Innsbruck (Austria) with Brennero (Italy), becoming a strategic military and commercial artery. After WWI, when the Brenner line fell under Italian sovereignty, it became a symbol of territorial loss for Austria and a tool for Italian integration of South Tyrol.\n*   **Swiss Neutrality and Unity:** Switzerland used its railways to reinforce internal cohesion. The federal government invested heavily in trans-alpine routes to ensure economic independence and avoid dependence on foreign powers for transit.\n\n#### 3. Tourism Emergence\n*   Early tourists were wealthy elites seeking \"Grand Tour\" experiences. Railways made the Alps accessible to the emerging middle class. Hotels like the **Grand Hotel Zermatt** or those in Interlaken began catering specifically to railway arrivals. The journey itself became a spectacle—pass"
+}

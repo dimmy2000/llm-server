@@ -1,0 +1,39 @@
+{
+  "label": "ninfer-p2p-twolanes-a",
+  "model": "qwen3.8-27b",
+  "max_tokens": 600,
+  "ttft_s": 69.88620143200001,
+  "total_s": 71.71813727199992,
+  "decode_span_s": 1923.901657705,
+  "content_chars": 439,
+  "content_chunks": 11,
+  "completion_tokens": 82,
+  "decode_tok_s_chunks": 0.005717547960908653,
+  "decode_tok_s_usage": 0.042621721163137234,
+  "usage": {
+    "completion_tokens": 82,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 186980,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 187062
+  },
+  "timings": {
+    "cache_n": 0,
+    "draft_n": 77,
+    "draft_n_accepted": 71,
+    "predicted_ms": 1831.76621,
+    "predicted_n": 82,
+    "predicted_per_second": 44.219616869119996,
+    "predicted_per_token_ms": 22.61439765432099,
+    "prompt_ms": 69772.523683,
+    "prompt_n": 186980,
+    "prompt_per_second": 2679.851467742702,
+    "prompt_per_token_ms": 0.37315500953577924
+  },
+  "finish_reason": "stop",
+  "text": "The mountain railway climbed steadily through the pine forest, past granite outcrops and small farming villages. Engineers had spent fourteen years drilling tunnels and spanning ravines to keep the grade below three percent, and the result was a line that still ran hourly through weather that would defeat most roads. Passengers watched the valley open below them while the carriages swayed gently over switchbacks cut into the rock face."
+}

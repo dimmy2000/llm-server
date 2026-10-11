@@ -1,0 +1,39 @@
+{
+  "label": "decode 20261011-142354",
+  "model": "qwen3.8-27b-chat-medium",
+  "max_tokens": 256,
+  "ttft_s": 1.3984776489996875,
+  "total_s": 1.866846914999769,
+  "decode_span_s": 19324.183722613,
+  "content_chars": 369,
+  "content_chunks": 25,
+  "completion_tokens": 256,
+  "decode_tok_s_chunks": 0.0012937157066430292,
+  "decode_tok_s_usage": 0.013247648836024618,
+  "usage": {
+    "completion_tokens": 256,
+    "completion_tokens_details": {
+      "reasoning_tokens": 186
+    },
+    "prompt_tokens": 65,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 321
+  },
+  "timings": {
+    "cache_n": 0,
+    "draft_n": 639,
+    "draft_n_accepted": 163,
+    "predicted_ms": 1795.6759,
+    "predicted_n": 256,
+    "predicted_per_second": 142.00780887018644,
+    "predicted_per_token_ms": 7.041866274509804,
+    "prompt_ms": 69.431937,
+    "prompt_n": 65,
+    "prompt_per_second": 936.1686107072023,
+    "prompt_per_token_ms": 1.0681836461538463
+  },
+  "finish_reason": "length",
+  "text": "# Alpine Railway Engineering, Tourism, and Politics: An Integrated Technical Analysis\n\n## 1. Engineering Fundamentals in a Hostile Environment\n\nThe construction of railways through the European Alps represents one of the most sustained engineering challenges in human history. The fundamental problem is gradient: the Alpine massif presents vertical relief of 2,000 to "
+}

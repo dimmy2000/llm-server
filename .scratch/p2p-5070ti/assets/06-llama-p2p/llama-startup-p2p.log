@@ -1,0 +1,366 @@
+llama-swap  | [INFO] using nvidia-smi for GPU monitoring
+llama-swap  | [INFO] preloading model: qwen3.8-27b
+llama-swap  | [INFO] llama-swap listening on http://:8080
+llama-swap  | [INFO] llama-swap is reachable by all hosts on the network, use -listen localhost:8080 to restrict to loopback only
+llama-swap  | 2026/10/10 21:42:15 http: proxy error: dial tcp [::1]:5800: connect: connection refused
+llama-swap  | warn: LLAMA_ARG_HOST environment variable is set, but will be overwritten by command line argument --host
+llama-swap  | 0.00.578.976 I cmn  common_param: common_params_print_info: verbosity = 3 (adjust with the `-lv N` CLI arg)
+llama-swap  | 0.00.580.122 W srv  llama_server: -----------------
+llama-swap  | 0.00.580.123 W srv  llama_server: CORS is set to allow all origins ('*') and no API key is set
+llama-swap  | 0.00.580.123 W srv  llama_server: this can be a security risk (cross-origin attacks)
+llama-swap  | 0.00.580.124 W srv  llama_server: more info: https://github.com/ggml-org/llama.cpp/pull/25655
+llama-swap  | 0.00.580.124 W srv  llama_server: -----------------
+llama-swap  | 0.00.581.555 I srv    load_model: loading model '/models/Qwen3.8-27B-NVFP4-MTP-GGUF/Qwen3.8-27B-NVFP4-MTP-HIGH.gguf'
+llama-swap  | 0.06.754.307 W NCCL not compiled in; falling back to internal AllReduce.  Recompile with -DGGML_CUDA_NCCL=ON for best multi-GPU performance.
+llama-swap  | 0.06.895.405 W NCCL not compiled in; falling back to internal AllReduce.  Recompile with -DGGML_CUDA_NCCL=ON for best multi-GPU performance.
+llama-swap  | 0.06.939.644 W load_hparams: Qwen-VL models require at minimum 1024 image tokens to function correctly on grounding tasks
+llama-swap  | 0.06.939.647 W load_hparams: if you encounter problems with accuracy, try adding --image-min-tokens 1024
+llama-swap  | 0.06.939.647 W load_hparams: more info: https://github.com/ggml-org/llama.cpp/issues/16842
+llama-swap  | 
+llama-swap  | 0.07.302.115 I srv    load_model: loaded multimodal model, '/models/Qwen3.8-27B-NVFP4-MTP-GGUF/mmproj-BF16.gguf'
+llama-swap  | 0.07.336.459 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 180224, kv_unified = 'false'
+llama-swap  | 0.07.339.508 W set_sampler: backend sampling not supported with SPLIT_MODE_TENSOR; using CPU
+llama-swap  | 0.07.339.510 W spec common_specu: backend offload failed for seq_id=0; using CPU sampler
+llama-swap  | 0.07.358.257 I srv          init: chat template supports preserving reasoning, consider enabling it via --reasoning-preserve
+llama-swap  | 0.07.358.293 I srv  llama_server: model loaded
+llama-swap  | 0.07.358.297 I srv  llama_server: listening on http://127.0.0.1:5800
+llama-swap  | [INFO] <qwen3.8-27b> Health check passed on http://localhost:5800/health
+llama-swap  | [INFO] Request ::1 "GET / HTTP/1.1" 302 26 "curl/8.5.0" 16.16µs
+llama-swap  | 0.49.335.896 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = -1
+llama-swap  | 0.49.336.010 I slot launch_slot_: id  0 | task 0 | processing task, is_child = 0
+llama-swap  | 0.53.609.773 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =   2048, progress = 0.02, t =   4.27 s / 479.21 tokens per second
+llama-swap  | 0.54.347.882 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =   4096, progress = 0.05, t =   5.01 s / 817.26 tokens per second
+llama-swap  | 0.55.093.569 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =   6144, progress = 0.07, t =   5.76 s / 1067.12 tokens per second
+llama-swap  | 0.55.848.197 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =   8192, progress = 0.09, t =   6.51 s / 1257.95 tokens per second
+llama-swap  | 0.56.614.051 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  10240, progress = 0.11, t =   7.28 s / 1406.98 tokens per second
+llama-swap  | 0.57.390.728 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  12288, progress = 0.14, t =   8.05 s / 1525.57 tokens per second
+llama-swap  | 0.58.180.348 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  14336, progress = 0.16, t =   8.84 s / 1620.93 tokens per second
+llama-swap  | 0.58.981.666 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  16384, progress = 0.18, t =   9.65 s / 1698.59 tokens per second
+llama-swap  | 0.59.793.981 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  18432, progress = 0.21, t =  10.46 s / 1762.49 tokens per second
+llama-swap  | [INFO] Request ::1 "GET / HTTP/1.1" 302 26 "curl/8.5.0" 12.06µs
+llama-swap  | 1.00.618.149 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  20480, progress = 0.23, t =  11.28 s / 1815.26 tokens per second
+llama-swap  | 1.01.454.459 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  22528, progress = 0.25, t =  12.12 s / 1858.99 tokens per second
+llama-swap  | 1.02.303.996 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  24576, progress = 0.27, t =  12.97 s / 1895.13 tokens per second
+llama-swap  | 1.03.167.200 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  26624, progress = 0.30, t =  13.83 s / 1924.93 tokens per second
+llama-swap  | 1.04.042.679 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  28672, progress = 0.32, t =  14.71 s / 1949.60 tokens per second
+llama-swap  | 1.04.930.581 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  30720, progress = 0.34, t =  15.59 s / 1969.92 tokens per second
+llama-swap  | 1.05.831.220 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  32768, progress = 0.37, t =  16.50 s / 1986.52 tokens per second
+llama-swap  | 1.06.744.246 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  34816, progress = 0.39, t =  17.41 s / 1999.98 tokens per second
+llama-swap  | 1.07.669.661 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  36864, progress = 0.41, t =  18.33 s / 2010.73 tokens per second
+llama-swap  | 1.08.607.726 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  38912, progress = 0.43, t =  19.27 s / 2019.13 tokens per second
+llama-swap  | 1.09.558.948 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  40960, progress = 0.46, t =  20.22 s / 2025.43 tokens per second
+llama-swap  | 1.10.524.461 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  43008, progress = 0.48, t =  21.19 s / 2029.79 tokens per second
+llama-swap  | 1.11.503.902 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  45056, progress = 0.50, t =  22.17 s / 2032.49 tokens per second
+llama-swap  | 1.12.496.879 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  47104, progress = 0.52, t =  23.16 s / 2033.78 tokens per second
+llama-swap  | 1.13.501.831 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  49152, progress = 0.55, t =  24.17 s / 2033.95 tokens per second
+llama-swap  | 1.14.520.860 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  51200, progress = 0.57, t =  25.18 s / 2032.97 tokens per second
+llama-swap  | 1.15.553.067 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  53248, progress = 0.59, t =  26.22 s / 2031.05 tokens per second
+llama-swap  | 1.16.598.474 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  55296, progress = 0.62, t =  27.26 s / 2028.29 tokens per second
+llama-swap  | 1.17.658.199 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  57344, progress = 0.64, t =  28.32 s / 2024.70 tokens per second
+llama-swap  | 1.18.730.503 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  59392, progress = 0.66, t =  29.39 s / 2020.52 tokens per second
+llama-swap  | 1.19.813.277 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  61440, progress = 0.68, t =  30.48 s / 2015.93 tokens per second
+llama-swap  | 1.20.910.161 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  63488, progress = 0.71, t =  31.57 s / 2010.76 tokens per second
+llama-swap  | 1.22.019.357 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  65536, progress = 0.73, t =  32.68 s / 2005.18 tokens per second
+llama-swap  | 1.23.143.302 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  67584, progress = 0.75, t =  33.81 s / 1999.10 tokens per second
+llama-swap  | 1.24.282.439 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  69632, progress = 0.78, t =  34.95 s / 1992.54 tokens per second
+llama-swap  | 1.25.435.181 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  71680, progress = 0.80, t =  36.10 s / 1985.64 tokens per second
+llama-swap  | 1.26.603.010 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  73728, progress = 0.82, t =  37.27 s / 1978.37 tokens per second
+llama-swap  | 1.27.790.091 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  75776, progress = 0.84, t =  38.45 s / 1970.56 tokens per second
+llama-swap  | 1.28.990.110 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  77824, progress = 0.87, t =  39.65 s / 1962.57 tokens per second
+llama-swap  | [INFO] Request ::1 "GET / HTTP/1.1" 302 26 "curl/8.5.0" 11.23µs
+llama-swap  | 1.30.204.690 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  79872, progress = 0.89, t =  40.87 s / 1954.36 tokens per second
+llama-swap  | 1.31.434.155 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  81920, progress = 0.91, t =  42.10 s / 1945.93 tokens per second
+llama-swap  | 1.32.677.429 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  83968, progress = 0.94, t =  43.34 s / 1937.36 tokens per second
+llama-swap  | 1.33.934.209 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  86016, progress = 0.96, t =  44.60 s / 1928.69 tokens per second
+llama-swap  | 1.35.204.807 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  88064, progress = 0.98, t =  45.87 s / 1919.91 tokens per second
+llama-swap  | 1.35.973.661 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  89225, progress = 0.99, t =  46.64 s / 1913.15 tokens per second
+llama-swap  | 1.36.388.822 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =  89737, progress = 1.00, t =  47.05 s / 1907.16 tokens per second
+llama-swap  | 1.36.602.332 I slot print_timing: id  0 | task 0 | prompt eval time =   47199.65 ms / 89741 tokens (    0.53 ms per token,  1901.31 tokens per second)
+llama-swap  | 1.36.602.335 I slot print_timing: id  0 | task 0 |        eval time =      66.53 ms /     4 tokens (   16.63 ms per token,    60.12 tokens per second)
+llama-swap  | 1.36.602.335 I slot print_timing: id  0 | task 0 |       total time =   47266.19 ms / 89745 tokens
+llama-swap  | 1.36.602.339 I slot print_timing: id  0 | task 0 |    graphs reused =          1
+llama-swap  | 1.36.602.349 I slot print_timing: id  0 | task 0 | draft acceptance = 1.00000 (    2 accepted /     2 generated), mean len =  3.00
+llama-swap  | 1.36.603.123 I slot      release: id  0 | task 0 | stop processing: n_tokens = 89744, truncated = 0
+llama-swap  | [INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 2489 "" 47.364340958s
+llama-swap  | [INFO] Request ::1 "GET / HTTP/1.1" 302 26 "curl/8.5.0" 12.44µs
+llama-swap  | 2.07.390.164 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 7107782546
+llama-swap  | 2.08.330.331 I slot launch_slot_: id  0 | task 48 | processing task, is_child = 0
+llama-swap  | 2.11.337.956 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =   8192, progress = 0.09, t =   3.01 s / 2723.76 tokens per second
+llama-swap  | 2.12.106.790 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  10240, progress = 0.11, t =   3.78 s / 2711.55 tokens per second
+llama-swap  | 2.12.885.583 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  12288, progress = 0.14, t =   4.56 s / 2697.56 tokens per second
+llama-swap  | 2.13.676.803 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  14336, progress = 0.16, t =   5.35 s / 2681.41 tokens per second
+llama-swap  | 2.14.478.383 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  16384, progress = 0.18, t =   6.15 s / 2664.92 tokens per second
+llama-swap  | 2.15.294.287 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  18432, progress = 0.21, t =   6.96 s / 2646.78 tokens per second
+llama-swap  | 2.16.119.927 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  20480, progress = 0.23, t =   7.79 s / 2629.15 tokens per second
+llama-swap  | 2.16.958.056 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  22528, progress = 0.25, t =   8.63 s / 2611.12 tokens per second
+llama-swap  | 2.17.808.375 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  24576, progress = 0.27, t =   9.48 s / 2592.95 tokens per second
+llama-swap  | 2.18.671.660 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  26624, progress = 0.30, t =  10.34 s / 2574.53 tokens per second
+llama-swap  | 2.19.548.561 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  28672, progress = 0.32, t =  11.22 s / 2555.84 tokens per second
+llama-swap  | 2.20.439.398 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  30720, progress = 0.34, t =  12.11 s / 2536.95 tokens per second
+llama-swap  | 2.21.341.053 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  32768, progress = 0.36, t =  13.01 s / 2518.54 tokens per second
+llama-swap  | 2.22.255.976 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  34816, progress = 0.39, t =  13.93 s / 2500.14 tokens per second
+llama-swap  | 2.23.182.797 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  36864, progress = 0.41, t =  14.85 s / 2482.02 tokens per second
+llama-swap  | 2.24.123.136 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  38912, progress = 0.43, t =  15.79 s / 2463.91 tokens per second
+llama-swap  | 2.25.075.690 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  40960, progress = 0.46, t =  16.75 s / 2446.05 tokens per second
+llama-swap  | 2.26.043.221 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  43008, progress = 0.48, t =  17.71 s / 2428.07 tokens per second
+llama-swap  | 2.27.025.016 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  45056, progress = 0.50, t =  18.69 s / 2410.10 tokens per second
+llama-swap  | 2.28.019.044 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  47104, progress = 0.52, t =  19.69 s / 2392.44 tokens per second
+llama-swap  | 2.29.026.331 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  49152, progress = 0.55, t =  20.70 s / 2374.95 tokens per second
+llama-swap  | 2.30.048.933 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  51200, progress = 0.57, t =  21.72 s / 2357.43 tokens per second
+llama-swap  | [INFO] Request ::1 "GET / HTTP/1.1" 302 26 "curl/8.5.0" 13.84µs
+llama-swap  | 2.31.082.412 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  53248, progress = 0.59, t =  22.75 s / 2340.36 tokens per second
+llama-swap  | 2.32.129.101 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  55296, progress = 0.62, t =  23.80 s / 2323.48 tokens per second
+llama-swap  | 2.33.189.917 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  57344, progress = 0.64, t =  24.86 s / 2306.72 tokens per second
+llama-swap  | 2.34.264.710 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  59392, progress = 0.66, t =  25.93 s / 2290.09 tokens per second
+llama-swap  | 2.35.351.380 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  61440, progress = 0.68, t =  27.02 s / 2273.78 tokens per second
+llama-swap  | 2.36.450.936 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  63488, progress = 0.71, t =  28.12 s / 2257.71 tokens per second
+llama-swap  | 2.37.563.109 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  65536, progress = 0.73, t =  29.23 s / 2241.87 tokens per second
+llama-swap  | 2.38.688.650 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  67584, progress = 0.75, t =  30.36 s / 2226.21 tokens per second
+llama-swap  | 2.39.828.442 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  69632, progress = 0.78, t =  31.50 s / 2210.67 tokens per second
+llama-swap  | 2.40.981.886 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  71680, progress = 0.80, t =  32.65 s / 2195.30 tokens per second
+llama-swap  | 2.42.151.130 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  73728, progress = 0.82, t =  33.82 s / 2179.96 tokens per second
+llama-swap  | 2.43.338.538 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  75776, progress = 0.84, t =  35.01 s / 2164.52 tokens per second
+llama-swap  | 2.44.538.367 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  77824, progress = 0.87, t =  36.21 s / 2149.36 tokens per second
+llama-swap  | 2.45.754.989 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  79872, progress = 0.89, t =  37.42 s / 2134.21 tokens per second
+llama-swap  | 2.46.987.527 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  81920, progress = 0.91, t =  38.66 s / 2119.14 tokens per second
+llama-swap  | 2.48.230.468 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  83968, progress = 0.94, t =  39.90 s / 2104.46 tokens per second
+llama-swap  | 2.49.491.250 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  86016, progress = 0.96, t =  41.16 s / 2089.75 tokens per second
+llama-swap  | 2.50.765.291 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  88064, progress = 0.98, t =  42.43 s / 2075.27 tokens per second
+llama-swap  | 2.51.557.395 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  89275, progress = 0.99, t =  43.23 s / 2065.26 tokens per second
+llama-swap  | 2.51.970.221 I slot print_timing: id  0 | task 48 | prompt processing, n_tokens =  89787, progress = 1.00, t =  43.64 s / 2057.45 tokens per second
+llama-swap  | 2.55.125.490 I slot print_timing: id  0 | task 48 | n_decoded =    146, tg =  48.42 t/s, tg_3s =  48.42 t/s
+llama-swap  | 2.58.169.208 I slot print_timing: id  0 | task 48 | n_decoded =    277, tg =  45.72 t/s, tg_3s =  43.04 t/s
+llama-swap  | [INFO] Request ::1 "GET / HTTP/1.1" 302 26 "curl/8.5.0" 13.02µs
+llama-swap  | 3.01.175.766 I slot print_timing: id  0 | task 48 | n_decoded =    395, tg =  43.57 t/s, tg_3s =  39.25 t/s
+llama-swap  | 3.04.184.186 I slot print_timing: id  0 | task 48 | n_decoded =    520, tg =  43.07 t/s, tg_3s =  41.55 t/s
+llama-swap  | 3.07.204.302 I slot print_timing: id  0 | task 48 | n_decoded =    647, tg =  42.87 t/s, tg_3s =  42.05 t/s
+llama-swap  | 3.10.239.960 I slot print_timing: id  0 | task 48 | n_decoded =    787, tg =  43.41 t/s, tg_3s =  46.12 t/s
+llama-swap  | 3.13.286.969 I slot print_timing: id  0 | task 48 | n_decoded =    926, tg =  43.73 t/s, tg_3s =  45.62 t/s
+llama-swap  | 3.16.326.385 I slot print_timing: id  0 | task 48 | n_decoded =   1051, tg =  43.40 t/s, tg_3s =  41.13 t/s
+llama-swap  | 3.19.346.730 I slot print_timing: id  0 | task 48 | n_decoded =   1179, tg =  43.29 t/s, tg_3s =  42.38 t/s
+llama-swap  | 3.22.362.863 I slot print_timing: id  0 | task 48 | n_decoded =   1319, tg =  43.60 t/s, tg_3s =  46.42 t/s
+llama-swap  | 3.25.384.158 I slot print_timing: id  0 | task 48 | n_decoded =   1457, tg =  43.79 t/s, tg_3s =  45.68 t/s
+llama-swap  | 3.28.394.180 I slot print_timing: id  0 | task 48 | n_decoded =   1580, tg =  43.55 t/s, tg_3s =  40.86 t/s
+llama-swap  | [INFO] Request ::1 "GET / HTTP/1.1" 302 26 "curl/8.5.0" 13.2µs
+llama-swap  | 3.31.410.153 I slot print_timing: id  0 | task 48 | n_decoded =   1706, tg =  43.41 t/s, tg_3s =  41.78 t/s
+llama-swap  | 3.34.412.310 I slot print_timing: id  0 | task 48 | n_decoded =   1837, tg =  43.43 t/s, tg_3s =  43.64 t/s
+llama-swap  | 3.37.433.754 I slot print_timing: id  0 | task 48 | n_decoded =   1970, tg =  43.47 t/s, tg_3s =  44.02 t/s
+llama-swap  | 3.40.438.678 I slot print_timing: id  0 | task 48 | n_decoded =   2104, tg =  43.54 t/s, tg_3s =  44.59 t/s
+llama-swap  | 3.43.476.162 I slot print_timing: id  0 | task 48 | n_decoded =   2234, tg =  43.49 t/s, tg_3s =  42.80 t/s
+llama-swap  | 3.46.486.296 I slot print_timing: id  0 | task 48 | n_decoded =   2364, tg =  43.48 t/s, tg_3s =  43.19 t/s
+llama-swap  | 3.49.501.979 I slot print_timing: id  0 | task 48 | n_decoded =   2487, tg =  43.33 t/s, tg_3s =  40.79 t/s
+llama-swap  | 3.52.508.556 I slot print_timing: id  0 | task 48 | n_decoded =   2637, tg =  43.66 t/s, tg_3s =  49.89 t/s
+llama-swap  | 3.55.549.182 I slot print_timing: id  0 | task 48 | n_decoded =   2785, tg =  43.90 t/s, tg_3s =  48.67 t/s
+llama-swap  | 3.58.603.089 I slot print_timing: id  0 | task 48 | n_decoded =   2930, tg =  44.07 t/s, tg_3s =  47.48 t/s
+llama-swap  | [INFO] Request ::1 "GET / HTTP/1.1" 302 26 "curl/8.5.0" 14.07µs
+llama-swap  | 4.01.619.503 I slot print_timing: id  0 | task 48 | n_decoded =   3069, tg =  44.15 t/s, tg_3s =  46.08 t/s
+llama-swap  | 4.04.620.859 I slot print_timing: id  0 | task 48 | n_decoded =   3203, tg =  44.17 t/s, tg_3s =  44.65 t/s
+llama-swap  | 4.07.625.644 I slot print_timing: id  0 | task 48 | n_decoded =   3333, tg =  44.14 t/s, tg_3s =  43.26 t/s
+llama-swap  | 4.10.660.255 I slot print_timing: id  0 | task 48 | n_decoded =   3463, tg =  44.09 t/s, tg_3s =  42.84 t/s
+llama-swap  | 4.13.662.197 I slot print_timing: id  0 | task 48 | n_decoded =   3608, tg =  44.24 t/s, tg_3s =  48.30 t/s
+llama-swap  | 4.16.685.841 I slot print_timing: id  0 | task 48 | n_decoded =   3742, tg =  44.24 t/s, tg_3s =  44.32 t/s
+llama-swap  | 4.19.720.762 I slot print_timing: id  0 | task 48 | n_decoded =   3875, tg =  44.23 t/s, tg_3s =  43.82 t/s
+llama-swap  | 4.22.754.331 I slot print_timing: id  0 | task 48 | n_decoded =   4023, tg =  44.38 t/s, tg_3s =  48.79 t/s
+llama-swap  | 4.25.765.356 I slot print_timing: id  0 | task 48 | n_decoded =   4161, tg =  44.43 t/s, tg_3s =  45.83 t/s
+llama-swap  | 4.28.780.359 I slot print_timing: id  0 | task 48 | n_decoded =   4286, tg =  44.34 t/s, tg_3s =  41.46 t/s
+llama-swap  | [INFO] Request ::1 "GET / HTTP/1.1" 302 26 "curl/8.5.0" 13.14µs
+llama-swap  | 4.31.813.317 I slot print_timing: id  0 | task 48 | n_decoded =   4432, tg =  44.45 t/s, tg_3s =  48.14 t/s
+llama-swap  | 4.34.816.692 I slot print_timing: id  0 | task 48 | n_decoded =   4563, tg =  44.43 t/s, tg_3s =  43.62 t/s
+llama-swap  | 4.37.825.285 I slot print_timing: id  0 | task 48 | n_decoded =   4701, tg =  44.47 t/s, tg_3s =  45.87 t/s
+llama-swap  | 4.40.835.680 I slot print_timing: id  0 | task 48 | n_decoded =   4832, tg =  44.44 t/s, tg_3s =  43.52 t/s
+llama-swap  | 4.43.853.075 I slot print_timing: id  0 | task 48 | n_decoded =   4970, tg =  44.48 t/s, tg_3s =  45.73 t/s
+llama-swap  | 4.46.861.959 I slot print_timing: id  0 | task 48 | n_decoded =   5111, tg =  44.54 t/s, tg_3s =  46.86 t/s
+llama-swap  | 4.49.897.553 I slot print_timing: id  0 | task 48 | n_decoded =   5245, tg =  44.53 t/s, tg_3s =  44.14 t/s
+llama-swap  | 4.52.920.066 I slot print_timing: id  0 | task 48 | n_decoded =   5372, tg =  44.47 t/s, tg_3s =  42.02 t/s
+llama-swap  | 4.55.930.366 I slot print_timing: id  0 | task 48 | n_decoded =   5515, tg =  44.54 t/s, tg_3s =  47.50 t/s
+llama-swap  | 4.58.934.418 I slot print_timing: id  0 | task 48 | n_decoded =   5646, tg =  44.52 t/s, tg_3s =  43.61 t/s
+llama-swap  | [INFO] Request ::1 "GET / HTTP/1.1" 302 26 "curl/8.5.0" 12.46µs
+llama-swap  | 5.01.938.460 I slot print_timing: id  0 | task 48 | n_decoded =   5781, tg =  44.53 t/s, tg_3s =  44.94 t/s
+llama-swap  | 5.04.953.608 I slot print_timing: id  0 | task 48 | n_decoded =   5918, tg =  44.55 t/s, tg_3s =  45.44 t/s
+llama-swap  | 5.08.004.217 I slot print_timing: id  0 | task 48 | n_decoded =   6055, tg =  44.56 t/s, tg_3s =  44.91 t/s
+llama-swap  | 5.11.043.858 I slot print_timing: id  0 | task 48 | n_decoded =   6196, tg =  44.60 t/s, tg_3s =  46.39 t/s
+llama-swap  | 5.14.059.383 I slot print_timing: id  0 | task 48 | n_decoded =   6324, tg =  44.55 t/s, tg_3s =  42.45 t/s
+llama-swap  | 5.17.101.329 I slot print_timing: id  0 | task 48 | n_decoded =   6448, tg =  44.47 t/s, tg_3s =  40.76 t/s
+llama-swap  | 5.20.147.635 I slot print_timing: id  0 | task 48 | n_decoded =   6580, tg =  44.45 t/s, tg_3s =  43.33 t/s
+llama-swap  | 5.23.149.400 I slot print_timing: id  0 | task 48 | n_decoded =   6707, tg =  44.41 t/s, tg_3s =  42.31 t/s
+llama-swap  | 5.26.155.955 I slot print_timing: id  0 | task 48 | n_decoded =   6829, tg =  44.33 t/s, tg_3s =  40.58 t/s
+llama-swap  | 5.29.166.359 I slot print_timing: id  0 | task 48 | n_decoded =   6970, tg =  44.38 t/s, tg_3s =  46.84 t/s
+llama-swap  | [INFO] Request ::1 "GET / HTTP/1.1" 302 26 "curl/8.5.0" 10.25µs
+llama-swap  | 5.32.180.605 I slot print_timing: id  0 | task 48 | n_decoded =   7097, tg =  44.34 t/s, tg_3s =  42.13 t/s
+llama-swap  | 5.35.214.726 I slot print_timing: id  0 | task 48 | n_decoded =   7220, tg =  44.27 t/s, tg_3s =  40.54 t/s
+llama-swap  | 5.38.229.166 I slot print_timing: id  0 | task 48 | n_decoded =   7351, tg =  44.25 t/s, tg_3s =  43.46 t/s
+llama-swap  | 5.41.280.273 I slot print_timing: id  0 | task 48 | n_decoded =   7479, tg =  44.21 t/s, tg_3s =  41.95 t/s
+llama-swap  | 5.45.135.363 I slot print_timing: id  0 | task 48 | n_decoded =   7570, tg =  43.75 t/s, tg_3s =  23.61 t/s
+llama-swap  | 5.48.136.642 I slot print_timing: id  0 | task 48 | n_decoded =   7710, tg =  43.80 t/s, tg_3s =  46.65 t/s
+llama-swap  | 5.51.142.658 I slot print_timing: id  0 | task 48 | n_decoded =   7832, tg =  43.75 t/s, tg_3s =  40.59 t/s
+llama-swap  | 5.54.159.928 I slot print_timing: id  0 | task 48 | n_decoded =   7958, tg =  43.71 t/s, tg_3s =  41.76 t/s
+llama-swap  | 5.57.172.009 I slot print_timing: id  0 | task 48 | n_decoded =   8092, tg =  43.73 t/s, tg_3s =  44.49 t/s
+llama-swap  | 5.59.461.458 I slot print_timing: id  0 | task 48 | prompt eval time =   43779.95 ms / 89791 tokens (    0.49 ms per token,  2050.96 tokens per second)
+llama-swap  | 5.59.461.461 I slot print_timing: id  0 | task 48 |        eval time =  187351.03 ms /  8192 tokens (   22.87 ms per token,    43.73 tokens per second)
+llama-swap  | 5.59.461.461 I slot print_timing: id  0 | task 48 |       total time =  231130.99 ms / 97983 tokens
+llama-swap  | 5.59.461.462 I slot print_timing: id  0 | task 48 |    graphs reused =       1150
+llama-swap  | 5.59.461.470 I slot print_timing: id  0 | task 48 | draft acceptance = 0.66981 ( 3767 accepted /  5624 generated), mean len =  2.34
+llama-swap  | 5.59.462.256 I slot      release: id  0 | task 48 | stop processing: n_tokens = 97982, truncated = 0
+llama-swap  | [INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 2473705 "" 3m52.174235545s
+llama-swap  | [INFO] Request ::1 "GET / HTTP/1.1" 302 26 "curl/8.5.0" 13.06µs
+llama-swap  | 6.16.403.264 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 7370641679
+llama-swap  | 6.17.394.692 I slot launch_slot_: id  0 | task 4520 | processing task, is_child = 0
+llama-swap  | 6.20.436.079 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =   8192, progress = 0.09, t =   3.04 s / 2693.53 tokens per second
+llama-swap  | 6.21.207.253 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  10240, progress = 0.11, t =   3.81 s / 2685.87 tokens per second
+llama-swap  | 6.21.991.262 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  12288, progress = 0.14, t =   4.60 s / 2673.31 tokens per second
+llama-swap  | 6.22.787.245 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  14336, progress = 0.16, t =   5.39 s / 2658.49 tokens per second
+llama-swap  | 6.23.593.624 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  16384, progress = 0.18, t =   6.20 s / 2643.04 tokens per second
+llama-swap  | 6.24.411.747 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  18432, progress = 0.21, t =   7.02 s / 2626.75 tokens per second
+llama-swap  | 6.25.242.193 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  20480, progress = 0.23, t =   7.85 s / 2609.76 tokens per second
+llama-swap  | 6.26.086.330 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  22528, progress = 0.25, t =   8.69 s / 2591.92 tokens per second
+llama-swap  | 6.26.942.481 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  24576, progress = 0.27, t =   9.55 s / 2574.01 tokens per second
+llama-swap  | 6.27.811.130 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  26624, progress = 0.30, t =  10.42 s / 2555.97 tokens per second
+llama-swap  | 6.28.693.195 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  28672, progress = 0.32, t =  11.30 s / 2537.69 tokens per second
+llama-swap  | 6.29.587.936 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  30720, progress = 0.34, t =  12.19 s / 2519.43 tokens per second
+llama-swap  | [INFO] Request ::1 "GET / HTTP/1.1" 302 26 "curl/8.5.0" 15.85µs
+llama-swap  | 6.30.496.435 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  32768, progress = 0.37, t =  13.10 s / 2501.05 tokens per second
+llama-swap  | 6.31.417.290 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  34816, progress = 0.39, t =  14.02 s / 2482.85 tokens per second
+llama-swap  | 6.32.350.488 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  36864, progress = 0.41, t =  14.96 s / 2464.87 tokens per second
+llama-swap  | 6.33.295.948 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  38912, progress = 0.43, t =  15.90 s / 2447.11 tokens per second
+llama-swap  | 6.34.254.232 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  40960, progress = 0.46, t =  16.86 s / 2429.49 tokens per second
+llama-swap  | 6.35.225.095 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  43008, progress = 0.48, t =  17.83 s / 2412.06 tokens per second
+llama-swap  | 6.36.211.296 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  45056, progress = 0.50, t =  18.82 s / 2394.48 tokens per second
+llama-swap  | 6.37.209.688 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  47104, progress = 0.52, t =  19.81 s / 2377.19 tokens per second
+llama-swap  | 6.38.221.501 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  49152, progress = 0.55, t =  20.83 s / 2360.04 tokens per second
+llama-swap  | 6.39.245.704 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  51200, progress = 0.57, t =  21.85 s / 2343.14 tokens per second
+llama-swap  | 6.40.283.540 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  53248, progress = 0.59, t =  22.89 s / 2326.38 tokens per second
+llama-swap  | 6.41.332.957 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  55296, progress = 0.62, t =  23.94 s / 2309.94 tokens per second
+llama-swap  | 6.42.397.536 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  57344, progress = 0.64, t =  25.00 s / 2293.50 tokens per second
+llama-swap  | 6.43.475.548 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  59392, progress = 0.66, t =  26.08 s / 2277.23 tokens per second
+llama-swap  | 6.44.564.381 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  61440, progress = 0.68, t =  27.17 s / 2261.35 tokens per second
+llama-swap  | 6.45.665.350 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  63488, progress = 0.71, t =  28.27 s / 2245.72 tokens per second
+llama-swap  | 6.46.780.315 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  65536, progress = 0.73, t =  29.39 s / 2230.21 tokens per second
+llama-swap  | 6.47.910.240 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  67584, progress = 0.75, t =  30.52 s / 2214.74 tokens per second
+llama-swap  | 6.49.053.563 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  69632, progress = 0.78, t =  31.66 s / 2199.45 tokens per second
+llama-swap  | 6.50.213.211 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  71680, progress = 0.80, t =  32.82 s / 2184.13 tokens per second
+llama-swap  | 6.51.383.525 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  73728, progress = 0.82, t =  33.99 s / 2169.18 tokens per second
+llama-swap  | 6.52.572.040 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  75776, progress = 0.84, t =  35.18 s / 2154.11 tokens per second
+llama-swap  | 6.53.774.963 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  77824, progress = 0.87, t =  36.38 s / 2139.18 tokens per second
+llama-swap  | 6.54.994.174 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  79872, progress = 0.89, t =  37.60 s / 2124.29 tokens per second
+llama-swap  | 6.56.226.353 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  81920, progress = 0.91, t =  38.83 s / 2109.62 tokens per second
+llama-swap  | 6.57.472.023 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  83968, progress = 0.94, t =  40.08 s / 2095.15 tokens per second
+llama-swap  | 6.58.732.575 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  86016, progress = 0.96, t =  41.34 s / 2080.80 tokens per second
+llama-swap  | 7.00.008.530 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  88064, progress = 0.98, t =  42.61 s / 2066.56 tokens per second
+llama-swap  | [INFO] Request ::1 "GET / HTTP/1.1" 302 26 "curl/8.5.0" 13.61µs
+llama-swap  | 7.00.768.063 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  89222, progress = 0.99, t =  43.37 s / 2057.07 tokens per second
+llama-swap  | 7.01.183.356 I slot print_timing: id  0 | task 4520 | prompt processing, n_tokens =  89734, progress = 1.00, t =  43.79 s / 2049.25 tokens per second
+llama-swap  | 7.01.378.392 I slot print_timing: id  0 | task 4520 | prompt eval time =   43930.43 ms / 89738 tokens (    0.49 ms per token,  2042.73 tokens per second)
+llama-swap  | 7.01.378.394 I slot print_timing: id  0 | task 4520 |        eval time =      53.14 ms /     4 tokens (   13.29 ms per token,    75.27 tokens per second)
+llama-swap  | 7.01.378.395 I slot print_timing: id  0 | task 4520 |       total time =   43983.57 ms / 89742 tokens
+llama-swap  | 7.01.378.396 I slot print_timing: id  0 | task 4520 |    graphs reused =       1150
+llama-swap  | 7.01.378.403 I slot print_timing: id  0 | task 4520 | draft acceptance = 1.00000 (    2 accepted /     2 generated), mean len =  3.00
+llama-swap  | 7.01.379.140 I slot      release: id  0 | task 4520 | stop processing: n_tokens = 89741, truncated = 0
+llama-swap  | [INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 2489 "" 45.066559313s
+llama-swap  | 7.14.060.615 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 7432558563
+llama-swap  | 7.14.967.691 I slot launch_slot_: id  0 | task 4568 | processing task, is_child = 0
+llama-swap  | 7.18.010.992 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =   8192, progress = 0.09, t =   3.04 s / 2691.83 tokens per second
+llama-swap  | 7.18.782.364 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  10240, progress = 0.11, t =   3.81 s / 2684.39 tokens per second
+llama-swap  | 7.19.566.282 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  12288, progress = 0.14, t =   4.60 s / 2672.14 tokens per second
+llama-swap  | 7.20.364.091 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  14336, progress = 0.16, t =   5.40 s / 2656.60 tokens per second
+llama-swap  | 7.21.171.950 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  16384, progress = 0.18, t =   6.20 s / 2640.78 tokens per second
+llama-swap  | 7.21.990.714 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  18432, progress = 0.21, t =   7.02 s / 2624.52 tokens per second
+llama-swap  | 7.22.820.058 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  20480, progress = 0.23, t =   7.85 s / 2608.14 tokens per second
+llama-swap  | 7.23.663.657 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  22528, progress = 0.25, t =   8.70 s / 2590.63 tokens per second
+llama-swap  | 7.24.519.273 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  24576, progress = 0.27, t =   9.55 s / 2572.98 tokens per second
+llama-swap  | 7.25.387.989 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  26624, progress = 0.30, t =  10.42 s / 2555.02 tokens per second
+llama-swap  | 7.26.270.362 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  28672, progress = 0.32, t =  11.30 s / 2536.75 tokens per second
+llama-swap  | 7.27.164.469 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  30720, progress = 0.34, t =  12.20 s / 2518.70 tokens per second
+llama-swap  | 7.28.071.694 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  32768, progress = 0.37, t =  13.10 s / 2500.61 tokens per second
+llama-swap  | 7.28.991.333 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  34816, progress = 0.39, t =  14.02 s / 2482.67 tokens per second
+llama-swap  | 7.29.922.525 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  36864, progress = 0.41, t =  14.95 s / 2465.03 tokens per second
+llama-swap  | [INFO] Request ::1 "GET / HTTP/1.1" 302 26 "curl/8.5.0" 11.12µs
+llama-swap  | 7.30.866.352 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  38912, progress = 0.43, t =  15.90 s / 2447.50 tokens per second
+llama-swap  | 7.31.822.971 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  40960, progress = 0.46, t =  16.86 s / 2430.10 tokens per second
+llama-swap  | 7.32.793.478 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  43008, progress = 0.48, t =  17.83 s / 2412.69 tokens per second
+llama-swap  | 7.33.777.283 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  45056, progress = 0.50, t =  18.81 s / 2395.38 tokens per second
+llama-swap  | 7.34.775.003 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  47104, progress = 0.52, t =  19.81 s / 2378.11 tokens per second
+llama-swap  | 7.35.783.636 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  49152, progress = 0.55, t =  20.82 s / 2361.27 tokens per second
+llama-swap  | 7.36.807.438 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  51200, progress = 0.57, t =  21.84 s / 2344.35 tokens per second
+llama-swap  | 7.37.846.124 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  53248, progress = 0.59, t =  22.88 s / 2327.43 tokens per second
+llama-swap  | 7.38.895.399 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  55296, progress = 0.62, t =  23.93 s / 2310.96 tokens per second
+llama-swap  | 7.39.959.246 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  57344, progress = 0.64, t =  24.99 s / 2294.54 tokens per second
+llama-swap  | 7.41.034.899 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  59392, progress = 0.66, t =  26.07 s / 2278.42 tokens per second
+llama-swap  | 7.42.124.967 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  61440, progress = 0.68, t =  27.16 s / 2262.38 tokens per second
+llama-swap  | 7.43.228.320 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  63488, progress = 0.71, t =  28.26 s / 2246.52 tokens per second
+llama-swap  | 7.44.343.164 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  65536, progress = 0.73, t =  29.38 s / 2230.98 tokens per second
+llama-swap  | 7.45.471.556 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  67584, progress = 0.75, t =  30.50 s / 2215.59 tokens per second
+llama-swap  | 7.46.614.342 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  69632, progress = 0.78, t =  31.65 s / 2200.30 tokens per second
+llama-swap  | 7.47.772.417 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  71680, progress = 0.80, t =  32.80 s / 2185.05 tokens per second
+llama-swap  | 7.48.944.718 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  73728, progress = 0.82, t =  33.98 s / 2169.94 tokens per second
+llama-swap  | 7.50.135.553 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  75776, progress = 0.84, t =  35.17 s / 2154.70 tokens per second
+llama-swap  | 7.51.339.152 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  77824, progress = 0.87, t =  36.37 s / 2139.70 tokens per second
+llama-swap  | 7.52.558.356 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  79872, progress = 0.89, t =  37.59 s / 2124.78 tokens per second
+llama-swap  | 7.53.792.711 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  81920, progress = 0.91, t =  38.83 s / 2109.98 tokens per second
+llama-swap  | 7.55.039.619 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  83968, progress = 0.94, t =  40.07 s / 2095.43 tokens per second
+llama-swap  | 7.56.300.592 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  86016, progress = 0.96, t =  41.33 s / 2081.06 tokens per second
+llama-swap  | 7.57.574.497 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  88064, progress = 0.98, t =  42.61 s / 2066.90 tokens per second
+llama-swap  | 7.58.343.027 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  89226, progress = 0.99, t =  43.38 s / 2057.07 tokens per second
+llama-swap  | 7.58.758.555 I slot print_timing: id  0 | task 4568 | prompt processing, n_tokens =  89738, progress = 1.00, t =  43.79 s / 2049.24 tokens per second
+llama-swap  | 7.58.956.300 I slot print_timing: id  0 | task 4568 | prompt eval time =   43934.93 ms / 89742 tokens (    0.49 ms per token,  2042.61 tokens per second)
+llama-swap  | 7.58.956.303 I slot print_timing: id  0 | task 4568 |        eval time =      53.55 ms /     4 tokens (   13.39 ms per token,    74.70 tokens per second)
+llama-swap  | 7.58.956.303 I slot print_timing: id  0 | task 4568 |       total time =   43988.48 ms / 89746 tokens
+llama-swap  | 7.58.956.304 I slot print_timing: id  0 | task 4568 |    graphs reused =       1150
+llama-swap  | 7.58.956.311 I slot print_timing: id  0 | task 4568 | draft acceptance = 1.00000 (    2 accepted /     2 generated), mean len =  3.00
+llama-swap  | 7.58.957.102 I slot      release: id  0 | task 4568 | stop processing: n_tokens = 89745, truncated = 0
+llama-swap  | [INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 2491 "" 44.984764853s
+llama-swap  | 7.59.079.687 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 7490136525
+llama-swap  | 7.59.987.217 I slot launch_slot_: id  0 | task 4616 | processing task, is_child = 0
+llama-swap  | [INFO] Request ::1 "GET / HTTP/1.1" 302 26 "curl/8.5.0" 10.37µs
+llama-swap  | 8.03.007.770 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =   8192, progress = 0.09, t =   3.02 s / 2712.11 tokens per second
+llama-swap  | 8.03.782.147 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  10240, progress = 0.11, t =   3.79 s / 2698.36 tokens per second
+llama-swap  | 8.04.567.927 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  12288, progress = 0.14, t =   4.58 s / 2682.58 tokens per second
+llama-swap  | 8.05.364.387 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  14336, progress = 0.16, t =   5.38 s / 2666.10 tokens per second
+llama-swap  | 8.06.174.517 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  16384, progress = 0.18, t =   6.19 s / 2648.01 tokens per second
+llama-swap  | 8.06.995.504 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  18432, progress = 0.21, t =   7.01 s / 2630.04 tokens per second
+llama-swap  | 8.07.829.311 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  20480, progress = 0.23, t =   7.84 s / 2611.55 tokens per second
+llama-swap  | 8.08.674.906 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  22528, progress = 0.25, t =   8.69 s / 2593.10 tokens per second
+llama-swap  | 8.09.530.568 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  24576, progress = 0.27, t =   9.54 s / 2575.20 tokens per second
+llama-swap  | 8.10.400.393 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  26624, progress = 0.30, t =  10.41 s / 2556.77 tokens per second
+llama-swap  | 8.11.283.827 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  28672, progress = 0.32, t =  11.30 s / 2538.11 tokens per second
+llama-swap  | 8.12.178.852 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  30720, progress = 0.34, t =  12.19 s / 2519.76 tokens per second
+llama-swap  | 8.13.087.581 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  32768, progress = 0.37, t =  13.10 s / 2501.31 tokens per second
+llama-swap  | 8.14.007.911 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  34816, progress = 0.39, t =  14.02 s / 2483.19 tokens per second
+llama-swap  | 8.14.940.311 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  36864, progress = 0.41, t =  14.95 s / 2465.31 tokens per second
+llama-swap  | 8.15.886.350 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  38912, progress = 0.43, t =  15.90 s / 2447.43 tokens per second
+llama-swap  | 8.16.845.608 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  40960, progress = 0.46, t =  16.86 s / 2429.65 tokens per second
+llama-swap  | 8.17.819.018 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  43008, progress = 0.48, t =  17.83 s / 2411.87 tokens per second
+llama-swap  | 8.18.805.144 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  45056, progress = 0.50, t =  18.82 s / 2394.32 tokens per second
+llama-swap  | 8.19.804.120 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  47104, progress = 0.52, t =  19.82 s / 2376.96 tokens per second
+llama-swap  | 8.20.815.715 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  49152, progress = 0.55, t =  20.83 s / 2359.85 tokens per second
+llama-swap  | 8.21.839.027 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  51200, progress = 0.57, t =  21.85 s / 2343.06 tokens per second
+llama-swap  | 8.22.875.781 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  53248, progress = 0.59, t =  22.89 s / 2326.40 tokens per second
+llama-swap  | 8.23.923.954 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  55296, progress = 0.62, t =  23.94 s / 2310.09 tokens per second
+llama-swap  | 8.24.986.292 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  57344, progress = 0.64, t =  25.00 s / 2293.85 tokens per second
+llama-swap  | 8.26.061.093 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  59392, progress = 0.66, t =  26.07 s / 2277.84 tokens per second
+llama-swap  | 8.27.149.648 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  61440, progress = 0.68, t =  27.16 s / 2261.95 tokens per second
+llama-swap  | 8.28.252.386 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  63488, progress = 0.71, t =  28.27 s / 2246.16 tokens per second
+llama-swap  | 8.29.367.492 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  65536, progress = 0.73, t =  29.38 s / 2230.61 tokens per second
+llama-swap  | [INFO] Request ::1 "GET / HTTP/1.1" 302 26 "curl/8.5.0" 14.55µs
+llama-swap  | 8.30.496.259 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  67584, progress = 0.75, t =  30.51 s / 2215.21 tokens per second
+llama-swap  | 8.31.638.690 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  69632, progress = 0.78, t =  31.65 s / 2199.96 tokens per second
+llama-swap  | 8.32.794.896 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  71680, progress = 0.80, t =  32.81 s / 2184.86 tokens per second
+llama-swap  | 8.33.966.688 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  73728, progress = 0.82, t =  33.98 s / 2169.78 tokens per second
+llama-swap  | 8.35.154.074 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  75776, progress = 0.84, t =  35.17 s / 2154.76 tokens per second
+llama-swap  | 8.36.357.515 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  77824, progress = 0.87, t =  36.37 s / 2139.77 tokens per second
+llama-swap  | 8.37.575.472 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  79872, progress = 0.89, t =  37.59 s / 2124.92 tokens per second
+llama-swap  | 8.38.810.030 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  81920, progress = 0.91, t =  38.82 s / 2110.10 tokens per second
+llama-swap  | 8.40.057.347 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  83968, progress = 0.94, t =  40.07 s / 2095.53 tokens per second
+llama-swap  | 8.41.317.719 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  86016, progress = 0.96, t =  41.33 s / 2081.18 tokens per second
+llama-swap  | 8.42.592.578 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  88064, progress = 0.98, t =  42.61 s / 2066.97 tokens per second
+llama-swap  | 8.43.361.971 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  89226, progress = 0.99, t =  43.37 s / 2057.10 tokens per second
+llama-swap  | 8.43.778.556 I slot print_timing: id  0 | task 4616 | prompt processing, n_tokens =  89738, progress = 1.00, t =  43.79 s / 2049.22 tokens per second
+llama-swap  | 8.43.975.580 I slot print_timing: id  0 | task 4616 | prompt eval time =   43934.58 ms / 89742 tokens (    0.49 ms per token,  2042.63 tokens per second)
+llama-swap  | 8.43.975.583 I slot print_timing: id  0 | task 4616 |        eval time =      53.65 ms /     4 tokens (   13.41 ms per token,    74.56 tokens per second)
+llama-swap  | 8.43.975.583 I slot print_timing: id  0 | task 4616 |       total time =   43988.23 ms / 89746 tokens
+llama-swap  | 8.43.975.585 I slot print_timing: id  0 | task 4616 |    graphs reused =       1150
+llama-swap  | 8.43.975.597 I slot print_timing: id  0 | task 4616 | draft acceptance = 1.00000 (    2 accepted /     2 generated), mean len =  3.00
+llama-swap  | 8.43.976.622 I slot      release: id  0 | task 4616 | stop processing: n_tokens = 89745, truncated = 0
+llama-swap  | [INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 2491 "" 44.987644512s
+llama-swap  | [INFO] Request ::1 "GET / HTTP/1.1" 302 26 "curl/8.5.0" 12.13µs
+llama-swap  | [INFO] Request ::1 "GET / HTTP/1.1" 302 26 "curl/8.5.0" 12.81µs
+llama-swap  | [INFO] Request ::1 "GET / HTTP/1.1" 302 26 "curl/8.5.0" 12.041µs

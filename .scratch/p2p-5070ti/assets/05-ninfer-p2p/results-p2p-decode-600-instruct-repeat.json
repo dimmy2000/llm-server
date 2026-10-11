@@ -1,0 +1,39 @@
+{
+  "label": "ninfer-p2p-decode-600-instruct-repeat",
+  "model": "qwen3.8-27b",
+  "max_tokens": 600,
+  "ttft_s": 0.07127837299958628,
+  "total_s": 5.016944857999988,
+  "decode_span_s": 2305.3082457350006,
+  "content_chars": 2687,
+  "content_chunks": 253,
+  "completion_tokens": 600,
+  "decode_tok_s_chunks": 0.10974671194972285,
+  "decode_tok_s_usage": 0.2602688820942044,
+  "usage": {
+    "completion_tokens": 600,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 49,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 649
+  },
+  "timings": {
+    "cache_n": 0,
+    "draft_n": 1749,
+    "draft_n_accepted": 347,
+    "predicted_ms": 4945.6499459999995,
+    "predicted_n": 600,
+    "predicted_per_second": 121.11653807695512,
+    "predicted_per_token_ms": 8.25651076126878,
+    "prompt_ms": 69.27918700000001,
+    "prompt_n": 49,
+    "prompt_per_second": 707.2831267491634,
+    "prompt_per_token_ms": 1.4138609591836737
+  },
+  "finish_reason": "length",
+  "text": "The history of alpine railways is a narrative of human ingenuity colliding with one of Earth’s most hostile environments. From the early 19th century to the present day, these lines have served as lifelines for isolated communities, catalysts for mass tourism, and symbols of national prestige. This detailed history explores the engineering marvels, the economic shifts driven by tourism, and the complex political dynamics that shaped the rail networks across the Alps.\n\n### I. The Pioneering Era: Conquering Gravity (1830s–1870s)\n\n#### Engineering Challenges\nThe initial attempt to cross the Alps by rail was not about comfort but survival. The first major challenge was the **Simplon Pass** and the **Gotthard Pass**. Early engineers faced steep gradients that standard locomotives could not climb.\n\n- **Adhesion Limits:** Standard steam engines relied on friction between wheels and rails. On slopes exceeding 4%, they slipped. Solutions included:\n  - **Cable Haulage:** Used in the early **Semmering Railway** (Austria, completed 1854), where stationary engines pulled trains via cables on steepest sections.\n  - **Cog Rail Systems:** Introduced by Carl Roman Meyer, this used a toothed rack between the rails, engaged by a pinion on the locomotive. The **Rigi Railway** (Switzerland, 1871) was among the first successful cog railways, allowing gradients up to 25%.\n- **Tunneling:** The **Gotthard Tunnel** (completed 1882) was a monumental feat. At 14.6 km, it was the world’s longest railway tunnel at the time. Engineers like Gottfried Seiler developed new techniques for drilling through hard gneiss rock using compressed air drills, reducing construction time significantly.\n\n#### Political Context\n- **National Unification:** In Switzerland, the Gotthard Line was crucial for unifying the German-speaking north with the Italian-speaking south, strengthening federal cohesion.\n- **Imperial Ambition:** Austria-Hungary viewed the Semmering and later the Brenner Pass (opened 1910) as strategic military and economic arteries connecting Vienna to Trieste and Milan.\n- **French-German Rivalry:** France sought access to Italy via the Mont Cenis and Fréjus tunnels (completed 1871), bypassing Austrian-controlled passes. These were also military assets during the Franco-Prussian War era.\n\n#### Tourism Emergence\nBefore the railways, alpine travel was arduous and limited to the wealthy. The railways democratized mountain access:\n- **Grand Tour Evolution:** The route from Paris to Venice via the Simplon became a classic Grand Tour stop.\n- **Health Resorts:** The clean mountain air attracted patients seeking cures for tuberculosis and respiratory ailments. Stations like Davos"
+}

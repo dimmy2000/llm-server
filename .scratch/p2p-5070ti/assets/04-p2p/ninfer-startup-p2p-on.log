@@ -1,0 +1,3 @@
+2026-10-10 19:52:59.327  INFO  capacity | KV 381,376 tokens, nvfp4, auto | pages 5,959/8,192 | runtime 4.23 GiB | free 709.8 MiB
+2026-10-10 19:52:59.327  INFO  tensor parallel | tp 2 on devices 0,1 | p2p on | KV, StateImages and runtime reserved per rank | Host context-cache tiers off (rank 1 state has no Host replica) | 4 Device checkpoint StateImages; a prefill checkpoint that finds them full first reclaims idle private continuations and is skipped only when none can be released (raise --device-state-slots for many conversations)
+2026-10-10 19:52:59.327  INFO  tensor parallel | captured all-reduces: copies

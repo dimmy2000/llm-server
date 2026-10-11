@@ -1,0 +1,39 @@
+{
+  "label": "p2p-story-r2",
+  "model": "qwen3.8-27b-chat-medium",
+  "max_tokens": 600,
+  "ttft_s": 3.051854920000096,
+  "total_s": 4.819141228999797,
+  "decode_span_s": 2482.393341386,
+  "content_chars": 873,
+  "content_chunks": 91,
+  "completion_tokens": 600,
+  "decode_tok_s_chunks": 0.03665817116202534,
+  "decode_tok_s_usage": 0.24170222744192535,
+  "usage": {
+    "completion_tokens": 600,
+    "completion_tokens_details": {
+      "reasoning_tokens": 410
+    },
+    "prompt_tokens": 47,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 647
+  },
+  "timings": {
+    "cache_n": 0,
+    "draft_n": 1680,
+    "draft_n_accepted": 357,
+    "predicted_ms": 4748.838786,
+    "predicted_n": 600,
+    "predicted_per_second": 126.13609915878916,
+    "predicted_per_token_ms": 7.927944550918197,
+    "prompt_ms": 68.657609,
+    "prompt_n": 47,
+    "prompt_per_second": 684.5563177127244,
+    "prompt_per_token_ms": 1.4608001914893616
+  },
+  "finish_reason": "length",
+  "text": "# The Line to Kesslerpass\n\n## I. The Valley\n\nThe train was already late when Elise Varga stepped onto the platform at Thalheim, her suitcase dragging a groan against the flagstones. She had expected precision. Everything about the Kesslerbahn was meant to be precise: the interlocking of steel teeth, the measured pitch of the rack, the punctuality of a system built by men who understood that a single miscalculation in gradient could send a car of passengers sliding backward into the valley like a stone off a finger. But the line from Unterthal had been closed that morning by a fallen birch, and the connecting service from the southern branch would not arrive until the last light bled from the eastern ridge.\n\nThe platform smelled of diesel and wet wool. Behind her, the low town of Thalheim huddled in the valley's bowl, its roofs dark with moss, its church steeple"
+}

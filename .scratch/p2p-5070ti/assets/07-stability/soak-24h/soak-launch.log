@@ -1,0 +1,6 @@
+soak start 2026-10-11T09:07:44+03:00
+  dir:      /home/dimmy/projects/00 infra/llm-server/.scratch/p2p-5070ti/assets/07-stability/soak-24h
+  duration: 24h (86400s)
+  endpoint: http://127.0.0.1:8080  model=qwen3.8-27b-chat-medium  decode-tokens=256
+  long prefill: .scratch/p2p-5070ti/assets/05-ninfer-p2p/prompt-90k.txt every 1800s
+  red line:   GPU1 free >= 512 MiB

@@ -1,0 +1,39 @@
+{
+  "label": "ninfer-p2p-decode-600-story",
+  "model": "qwen3.8-27b-chat-medium",
+  "max_tokens": 600,
+  "ttft_s": 3.0535199779999402,
+  "total_s": 4.232248867999942,
+  "decode_span_s": 1214.619239264,
+  "content_chars": 554,
+  "content_chunks": 61,
+  "completion_tokens": 600,
+  "decode_tok_s_chunks": 0.05022149989733657,
+  "decode_tok_s_usage": 0.49398196620331053,
+  "usage": {
+    "completion_tokens": 600,
+    "completion_tokens_details": {
+      "reasoning_tokens": 478
+    },
+    "prompt_tokens": 46,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 646
+  },
+  "timings": {
+    "cache_n": 0,
+    "draft_n": 1476,
+    "draft_n_accepted": 387,
+    "predicted_ms": 4162.011643999999,
+    "predicted_n": 600,
+    "predicted_per_second": 143.9207890884988,
+    "predicted_per_token_ms": 6.948266517529214,
+    "prompt_ms": 68.657369,
+    "prompt_n": 46,
+    "prompt_per_second": 669.9936317105305,
+    "prompt_per_token_ms": 1.4925515
+  },
+  "finish_reason": "length",
+  "text": "# The Ascent\n\nThe station at Kellermund sat in a valley so narrow that the morning mist did not clear but simply pressed itself flat against the window glass of the small waiting room, as though the mountain wanted to be seen but not yet named. Elara Voss stood with her valise in one hand and her ticket in the other, watching the single-track platform glisten with the remnants of last night's frost. She had come to Kellermund three hours early, as her mother had instructed, and the excess time had stretched itself thin and strange in the stillness."
+}

@@ -1,0 +1,39 @@
+{
+  "label": "p2p-instruct-r4",
+  "model": "qwen3.8-27b",
+  "max_tokens": 600,
+  "ttft_s": 0.07033803400008765,
+  "total_s": 4.248409419999916,
+  "decode_span_s": 2517.7180123529997,
+  "content_chars": 2550,
+  "content_chunks": 214,
+  "completion_tokens": 600,
+  "decode_tok_s_chunks": 0.08499760455699353,
+  "decode_tok_s_usage": 0.23831104081400054,
+  "usage": {
+    "completion_tokens": 600,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 51,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 651
+  },
+  "timings": {
+    "cache_n": 0,
+    "draft_n": 1484,
+    "draft_n_accepted": 386,
+    "predicted_ms": 4177.978047,
+    "predicted_n": 600,
+    "predicted_per_second": 143.37078684032636,
+    "predicted_per_token_ms": 6.974921614357261,
+    "prompt_ms": 68.868979,
+    "prompt_n": 51,
+    "prompt_per_second": 740.5366064741573,
+    "prompt_per_token_ms": 1.3503721372549018
+  },
+  "finish_reason": "length",
+  "text": "The history of alpine railways is a narrative woven from the threads of imperial ambition, technological necessity, and the birth of modern tourism. Spanning the Alps, the Pyrenees, and the Caucasus, these lines were not merely transport links; they were statements of national identity, engines of economic development, and laboratories for engineering innovation.\n\nThis detailed history covers three primary dimensions: **Engineering**, **Tourism**, and **Politics**.\n\n---\n\n### I. The Pre-Railway Context: Why the Alps?\n\nBefore the 19th century, the Alps were a formidable barrier to trade and communication. Mountain passes were seasonal, dangerous, and limited in capacity. The desire to cross the Alps was driven by:\n1.  **Military Strategy:** Rapid movement of troops between northern and southern Europe.\n2.  **Economic Integration:** Connecting industrial regions (e.g., Switzerland, Northern Italy) with Mediterranean ports (Genoa, Marseille).\n3.  **National Unification:** For Germany and Italy, rail networks symbolized statehood and centralization.\n\nThe first major alpine railway projects emerged in the mid-19th century, coinciding with the rise of steam power and the expansion of European empires.\n\n---\n\n### II. Engineering Marvels: Conquering Gravity and Terrain\n\nAlpine railways posed unique engineering challenges: steep gradients, narrow valleys, extreme weather, and complex geology. Solutions included tunnels, viaducts, cog railways, funiculars, and later, electric traction.\n\n#### A. Early Steam Era: Tunnels and Viaducts (1850s–1890s)\n\n**1. The Semmering Railway (Austria, 1854)**\n*   **Significance:** The first major alpine railway in the world.\n*   **Engineering:** Built by Carl von Ghega, it featured 16 tunnels and 14 bridges over 41 km. It used standard gauge but required powerful locomotives due to gradients up to 4.7%.\n*   **Innovation:** Introduced the use of compressed air drills for tunneling, speeding up construction significantly.\n\n**2. The Gotthard Tunnel (Switzerland, 1882)**\n*   **Significance:** The first large-scale trans-Alpine base tunnel.\n*   **Engineering:** 14.6 km long, bored through solid granite. It allowed trains to bypass the mountain entirely, reducing travel time from Bern to Milan.\n*   **Innovation:** Used rotating cutters and efficient ventilation systems. It became a model for future tunnel engineering worldwide.\n\n**3. The Brenner Base Tunnel (Austria/Italy, 1867)**\n*   **Significance:** Connected Austria-Hungary to Italy via the Brenner Pass.\n*   **Engineering:** Featured the"
+}

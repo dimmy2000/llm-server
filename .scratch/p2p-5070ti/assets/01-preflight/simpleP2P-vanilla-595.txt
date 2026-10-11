@@ -1,0 +1,9 @@
+[/tmp/opencode/p2p-bin/simpleP2P] - Starting...
+Checking for multiple GPUs...
+CUDA-capable device count: 2
+
+Checking GPU(s) for support of peer to peer memory access...
+> Peer access from NVIDIA GeForce RTX 5070 Ti (GPU0) -> NVIDIA GeForce RTX 5070 Ti (GPU1) : No
+> Peer access from NVIDIA GeForce RTX 5070 Ti (GPU1) -> NVIDIA GeForce RTX 5070 Ti (GPU0) : No
+Two or more GPUs with Peer-to-Peer access capability are required for /tmp/opencode/p2p-bin/simpleP2P.
+Peer to Peer access is not available amongst GPUs in the system, waiving test.

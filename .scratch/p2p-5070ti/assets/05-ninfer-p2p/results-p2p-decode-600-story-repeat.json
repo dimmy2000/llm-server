@@ -1,0 +1,39 @@
+{
+  "label": "ninfer-p2p-decode-600-story-repeat",
+  "model": "qwen3.8-27b-chat-medium",
+  "max_tokens": 600,
+  "ttft_s": null,
+  "total_s": 4.7194382609995955,
+  "decode_span_s": null,
+  "content_chars": 0,
+  "content_chunks": 0,
+  "completion_tokens": 600,
+  "decode_tok_s_chunks": null,
+  "decode_tok_s_usage": null,
+  "usage": {
+    "completion_tokens": 600,
+    "completion_tokens_details": {
+      "reasoning_tokens": 600
+    },
+    "prompt_tokens": 46,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 646
+  },
+  "timings": {
+    "cache_n": 0,
+    "draft_n": 1639,
+    "draft_n_accepted": 363,
+    "predicted_ms": 4628.165951,
+    "predicted_n": 600,
+    "predicted_per_second": 129.42491828119842,
+    "predicted_per_token_ms": 7.7264873973288815,
+    "prompt_ms": 89.19548400000001,
+    "prompt_n": 46,
+    "prompt_per_second": 515.7211770945712,
+    "prompt_per_token_ms": 1.9390322608695654
+  },
+  "finish_reason": "length",
+  "text": ""
+}

@@ -1,0 +1,11 @@
+2026-10-10 19:52:59.327  INFO  rank 1 | device 1 | weights 10.1 GiB | sharded 9.65 GiB | replicated 259.6 MiB | local 245.0 MiB | host-mapped 1.18 GiB
+2026-10-10 19:52:59.327  INFO  host-mapped weights | 1.18 GiB of pinned host memory | read in place by 2 devices over PCIe
+2026-10-10 19:52:59.327  INFO  capacity | KV 381,376 tokens, nvfp4, auto | pages 5,959/8,192 | runtime 4.23 GiB | free 709.8 MiB
+2026-10-10 19:52:59.327  INFO  tensor parallel | tp 2 on devices 0,1 | p2p on | KV, StateImages and runtime reserved per rank | Host context-cache tiers off (rank 1 state has no Host replica) | 4 Device checkpoint StateImages; a prefill checkpoint that finds them full first reclaims idle private continuations and is skipped only when none can be released (raise --device-state-slots for many conversations)
+2026-10-10 19:52:59.327  INFO  tensor parallel | captured all-reduces: copies
+2026-10-10 19:52:59.327  INFO  tensor parallel | DFlash2 proposal head: split by vocabulary
+2026-10-10 19:52:59.327  INFO  tensor parallel | DFlash2 drafter: split (16/4 attention heads, MLP halves per rank; selector on rank 1)
+2026-10-10 19:52:59.328  INFO  cuda graphs | rank 0: observed 60.0 MiB, allowance 132.0 MiB
+2026-10-10 19:52:59.328  INFO  cuda graphs | rank 1: observed 60.0 MiB, allowance 132.0 MiB
+2026-10-10 19:52:59.328  INFO  context cache | 2 active + 4 cached device states | host 0 states, 0 B KV | private 8 | shared 4 | anchors 2
+2026-10-10 19:52:59.328  INFO  media | Vision on device 0 | 16 preprocess workers | cache 1.00 GiB | live 2.00 GiB

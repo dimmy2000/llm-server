@@ -1,0 +1,47 @@
+[P2P (Peer-to-Peer) GPU Bandwidth Latency Test]
+Device: 0, NVIDIA GeForce RTX 5070 Ti, pciBusID: 1, pciDeviceID: 0, pciDomainID:0
+Device: 1, NVIDIA GeForce RTX 5070 Ti, pciBusID: 3, pciDeviceID: 0, pciDomainID:0
+Device=0 CAN Access Peer Device=1
+Device=1 CAN Access Peer Device=0
+
+***NOTE: In case a device doesn't have P2P access to other one, it falls back to normal memcopy procedure.
+So you can see lesser Bandwidth (GB/s) and unstable Latency (us) in those cases.
+
+P2P Connectivity Matrix
+     D\D     0     1
+     0	     1     1
+     1	     1     1
+Unidirectional P2P=Disabled Bandwidth Matrix (GB/s)
+   D\D     0      1 
+     0 767.54  24.74 
+     1  24.67 776.20 
+Unidirectional P2P=Enabled Bandwidth (P2P Writes) Matrix (GB/s)
+   D\D     0      1 
+     0 703.20  28.66 
+     1  28.65 775.61 
+Bidirectional P2P=Disabled Bandwidth Matrix (GB/s)
+   D\D     0      1 
+     0 740.46  27.74 
+     1  27.83 732.54 
+Bidirectional P2P=Enabled Bandwidth Matrix (GB/s)
+   D\D     0      1 
+     0 741.59  56.07 
+     1  56.09 773.37 
+P2P=Disabled Latency Matrix (us)
+   GPU     0      1 
+     0   1.00  12.59 
+     1  14.25   0.81 
+
+   CPU     0      1 
+     0   1.51   4.15 
+     1   4.15   1.46 
+P2P=Enabled Latency (P2P Writes) Matrix (us)
+   GPU     0      1 
+     0   1.01   0.34 
+     1   0.33   0.90 
+
+   CPU     0      1 
+     0   1.56   1.15 
+     1   1.15   1.49 
+
+NOTE: The CUDA Samples are not meant for performance measurements. Results may vary when GPU Boost is enabled.

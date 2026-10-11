@@ -1,0 +1,39 @@
+{
+  "label": "ninfer-decode-600-essay-rerun",
+  "model": "qwen3.8-27b-chat-medium",
+  "max_tokens": 600,
+  "ttft_s": null,
+  "total_s": 4.38890745199933,
+  "decode_span_s": null,
+  "content_chars": 0,
+  "content_chunks": 0,
+  "completion_tokens": 600,
+  "decode_tok_s_chunks": null,
+  "decode_tok_s_usage": null,
+  "usage": {
+    "completion_tokens": 600,
+    "completion_tokens_details": {
+      "reasoning_tokens": 600
+    },
+    "prompt_tokens": 41,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 641
+  },
+  "timings": {
+    "cache_n": 0,
+    "draft_n": 1656,
+    "draft_n_accepted": 360,
+    "predicted_ms": 4294.897261,
+    "predicted_n": 600,
+    "predicted_per_second": 139.46782975212128,
+    "predicted_per_token_ms": 7.170112288814691,
+    "prompt_ms": 91.225373,
+    "prompt_n": 41,
+    "prompt_per_second": 449.43636459562623,
+    "prompt_per_token_ms": 2.2250090975609758
+  },
+  "finish_reason": "length",
+  "text": ""
+}

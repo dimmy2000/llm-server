@@ -1,0 +1,39 @@
+{
+  "label": "ninfer-p2p-decode-600-instruct",
+  "model": "qwen3.8-27b",
+  "max_tokens": 600,
+  "ttft_s": 0.06955945100003191,
+  "total_s": 4.840117649999911,
+  "decode_span_s": 1222.474619553,
+  "content_chars": 2603,
+  "content_chunks": 244,
+  "completion_tokens": 600,
+  "decode_tok_s_chunks": 0.19959514586013985,
+  "decode_tok_s_usage": 0.49080773572165537,
+  "usage": {
+    "completion_tokens": 600,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 52,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 652
+  },
+  "timings": {
+    "cache_n": 0,
+    "draft_n": 1694,
+    "draft_n_accepted": 356,
+    "predicted_ms": 4770.443219,
+    "predicted_n": 600,
+    "predicted_per_second": 125.56485267747614,
+    "predicted_per_token_ms": 7.964012051752921,
+    "prompt_ms": 68.090948,
+    "prompt_n": 52,
+    "prompt_per_second": 763.6844768264939,
+    "prompt_per_token_ms": 1.3094413076923077
+  },
+  "finish_reason": "length",
+  "text": "The history of alpine railways is a narrative defined by the collision of human ambition and geological resistance. From the early 19th century to the present day, these lines have served as arteries for trade, veins for tourism, and symbols of national identity. Their development was driven by a complex interplay of engineering innovation, economic strategy, and geopolitical maneuvering.\n\n### I. The Pioneering Era: Conquering the Passes (1830s–1870s)\n\n#### Engineering Challenges\nThe initial challenge was not merely building on slopes, but crossing high mountain passes where existing roads were treacherous or non-existent. Early engineers faced:\n- **Gradient Limits:** Steam locomotives could only manage gradients of about 1 in 20 (5%) using standard adhesion. Steeper slopes required rack systems (cog railways).\n- **Tunneling Through Hard Rock:** The Alps are composed of metamorphic and igneous rocks, requiring new drilling techniques and explosives management.\n- **Weather Extremes:** Snow loads, ice formation, and avalanches threatened track integrity year-round.\n\nKey Innovations:\n- **Rack-and-Pinion Systems:** Developed by Robert Stephenson and later refined by Carl Roman Abt, allowing trains to climb steeper grades (up to 1 in 6 or even 1 in 4).\n- **Spiral Tunnels:** Used to gain elevation within confined spaces (e.g., the Semmering Tunnel).\n- **Gauge Standardization:** Most early lines used standard gauge (1,435 mm), limiting flexibility in tight mountain curves.\n\n#### Political Context\n- **Austrian Empire’s Strategic Interest:** The **Semmering Railway** (opened 1854) was Austria’s first major mountain line, connecting Vienna to Trieste via the Semmering Pass. It was a state-driven project to secure trade routes and military mobility.\n- **Swiss Confederation’s Fragmented Politics:** Switzerland’s cantonal autonomy meant that railway construction required complex negotiations between federal, cantonal, and private interests. The **Gotthard Line** (completed 1882) became a symbol of Swiss unity and economic integration.\n\n#### Tourism Emergence\n- The Semmering Railway attracted early tourists drawn by the dramatic scenery and the novelty of rail travel through mountains.\n- Brochure literature began promoting \"railway tourism,\" framing the journey itself as the destination.\n\n---\n\n### II. The Golden Age of Grandeur: The Gotthard and Simplon (1880s–1910s)\n\n#### Engineering Triumphs\nThis era saw the construction of two of the most ambitious trans-Alpine tunnels:\n1. **Gotthard Base Tunnel (Railway):** Completed in 1882 after 17 years of construction. At 14.6 km"
+}

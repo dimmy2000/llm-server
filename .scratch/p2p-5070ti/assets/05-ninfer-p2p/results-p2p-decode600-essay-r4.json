@@ -1,0 +1,39 @@
+{
+  "label": "p2p-essay-r4",
+  "model": "qwen3.8-27b-chat-medium",
+  "max_tokens": 600,
+  "ttft_s": 2.8946077880000303,
+  "total_s": 4.464746255000136,
+  "decode_span_s": 2464.88741944,
+  "content_chars": 898,
+  "content_chunks": 81,
+  "completion_tokens": 600,
+  "decode_tok_s_chunks": 0.03286154140800575,
+  "decode_tok_s_usage": 0.24341882524448705,
+  "usage": {
+    "completion_tokens": 600,
+    "completion_tokens_details": {
+      "reasoning_tokens": 415
+    },
+    "prompt_tokens": 52,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 652
+  },
+  "timings": {
+    "cache_n": 0,
+    "draft_n": 1558,
+    "draft_n_accepted": 375,
+    "predicted_ms": 4393.8015000000005,
+    "predicted_n": 600,
+    "predicted_per_second": 136.32841629281612,
+    "predicted_per_token_ms": 7.335227879799667,
+    "prompt_ms": 69.40106,
+    "prompt_n": 52,
+    "prompt_per_second": 749.2680947524433,
+    "prompt_per_token_ms": 1.3346357692307693
+  },
+  "finish_reason": "length",
+  "text": "# The Iron Arteries of the Alps: A History of Alpine Railways in Engineering, Tourism, and Politics\n\n## I. The Mountain as Problem and Promise\n\nThe Alps do not yield to the flat logic of the railway. Where the engineer of the English or Saxon plain could unroll a line of iron track across gentle undulations, the alpine builder confronted a geography that seemed to make mechanized transit a proposition for the mad. The mountains rise in sheer limestone walls, fracture into gorges a thousand meters deep, crown their summits with perpetual snow, and shift their bedsides in the spring thaw. To drive a railway through them was, in the mid-nineteenth century, to attempt what many considered physically impossible. Yet by the turn of the twentieth century, the Alps had become one of the most densely rail-served mountain ranges on Earth, their passes and valleys threaded with lines that carried"
+}

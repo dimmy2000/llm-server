@@ -1,0 +1,145 @@
+
+=== p2p-snapshot 2026-10-11T08:55:33+03:00 ===
+kernel:  7.0.0-38-generic
+cmdline: BOOT_IMAGE=/boot/vmlinuz-7.0.0-38-generic root=UUID=fc48e29e-2bff-4faa-8d4b-42d7db9e6f7d ro quiet splash amd_iommu=on iommu=pt crashkernel=2G-4G:320M,4G-32G:512M,32G-64G:1024M,64G-128G:2048M,128G-:4096M
+
+=== driver ===
+0, NVIDIA GeForce RTX 5070 Ti, 615.71.09, 15 MiB, 16303 MiB, 15919 MiB
+1, NVIDIA GeForce RTX 5070 Ti, 615.71.09, 430 MiB, 16303 MiB, 15501 MiB
+
+=== modinfo nvidia ===
+filename:       /lib/modules/7.0.0-38-generic/kernel/drivers/video/nvidia.ko
+version:        615.71.09
+vermagic:       7.0.0-38-generic SMP preempt mod_unload modversions 
+
+=== installed modules (7.0.0-38-generic) ===
+-rw-r--r-- 1 root root  6163136 Oct 10 22:41 /lib/modules/7.0.0-38-generic/kernel/drivers/video/nvidia-drm.ko
+-rw-r--r-- 1 root root  3439784 Oct 10 22:41 /lib/modules/7.0.0-38-generic/kernel/drivers/video/nvidia-modeset.ko
+-rw-r--r-- 1 root root   402496 Oct 10 22:41 /lib/modules/7.0.0-38-generic/kernel/drivers/video/nvidia-peermem.ko
+-rw-r--r-- 1 root root 58817256 Oct 10 22:41 /lib/modules/7.0.0-38-generic/kernel/drivers/video/nvidia-uvm.ko
+-rw-r--r-- 1 root root 39312344 Oct 10 22:41 /lib/modules/7.0.0-38-generic/kernel/drivers/video/nvidia.ko
+083f51da932c8874feb9c9f523815ac81ce1bb2ec511529f6e610f529f5e2c31  /lib/modules/7.0.0-38-generic/kernel/drivers/video/nvidia-drm.ko
+763fe7d63432216a043b93f4c83db7effedd8eb94fb6db14f60a4edcb5e61d17  /lib/modules/7.0.0-38-generic/kernel/drivers/video/nvidia.ko
+efa920c50ec00fc75c9ef5748dbf97984fb9027f696e2995aa2bfbde797526c5  /lib/modules/7.0.0-38-generic/kernel/drivers/video/nvidia-modeset.ko
+8b0ba1558bafa9ae6a55662434e8e676d6e7d746b78dc2c7b2e57345990d7c33  /lib/modules/7.0.0-38-generic/kernel/drivers/video/nvidia-peermem.ko
+27bab51c648c9d52fba5f6a1d0048505fad3a2b0f2fcc98fd6bc46e7a2b56ebf  /lib/modules/7.0.0-38-generic/kernel/drivers/video/nvidia-uvm.ko
+
+=== topo -p2p r ===
+ 	[4mGPU0	GPU1	[0m
+ GPU0	X	OK	
+ GPU1	OK	X	
+
+Legend:
+
+  X    = Self
+  OK   = Status Ok
+  CNS  = Chipset not supported
+  GNS  = GPU not supported
+  TNS  = Topology not supported
+  NS   = Not supported
+  DR   = Disabled by regkey
+  U    = Unknown
+
+=== topo -p2p w ===
+ 	[4mGPU0	GPU1	[0m
+ GPU0	X	OK	
+ GPU1	OK	X	
+
+Legend:
+
+  X    = Self
+  OK   = Status Ok
+  CNS  = Chipset not supported
+  GNS  = GPU not supported
+  TNS  = Topology not supported
+  NS   = Not supported
+  DR   = Disabled by regkey
+  U    = Unknown
+
+=== BAR1 ===
+    BAR1 Memory Usage
+        Total                                          : 16384 MiB
+        Used                                           : 14 MiB
+        Free                                           : 16370 MiB
+--
+    BAR1 Memory Usage
+        Total                                          : 16384 MiB
+        Used                                           : 437 MiB
+        Free                                           : 15947 MiB
+
+=== iommu groups ===
+groups: 38
+
+=== dmesg nvidia/iommu/xid (tail) ===
+[    0.477984] pci 0000:17:00.0: Adding to iommu group 26
+[    0.477992] pci 0000:18:00.0: Adding to iommu group 27
+[    0.478000] pci 0000:18:01.0: Adding to iommu group 28
+[    0.478008] pci 0000:18:02.0: Adding to iommu group 29
+[    0.478015] pci 0000:18:03.0: Adding to iommu group 30
+[    0.478018] pci 0000:79:00.0: Adding to iommu group 29
+[    0.478021] pci 0000:7a:00.0: Adding to iommu group 30
+[    0.478049] pci 0000:7b:00.0: Adding to iommu group 31
+[    0.478057] pci 0000:7b:00.1: Adding to iommu group 32
+[    0.478065] pci 0000:7b:00.2: Adding to iommu group 33
+[    0.478073] pci 0000:7b:00.3: Adding to iommu group 34
+[    0.478081] pci 0000:7b:00.4: Adding to iommu group 35
+[    0.478090] pci 0000:7b:00.6: Adding to iommu group 36
+[    0.478098] pci 0000:7c:00.0: Adding to iommu group 37
+[    1.250403] perf/amd_iommu: Detected AMD IOMMU #0 (2 banks, 4 counters/bank).
+[    4.951327] nvidia: loading out-of-tree module taints kernel.
+[    4.951336] nvidia: module verification failed: signature and/or required key missing - tainting kernel
+[    5.016963] nvidia-nvlink: Nvlink Core is being initialized, major device number 509
+[    5.018995] nvidia 0000:03:00.0: enabling device (0002 -> 0003)
+[    5.018996] nvidia 0000:01:00.0: enabling device (0002 -> 0003)
+[    5.019223] nvidia 0000:03:00.0: vgaarb: VGA decodes changed: olddecodes=io+mem,decodes=none:owns=none
+[    5.019242] nvidia 0000:01:00.0: vgaarb: VGA decodes changed: olddecodes=io+mem,decodes=none:owns=none
+[    6.266093] input: HDA NVidia HDMI/DP,pcm=3 as /devices/pci0000:00/0000:00:01.1/0000:01:00.1/sound/card2/input24
+[    6.266185] input: HDA NVidia HDMI/DP,pcm=3 as /devices/pci0000:00/0000:00:01.3/0000:03:00.1/sound/card3/input20
+[    6.339531] input: HDA NVidia HDMI/DP,pcm=7 as /devices/pci0000:00/0000:00:01.1/0000:01:00.1/sound/card2/input25
+[    6.339557] input: HDA NVidia HDMI/DP,pcm=8 as /devices/pci0000:00/0000:00:01.1/0000:01:00.1/sound/card2/input26
+[    6.339578] input: HDA NVidia HDMI/DP,pcm=7 as /devices/pci0000:00/0000:00:01.3/0000:03:00.1/sound/card3/input21
+[    6.339597] input: HDA NVidia HDMI/DP,pcm=8 as /devices/pci0000:00/0000:00:01.3/0000:03:00.1/sound/card3/input22
+[    6.339686] input: HDA NVidia HDMI/DP,pcm=9 as /devices/pci0000:00/0000:00:01.1/0000:01:00.1/sound/card2/input27
+[    6.339723] input: HDA NVidia HDMI/DP,pcm=9 as /devices/pci0000:00/0000:00:01.3/0000:03:00.1/sound/card3/input23
+[    8.917065] NVRM: loading NVIDIA UNIX Open Kernel Module for x86_64  615.71.09  Release Build  (dimmy@dimmy-server)  Sat Oct 10 10:39:18 PM MSK 2026
+[    8.922834] nvidia-modeset: Loading NVIDIA UNIX Open Kernel Mode Setting Driver for x86_64  615.71.09  Release Build  (dimmy@dimmy-server)  Sat Oct 10 10:39:14 PM MSK 2026
+[    8.926974] [drm] [nvidia-drm] [GPU ID 0x00000100] Loading driver
+[    8.960539] [drm] Initialized nvidia-drm 0.0.0 for 0000:01:00.0 on minor 2
+[    8.961374] nvidia 0000:01:00.0: [drm] Cannot find any crtc or sizes
+[    8.961413] [drm] [nvidia-drm] [GPU ID 0x00000300] Loading driver
+[    9.050921] [drm] Initialized nvidia-drm 0.0.0 for 0000:03:00.0 on minor 3
+[    9.076533] nvidia 0000:03:00.0: vgaarb: deactivate vga console
+[    9.107129] fbcon: nvidia-drmdrmfb (fb0) is primary device
+[    9.107132] nvidia 0000:03:00.0: [drm] fb0: nvidia-drmdrmfb frame buffer device
+
+=== containers ===
+llama-swap	llm-server/ninfer-tp2:v0.4.6	Up About a minute (healthy)
+llm-grafana	grafana/grafana:11.4.0	Up About a minute
+llm-promtail	grafana/promtail:3.3.2	Up About a minute
+llm-loki	grafana/loki:3.3.2	Up About a minute
+llm-prometheus	prom/prometheus:v2.55.1	Up About a minute
+llm-nvidia-smi-exporter	ninfer-nvidia-smi-exporter	Up About a minute
+llm-node-exporter	prom/node-exporter:v1.8.2	Up About a minute
+llm-cadvisor	gcr.io/cadvisor/cadvisor:v0.49.1	Up About a minute (healthy)
+
+=== simpleP2P ===
+[./simpleP2P] - Starting...
+Checking for multiple GPUs...
+CUDA-capable device count: 2
+
+Checking GPU(s) for support of peer to peer memory access...
+> Peer access from NVIDIA GeForce RTX 5070 Ti (GPU0) -> NVIDIA GeForce RTX 5070 Ti (GPU1) : Yes
+> Peer access from NVIDIA GeForce RTX 5070 Ti (GPU1) -> NVIDIA GeForce RTX 5070 Ti (GPU0) : Yes
+Enabling peer access between GPU0 and GPU1...
+Allocating buffers (64MB on GPU0, GPU1 and CPU Host)...
+Creating event handles...
+cudaMemcpyPeer / cudaMemcpy between GPU0 and GPU1: 26.59GB/s
+Preparing host buffer and memcpy to GPU0...
+Run kernel on GPU1, taking source data from GPU0 and writing to GPU1...
+Run kernel on GPU0, taking source data from GPU1 and writing to GPU0...
+Copy data back to host from GPU0 and verify results...
+Disabling peer access...
+Shutting down...
+Test passed
+
+=== end ===

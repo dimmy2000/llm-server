@@ -1,0 +1,39 @@
+{
+  "label": "ninfer-prefill-30k",
+  "model": "qwen3.8-27b",
+  "max_tokens": 4,
+  "ttft_s": 6.572280788999706,
+  "total_s": 6.591610095998476,
+  "decode_span_s": 8761.816199551,
+  "content_chars": 13,
+  "content_chunks": 2,
+  "completion_tokens": 4,
+  "decode_tok_s_chunks": 0.00022826317677178507,
+  "decode_tok_s_usage": 0.00045652635354357014,
+  "usage": {
+    "completion_tokens": 4,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 29964,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 29968
+  },
+  "timings": {
+    "cache_n": 0,
+    "draft_n": 2,
+    "draft_n_accepted": 2,
+    "predicted_ms": 19.321217,
+    "predicted_n": 4,
+    "predicted_per_second": 155.26972239895653,
+    "predicted_per_token_ms": 6.440405666666667,
+    "prompt_ms": 6554.761737,
+    "prompt_n": 29964,
+    "prompt_per_second": 4571.3332081715,
+    "prompt_per_token_ms": 0.21875456337605126
+  },
+  "finish_reason": "length",
+  "text": "Understood. I"
+}

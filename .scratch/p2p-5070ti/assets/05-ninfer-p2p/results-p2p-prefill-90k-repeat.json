@@ -1,0 +1,39 @@
+{
+  "label": "ninfer-p2p-prefill-90k-repeat",
+  "model": "qwen3.8-27b",
+  "max_tokens": 4,
+  "ttft_s": 22.295666038000036,
+  "total_s": 22.318995906000055,
+  "decode_span_s": 1186.596337242,
+  "content_chars": 17,
+  "content_chunks": 2,
+  "completion_tokens": 4,
+  "decode_tok_s_chunks": 0.0016854931514861998,
+  "decode_tok_s_usage": 0.0033709863029723996,
+  "usage": {
+    "completion_tokens": 4,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 89741,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 89745
+  },
+  "timings": {
+    "cache_n": 0,
+    "draft_n": 2,
+    "draft_n_accepted": 2,
+    "predicted_ms": 23.294438,
+    "predicted_n": 4,
+    "predicted_per_second": 128.7861076536811,
+    "predicted_per_token_ms": 7.764812666666667,
+    "prompt_ms": 22252.109902,
+    "prompt_n": 89741,
+    "prompt_per_second": 4032.920940765898,
+    "prompt_per_token_ms": 0.24795923716027235
+  },
+  "finish_reason": "length",
+  "text": "Based on the text"
+}

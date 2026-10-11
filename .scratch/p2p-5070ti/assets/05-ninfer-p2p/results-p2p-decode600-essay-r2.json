@@ -1,0 +1,39 @@
+{
+  "label": "p2p-essay-r2",
+  "model": "qwen3.8-27b-chat-medium",
+  "max_tokens": 600,
+  "ttft_s": 3.150823433000369,
+  "total_s": 3.7800214430003507,
+  "decode_span_s": 2455.9321669579995,
+  "content_chars": 389,
+  "content_chunks": 33,
+  "completion_tokens": 600,
+  "decode_tok_s_chunks": 0.013436853201395588,
+  "decode_tok_s_usage": 0.24430642184355617,
+  "usage": {
+    "completion_tokens": 600,
+    "completion_tokens_details": {
+      "reasoning_tokens": 510
+    },
+    "prompt_tokens": 50,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 650
+  },
+  "timings": {
+    "cache_n": 0,
+    "draft_n": 1304,
+    "draft_n_accepted": 410,
+    "predicted_ms": 3709.579679,
+    "predicted_n": 600,
+    "predicted_per_second": 161.4738196327067,
+    "predicted_per_token_ms": 6.192954388981636,
+    "prompt_ms": 68.744879,
+    "prompt_n": 50,
+    "prompt_per_second": 727.3269038701777,
+    "prompt_per_token_ms": 1.3748975799999998
+  },
+  "finish_reason": "length",
+  "text": "# The Mountain and the Iron: A History of Alpine Railways\n\n## I. The Mountain as Obstacle, the Mountain as Invitation\n\nFor most of human history, the Alps were a wall. The peaks of the Alps, the Pyrenees, and the Carpathians divided not merely landscapes but civilizations—Celtic from Roman, Teutonic from Romance, pastoral from urban. Travelers crossed them at extraordinary cost of time,"
+}

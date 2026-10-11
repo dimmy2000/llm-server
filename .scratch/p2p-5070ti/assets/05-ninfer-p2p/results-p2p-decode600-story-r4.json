@@ -1,0 +1,39 @@
+{
+  "label": "p2p-story-r4",
+  "model": "qwen3.8-27b-chat-medium",
+  "max_tokens": 600,
+  "ttft_s": null,
+  "total_s": 4.071751894000045,
+  "decode_span_s": null,
+  "content_chars": 0,
+  "content_chunks": 0,
+  "completion_tokens": 600,
+  "decode_tok_s_chunks": null,
+  "decode_tok_s_usage": null,
+  "usage": {
+    "completion_tokens": 600,
+    "completion_tokens_details": {
+      "reasoning_tokens": 600
+    },
+    "prompt_tokens": 47,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 647
+  },
+  "timings": {
+    "cache_n": 0,
+    "draft_n": 1425,
+    "draft_n_accepted": 395,
+    "predicted_ms": 4001.6380820000004,
+    "predicted_n": 600,
+    "predicted_per_second": 149.68869940897366,
+    "predicted_per_token_ms": 6.680531021702839,
+    "prompt_ms": 68.490598,
+    "prompt_n": 47,
+    "prompt_per_second": 686.2255750782026,
+    "prompt_per_token_ms": 1.4572467659574468
+  },
+  "finish_reason": "length",
+  "text": ""
+}

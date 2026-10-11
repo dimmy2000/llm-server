@@ -332,6 +332,35 @@ docker compose --profile ninfer restart ninfer-swap
 
 Публичный API всех профилей: `http://localhost:8080`.
 
+## Хост: патченный драйвер и P2P
+
+Решение и цифры — ADR-0005, исследование — `docs/research/0010-p2p-two-5070ti.md`,
+ops-ранбук (смена драйвера, обновление ядра, откаты, soak) — `docs/NVIDIA_P2P.md`.
+
+- Драйвер хоста — open-модули ветки `615.71.09-p2p` форка
+  `aikitoria/open-gpu-kernel-modules` + vanilla userland 615.71.09,
+  nouveau в blacklist. Заменяет штатный apt `nvidia-driver-595-open`.
+- GRUB содержит `amd_iommu=on iommu=pt` — это осознанный компромисс (см.
+  ADR-0005), без него P2P не работает; снятие не планируется.
+- P2P между картами подтверждается `nvidia-smi topo -p2p r/w` = OK/OK и
+  стартовой строкой NInfer `tensor parallel ... p2p on` +
+  `captured all-reduces: copies`. NInfer-профиль не имеет P2P-параметров
+  (рантайм-детект `canPeer`); llama.cpp работает без `GGML_CUDA_P2P`
+  (выигрыша нет, риск corruption по докам llama.cpp).
+- HWE-ядро не пинится: после каждого обновления ядра пересобрать патченные
+  модули (`./scripts/nvidia-p2p/rebuild-modules.sh`, алерт по vermagic —
+  в ранбуке). После ребута/сборки прогонять `scripts/nvidia-p2p/p2p-verify.sh`
+  и снимать снапшот `p2p-snapshot.sh` (бэкап GRUB и модулей).
+- Красная линия «≥ 512 MiB свободной VRAM на дисплейной GPU1 под пиковой
+  нагрузкой» на текущем ninfer-профиле держится не всегда: под долгими
+  диалогами в device-state слотах + 90k-prefills зафиксирован минимум 19 MiB
+  (тикет 07). Нарушение принято как документированный регресс текущего
+  профиля (возможен вклад фоновых задач вне инференса) — при изменениях
+  профиля следить за свободной VRAM GPU1 по стартовой строке движка.
+- Важно: `llm-*` мониторинг и GPU-метрики (nvidia-smi-exporter) от драйвера
+  не зависят; патченные модули переживают reboot без ручных действий
+  (проверено двумя циклами).
+
 ## Локальные репозитории llama-swap и llama.cpp
 
 Репозитории `llama-swap` и `llama.cpp` находятся на локальном диске в папке

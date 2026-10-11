@@ -1,0 +1,179 @@
+=== Preflight snapshot 2026-10-10, driver 595.99.02 (vanilla apt) ===
+
+=== uname / cmdline ===
+Linux dimmy-server 7.0.0-38-generic #38-Ubuntu SMP PREEMPT_DYNAMIC Fri Sep  4 09:10:14 UTC 2026 x86_64 GNU/Linux
+BOOT_IMAGE=/boot/vmlinuz-7.0.0-38-generic root=UUID=fc48e29e-2bff-4faa-8d4b-42d7db9e6f7d ro quiet splash crashkernel=2G-4G:320M,4G-32G:512M,32G-64G:1024M,64G-128G:2048M,128G-:4096M
+
+=== secure boot ===
+SecureBoot disabled
+Platform is in Setup Mode
+
+=== IOMMU ===
+ivhd0
+groups: 38
+
+=== GRUB ===
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"
+GRUB_CMDLINE_LINUX=""
+
+=== apt driver ===
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+nvidia-driver-595-open:
+  Installed: 595.99.02-0ubuntu0.26.04.1
+  Candidate: 595.99.02-0ubuntu0.26.04.1
+  Version table:
+ *** 595.99.02-0ubuntu0.26.04.1 500
+        500 http://ru.archive.ubuntu.com/ubuntu resolute-updates/restricted amd64 Packages
+nvidia-dkms-595-open 595.99.02-0ubuntu0.26.04.1
+nvidia-driver-595-open 595.99.02-0ubuntu0.26.04.1
+nvidia-kernel-source-595-open 595.99.02-0ubuntu0.26.04.1
+nvidia-utils-595 595.99.02-0ubuntu0.26.04.1
+
+=== dkms ===
+nvidia/595.99.02, 7.0.0-29-generic, x86_64: installed
+nvidia/595.99.02, 7.0.0-34-generic, x86_64: installed
+nvidia/595.99.02, 7.0.0-38-generic, x86_64: installed
+
+=== modinfo nvidia ===
+filename:       /lib/modules/7.0.0-38-generic/updates/dkms/nvidia.ko.zst
+version:        595.99.02
+nvidia-drm.ko.zst
+nvidia-modeset.ko.zst
+nvidia-peermem.ko.zst
+nvidia-uvm.ko.zst
+nvidia.ko.zst
+
+=== lsmod ===
+nvidia_uvm           2088960  16
+nvidia_drm            147456  83
+nvidia_modeset       1794048  18 nvidia_drm
+nvidia              15114240  768 nvidia_uvm,nvidia_modeset
+
+=== persistenced ===
+active
+
+=== nvidia-smi ===
+Sat Oct 10 13:39:04 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 595.99.02              Driver Version: 595.99.02      CUDA Version: 13.2     |
++-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA GeForce RTX 5070 Ti     Off |   00000000:01:00.0 Off |                  N/A |
+|  0%   43C    P8             14W /  270W |   14301MiB /  16303MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+|   1  NVIDIA GeForce RTX 5070 Ti     Off |   00000000:03:00.0  On |                  N/A |
+| 30%   38C    P8             11W /  270W |   14918MiB /  16303MiB |      4%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|    0   N/A  N/A            3531      G   /usr/bin/gnome-shell                      3MiB |
+|    0   N/A  N/A          172168      C   /opt/ninfer/bin/ninfer-serve          14276MiB |
+|    1   N/A  N/A            3531      G   /usr/bin/gnome-shell                    275MiB |
+|    1   N/A  N/A            4085      G   /usr/bin/Xwayland                         8MiB |
+|    1   N/A  N/A            7453    C+G   /usr/bin/ptyxis                          68MiB |
+|    1   N/A  N/A           35965      G   ...7167/usr/bin/telegram-desktop        140MiB |
+|    1   N/A  N/A           53509      G   /usr/bin/hiddify                         47MiB |
+|    1   N/A  N/A           55716    C+G   /usr/bin/nautilus                        88MiB |
+|    1   N/A  N/A          172168      C   /opt/ninfer/bin/ninfer-serve          14164MiB |
++-----------------------------------------------------------------------------------------+
+
+=== topo -m ===
+	[4mGPU0	GPU1	CPU Affinity	NUMA Affinity	GPU NUMA ID[0m
+GPU0	 X 	PHB	0-31	0		N/A
+GPU1	PHB	 X 	0-31	0		N/A
+
+Legend:
+
+  X    = Self
+  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)
+  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node
+  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)
+  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)
+  PIX  = Connection traversing at most a single PCIe bridge
+  NV#  = Connection traversing a bonded set of # NVLinks
+=== topo -p2p r ===
+ 	[4mGPU0	GPU1	[0m
+ GPU0	X	CNS	
+ GPU1	CNS	X	
+
+Legend:
+
+  X    = Self
+  OK   = Status Ok
+  CNS  = Chipset not supported
+  GNS  = GPU not supported
+  TNS  = Topology not supported
+  NS   = Not supported
+  U    = Unknown
+=== topo -p2p w ===
+ 	[4mGPU0	GPU1	[0m
+ GPU0	X	CNS	
+ GPU1	CNS	X	
+
+Legend:
+
+  X    = Self
+  OK   = Status Ok
+  CNS  = Chipset not supported
+  GNS  = GPU not supported
+  TNS  = Topology not supported
+  NS   = Not supported
+  U    = Unknown
+
+=== BAR1 / PCIe ===
+    BAR1 Memory Usage
+        Total                                          : 16384 MiB
+        Used                                           : 4 MiB
+--
+    BAR1 Memory Usage
+        Total                                          : 16384 MiB
+        Used                                           : 34 MiB
+0, 1, 5, 8, 16
+1, 1, 5, 8, 16
+
+=== CUDA / toolchain ===
+Build cuda_13.3.r13.3/compiler.38244171_0
+gcc (Ubuntu 15.2.0-16ubuntu1) 15.2.0
+cuda-samples v12.4.1 @ 5f97d7d0dff880bc6567faa4c5e62e389a6d6999 (sparse), nvcc -std=c++17 -arch=native
+
+=== containers ===
+llm-server/ninfer-tp2:v0.4.6 f8d6ebcc2ca7 2.06GB
+llm-server-nvidia-smi-exporter:latest 87b49d14832a 617MB
+llm-server/ninfer-tp2:v0.4.5 8ae156bfe3c7 2.06GB
+ghcr.io/mostlygeek/llama-swap:cuda13 3d49d5d957e1 5.26GB
+llama-swap Up About a minute (healthy)
+llm-grafana Up 3 hours
+llm-promtail Up 3 hours
+llm-loki Up 3 hours
+llm-prometheus Up 3 hours
+llm-nvidia-smi-exporter Up 3 hours
+llm-node-exporter Up 3 hours
+llm-cadvisor Up 3 hours (healthy)
+
+=== models ===
+Qwen-Fixed-Chat-Templates
+Qwen3.8-27B-GGUF
+Qwen3.8-27B-NVFP4
+Qwen3.8-27B-NVFP4-MTP-GGUF
+Qwen3.8-27B-nvfp4-DFlash2NV-MTPNV-NInfer
+Qwen3.8-27B-nvfp4-NInfer
+unsloth-Qwen3.8-27B-NVFP4
+
+=== NInfer engine startup lines (log 2026-10-10) ===
+2026-10-10 10:38:12.820  INFO  capacity | KV 308,992 tokens, nvfp4, auto | pages 4,828/8,192 | runtime 3.61 GiB | free 707.3 MiB
+2026-10-10 10:38:12.820  INFO  tensor parallel | tp 2 on devices 0,1 | p2p off (host-staged copies) | KV, StateImages and runtime reserved per rank | Host context-cache tiers off (rank 1 state has no Host replica) | 4 Device checkpoint StateImages; a prefill checkpoint that finds them full first reclaims idle private continuations and is skipped only when none can be released (raise --device-state-slots for many conversations)
+2026-10-10 10:38:12.820  INFO  tensor parallel | captured all-reduces: mailbox | exchange kernel pipelined | slot 160 KiB | mailbox probe 0.03 ms
+2026-10-10 10:38:12.820  INFO  tensor parallel | DFlash2 proposal head: split by vocabulary
+2026-10-10 10:38:12.820  INFO  tensor parallel | DFlash2 drafter: split (16/4 attention heads, MLP halves per rank; selector on rank 1)
+2026-10-10 10:38:12.820  INFO  context cache | 2 active + 4 cached device states | host 0 states, 0 B KV | private 8 | shared 4 | anchors 2

@@ -1,0 +1,39 @@
+{
+  "label": "ninfer-decode-600-instruct",
+  "model": "qwen3.8-27b",
+  "max_tokens": 600,
+  "ttft_s": 0.09923271300067427,
+  "total_s": 4.7376201749993925,
+  "decode_span_s": 8878.818994669,
+  "content_chars": 3142,
+  "content_chunks": 259,
+  "completion_tokens": 600,
+  "decode_tok_s_chunks": 0.029170546235429303,
+  "decode_tok_s_usage": 0.06757655498555051,
+  "usage": {
+    "completion_tokens": 600,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 56,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 656
+  },
+  "timings": {
+    "cache_n": 0,
+    "draft_n": 1791,
+    "draft_n_accepted": 341,
+    "predicted_ms": 4638.313462,
+    "predicted_n": 600,
+    "predicted_per_second": 129.14176777990258,
+    "predicted_per_token_ms": 7.743428150250417,
+    "prompt_ms": 96.78406700000001,
+    "prompt_n": 56,
+    "prompt_per_second": 578.6076338370859,
+    "prompt_per_token_ms": 1.7282869107142858
+  },
+  "finish_reason": "length",
+  "text": "The history of alpine railways is a narrative woven from steel, steam, and the relentless human desire to conquer nature’s most formidable barriers. Emerging in the mid-nineteenth century, these engineering marvels were not merely modes of transport; they were instruments of geopolitical strategy, economic transformation, and the birth of modern tourism. The story of the mountain rail begins with the realization that the Alps, once seen as an impenetrable wall dividing Europe, could be bridged by technology.\n\nThe first major breakthrough came with the construction of the Semmering Railway in Austria, completed in 1854. This line was a testament to the ingenuity required to navigate steep gradients and narrow valleys. Engineers like Carl von Etzel utilized innovative techniques such as zigzagging tracks and massive retaining walls to stabilize slopes. However, it was the subsequent development of rack-and-pinion systems that truly unlocked the potential for high-altitude travel. In Switzerland, the Rigi Railway, opened in 1875, became one of the earliest successful rack railways, proving that passengers could ascend significant elevations with relative comfort. These early projects established the technical vocabulary of alpine engineering: tunnels bored through solid rock, viaducts spanning deep chasms, and curves designed to minimize gradient while maximizing safety.\n\nPolitically, the construction of these lines was driven by the unification movements sweeping across Europe. For Germany, the Brenner Pass railway, completed in 1867, was crucial for connecting Berlin to the industrial heartland of Northern Italy via Vienna. It symbolized the integration of Central Europe into a cohesive economic and military bloc. Similarly, in France and Italy, the Fréjus Tunnel, finished in 1871, represented a triumph of national pride and diplomatic cooperation. The tunnel, nearly eleven kilometers long, was drilled simultaneously from both ends using powerful air drills, a feat that captured the imagination of the public and politicians alike. These transnational links reduced travel times from days to hours, fostering trade and cultural exchange while also allowing for the rapid mobilization of troops—a dual-use capability that underscored the strategic importance of alpine connectivity.\n\nEconomically and culturally, the railways catalyzed the rise of the Alpine tourist industry. Before the rails, the mountains were accessible only to hardy hikers or wealthy patrons of expensive mule trains. The arrival of the train democratized access to the peaks. Resorts such as Davos, St. Moritz, and Zermatt transformed from remote hamlets into global hubs for winter sports and summer retreats. The \"Grand Tour\" of the aristocracy evolved into mass leisure travel, creating a new service economy centered around hospitality, guided tours, and equipment rental. The railway station itself became a landmark, often more architecturally impressive than the surrounding villages, serving as a gateway to paradise.\n\nHowever, this progress came at a significant environmental and social cost. The landscape was scarred by cut"
+}

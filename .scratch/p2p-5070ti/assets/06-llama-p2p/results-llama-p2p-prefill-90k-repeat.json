@@ -1,0 +1,36 @@
+{
+  "label": "llama-p2p-prefill-90k-repeat",
+  "model": "qwen3.8-27b",
+  "max_tokens": 4,
+  "ttft_s": 45.01172615499945,
+  "total_s": 45.065572489999795,
+  "decode_span_s": 7387.546433799001,
+  "content_chars": 28,
+  "content_chunks": 4,
+  "completion_tokens": 4,
+  "decode_tok_s_chunks": 0.0005414517574738308,
+  "decode_tok_s_usage": 0.0005414517574738308,
+  "usage": {
+    "completion_tokens": 4,
+    "prompt_tokens": 89738,
+    "total_tokens": 89742,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    }
+  },
+  "timings": {
+    "cache_n": 0,
+    "prompt_n": 89738,
+    "prompt_ms": 43930.429,
+    "prompt_per_token_ms": 0.4895409859814125,
+    "prompt_per_second": 2042.7298809214908,
+    "predicted_n": 4,
+    "predicted_ms": 53.142,
+    "predicted_per_token_ms": 13.2855,
+    "predicted_per_second": 75.27003123706297,
+    "draft_n": 2,
+    "draft_n_accepted": 2
+  },
+  "finish_reason": "length",
+  "text": "The mountain railway climbed"
+}

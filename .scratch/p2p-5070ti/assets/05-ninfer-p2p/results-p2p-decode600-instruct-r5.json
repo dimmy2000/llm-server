@@ -1,0 +1,39 @@
+{
+  "label": "p2p-instruct-r5",
+  "model": "qwen3.8-27b",
+  "max_tokens": 600,
+  "ttft_s": 0.07093615499979933,
+  "total_s": 4.881489581000096,
+  "decode_span_s": 2522.629691077,
+  "content_chars": 2560,
+  "content_chunks": 246,
+  "completion_tokens": 600,
+  "decode_tok_s_chunks": 0.09751728558105327,
+  "decode_tok_s_usage": 0.23784703800256893,
+  "usage": {
+    "completion_tokens": 600,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 51,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 651
+  },
+  "timings": {
+    "cache_n": 0,
+    "draft_n": 1709,
+    "draft_n_accepted": 354,
+    "predicted_ms": 4810.4971860000005,
+    "predicted_n": 600,
+    "predicted_per_second": 124.51935358018105,
+    "predicted_per_token_ms": 8.03088011018364,
+    "prompt_ms": 69.30799999999999,
+    "prompt_n": 51,
+    "prompt_per_second": 735.8457898078145,
+    "prompt_per_token_ms": 1.3589803921568626
+  },
+  "finish_reason": "length",
+  "text": "The history of alpine railways is a narrative of human ambition colliding with the harshest geography on Earth. From the mid-19th century to the present day, these lines have served as arteries for military logistics, engines of economic integration, and catalysts for mass tourism. They represent one of the most significant feats of engineering in modern history, transforming the Alps from an impassable barrier into a connected landscape.\n\n### I. The Pioneering Era (1840s–1870s): Conquering the Gradient\n\nThe first major challenge was not just altitude, but gradient. Early locomotives could only climb slopes of about 1:20 (5%). Alpine passes often required gradients of 1:10 or steeper. This necessitated radical innovations in traction and track design.\n\n#### Engineering Innovations\n1.  **Rack-and-Pinion Systems**: To handle steep inclines, engineers adopted rack railways. A toothed bar (rack) runs between the rails, engaged by a cogwheel on the locomotive. This provides positive drive, preventing wheels from slipping.\n    *   **Key Figure**: Carl Friedrich von Gerstner’s early concepts were refined by others like Ignaz Kellermann and later by the Swiss engineer Robert Merian.\n2.  **Switchback Loops and Spirals**: Where possible, engineers used switchbacks (zigzag tracks) and spiral tunnels to reduce effective gradients. However, this increased length and cost.\n3.  **Tunneling Technology**: The construction of long, deep tunnels required new techniques for ventilation, drainage, and rock stability. The Gotthard Tunnel (completed 1882) was a landmark, requiring massive steam-powered drills and careful management of groundwater.\n\n#### Key Projects\n*   **Gotthard Railway (Switzerland)**: Opened in stages between 1868 and 1882. It was the world’s first major mountain railway crossing the Alps via a tunnel. The base line (1875) used standard gauge, while the summit section initially used a rack system. The tunnel itself was 14.6 km long, a record at the time.\n*   **Semmering Railway (Austria)**: Opened in 1854, it was the first major railway over an Alpine pass (not through a tunnel). It featured numerous curves, viaducts, and tunnels, demonstrating that rail travel over high mountains was feasible without tunneling the entire route.\n*   **Simplon Tunnel (Switzerland/Italy)**: Completed in 1906, it was longer than Gotthard (19.8 km) and faced extreme geological challenges, including hot rock temperatures and water pressure. It became a critical trade route between Europe and Italy.\n\n### II. The Age of Mass Tourism (1880s–"
+}

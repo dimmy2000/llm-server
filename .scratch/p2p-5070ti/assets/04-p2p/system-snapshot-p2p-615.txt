@@ -1,0 +1,80 @@
+# Снапшот после включения P2P (тикет 04, 2026-10-10 ~23:05)
+
+## /proc/cmdline
+BOOT_IMAGE=/boot/vmlinuz-7.0.0-38-generic root=UUID=fc48e29e-2bff-4faa-8d4b-42d7db9e6f7d ro quiet splash amd_iommu=on iommu=pt crashkernel=2G-4G:320M,4G-32G:512M,32G-64G:1024M,64G-128G:2048M,128G-:4096M
+
+## dmesg: модуль (провенанс сборки)
+[    5.716628] NVRM: loading NVIDIA UNIX Open Kernel Module for x86_64  615.71.09  Release Build  (dimmy@dimmy-server)  Sat Oct 10 10:39:18 PM MSK 2026
+(vanilla-модули были собраны 14:13, p2p-сборка 22:39 — загружен p2p-модуль)
+
+## dmesg: iommu
+[    0.045530] Kernel command line: BOOT_IMAGE=/boot/vmlinuz-7.0.0-38-generic root=UUID=fc48e29e-2bff-4faa-8d4b-42d7db9e6f7d ro quiet splash amd_iommu=on iommu=pt crashkernel=2G-4G:320M,4G-32G:512M,32G-64G:1024M,64G-128G:2048M,128G-:4096M
+[    0.045580] Unknown kernel command line parameters "splash", will be passed to user space.
+[    0.437339] iommu: Default domain type: Passthrough (set via kernel command line)
+
+## nvidia-smi
+index, name, driver_version, pci.bus_id, pcie.link.gen.max, pcie.link.width.max
+0, NVIDIA GeForce RTX 5070 Ti, 615.71.09, 00000000:01:00.0, 5, 16
+1, NVIDIA GeForce RTX 5070 Ti, 615.71.09, 00000000:03:00.0, 5, 16
+
+## BAR1
+    BAR1 Memory Usage
+        Total                                          : 16384 MiB
+        Used                                           : 14 MiB
+        Free                                           : 16370 MiB
+    Conf Compute Protected Memory Usage
+--
+    BAR1 Memory Usage
+        Total                                          : 16384 MiB
+        Used                                           : 432 MiB
+        Free                                           : 15952 MiB
+    Conf Compute Protected Memory Usage
+
+## topo
+	[4mGPU0	GPU1	CPU Affinity	NUMA Affinity	GPU NUMA ID[0m
+GPU0	 X 	PHB	0-31	0		N/A
+GPU1	PHB	 X 	0-31	0		N/A
+
+Legend:
+
+  X    = Self
+  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)
+  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node
+  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)
+  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)
+  PIX  = Connection traversing at most a single PCIe bridge
+  NV#  = Connection traversing a bonded set of # NVLinks
+
+## topo -p2p r
+ 	[4mGPU0	GPU1	[0m
+ GPU0	X	OK	
+ GPU1	OK	X	
+
+Legend:
+
+  X    = Self
+  OK   = Status Ok
+  CNS  = Chipset not supported
+  GNS  = GPU not supported
+  TNS  = Topology not supported
+  NS   = Not supported
+  DR   = Disabled by regkey
+  U    = Unknown
+
+## topo -p2p w
+ 	[4mGPU0	GPU1	[0m
+ GPU0	X	OK	
+ GPU1	OK	X	
+
+Legend:
+
+  X    = Self
+  OK   = Status Ok
+  CNS  = Chipset not supported
+  GNS  = GPU not supported
+  TNS  = Topology not supported
+  NS   = Not supported
+  DR   = Disabled by regkey
+  U    = Unknown
+
+## NVRM errors/Xid: 0

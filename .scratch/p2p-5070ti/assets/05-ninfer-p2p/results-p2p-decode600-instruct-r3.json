@@ -1,0 +1,39 @@
+{
+  "label": "p2p-instruct-r3",
+  "model": "qwen3.8-27b",
+  "max_tokens": 600,
+  "ttft_s": 0.07036706400003823,
+  "total_s": 4.801646151000114,
+  "decode_span_s": 2513.438459777,
+  "content_chars": 2571,
+  "content_chunks": 242,
+  "completion_tokens": 600,
+  "decode_tok_s_chunks": 0.0962824448948199,
+  "decode_tok_s_usage": 0.23871680552434685,
+  "usage": {
+    "completion_tokens": 600,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 49,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 649
+  },
+  "timings": {
+    "cache_n": 0,
+    "draft_n": 1677,
+    "draft_n_accepted": 358,
+    "predicted_ms": 4731.267568,
+    "predicted_n": 600,
+    "predicted_per_second": 126.6045497091193,
+    "predicted_per_token_ms": 7.8986102971619365,
+    "prompt_ms": 68.784689,
+    "prompt_n": 49,
+    "prompt_per_second": 712.3678352314713,
+    "prompt_per_token_ms": 1.4037691632653062
+  },
+  "finish_reason": "length",
+  "text": "# The Vertical Frontier: A History of Alpine Railways\n\nThe history of alpine railways is not merely a story of transportation; it is a narrative of engineering triumph, geopolitical ambition, and the birth of modern mass tourism. Spanning from the mid-19th century to the present day, these lines represent one of humanity’s most significant achievements in overcoming natural barriers. This detailed history explores the interplay between technical innovation, economic forces, and political strategy that shaped the rail networks of the Alps.\n\n## I. The Pioneering Era (1840s–1870s): Conquering the Gradient\n\n### Engineering Challenges and Innovations\nThe first major challenge was the gradient. Standard steam locomotives struggled on slopes exceeding 3–4%. To cross the Alps, engineers had to invent new solutions:\n\n1.  **Cable-Hauled Systems**: Early attempts used external cables pulled by winches at stations or intermediate points.\n2.  **Rack-and-Pinion (Abt/Strubel) Systems**: The most revolutionary solution. By adding a toothed rack rail between the running rails, locomotives could grip directly into the track, allowing them to climb gradients up to 10% or more without slipping.\n    *   **Key Figure**: Carl Friedrich von Strehlen (Swiss engineer) and later Ignaz von Edl (Austrian), who refined rack systems for mountainous terrain.\n    *   **First Rack Railway**: The **Engadine Railway** (1888–1895) in Switzerland was among the first successful high-altitude rack lines, but earlier experimental lines like the **Zug-Rigi-Bahn** (1871) proved the concept.\n\n3.  **Switchback Loops and Spiral Tunnels**: Where rack systems were insufficient, engineers used switchbacks (zigzagging tracks) and spiral tunnels to reduce effective gradients.\n\n### Key Projects\n*   **Gotthard Tunnel (1882)**: While not a rack line, the Gotthard Base Tunnel was the world’s first major railway tunnel through an alpine range. Its construction required drilling 14.6 km through solid granite using compressed air drills—a feat that took 17 years and claimed over 400 lives. It enabled standard-gauge trains to cross the Alps without climbing steep grades.\n*   **Semmering Railway (1854)**: In Austria, this line used switchbacks and viaducts to cross the Semmering Pass. It was one of the first major mountain railways built with conventional adhesion locomotives, demonstrating that complex geometry could overcome elevation.\n\n## II. The Rise of Tourism Railways (1880s–1914)\n\nAs industrialization created a leisure class, the Alps became a destination for health, sport, and"
+}

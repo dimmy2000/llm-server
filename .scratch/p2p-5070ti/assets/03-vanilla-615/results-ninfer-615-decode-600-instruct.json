@@ -1,0 +1,39 @@
+{
+  "label": "ninfer-615-decode-600-instruct",
+  "model": "qwen3.8-27b",
+  "max_tokens": 600,
+  "ttft_s": 0.07820801399998345,
+  "total_s": 4.617053910999971,
+  "decode_span_s": 356.593507556,
+  "content_chars": 2587,
+  "content_chunks": 250,
+  "completion_tokens": 600,
+  "decode_tok_s_chunks": 0.7010783839375976,
+  "decode_tok_s_usage": 1.6825881214502343,
+  "usage": {
+    "completion_tokens": 600,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 52,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 652
+  },
+  "timings": {
+    "cache_n": 0,
+    "draft_n": 1736,
+    "draft_n_accepted": 350,
+    "predicted_ms": 4538.748347000001,
+    "predicted_n": 600,
+    "predicted_per_second": 131.97471069219426,
+    "predicted_per_token_ms": 7.577209260434058,
+    "prompt_ms": 76.79244,
+    "prompt_n": 52,
+    "prompt_per_second": 677.1499902855021,
+    "prompt_per_token_ms": 1.4767776923076923
+  },
+  "finish_reason": "length",
+  "text": "The history of alpine railways is a narrative defined by the intersection of extreme geography, technological ambition, and geopolitical strategy. From the 19th century to the present day, these lines have transformed the Swiss, Austrian, Italian, and French Alps from impenetrable barriers into hubs of global tourism and economic integration.\n\nThis detailed history covers three core dimensions: **engineering innovation**, **tourism development**, and **political dynamics**.\n\n---\n\n## I. The Pioneering Era (1850s–1890s): Conquering the Impossible\n\n### Engineering Challenges\nBefore the mid-19th century, crossing the Alps meant traversing high mountain passes on foot or horseback. Railways required solutions to three fundamental problems:\n1. **Gradient**: Standard rail gradients are limited to ~2.5% for steam locomotives; alpine terrain often exceeds 10%.\n2. **Tunneling**: Drilling through solid rock in cold, wet conditions without modern explosives or ventilation.\n3. **Curvature**: Tight curves necessitated short trains and specialized wheel-rail interactions.\n\n### Key Innovations\n- **Rack-and-Pinion Systems**: Introduced by **Nicolaus Riggenbach** in Switzerland, rack railways used a toothed rail under the track to grip with a cogwheel on the locomotive. This allowed steep gradients (up to 25%) independent of adhesion.\n  - *First Rack Railway*: The **Zug-Rigi-Bahn** (1871), connecting Zug to Rigi Kulm.\n- **Cable-Hauled Systems**: Used where gradients were too steep even for racks. Cables pulled trains up, with counterweights or gravity assisting descent.\n  - *Example*: The **Gotthard Pass railway** initially considered cable systems before settling on a long tunnel solution.\n- **Adhesion Improvements**: Sanding devices, heavier axles, and compound engines improved traction on standard tracks.\n\n### Major Projects\n1. **Gotthard Base Tunnel (Strecke)** (Completed 1882)\n   - **Engineering**: A 14.6 km base tunnel piercing the Gotthard Massif. It was the first major trans-alpine railway tunnel, using compressed air drills and innovative drainage systems.\n   - **Political Impact**: Reduced travel time between Basel and Milan from 12 hours to 6 hours. It cemented Swiss neutrality by providing an alternative to dangerous surface routes controlled by other powers.\n   - **Tourism**: Made Lake Como and Italian lakes accessible to northern European tourists, sparking the \"Grand Tour\" era.\n\n2. **Semmering Railway (Austria)** (Completed 1854)\n   - **Engineering**: Built at an average gradient of 5.8%, it featured numerous tunnels, viaducts, and switchbacks."
+}

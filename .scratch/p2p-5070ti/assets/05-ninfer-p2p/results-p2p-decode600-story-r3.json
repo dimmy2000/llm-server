@@ -1,0 +1,39 @@
+{
+  "label": "p2p-story-r3",
+  "model": "qwen3.8-27b-chat-medium",
+  "max_tokens": 600,
+  "ttft_s": 2.165377122999871,
+  "total_s": 4.66060470299999,
+  "decode_span_s": 2487.97062495,
+  "content_chars": 1325,
+  "content_chunks": 128,
+  "completion_tokens": 600,
+  "decode_tok_s_chunks": 0.05144755276303649,
+  "decode_tok_s_usage": 0.24116040357673355,
+  "usage": {
+    "completion_tokens": 600,
+    "completion_tokens_details": {
+      "reasoning_tokens": 303
+    },
+    "prompt_tokens": 45,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 645
+  },
+  "timings": {
+    "cache_n": 0,
+    "draft_n": 1628,
+    "draft_n_accepted": 365,
+    "predicted_ms": 4590.39919,
+    "predicted_n": 600,
+    "predicted_per_second": 130.4897406972573,
+    "predicted_per_token_ms": 7.663437712854758,
+    "prompt_ms": 68.59306799999999,
+    "prompt_n": 45,
+    "prompt_per_second": 656.0429692399822,
+    "prompt_per_token_ms": 1.5242903999999997
+  },
+  "finish_reason": "length",
+  "text": "# The Ascent of Kesslerwand\n\nThe locomotive coughed its first breath at four in the morning, a long, sulfurous exhale that shook the station platform at Kesslermünde. Elise Varnham watched the white plume curl upward into the pre-dawn dark, threading between the pine trees that lined the valley floor, and felt something loosen in her chest—a tension she hadn't known she was carrying until it released.\n\nThe mountain was waiting above her. She could not see it, not yet, not in this hour when the valley held its breath in the cold. But she could feel its weight pressing down through the soles of her boots, through the sleepless night in the little hotel room where she'd spread her blank maps across the floor like the pages of a scripture she was trying to read backwards.\n\nThe train was the *Kesslerwandbahn*, a narrow-gauge line that had been running since 1923, when a consortium of Swiss, Austrian, and local valley engineers had driven their steel spike into the living rock of the Kesslerwand massif and declared that the pass at its summit—2,340 meters above sea level—would be accessible to the world. For nearly a century, the railway had climbed. It was, in many ways, the only reason the pass still existed as anything more than a footnote in geological surveys. Without the station at the top, the road, the"
+}

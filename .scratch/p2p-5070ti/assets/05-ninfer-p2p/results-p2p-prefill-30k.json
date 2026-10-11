@@ -1,0 +1,39 @@
+{
+  "label": "ninfer-p2p-prefill-30k",
+  "model": "qwen3.8-27b",
+  "max_tokens": 4,
+  "ttft_s": 5.187725679000096,
+  "total_s": 5.229206348999924,
+  "decode_span_s": 1153.120465471,
+  "content_chars": 28,
+  "content_chunks": 3,
+  "completion_tokens": 4,
+  "decode_tok_s_chunks": 0.0026016362468899807,
+  "decode_tok_s_usage": 0.003468848329186641,
+  "usage": {
+    "completion_tokens": 4,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 29960,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 29964
+  },
+  "timings": {
+    "cache_n": 0,
+    "draft_n": 3,
+    "draft_n_accepted": 1,
+    "predicted_ms": 41.46121,
+    "predicted_n": 4,
+    "predicted_per_second": 72.3567884294742,
+    "predicted_per_token_ms": 13.820403333333333,
+    "prompt_ms": 5168.826725,
+    "prompt_n": 29960,
+    "prompt_per_second": 5796.286390312301,
+    "prompt_per_token_ms": 0.17252425650867823
+  },
+  "finish_reason": "length",
+  "text": "The mountain railway climbed"
+}

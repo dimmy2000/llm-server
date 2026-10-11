@@ -1,0 +1,39 @@
+{
+  "label": "ninfer-615-decode-600-essay",
+  "model": "qwen3.8-27b-chat-medium",
+  "max_tokens": 600,
+  "ttft_s": null,
+  "total_s": 4.464827595999964,
+  "decode_span_s": null,
+  "content_chars": 0,
+  "content_chunks": 0,
+  "completion_tokens": 600,
+  "decode_tok_s_chunks": null,
+  "decode_tok_s_usage": null,
+  "usage": {
+    "completion_tokens": 600,
+    "completion_tokens_details": {
+      "reasoning_tokens": 600
+    },
+    "prompt_tokens": 52,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 652
+  },
+  "timings": {
+    "cache_n": 0,
+    "draft_n": 1674,
+    "draft_n_accepted": 358,
+    "predicted_ms": 4385.850740999999,
+    "predicted_n": 600,
+    "predicted_per_second": 136.57555520537952,
+    "predicted_per_token_ms": 7.321954492487478,
+    "prompt_ms": 77.412531,
+    "prompt_n": 52,
+    "prompt_per_second": 671.7258734248077,
+    "prompt_per_token_ms": 1.4887025192307692
+  },
+  "finish_reason": "length",
+  "text": ""
+}

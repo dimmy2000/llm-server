@@ -1,0 +1,39 @@
+{
+  "label": "ninfer-decode-600",
+  "model": "qwen3.8-27b-chat-medium",
+  "max_tokens": 600,
+  "ttft_s": 2.720422223999776,
+  "total_s": 3.674630260999038,
+  "decode_span_s": 8795.770516805,
+  "content_chars": 836,
+  "content_chunks": 54,
+  "completion_tokens": 600,
+  "decode_tok_s_chunks": 0.00613931433259074,
+  "decode_tok_s_usage": 0.06821460369545267,
+  "usage": {
+    "completion_tokens": 600,
+    "completion_tokens_details": {
+      "reasoning_tokens": 422
+    },
+    "prompt_tokens": 50,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 650
+  },
+  "timings": {
+    "cache_n": 0,
+    "draft_n": 1392,
+    "draft_n_accepted": 399,
+    "predicted_ms": 3595.688727,
+    "predicted_n": 600,
+    "predicted_per_second": 166.5883911202083,
+    "predicted_per_token_ms": 6.002819243739566,
+    "prompt_ms": 75.467065,
+    "prompt_n": 50,
+    "prompt_per_second": 662.5406725437116,
+    "prompt_per_token_ms": 1.5093413
+  },
+  "finish_reason": "length",
+  "text": "# The Conquest of the White Mountains: Alpine Railways in Engineering, Tourism, and Politics\n\nFor centuries, the Alps were Europe's great wall, a jagged spine of granite and ice that divided peoples, economies, and empires. The railway's arrival in the mid-nineteenth century transformed those peaks from an impassable barrier into a negotiable corridor, and the story of alpine railways is inseparable from the intertwined forces of engineering ingenuity, the birth of a tourism economy, and the political ambitions of emerging nations.\n\nThe engineering challenges were immense. The Semmering Railway in Austria, completed in 1854, is often cited as the first major alpine line, and its construction—over seven years, through 46 tunnels and 91 bridges—established the template for what followed. Engineers like Carl von Etter and later"
+}

@@ -1,0 +1,39 @@
+{
+  "label": "p2p-essay-r1",
+  "model": "qwen3.8-27b-chat-medium",
+  "max_tokens": 600,
+  "ttft_s": 1.57465079900021,
+  "total_s": 4.875443664000159,
+  "decode_span_s": 2453.6978097859997,
+  "content_chars": 1864,
+  "content_chunks": 169,
+  "completion_tokens": 600,
+  "decode_tok_s_chunks": 0.06887563714080154,
+  "decode_tok_s_usage": 0.24452888925728358,
+  "usage": {
+    "completion_tokens": 600,
+    "completion_tokens_details": {
+      "reasoning_tokens": 214
+    },
+    "prompt_tokens": 51,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 651
+  },
+  "timings": {
+    "cache_n": 0,
+    "draft_n": 1690,
+    "draft_n_accepted": 356,
+    "predicted_ms": 4769.377023,
+    "predicted_n": 600,
+    "predicted_per_second": 125.59292274679959,
+    "predicted_per_token_ms": 7.9622320918197,
+    "prompt_ms": 103.902945,
+    "prompt_n": 51,
+    "prompt_per_second": 490.8426801569484,
+    "prompt_per_token_ms": 2.0373126470588234
+  },
+  "finish_reason": "length",
+  "text": "# Iron in the Mountains: The History of Alpine Railways\n\n## I. The Impossible Task\n\nThe Alps are, in the geological sense, a young mountain range. Formed over roughly thirty million years by the collision of the African and Eurasian tectonic plates, they rose with a violence and a incompleteness that distinguish them from the weathered, rounded highlands of Britain or the Appalachian spine of North America. Their peaks still rise abruptly, their valleys cut deep and narrow, their slopes precipitous. For centuries, this topography constituted an absolute barrier to overland movement across continental Europe. Goods, armies, and travelers crossed the Alps by mule track, by donkey caravan, by the occasional cart path that clung to the mountainside in a gesture that seemed more suicidal than practical. The passes—the Simplon, the Great St. Bernard, the Brenner, the Gotthard, the Arlberg, the Semmering—were ancient arteries of trade and war, but they were arteries of very limited capacity. They could carry a handful of wagons in summer and nothing at all in winter. They could not, and would not, carry the industrializing Europe of the nineteenth century.\n\nThe challenge the nineteenth century posed to the Alps was unprecedented. The railway, that new machine of the Industrial Revolution, demanded level gradients, wide curves, and a degree of geometric regularity that was anathema to mountain terrain. To push a locomotive up a slope of even two or three percent was a matter of immense difficulty; above five percent, it was, by the standards of the early 1850s, simply not possible with the available traction. The mountains, for all their beauty, presented gradients that routinely exceeded thirty percent, curves that would have flung a train off the track, and elevations that dropped the atmospheric pressure and the boiling point of water to"
+}

@@ -1,0 +1,39 @@
+{
+  "label": "p2p-instruct-r2",
+  "model": "qwen3.8-27b",
+  "max_tokens": 600,
+  "ttft_s": 0.07051689400032046,
+  "total_s": 4.7798355610002545,
+  "decode_span_s": 2508.6041641469997,
+  "content_chars": 2754,
+  "content_chunks": 241,
+  "completion_tokens": 600,
+  "decode_tok_s_chunks": 0.09606936137808222,
+  "decode_tok_s_usage": 0.23917683330642878,
+  "usage": {
+    "completion_tokens": 600,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 51,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 651
+  },
+  "timings": {
+    "cache_n": 0,
+    "draft_n": 1665,
+    "draft_n_accepted": 359,
+    "predicted_ms": 4709.172776,
+    "predicted_n": 600,
+    "predicted_per_second": 127.19856087098044,
+    "predicted_per_token_ms": 7.861724166944909,
+    "prompt_ms": 69.0158,
+    "prompt_n": 51,
+    "prompt_per_second": 738.9612233720395,
+    "prompt_per_token_ms": 1.3532509803921569
+  },
+  "finish_reason": "length",
+  "text": "The history of alpine railways is a narrative defined by the intersection of extreme geography, technological ingenuity, and shifting political landscapes. From the mid-19th century to the present day, these lines have transformed the Swiss, Austrian, Italian, and French Alps from isolated, rugged highlands into accessible destinations for tourism, trade, and military strategy.\n\nThis detailed history covers three interconnected dimensions: **engineering challenges**, **the rise of alpine tourism**, and **political motivations**.\n\n---\n\n### I. The Pioneering Era (1840s–1870s): Conquering the Impossible\n\n#### 1. Engineering Challenges\nThe primary obstacle in the Alps was not distance, but gradient. Standard railway locomotives of the 19th century could only manage gradients of about 3% (1 in 33). Alpine passes often required gradients of 5–8%, or even steeper. This necessitated radical engineering innovations:\n\n- **Rack Railways (Cog Railway):** Introduced by Carl Friedrich Gerstner and later perfected by Niklaus Riggenbach, rack systems provided additional traction by engaging a toothed rail between the tracks. The first major rack railway was the **Zug–Brig line** in Switzerland (completed 1875), which crossed the Gotthard Pass. It used the Riggenbach system, allowing trains to climb steep sections safely.\n- **Adhesion Systems with Powerful Locomotives:** For less steep gradients, engineers developed specialized adhesion locomotives with large driving wheels and high tractive effort. The **Semmering Railway** in Austria (opened 15 July 1854) was a landmark achievement. Designed by Karl von Roder, it featured 26 tunnels and 14 bridges over a 29 km stretch at an average gradient of 4.4%. It demonstrated that standard adhesion railways could cross high mountain passes without racks.\n- **Tunneling Technology:** Drilling through solid rock required new techniques. The **Gotthard Tunnel** (completed 1882) was the world’s longest railway tunnel at 14.6 km. Engineers used pneumatic drills and compressed air to ventilate the shafts, reducing construction time significantly compared to earlier methods.\n\n#### 2. Political Motivations\n- **National Unity and Economic Integration:** In Switzerland, the federal government saw railways as essential for unifying the cantons. The Gotthard Line connected northern and southern Switzerland, boosting trade with Italy and strengthening national cohesion.\n- **Austrian Imperial Strategy:** The Semmering Railway was part of Emperor Franz Joseph I’s plan to integrate Carinthia and Styria more closely with Vienna, enhancing economic and military mobility within the Habsburg Empire.\n- **Italian Unification:** After 1861, Italy sought to connect its northern industrial regions with the"
+}

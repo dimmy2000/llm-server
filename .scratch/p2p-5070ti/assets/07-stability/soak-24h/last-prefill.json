@@ -1,0 +1,39 @@
+{
+  "label": "prefill 20261011-141140",
+  "model": "qwen3.8-27b-chat-medium",
+  "max_tokens": 4,
+  "ttft_s": null,
+  "total_s": 22.26680202499847,
+  "decode_span_s": null,
+  "content_chars": 0,
+  "content_chunks": 0,
+  "completion_tokens": 4,
+  "decode_tok_s_chunks": null,
+  "decode_tok_s_usage": null,
+  "usage": {
+    "completion_tokens": 4,
+    "completion_tokens_details": {
+      "reasoning_tokens": 4
+    },
+    "prompt_tokens": 89738,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 89742
+  },
+  "timings": {
+    "cache_n": 0,
+    "draft_n": 2,
+    "draft_n_accepted": 2,
+    "predicted_ms": 23.116119,
+    "predicted_n": 4,
+    "predicted_per_second": 129.7795706969669,
+    "predicted_per_token_ms": 7.705373000000001,
+    "prompt_ms": 22200.69131,
+    "prompt_n": 89738,
+    "prompt_per_second": 4042.1263800726215,
+    "prompt_per_token_ms": 0.24739454088568943
+  },
+  "finish_reason": "length",
+  "text": ""
+}

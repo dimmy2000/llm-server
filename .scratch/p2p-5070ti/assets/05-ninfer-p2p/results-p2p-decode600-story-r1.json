@@ -1,0 +1,39 @@
+{
+  "label": "p2p-story-r1",
+  "model": "qwen3.8-27b-chat-medium",
+  "max_tokens": 600,
+  "ttft_s": 2.8949331800004074,
+  "total_s": 4.643826428000011,
+  "decode_span_s": 2477.6996301809995,
+  "content_chars": 835,
+  "content_chunks": 90,
+  "completion_tokens": 600,
+  "decode_tok_s_chunks": 0.03632401559240874,
+  "decode_tok_s_usage": 0.2421601039493916,
+  "usage": {
+    "completion_tokens": 600,
+    "completion_tokens_details": {
+      "reasoning_tokens": 412
+    },
+    "prompt_tokens": 47,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 647
+  },
+  "timings": {
+    "cache_n": 0,
+    "draft_n": 1614,
+    "draft_n_accepted": 366,
+    "predicted_ms": 4572.669361,
+    "predicted_n": 600,
+    "predicted_per_second": 130.9956947923749,
+    "predicted_per_token_ms": 7.633838666110184,
+    "prompt_ms": 69.435311,
+    "prompt_n": 47,
+    "prompt_per_second": 676.8890255276599,
+    "prompt_per_token_ms": 1.4773470425531914
+  },
+  "finish_reason": "length",
+  "text": "# The Ascent\n\nThe station at Valbrunn looked like a piece of machinery that had been left in the sun too long. Its single platform was concrete cracked by two decades of frost, the canopy sagging with a rust that wept in long orange threads. The train was already there when Margit stepped off the regional bus, a short locomotive the color of a bruise, hauling four carriages that rattled against their couplings like old men clearing their throats. The number 447 was stenciled on the nose in white paint, and beneath it, in smaller letters, the words *Alpenbahn Valbrunn–Piz Kora*. The whole line was twenty-three kilometers long. It climbed two thousand and one hundred and four meters in that distance.\n\nMargit bought her ticket from the conductor, a man who looked as though he had been carved from the same limestone that formed"
+}

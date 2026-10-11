@@ -1,0 +1,39 @@
+{
+  "label": "p2p-essay-r3",
+  "model": "qwen3.8-27b-chat-medium",
+  "max_tokens": 600,
+  "ttft_s": null,
+  "total_s": 4.170848496999952,
+  "decode_span_s": null,
+  "content_chars": 0,
+  "content_chunks": 0,
+  "completion_tokens": 600,
+  "decode_tok_s_chunks": null,
+  "decode_tok_s_usage": null,
+  "usage": {
+    "completion_tokens": 600,
+    "completion_tokens_details": {
+      "reasoning_tokens": 600
+    },
+    "prompt_tokens": 46,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 646
+  },
+  "timings": {
+    "cache_n": 0,
+    "draft_n": 1453,
+    "draft_n_accepted": 390,
+    "predicted_ms": 4100.682124000001,
+    "predicted_n": 600,
+    "predicted_per_second": 146.0732585181967,
+    "predicted_per_token_ms": 6.845880006677798,
+    "prompt_ms": 68.552589,
+    "prompt_n": 46,
+    "prompt_per_second": 671.0176912501438,
+    "prompt_per_token_ms": 1.4902736739130433
+  },
+  "finish_reason": "length",
+  "text": ""
+}

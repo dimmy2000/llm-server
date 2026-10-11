@@ -1,0 +1,39 @@
+{
+  "label": "p2p-story-r5",
+  "model": "qwen3.8-27b-chat-medium",
+  "max_tokens": 600,
+  "ttft_s": 3.2477320689999942,
+  "total_s": 4.6224188490000415,
+  "decode_span_s": 2495.647113834,
+  "content_chars": 702,
+  "content_chunks": 71,
+  "completion_tokens": 600,
+  "decode_tok_s_chunks": 0.028449535034993183,
+  "decode_tok_s_usage": 0.24041860592951986,
+  "usage": {
+    "completion_tokens": 600,
+    "completion_tokens_details": {
+      "reasoning_tokens": 446
+    },
+    "prompt_tokens": 46,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 646
+  },
+  "timings": {
+    "cache_n": 0,
+    "draft_n": 1615,
+    "draft_n_accepted": 367,
+    "predicted_ms": 4551.657654000001,
+    "predicted_n": 600,
+    "predicted_per_second": 131.600407045903,
+    "predicted_per_token_ms": 7.598760691151921,
+    "prompt_ms": 69.10977,
+    "prompt_n": 46,
+    "prompt_per_second": 665.6077715205824,
+    "prompt_per_token_ms": 1.502386304347826
+  },
+  "finish_reason": "length",
+  "text": "# The Cog and the Sky\n\nThe 06:14 to Oberwald departed on time, as it always did, the little steam whistle exhaling a thin grey thread into the August morning. Margit pressed her forehead against the cold glass of the carriage window and watched the station dissolve—first the painted signboard with its faded lettering, then the wooden benches where no one sat, then the narrow platform where a single man in a flat cap waved a green flag and stood rigid, watching the train pull free.\n\nShe sat in the second carriage from the front, in the upper deck, because on this railway the upper deck was where the view lived. Below her, through the gap between the carriages, she could just make out the driver"
+}
