@@ -7,14 +7,14 @@ services:
   ninfer-swap:
     profiles:
       - ninfer
-    image: llm-server/ninfer-tp2:v0.4.5
+    image: llm-server/ninfer-tp2:v0.4.6
     build:
       context: .
       dockerfile: Dockerfile
       args:
-        NINFER_VERSION: v0.4.5
-        NINFER_ASSET: ninfer-tp2-v0.4.5-linux-x86_64-sm120a-ubuntu26.04.tar.gz
-        NINFER_SHA256: 22d0d447be1a6665e0ae6243bfb7c49fe8e3a895c16430fca4ce3607f3b95a1a
+        NINFER_VERSION: v0.4.6
+        NINFER_ASSET: ninfer-tp2-v0.4.6-linux-x86_64-sm120a-ubuntu26.04.tar.gz
+        NINFER_SHA256: aadbaaf99e3204fd97a5afe130254a7dd06430f404f1951c5d3ab74f8588c614
     container_name: llama-swap
     ports:
       - "8080:8080"

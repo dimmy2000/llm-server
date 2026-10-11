@@ -11,9 +11,14 @@ FROM ghcr.io/mostlygeek/llama-swap:cuda13 AS llama_swap
 
 FROM ubuntu:26.04
 
-ARG NINFER_VERSION=v0.4.5
-ARG NINFER_ASSET=ninfer-tp2-v0.4.5-linux-x86_64-sm120a-ubuntu26.04.tar.gz
-ARG NINFER_SHA256=22d0d447be1a6665e0ae6243bfb7c49fe8e3a895c16430fca4ce3607f3b95a1a
+# Движок v0.4.6 == релиз v0.4.7 по C++-дереву (release notes v0.4.7: «the
+# C++ tree is the same as v0.4.6, v0.4.6 tarball runs it»). У v0.4.7 нет
+# published-ассетов, поэтому ставим архив v0.4.6, зафиксированный по SHA-256;
+# v0.4.6 также объявлен минимумом, требуемым артефактом glfenix (см.
+# ninfer/fetch-model.sh).
+ARG NINFER_VERSION=v0.4.6
+ARG NINFER_ASSET=ninfer-tp2-v0.4.6-linux-x86_64-sm120a-ubuntu26.04.tar.gz
+ARG NINFER_SHA256=aadbaaf99e3204fd97a5afe130254a7dd06430f404f1951c5d3ab74f8588c614
 
 # FFmpeg 8 (libav*62) — зависимость ninfer-serve для видео-входа,
 # libcurl4t64 — HTTP-клиент и healthcheck из образа llama-swap.

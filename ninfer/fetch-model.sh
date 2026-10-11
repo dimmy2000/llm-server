@@ -3,19 +3,24 @@
 #
 #   ./ninfer/fetch-model.sh [каталог-назначения]
 #
-# Каталог по умолчанию — /opt/models/Qwen3.8-27B-nvfp4-NInfer, путь внутри
-# контейнера — /models/Qwen3.8-27B-nvfp4-NInfer/qwen3_8_27b_nvfp4.ninfer
-# (см. ninfer/config.yaml). Нужно ~24 ГиБ свободного места.
+# Каталог по умолчанию — /opt/models/Qwen3.8-27B-nvfp4-DFlash2NV-MTPNV-NInfer,
+# путь внутри контейнера —
+# /models/Qwen3.8-27B-nvfp4-DFlash2NV-MTPNV-NInfer/qwen3_8_27b_nvfp4.ninfer
+# (см. ninfer/config.yaml). Нужно ~22 ГиБ свободного места.
 #
-# Контрольная сумма зафиксирована из SHA256SUMS в репозитории артефакта
-# (ревизия a107ba1b5b0609d9ca90d5ed61439f5f5cc7d64d).
+# Артефакт — glfenix/Qwen3.8-27B-nvfp4-DFlash2NVFP4drafter-NInfer: весовая часть
+# побитово совпадает с официальным neroued/Qwen3.8-27B-nvfp4-NInfer (greedy
+# выход равен), отличается только блок DFlash2 (NVFP4-драфтер и proposal-голова).
+# Требует движок v0.4.6+ (движок профиля — v0.4.6 == код v0.4.7).
+#
+# Контрольная сумма зафиксирована из SHA256SUMS в репозитории артефакта.
 
 set -euo pipefail
 
-REPO='neroued/Qwen3.8-27B-nvfp4-NInfer'
+REPO='glfenix/Qwen3.8-27B-nvfp4-DFlash2NVFP4drafter-NInfer'
 FILE='qwen3_8_27b_nvfp4.ninfer'
-SHA256='74d2c57145e6ff11d1d2faa79594477f9bc903a611af1fb20218189fbbb77d82'
-DEST="${1:-/opt/models/Qwen3.8-27B-nvfp4-NInfer}"
+SHA256='bfc05a7077926775fb872cf227e984cb5d27487ef9aa0a346cc3d6763f72330a'
+DEST="${1:-/opt/models/Qwen3.8-27B-nvfp4-DFlash2NV-MTPNV-NInfer}"
 
 mkdir -p "$DEST"
 target="$DEST/$FILE"

@@ -7,55 +7,41 @@ healthCheckTimeout: 600
 logLevel: info
 logToStdout: both
 sendLoadingState: true
-# Режимы ниже — алиасы setParamsByID; без этого флага они не видны в /v1/models.
 includeAliasesInList: true
-unloadTimeout: 60
+
+# Единственная модель запускается llama-swap как дочерний процесс ninfer.
+# Модель прелоадится при старте: переключать нечего, поэтому первый запрос не
+# ждёт чтения весов с диска.
+hooks:
+  on_startup:
+    preload:
+      - qwen3.8-27b
 
 models:
   qwen3.8-27b:
-    name: "qwen3.8-27b (NInfer TP=2, nvfp4 KV, 262144 ctx, 2 lanes)"
-    # Базовый профиль переключён на nvfp4 KV и две полосы (тикет 12,
-    # 2026-10-07): --kv-dtype nvfp4, --max-concurrency 2, --max-context 262144
-    # (позиционный потолок артефакта), --kv-capacity 495104, H=3.
-    # Требование: на дисплейной GPU1 под пиковой нагрузкой ≥ 512 MiB (общий
-    # порог проекта; временный порог 600 MiB снят тем же днём ради +1 слота,
-    # решение — комментарий к тикету 12).
-    # Startup-sweep (nvfp4, C=2, --max-context 262144, меняются только
-    # --kv-capacity и --device-state-slots), свободно после старта MiB
-    # (GPU0 / GPU1):
-    #   524288, H=2 → 554 / 439   (полный пул 2×262144, ниже порога 512)
-    #   503296, H=2 → 750 / 635
-    #   503296, H=3 → 676 / 513   (впритык: запас 1 MiB)
-    #   495104, H=3 → 752 / 589   <- базовый (при спокойном десктопе — 637;
-    #                                занятость десктопа на GPU1 гуляет до ±50)
-    #   491520, H=2 → 860 / 745
-    #   491520, H=4 → 712 / 597
-    #   491520, H=8 → 418 / 303   (ниже порога 512)
-    #   489472, H=4 → 732 / 617
-    # Прайс линеен: ~9.5 MiB на 1024 токена пула, ~74 MiB на каждый
-    # device-state-slot (на ранг; подтверждено на 503296: H=2→H=3 =
-    # 750→676 на GPU0, где нет десктопа). Запас 589 над 512 покрывает и
-    # разброс десктопа (±50), и нагрузку: под парой 150k×2 минимум свободной
-    # VRAM равен стартовому (752 / 589). Одиночный запрос достигает
-    # моделевых 262144 (пул больше), две полосы делят 495104 (~247 552 на
-    # каждую при равных промптах), промпт 264 000 токенов отклоняется чистым
-    # `400 context_length_exceeded`. Прежний профиль int8 241664 / C=1 / H=4
-    # и рецепты A/B тикета 11 — в docs/research/0009 и git-истории конфига.
+    name: "qwen3.8-27b (NInfer TP=2, DFlash2, nvfp4 KV, 262144 ctx, 2 lanes)"
     cmd: |
       /opt/ninfer/bin/ninfer-serve
-      /models/Qwen3.8-27B-nvfp4-NInfer/qwen3_8_27b_nvfp4.ninfer
-      --host 127.0.0.1 --port ${PORT}
+      /models/Qwen3.8-27B-nvfp4-DFlash2NV-MTPNV-NInfer/qwen3_8_27b_nvfp4.ninfer
+      --host 127.0.0.1
+      --port ${PORT}
       --model-id qwen3.8-27b
-      --tp 2 --devices 0,1
+      --tp 2
+      --devices 0,1
       --kv-dtype nvfp4
       --max-context 262144
-      --kv-capacity 495104
+      --kv-capacity auto
+      --vram-headroom-mib 640
       --max-concurrency 2
-      --device-state-slots 3
-      --spec mtp --draft-tokens 3
-      --vision --vision-device 0 --max-vision-tokens 4096
+      --device-state-slots 4
+      --spec dflash2
+      --draft-tokens 7
+      --lm-head-draft
+      --vision
+      --vision-device 0
+      --max-vision-tokens 4096
       --embedding-host
-      --default-max-tokens 32768
+      --default-max-tokens 16384
       --pending-timeout-ms 600000
     # ninfer-serve отклоняет запрос, если request.model != --model-id, поэтому
     # llama-swap обязан переписывать имя модели для всех алиасов режимов.
@@ -75,43 +61,36 @@ models:
       # иначе они ломают инварианты пресета.
       stripParams: "temperature, top_p, top_k, min_p, presence_penalty, frequency_penalty, repetition_penalty"
       setParamsByID:
-        # Режим instruct: thinking выключается на стороне движка, клиентский
-        # reasoning_effort не может его включить.
+        # Режим 1: быстрые ответы без thinking
         "qwen3.8-27b":
           reasoning_effort: "none"
-        # Режим thinking: уровень reasoning задаёт сервер по имени алиаса, как
-        # в llama-профиле, поэтому клиенту effort передавать не нужно.
-        # reasoning_effort — жёсткий ключ setParamsByID, клиентское значение
-        # перезаписывается (llama-swap internal/server/filters.go:166), а
-        # chat_template_kwargs заменяется целиком: enable_thinking клиента до
-        # движка не доходит, поэтому 400 conflicting_template_option на
-        # thinking-режимах не воспроизводится. На instruct-режиме, где
-        # chat_template_kwargs не задан, enable_thinking клиента доходит и
-        # конфликтует с reasoning_effort: none сервера — 400.
-        # Замеры: docs/research/0009, раздел «Уровень reasoning на стороне сервера».
-        # preserve_thinking: false — reasoning не возвращается в следующие
-        # запросы диалога (режим чата).
+
+        # Режим 2: чат с thinking, reasoning скрыт (preserve off), effort low
         "qwen3.8-27b-chat-low":
           reasoning_effort: "low"
           chat_template_kwargs:
             preserve_thinking: false
+        # Режим 3: чат с thinking, reasoning скрыт (preserve off), effort medium
         "qwen3.8-27b-chat-medium":
           reasoning_effort: "medium"
           chat_template_kwargs:
             preserve_thinking: false
+        # Режим 4: чат с thinking, reasoning скрыт (preserve off), effort xhigh
         "qwen3.8-27b-chat-xhigh":
           reasoning_effort: "xhigh"
           chat_template_kwargs:
             preserve_thinking: false
-        # Режим thinking с сохранением reasoning в контексте диалога (агент).
+        # Режим 5: агент, thinking возвращается (preserve on), effort low
         "qwen3.8-27b-agent-low":
           reasoning_effort: "low"
           chat_template_kwargs:
             preserve_thinking: true
+        # Режим 6: агент, thinking возвращается (preserve on), effort medium
         "qwen3.8-27b-agent-medium":
           reasoning_effort: "medium"
           chat_template_kwargs:
             preserve_thinking: true
+        # Режим 7: агент, thinking возвращается (preserve on), effort xhigh
         "qwen3.8-27b-agent-xhigh":
           reasoning_effort: "xhigh"
           chat_template_kwargs:

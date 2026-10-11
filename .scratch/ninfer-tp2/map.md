@@ -14,10 +14,12 @@ llama-swap, официальный артефакт Qwen3.8-27B, те же пу�
 из сервиса `ninfer-swap`, официальный артефакт, все 7 ID работают, baseline
 против llama.cpp снят, VRAM-бюджет подтверждён, `nvfp4` KV против `int8`
 измерен. Замеры — в `docs/research/0009-ninfer-tp2-two-5070ti.md` и в
-`AGENTS.md`. Все тикеты 01–12 закрыты: DFlash2 измерен и в базовый профиль не входит
-(05), effort возвращён на сервер (06), `ornith-9b-*` удалена (ADR-0004, 07),
+`AGENTS.md`. Все тикеты 01–12 закрыты: DFlash2 измерен на официальном
+артефакте (05, выведен в базовый профиль тикетом 13),
+effort возвращён на сервер (06), `ornith-9b-*` удалена (ADR-0004, 07),
 мониторинг работает с профилем `ninfer` (08), контекст измерен до 262144 (11),
-базовый профиль переключён на `nvfp4` с двумя полосами (12).
+базовый профиль переключён на `nvfp4` с двумя полосами (12). Тикет 13 —
+активная работа по переводу базового профиля на glfenix-артефакт и DFlash2.
 
 ## Notes
 
@@ -29,15 +31,21 @@ llama-swap, официальный артефакт Qwen3.8-27B, те же пу�
 Ubuntu 26.04.1, дисплей на GPU1 (~478 MiB постоянно), требование проекта —
 ≥ 512 MiB свободной VRAM на GPU1 под пиковой нагрузкой.
 
-Движок: релиз `ninfer-tp2 v0.4.5` форка `ValerioDolci/ninfer-tp2` (upstream
-`Neroued/ninfer` одноплатовый). Архив под ubuntu26.04, SHA-256 зафиксирован в
+Движок: релиз `ninfer-tp2 v0.4.6` форка `ValerioDolci/ninfer-tp2` (upstream
+`Neroued/ninfer` одноплатовый). По C++-дереву v0.4.6 == релиз v0.4.7
+(release notes v0.4.7: «the C++ tree is the same as v0.4.6, v0.4.6 tarball
+runs it»); у v0.4.7 published-ассетов нет, поэтому ставим архив v0.4.6.
+Архив под ubuntu26.04, SHA-256 зафиксирован в
 Dockerfile и проверен на сборке; в архиве только бинарники и `libcudart.so.13`,
 Dockerfile ставит FFmpeg 8 и libcurl4t64. Бинарь `llama-swap` копируется из
 образа llama-профиля (версия v240).
 
-Модель: `neroued/Qwen3.8-27B-nvfp4-NInfer`, 23.7 GB, веса 20.9 GiB, SHA-256
-из репозитория артефакта зафиксирован в `ninfer/fetch-model.sh`. Компоненты:
-text, vision, mtp, dflash2.
+Модель: `glfenix/Qwen3.8-27B-nvfp4-DFlash2NVFP4drafter-NInfer`, 21.54 GB,
+SHA-256 из репозитория артефакта зафиксирован в `ninfer/fetch-model.sh`.
+Весовая часть побитово равна официальному `neroued/Qwen3.8-27B-nvfp4-NInfer`
+(greedy-выход совпадает), отличается только блок DFlash2: NVFP4-драфтер и
+proposal-голова. Компоненты: text, vision, mtp, dflash2. v0.4.6 объявлен
+минимумом, требуемым артефактом.
 
 Пределы VRAM на двух 16 ГиБ платах (README форка): MTP3 даёт 262144 токена при
 4 слотах либо 196608 с Vision и 4 слотах; дефолтные 8 слотов с Vision на
@@ -51,9 +59,12 @@ text, vision, mtp, dflash2.
 не скрывает `reasoning_content` текущего запроса.
 
 Что уже сделано: `docker compose --profile ninfer build` (образ
-`llm-server/ninfer-tp2:v0.4.5`), проверка конфига llama-swap (все 7 ID видны в
+`llm-server/ninfer-tp2:v0.4.6`),
+проверка конфига llama-swap (все 7 ID видны в
 `/v1/models`), сверка всех флагов `cmd` с `--help` бинаря v0.4.5, скачивание и
 проверка артефакта, живой запуск и baseline (тикеты 01–03 resolved).
+Тикет 13 (claimed): конфиг/Dockerfile/fetch-model.sh уже применены, живой
+запуск и пересъёмка — в работе.
 
 Baseline: движок готов через 6.1 с, веса 18.5 GiB за 4.5 с; prefill 4597 tok/s
 на 30k, 3319 на 98.8k, 2605 на 165k; decode 130.1–131.5 tok/s и 106.3 tok/s на
@@ -64,7 +75,7 @@ prefill и 1.63× по decode. Проверены также Vision, tool calls,
 
 ## Frontier
 
-Пусто — все тикеты 01–12 resolved.
+- [13 — DFlash2 и glfenix-артефакт в базовом профиле](issues/13-dflash2-baseline.md)
 
 ## Decisions so far
 
@@ -72,7 +83,7 @@ prefill и 1.63× по decode. Проверены также Vision, tool calls,
 - [02 — Cold-start профиля и baseline против llama.cpp](issues/02-cold-start-and-baseline.md)
 - [03 — VRAM-бюджет под пиковой нагрузкой](issues/03-vram-budget-under-load.md)
 - [04 — nvfp4 KV против int8 и контекст 262144](issues/04-nvfp4-kv-tradeoff.md)
-- [05 — Профиль с DFlash2](issues/05-dflash2-profile.md) (resolved)
+- [05 — Профиль с DFlash2](issues/05-dflash2-profile.md) (resolved; вывод отменён тикетом 13)
 - [06 — Effort на стороне агентов](issues/06-agent-side-effort.md) (resolved)
 - [07 — Судьба ornith-9b и instruct-режима](issues/07-ornith-and-instruct.md) (resolved)
 - [08 — Профиль ninfer в мониторинге](issues/08-monitoring-integration.md)
@@ -80,6 +91,7 @@ prefill и 1.63× по decode. Проверены также Vision, tool calls,
 - [10 — Вытеснение device-state слотов при нескольких диалогах](issues/10-device-state-slot-eviction.md)
 - [11 — Контекст выше 196608: 262144 или две полосы](issues/11-context-above-196608.md) (resolved)
 - [12 — nvfp4 KV + две полосы в базовом профиле ninfer](issues/12-nvfp4-two-lanes-baseline.md) (resolved)
+- [13 — DFlash2 и glfenix-артефакт в базовом профиле](issues/13-dflash2-baseline.md) (claimed)
 
 Ответы тикетов 01–03: артефакт цел и грузится; baseline и VRAM подтверждены
 без правок профиля, `--embedding-host` оставлен. Тикет 10: удержание состояния
@@ -148,8 +160,6 @@ capacity`), **B** две полосы по 204 169 токенов на пул 40
 - Стратегия переключения между профилями: держать ли оба контейнера
   одновременно выключенными и переключаться профилями, или вводить
   дополнительный маршрут на уровне порта.
-- Нужен ли отдельный профиль `ninfer-dflash2` как второй compose-профиль или
-  как переключаемая конфигурация внутри `ninfer/`.
 - Проверка длинных streaming-ответов под нагрузкой (общая практика профиля
   vLLM), если она потребуется после первых результатов.
 
