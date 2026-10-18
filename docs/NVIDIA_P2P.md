@@ -48,7 +48,8 @@ BAR1 16 ГиБ, `simpleP2P` без verification errors, отсутствие Xid
 dmesg. `p2p-snapshot.sh` дополнительно сохраняет sha256 модулей и `free` VRAM —
 для сравнения до/после ребута или пересборки.
 
-Признак рабочего P2P в логе NInfer (`docker compose --profile ninfer logs`):
+Признак рабочего P2P в логе NInfer (`docker compose logs llama-swap`, при
+активном ninfer-профиле):
 строка `tensor parallel | ... | p2p on` и `captured all-reduces: copies`
 (вместо `p2p off (host-staged copies)` / `mailbox`).
 

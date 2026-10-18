@@ -2,259 +2,240 @@
 
 ## Описание
 
-Репозиторий содержит три взаимозаменяемых Docker Compose-профиля с единым
-OpenAI-совместимым адресом `http://localhost:8080`:
+Репозиторий содержит единую точку входа `http://localhost:8080`: контейнер
+`llama-swap` (образ `router:v265` из `router/Dockerfile` — llama-swap v265,
+llama.cpp b10438 и NInfer v0.4.6 как дочерние процессы). Публичный контракт —
+ровно один model-ID `qwen3.8-27b`; какой движок за ним стоит, выбирает активный
+профиль llama-swap, переключаемый вручную. Движки никогда не работают
+параллельно.
 
-| Профиль | Движок | Модель | Публичный model-ID |
-|---|---|---|---|
-| `llama` | llama.cpp + llama-swap | Qwen3.8-27B NVFP4-MTP | `qwen3.8-27b-*` |
-| `ninfer` | NInfer TP=2 + llama-swap | Qwen3.8-27B NVFP4 (артефакт `.ninfer`) | `qwen3.8-27b-*` |
-| `vllm` | vLLM | Qwen3.8-27B NVFP4 | `qwen3.8-27b` |
+| Активный профиль | Движок | Модель |
+|---|---|---|
+| `llama` | llama.cpp | Qwen3.8-27B NVFP4-MTP (`.gguf`) |
+| `ninfer` | NInfer TP=2 | Qwen3.8-27B NVFP4 DFlash2 (`.ninfer`) |
 
-Профили используют один порт и одни GPU, поэтому одновременно запускать их
-нельзя. Корневой `docker-compose.yaml` только подключает конфигурации из
-`llama/`, `ninfer/` и `vllm/`; параметры инференса хранятся внутри
-соответствующего каталога.
+Решение зафиксировано в ADR-0006 (`docs/adr/`), проверка на живом железе — в
+`docs/research/0014` и `0015`, доказательства — в
+`.scratch/llama-swap-orchestrator/assets/`.
+
+Отдельно в репозитории остаётся `vllm/` — compose-профиль vLLM, выведенный из
+текущей топологии (ADR-0006). Он занимает тот же порт `8080` и те же GPU;
+одновременно с роутером не запускать.
 
 ## Требования
 
-- Docker Engine 24+ с Docker Compose, поддерживающим `include` и `profiles`.
+- Docker Engine 24+ с Docker Compose, поддерживающим `include`.
 - NVIDIA Container Toolkit (`nvidia-ctk`).
-- Для профилей `llama` и `ninfer`: две NVIDIA GPU по 16+ ГиБ VRAM (Qwen3.8-27B
-  занимает обе GPU).
-- Для текущего профиля `vllm`: две NVIDIA Blackwell GPU по 16 ГиБ VRAM.
+- Две NVIDIA GPU по 16+ ГиБ VRAM (Qwen3.8-27B занимает обе).
 - `/opt/models/Qwen3.8-27B-NVFP4-MTP-GGUF/Qwen3.8-27B-NVFP4-MTP-HIGH.gguf` для
   llama.cpp.
 - `/opt/models/Qwen3.8-27B-nvfp4-DFlash2NV-MTPNV-NInfer/qwen3_8_27b_nvfp4.ninfer`
-  для NInfer.
-- `/opt/models/Qwen3.8-27B-NVFP4/` для vLLM.
+  для NInfer (скачивается `./router/fetch-model.sh`).
+- Для vLLM: `/opt/models/Qwen3.8-27B-NVFP4/`.
 
-Модели монтируются в контейнеры read-only и в Git не добавляются.
+Модели монтируются в контейнер read-only и в Git не добавляются.
 
 ## Структура
 
 ```text
 llm-server/
 ├── docker-compose.yaml
-├── llama/
-│   ├── docker-compose.yaml
-│   └── config.yaml
-├── ninfer/
+├── router/
 │   ├── Dockerfile
 │   ├── docker-compose.yaml
-│   ├── config.yaml
+│   ├── config.yaml          # глобалы, hooks, профили с пинами
+│   ├── config.d/
+│   │   ├── 10-llama.yaml    # models.backend-llama (llama.cpp)
+│   │   └── 20-ninfer.yaml   # models.backend-ninfer (NInfer)
 │   └── fetch-model.sh
-├── vllm/
+├── vllm/                    # вне текущей топологии
 │   ├── docker-compose.yaml
 │   └── config.yaml
 ├── docs/
+│   ├── adr/
+│   ├── research/
 │   └── NVIDIA_SETUP.md
 └── scripts/
-    └── port-forwarding-rules.ps1
 ```
 
-## Запуск vLLM
-
-Сначала удалите контейнеры другого профиля, затем запустите vLLM. Первый
-запуск включает загрузку большого образа и JIT-компиляцию CUDA-ядер.
+## Запуск роутера
 
 ```bash
-docker compose --profile llama --profile ninfer --profile vllm down --remove-orphans
+docker compose up -d --wait --wait-timeout 1800
+docker compose logs -f llama-swap
+```
+
+Сервис без compose-профилей — поднимается всегда. При старте активен профиль
+`ninfer`, NInfer прелоадится (~6 c), после чего первый запрос обслуживается
+сразу. Строки `[ERROR] failed to preload model backend-ninfer: status 404` в
+стартовом логе — косметика: у NInfer нет warmup-эндпоинта, прелоад при этом
+запускает и прогревает движок (ADR-0006).
+
+## Переключение движков
+
+1. Убедиться, что текущие генерации завершились (выполняющийся запрос
+   продолжается на старом движке; его прерывает только swap).
+2. Переключить профиль:
+
+   ```bash
+   curl -X PUT http://localhost:8080/api/profiles/active \
+     -H 'Content-Type: application/json' \
+     -d '{"name":"llama"}'   # или "ninfer"
+   ```
+
+   (или UI llama-swap на `http://localhost:8080`).
+
+3. Проверить состояние:
+
+   ```bash
+   curl -s http://localhost:8080/api/profiles   # поле active
+   curl -s http://localhost:8080/v1/models      # ровно qwen3.8-27b
+   ```
+
+   `status: unloaded` у пин-записи в `/v1/models` — косметика llama-swap
+   (hardcode для пинов); правдивое состояние — `/api/profiles`.
+
+4. Смена профиля сам движок не грузит: swap происходит на первом запросе к
+   `qwen3.8-27b`, и он платит загрузку весов — llama.cpp 40–60 c, NInfer ~6 c.
+   При `sendLoadingState: false` этот запрос молчит, без in-stream баннера
+   загрузки (ADR-0006): индикатор — только логи контейнера
+   (`docker compose logs -f llama-swap`).
+
+Backend'ы не работают параллельно: дефолтная exclusive-группа llama-swap
+выгружает старый движок до старта нового. Прямые запросы к неактивному движку
+невозможны — его ID скрыт и закрыт пином (`404`).
+
+При OOM или зависании на первом запросе смотреть логи контейнера и
+`nvidia-smi`: красная линия проекта — ≥ 512 MiB свободной VRAM на дисплейной
+GPU1 под пиковой нагрузкой. Порт `8080` общий с vLLM-профилем — одновременно их
+не запускать.
+
+## Единый контракт
+
+Публичный model-ID один — `qwen3.8-27b`. Режим reasoning задаёт клиент;
+серверного мнения о reasoning нет (голый ID отдаёт дефолт chat template —
+thinking + `xhigh`). Проверено на обоих движках (`docs/research/0014`, `0015`):
+
+| Цель | Что слать клиент | Оба движка |
+|---|---|---|
+| выключить thinking | `chat_template_kwargs: {"enable_thinking": false}` | да |
+| уровень reasoning | `reasoning_effort: low\|medium\|xhigh` (top-level или в kwargs) | да |
+| выключить thinking через top-level | `reasoning_effort: "none"` | только NInfer |
+
+Невалидное значение `reasoning_effort` → `500` (llama.cpp) / `400` (NInfer).
+Top-level `none` на llama.cpp инертен — переносимый способ выключить thinking
+только через kwargs (разбор — `docs/research/0015`). opencode v2 управляет
+reasoning вариантами модели (`body.chat_template_kwargs`), см. ADR-0006.
+
+Sampling — серверный дефолт движка с клиентским переопределением: пресет живёт
+в `cmd` движка (`router/config.d/`), поля запроса его перекрывают. llama-swap
+правит тело запроса только `stripParams: repetition_penalty` (+ `useModelName`
+на NInfer).
+
+Безопасное подмножество параметров (безразлично обоим движкам; полная таблица —
+ADR-0006, сводка — `docs/research/0013`):
+
+- переносимо: `temperature` `[0,1]`, `top_p` `(0,1]`, `top_k` `1..20` (не 0),
+  `min_p` `[0,1]`, `presence_penalty`/`frequency_penalty` `[-2,2]`, `seed`,
+  `max_tokens ≥ 1`, `reasoning_effort` из
+  `none|low|medium|xhigh`, `chat_template_kwargs.{enable_thinking,
+  preserve_thinking}` (bool);
+- непереносимо: `repetition_penalty` (стрипается llama-swap), `repeat_penalty`
+  (llama.cpp-only, NInfer молча игнорирует), `top_k: 0`, `reasoning_effort`
+  вне словаря, а также фичи, которые NInfer отклоняет (`response_format:
+  json_object`, `logit_bias`, `logprobs`, `strict`,
+  `parallel_tool_calls: false`, named tool choice).
+
+## Модель llama.cpp (профиль `llama`)
+
+Параметры ядра находятся только в `router/config.d/10-llama.yaml` (секция
+`cmd`). Qwen3.8-27B запускается с контекстом 180224 токена (NVFP4-MTP
+квантизация тира HIGH, файл ~17.6 GB) и спекулятивным декодированием:
+draft-mtp с fallback на ngram-mod. Требуется пара `--split-mode tensor` и
+`--tensor-split 50,50`; проверенный стабильный максимум контекста — 180224, на
+196608 первый же decode падает OOM на дисплейной GPU1. `--ctx-checkpoints` не
+включены. Подробный разбор — в `docs/research/0008-llama-qwen38-mtp-ngram-mod-combo.md`.
+
+Активный пин llama.cpp — **b10438** (бамп с b10068 ради top-level
+`reasoning_effort`; A/B b10438 против b10068 на протоколе 0005 регресса не
+показало — prefill +5–7 %, decode в пределах разброса, wall-clock равен или
+лучше; `docs/research/0015`).
+
+## Модель NInfer (профиль `ninfer`)
+
+Движок — релиз `ninfer-tp2 v0.4.6` из форка `ValerioDolci/ninfer-tp2` (по
+C++-дереву v0.4.6 == v0.4.7; у v0.4.7 published-ассетов нет). SHA-256 архива
+зафиксирован в `router/Dockerfile` и проверяется на сборке. Модель — артефакт
+`glfenix/Qwen3.8-27B-nvfp4-DFlash2NVFP4drafter-NInfer` (21.54 GB, скачивается
+`./router/fetch-model.sh` с проверкой контрольной суммы): весовая часть
+побитово равна официальному `neroued/Qwen3.8-27B-nvfp4-NInfer`, отличается
+только блок DFlash2 (NVFP4-драфтер и proposal-голова).
+
+Базовый профиль движка: `--tp 2 --devices 0,1`, KV `nvfp4`, контекст модели
+262144 токенов, KV-пул `auto` (`--vram-headroom-mib 640`), две активные
+последовательности (`--max-concurrency 2`), 4 слота device-state, спекулятивное
+декодирование DFlash2 (`--spec dflash2 --draft-tokens 7 --lm-head-draft`),
+Vision на плате без дисплея и вынос таблицы embedding в host RAM,
+`--default-max-tokens 16384`. Фактическая свободная VRAM видна в стартовой
+строке движка `capacity | KV … auto | … free … MiB`; порог проекта — ≥ 512 MiB
+на дисплейной GPU1. Одиночный запрос достигает модельных 262144, промпт сверх
+ёмкости отклоняется чистым `400 context_length_exceeded`.
+
+`--host-state-slots` и `--host-kv-mib` на `--tp 2` обязаны быть 0: удерживаемые
+диалоги живут только в device-state слотах. Две полосы: decode двух диалогов
+идёт одновременно, но префиллы сериализуются. Замеры и разбор tp2 (VRAM-бюджет,
+пределы, сравнение артефактов и против llama.cpp) —
+`docs/research/0009-ninfer-tp2-two-5070ti.md`, решения — ADR-0003.
+
+Откат DFlash2 к MTP — правка `cmd` на `--spec mtp --draft-tokens 3` в
+`router/config.d/20-ninfer.yaml` и `docker compose restart llama-swap`, без
+пересборки образа.
+
+## vLLM (вне текущей топологии)
+
+Compose-профиль `vllm` остался в репозитории (`vllm/`), но выведен из текущей
+топологии (ADR-0006). Он публикует OpenAI API самого vLLM на том же `:8080`,
+поэтому одновременно с роутером не запускать:
+
+```bash
+docker compose down --remove-orphans
 docker compose --profile vllm up -d --wait --wait-timeout 1800
 docker compose --profile vllm logs -f vllm-server
 ```
 
-Проверка API:
-
-```bash
-curl --fail http://localhost:8080/health
-curl --fail http://localhost:8080/v1/models
-```
-
-Профиль публикует единственный model-ID: `qwen3.8-27b`. Базовая проверяемая
-конфигурация запускает модель в text-only режиме на двух GPU с FP8 KV-cache,
-контекстом 49152 токена, одной активной sequence, chunked prefill и лимитом
-1024 токена на scheduler iteration. Второй конкурентный запрос ожидает в
-scheduler, а не увеличивает число одновременно выполняемых sequences.
-
-Для совместной работы с графической сессией используется
-`gpu-memory-utilization: 0.85`. Под пиковой нагрузкой на GPU1 должно оставаться
-не менее 512 MiB физически свободной VRAM. Нельзя повышать utilization только
-ради прохождения startup-проверки KV cache. Максимальный стабильный context
-limit определяется отдельным cold-start и нагрузочным тестом после проверки
-базового профиля. На текущей машине `49152` прошёл проверку, а `65536` не
-прошёл startup из-за недостаточного KV cache, поэтому `49152` является
-максимальным проверенным context limit.
-
-Qwen3.8 по умолчанию использует thinking. Клиент может управлять им через
-`reasoning_effort` или передать
-`chat_template_kwargs: {"enable_thinking": false}`. В отличие от llama-профиля,
-vLLM не отбрасывает клиентские sampling-параметры. Reasoning возвращается в
-поле `reasoning` OpenAI-совместимого ответа.
-
-MTP/speculative decoding, TurboQuant KV-cache и prefix caching намеренно не
-включены в базовый профиль. Их следует добавлять только после отдельной
-проверки корректности длинных streaming-ответов и расхода VRAM.
-
-## Запуск llama.cpp
-
-```bash
-docker compose --profile llama --profile ninfer --profile vllm down --remove-orphans
-docker compose --profile llama up -d --wait --wait-timeout 1800
-docker compose --profile llama logs -f llama-swap
-```
-
-Публичной точкой входа остается `llama-swap` на `:8080`. Единственная модель
-запускается llama-swap как дочерний процесс llama-server (бинарник входит в
-образ `llama-swap:cuda13`); отдельный контейнер llama-server не используется.
-Модель прелоадится при старте контейнера (время загрузки ~40-60 c), после
-чего первый запрос обслуживается сразу.
-
-Доступные model-ID:
-
-| ID | Назначение |
-|---|---|
-| `qwen3.8-27b` | быстрые ответы без thinking |
-| `qwen3.8-27b-chat-low` | чат с thinking (reasoning скрыт, preserve off), effort low |
-| `qwen3.8-27b-chat-medium` | чат с thinking (reasoning скрыт, preserve off), effort medium |
-| `qwen3.8-27b-chat-xhigh` | чат с thinking (reasoning скрыт, preserve off), effort xhigh |
-| `qwen3.8-27b-agent-low` | агент, thinking с preserve, effort low |
-| `qwen3.8-27b-agent-medium` | агент, thinking с preserve, effort medium |
-| `qwen3.8-27b-agent-xhigh` | агент, thinking с preserve, effort xhigh |
-
-Параметры ядра модели находятся в `llama/config.yaml` (секция `cmd`). Sampling и
-режим reasoning задаются сервером через `setParamsByID`; переданные клиентом
-sampling-параметры и параметры thinking `llama-swap` удаляет.
-
-Qwen3.8-27B запускается с контекстом 180224 токена (NVFP4-MTP квантизация
-тира HIGH, файл ~17.6 GB) и спекулятивным декодированием: draft-mtp с
-fallback на ngram-mod. Требуется пара `--split-mode tensor` и
-`--tensor-split 50,50`; проверенный стабильный максимум контекста — 180224,
-на 196608 первый же decode падает OOM на дисплейной GPU1. `--ctx-checkpoints`
-не включены. Подробный разбор — в `docs/research/0008-llama-qwen38-mtp-ngram-mod-combo.md`.
-
-## Запуск NInfer TP=2
-
-Профиль `ninfer` отдаёт ту же публичную точку входа `llama-swap` на `:8080`,
-но за ней стоит NInfer с tensor parallelism на две GPU.
-
-```bash
-docker compose --profile llama --profile ninfer --profile vllm down --remove-orphans
-docker compose --profile ninfer build
-./ninfer/fetch-model.sh
-docker compose --profile ninfer up -d --wait --wait-timeout 1800
-docker compose --profile ninfer logs -f ninfer-swap
-```
-
-Движок берётся из готовых бинарников релиза `ninfer-tp2 v0.4.6`: образ
-собирается из `ubuntu:26.04` плюс архив релиза с проверкой SHA-256, а
-llama-swap копируется из образа llama-профиля, поэтому версии маршрутизатора
-совпадают. Compose-сервис называется `ninfer-swap`, контейнер —
-`llama-swap`. Модель — артефакт
-`glfenix/Qwen3.8-27B-nvfp4-DFlash2NVFP4drafter-NInfer` (21.54 GB, скачивается
-`ninfer/fetch-model.sh` с проверкой контрольной суммы): весовая часть
-побитово равна официальному `neroued/Qwen3.8-27B-nvfp4-NInfer`, отличается
-только блок DFlash2 (NVFP4-драфтер и proposal-голова).
-
-Базовый профиль движка (тикет 13, 2026-10-08): `--tp 2 --devices 0,1`, KV
-`nvfp4`, контекст модели 262144 токенов, KV-пул `auto`
-(`--vram-headroom-mib 640`), две активные последовательности
-(`--max-concurrency 2`), 4 слота device-state, спекулятивное декодирование
-DFlash2 (`--spec dflash2 --draft-tokens 7 --lm-head-draft`), Vision на плате
-без дисплея и вынос таблицы embedding в host RAM,
-`--default-max-tokens 16384`. Переключение с прежнего профиля (официальный
-артефакт, `--kv-capacity 495104`, H=3, MTP3) — переход на DFlash2-артефакт и
-DFlash2-декодирование. `auto` берёт пул от остатка VRAM; по прикидке это
-около 400k токенов, то есть ~200k на каждую из двух полос против ~247k у
-прежних 495104. Фактическая свободная VRAM видна в стартовой строке движка
-`capacity | KV … auto | … free … MiB`; порог проекта — ≥ 512 MiB на дисплейной
-GPU1. Одиночный запрос достигает модельных 262144, промпт сверх ёмкости
-отклоняется чистым `400 context_length_exceeded`.
-
-Замеры ниже сняты на прежнем профиле (официальный артефакт, v0.4.5, MTP3,
-пул 495104); текущий DFlash2-профиль с `auto`/H=4 переснимается по тикету 13.
-Проверено на этой машине (2026-10-05, официальный артефакт, v0.4.5, на
-контексте 196608): движок
-готов через 6.1 с, веса читаются за 4.5 с; prefill 4597 tok/s на 30k и 3319
-tok/s на 98 849 токенов (TTFT 29.8 с); decode 130.1–131.5 tok/s и 106.3 tok/s
-на контексте 131 830; приём MTP 46–48 %. Минимум свободной VRAM под нагрузкой
-(префилл 165k плюс длинная генерация) — 2018 MiB на GPU0 и 1501 MiB на GPU1,
-то есть запас GPU1 над требованием 512 MiB почти трёхкратный. Для сравнения,
-llama.cpp на тех же картах даёт 1372 tok/s на prefill 90k и 80.5 tok/s на
-генерации — NInfer быстрее в 2.42× и 1.63×. На контексте 241664 (2026-10-06):
-старт 6 с, runtime пула 4.63 GiB, свободно 1250/606 MiB (GPU0/GPU1).
-Нагрузочные прогоны снимались на верхней точке sweep 245760: prefill ~2074
-tok/s на промпте 243 195 (TTFT ~117 с), decode 129–131 tok/s, приём MTP 73 %,
-минимум свободной VRAM под нагрузкой 1180 MiB на GPU0 и 533 MiB на GPU1 — на
-241664 запас над требованием 512 MiB больше на 71 MiB.
-
-На базовом профиле (2026-10-07, `nvfp4`, пул 495104, H=3, две полосы):
-движок готов через 6.0 с, runtime пула 5.11 GiB, после старта 752/589 MiB
-(GPU0/GPU1). Prefill 3.93k tok/s на 60k, 2.70–2.71k на 150k, 1.96k на
-259 498 токенов (TTFT 2m 12.8s), decode 75–92 tok/s на длинном контексте.
-Две полосы: decode двух диалогов идёт одновременно, но префиллы
-сериализуются — при паре 150k×2 второй запрос ждёт 55 с в очереди (TTFT
-55.4 с и 1m 51.2s), при паре 5.1k×2 очередь не превышает 1.0 с и decode
-идёт со 128–136 tok/s. Минимум свободной VRAM под нагрузкой пары 150k×2 —
-752/589 MiB, то есть GPU1 держит порог 512 MiB.
-
-Публичные model-ID совпадают с llama-профилем: `qwen3.8-27b` (instruct, без
-reasoning) и шесть алиасов `-chat-{low,medium,xhigh}` (thinking, reasoning не
-возвращается в следующие запросы диалога) и `-agent-{low,medium,xhigh}`
-(thinking с сохранением reasoning в контексте). Уровень reasoning задаёт
-сервер по имени алиаса, как в llama-профиле, клиенту `reasoning_effort`
-передавать не нужно. Быстрые задачи, которым раньше был нужен отдельный
-небольшой instruct-режим, обслуживает `qwen3.8-27b`: он доступен во всех трёх
-профилях и быстрее по задержке, поэтому отдельный запасной профиль не нужен.
-
-Effort в NInfer — не бюджет токенов, а инструкция в системном промпте,
-которую подставляет chat template артефакта: `xhigh` на длинной задаче дошёл
-до лимита `max_tokens: 16000`, `low` закрыл рассуждение сам на 12 254 токенах.
-Движок принимает effort шире (`none, minimal, low, medium, high, xhigh, max,
-adaptive`), но опираться следует на `low | medium | xhigh`. Клиентский
-`enable_thinking` на thinking-режимах до движка не доходит, потому что
-`chat_template_kwargs` задан в конфиге объектом и заменяется целиком; на
-instruct-режиме он доходит и даёт `400 conflicting_template_option`.
-
-Движок сам выбирает пресет сэмплирования по режиму thinking, поэтому клиентские
-sampling-параметры отбрасываются; `repeat_penalty 1.05` из llama-профиля
-недоступен, потому что NInfer принимает `repetition_penalty` только равный
-1.0. Разбор tp2, бюджет VRAM, сравнение артефактов и замеры против llama.cpp —
-в `docs/research/0009-ninfer-tp2-two-5070ti.md`.
-
-Спекулятивное декодирование DFlash2 (`--spec dflash2 --draft-tokens 7
---lm-head-draft`) включено в базовый профиль (тикет 13) вместе с артефактом
-glfenix и движком v0.4.6. На tp2 обязателен `--lm-head-draft` (без него движок
-падает на старте); бэкенд спекуляции выбирается только на старте, поэтому откат
-к MTP — правка `cmd` на `--spec mtp --draft-tokens 3` и перезапуск. На
-официальном артефакте DFlash2 давал decode 179 против 126 tok/s на коротких
-генерациях, но 119–126 против 113 на контексте 110k при приёме драфта 18–29 % и
-префилле медленнее на ~2 %; на glfenix-артефакте числа переснимаются по тикету
-13.
+Публичный model-ID — `qwen3.8-27b`. Базовая конфигурация: text-only на двух GPU
+с FP8 KV-cache, контекст 49152 токена (`65536` не проходит startup), одна
+активная sequence (`max-num-seqs: 1`), `gpu-memory-utilization: 0.85` под
+графическую сессию; на GPU1 под пиковой нагрузкой ≥ 512 MiB свободной VRAM.
+Thinking управляется клиентом через `reasoning_effort` или
+`chat_template_kwargs: {"enable_thinking": false}`; reasoning возвращается в
+поле `reasoning`; клиентские sampling-параметры не отбрасываются. MTP,
+TurboQuant KV-cache, prefix caching и FlashInfer autotune намеренно не
+включены — только после отдельной проверки длинных streaming-ответов и VRAM.
 
 ## Управление
 
 ```bash
-# Остановить любой активный профиль
-docker compose --profile llama --profile ninfer --profile vllm down --remove-orphans
+# Запуск / остановка роутера
+docker compose up -d --wait --wait-timeout 1800
+docker compose down --remove-orphans   # остановит и vLLM, если поднят
 
-# Применить изменения Compose или образа vLLM
-docker compose --profile vllm up -d --force-recreate
+# Логи и перезапуск после изменения router/config*.yaml
+docker compose logs -f llama-swap
+docker compose restart llama-swap
 
-# Перезапустить vLLM после изменения vllm/config.yaml
-docker compose --profile vllm restart vllm-server
+# Пересборка образа после смены пинов в router/Dockerfile / build-args
+docker compose build llama-swap
 
-# Перезапустить llama-swap после изменения llama/config.yaml или llama/docker-compose.yaml
-docker compose --profile llama restart llama-swap
-
-# Пересобрать образ NInfer после смены версии и перезапустить профиль
-docker compose --profile ninfer build
-docker compose --profile ninfer restart ninfer-swap
+# Скачивание артефакта NInfer с проверкой SHA-256
+./router/fetch-model.sh
 ```
 
 ## Мониторинг
 
 Grafana, Prometheus, Loki и nvidia-smi-exporter находятся в отдельном проекте
-`llm-monitoring`. Его launcher должен передавать активный Compose-профиль и
-использовать имя сервиса выбранного backend: `llama-swap`, `ninfer-swap` или
-`vllm-server`.
+`llm-monitoring`. Его launcher принимает профиль вторым аргументом
+(`./llm-stack.sh up ninfer`) и мапит `llama`/`ninfer` на контейнер
+`llama-swap`; для `vllm` он исключает всегда-поднимающийся роутер, чтобы не
+конфликтовать за `:8080`. GPU-метрики и promtail/Loki-логи контейнеров от
+профиля не зависят.

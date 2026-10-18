@@ -130,9 +130,10 @@ docker run --rm --gpus all ubuntu nvidia-smi
 
 ## Требования профилей инференса
 
-Профиль `llama` рассчитан на NVIDIA GPU с 16+ ГиБ VRAM. Текущая конфигурация
-vLLM для Qwen3.8-27B NVFP4 требует обе RTX 5070 Ti: размер checkpoint больше
-памяти одной карты, поэтому используется `tensor-parallel-size: 2`.
+Профиль `llama` рассчитан на NVIDIA GPU с 16+ ГиБ VRAM. Роутер
+(`router/`, llama.cpp и NInfer) и vLLM-профиль для Qwen3.8-27B NVFP4 требуют
+обе RTX 5070 Ti: размер checkpoint больше памяти одной карты, поэтому
+используется `tensor-parallel-size: 2`.
 
 Одна из GPU обслуживает графическую сессию и может занимать около 1 ГиБ VRAM.
 Безопасный базовый профиль vLLM использует `gpu-memory-utilization: 0.85`,
@@ -146,19 +147,20 @@ cache; максимальный стабильный context limit выбира�
 прошёл startup из-за недостаточного KV cache; поэтому максимальный проверенный
 context limit равен `49152`.
 
-Оба профиля занимают порт `8080` и все GPU. Перед запуском выбранного профиля
-нужно удалить контейнеры другого:
+Обе топологии занимают порт `8080` и все GPU. Роутер поднимается всегда
+(без compose-профилей); vLLM — отдельный профиль, одновременно с роутером не
+запускать:
 
 ```bash
-docker compose --profile llama --profile vllm down --remove-orphans
+docker compose down --remove-orphans
 ```
 
-После этого запускается только один профиль:
+После этого запускается только одна топология:
 
 ```bash
 # vLLM
 docker compose --profile vllm up -d --wait --wait-timeout 1800
 
-# llama.cpp
-docker compose --profile llama up -d --wait --wait-timeout 1800
+# Роутер (llama.cpp / NInfer за llama-swap)
+docker compose up -d --wait --wait-timeout 1800
 ```
