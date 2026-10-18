@@ -8,7 +8,7 @@ both report prefill/decode tok/s there; NInfer also draft_n / draft_n_accepted).
 Usage:
   bench.py --model qwen3.8-27b --prompt-file prompt-90k.txt --max-tokens 4 \
            --out results-ninfer-prefill-90k.json [--nonce auto] [--label name]
-  bench.py --model qwen3.8-27b-chat-medium --prompt "Write a long story..." \
+  bench.py --model qwen3.8-27b --prompt "Write a long story..." \
            --max-tokens 600 --out results-ninfer-decode.json
 
 A random nonce is prepended to the user message by default so every run is a

@@ -1,0 +1,50 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mostlygeek/llama-swap/refs/heads/main/config-schema.json
+#
+# backend-ninfer — NInfer TP=2 v0.4.6 как дочерний процесс llama-swap.
+# Параметры движка задаются здесь и только здесь. Sampling-пресет не трогаем:
+# движок сам выбирает его по выведенному режиму thinking (thinking
+# 1.0/0.95/20/0/0, non-thinking 0.7/0.80/20/0/1.5). См. router/config.yaml
+# (пины, профили) и ADR-0006.
+
+models:
+  backend-ninfer:
+    name: "NInfer TP=2"
+    unlisted: true
+    # ninfer-serve отклоняет запрос, если request.model != --model-id, поэтому
+    # llama-swap обязан переписать имя модели (в т.ч. из пина) на каноническое.
+    useModelName: qwen3.8-27b
+    # /opt/ninfer/lib обязан быть первым: своего RPATH у бинарника нет, иначе
+    # подхватывается libcudart.so.13 из CUDA 13.3 (см. router/Dockerfile).
+    env:
+      - LD_LIBRARY_PATH=/opt/ninfer/lib:/app:/usr/local/cuda-13.3/lib64
+    cmd: |
+      /opt/ninfer/bin/ninfer-serve
+      /models/Qwen3.8-27B-nvfp4-DFlash2NV-MTPNV-NInfer/qwen3_8_27b_nvfp4.ninfer
+      --host 127.0.0.1
+      --port ${PORT}
+      --model-id qwen3.8-27b
+      --tp 2
+      --devices 0,1
+      --kv-dtype nvfp4
+      --max-context 262144
+      --kv-capacity auto
+      --vram-headroom-mib 640
+      --max-concurrency 2
+      --device-state-slots 4
+      --spec dflash2
+      --draft-tokens 7
+      --lm-head-draft
+      --vision
+      --vision-device 0
+      --max-vision-tokens 4096
+      --embedding-host
+      --default-max-tokens 16384
+      --pending-timeout-ms 600000
+    capabilities:
+      in: [text, image]
+      out: [text]
+      tools: true
+      context: 262144
+    filters:
+      # Симметрично llama-профилю: NInfer отвечает 400 при repetition_penalty != 1.
+      stripParams: "repetition_penalty"

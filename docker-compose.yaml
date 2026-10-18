@@ -1,6 +1,5 @@
 name: llm-server
 
 include:
-  - ./llama/docker-compose.yaml
-  - ./ninfer/docker-compose.yaml
+  - ./router/docker-compose.yaml
   - ./vllm/docker-compose.yaml

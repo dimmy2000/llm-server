@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
-# Скачивает артефакт Qwen3.8-27B для профиля `ninfer` и проверяет SHA-256.
+# Скачивает артефакт Qwen3.8-27B для backend'а NInfer и проверяет SHA-256.
 #
-#   ./ninfer/fetch-model.sh [каталог-назначения]
+#   ./router/fetch-model.sh [каталог-назначения]
 #
 # Каталог по умолчанию — /opt/models/Qwen3.8-27B-nvfp4-DFlash2NV-MTPNV-NInfer,
 # путь внутри контейнера —
 # /models/Qwen3.8-27B-nvfp4-DFlash2NV-MTPNV-NInfer/qwen3_8_27b_nvfp4.ninfer
-# (см. ninfer/config.yaml). Нужно ~22 ГиБ свободного места.
+# (см. router/config.d/20-ninfer.yaml). Нужно ~22 ГиБ свободного места.
 #
 # Артефакт — glfenix/Qwen3.8-27B-nvfp4-DFlash2NVFP4drafter-NInfer: весовая часть
 # побитово совпадает с официальным neroued/Qwen3.8-27B-nvfp4-NInfer (greedy
 # выход равен), отличается только блок DFlash2 (NVFP4-драфтер и proposal-голова).
-# Требует движок v0.4.6+ (движок профиля — v0.4.6 == код v0.4.7).
+# Требует движок v0.4.6+ (движок в router/Dockerfile — v0.4.6 == код v0.4.7).
 #
 # Контрольная сумма зафиксирована из SHA256SUMS в репозитории артефакта.
 

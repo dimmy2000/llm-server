@@ -1,0 +1,39 @@
+services:
+  # Сервис без ключа `profiles:` — поднимается всегда, в т.ч. при вызове с
+  # любым `--profile`: команды `docker compose up -d` и прежние
+  # `--profile llama|ninfer` из launcher'а `llm-monitoring` продолжают его
+  # запускать. Профилей, выражающих «какой движок», больше нет: выбор движка
+  # живёт внутри контейнера (активный профиль llama-swap, см. config.yaml).
+  #
+  # Имя контейнера оставлено `llama-swap`: дашборды llm-monitoring,
+  # `docker logs/exec/restart llama-swap` и promtail/Loki работают без правок.
+  llama-swap:
+    image: llm-server/router:v265
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        LLAMA_SWAP_VERSION: v265
+        LLAMA_SWAP_ASSET: llama-swap_265_linux_amd64.tar.gz
+        LLAMA_SWAP_SHA256: cb1f9a94be05afa129d3c17868f1dd2ca710b919333c7b868239dc31575dcfa1
+        NINFER_VERSION: v0.4.6
+        NINFER_ASSET: ninfer-tp2-v0.4.6-linux-x86_64-sm120a-ubuntu26.04.tar.gz
+        NINFER_SHA256: aadbaaf99e3204fd97a5afe130254a7dd06430f404f1951c5d3ab74f8588c614
+    container_name: llama-swap
+    ports:
+      - "8080:8080"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    environment:
+      NVIDIA_VISIBLE_DEVICES: all
+      NVIDIA_DRIVER_CAPABILITIES: compute,utility
+    volumes:
+      - /opt/models:/models:ro
+      - ./config.yaml:/app/config.yaml:ro
+      - ./config.d:/app/config.d:ro
+    restart: unless-stopped

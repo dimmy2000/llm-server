@@ -1,0 +1,47 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mostlygeek/llama-swap/refs/heads/main/config-schema.json
+#
+# Единая точка входа: один llama-swap, два движка (llama.cpp и NInfer) как
+# дочерние процессы. Публичный контракт — ровно один model-ID `qwen3.8-27b`;
+# активный профиль выбирает, какой движок за ним стоит, вручную:
+#
+#   PUT http://localhost:8080/api/profiles/active {"name":"llama"|"ninfer"}
+#
+# Записи движков `backend-llama` / `backend-ninfer` скрыты (`unlisted`) и
+# закрыты пином `~`, пока их профиль не активен: снаружи достижим только
+# `qwen3.8-27b`, и никакой запрос клиента не запускает swap. Sampling и
+# reasoning клиент задаёт сам (см. ADR-0006); llama-swap тело запроса почти не
+# правит.
+#
+# Изменение файла требует перезапуска llama-swap.
+
+healthCheckTimeout: 600   # максимум прежних 300 (llama) / 600 (ninfer); отсчёт сбрасывается на прогрессе загрузки
+logLevel: info
+logToStdout: both
+sendLoadingState: true
+
+# NInfer прелоадится на старте и активен по умолчанию: публичный ID есть сразу
+# после старта и не «мигает». Прелоад статичен и последователен, поэтому
+# второй движок не греется — переключение на llama.cpp платит 40–60 c первым
+# запросом. `globalTTL` не задаём (0 — движок не выгружается по простою).
+hooks:
+  on_startup:
+    profile: ninfer
+    preload:
+      - backend-ninfer
+
+# Пины применяются до алиасов: пока профиль активен, `qwen3.8-27b` уходит в
+# его движок, а неактивный движок запрещён (`~` → 404, и на
+# /v1/chat/completions, и на /upstream/<model>/…). Дефолтная exclusive-группа
+# (swap: true, exclusive: true) гарантирует, что движки никогда не работают
+# параллельно. Селекторов нет — автоматического выбора движка по запросу нет.
+profiles:
+  llama:
+    description: "llama.cpp active (single public ID qwen3.8-27b)"
+    pins:
+      qwen3.8-27b: backend-llama
+      backend-ninfer: ~
+  ninfer:
+    description: "NInfer TP=2 active (single public ID qwen3.8-27b)"
+    pins:
+      qwen3.8-27b: backend-ninfer
+      backend-llama: ~
