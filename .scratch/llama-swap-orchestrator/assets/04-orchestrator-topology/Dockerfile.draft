@@ -1,0 +1,10 @@
+FROM ubuntu:26.04
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        ca-certificates curl libssl3t64 libgomp1 \
+        libavcodec62 libavformat62 libavutil60 libswscale9 libcurl4t64 \
+    && rm -rf /var/lib/apt/lists/*
+COPY --from=ghcr.io/ggml-org/llama.cpp:server-cuda13 /app /app
+COPY --from=ghcr.io/ggml-org/llama.cpp:server-cuda13 /usr/local/cuda-13.3/lib64 /usr/local/cuda-13.3/lib64
+COPY --from=llm-server/ninfer-tp2:v0.4.6 /opt/ninfer /opt/ninfer
+ENV LD_LIBRARY_PATH=/app:/usr/local/cuda-13.3/lib64:/opt/ninfer/lib
+WORKDIR /app

@@ -1,0 +1,15 @@
+# llama.cpp revision
+repo: /home/dimmy/projects/00 infra/llama.cpp
+head: 62318cd57dc63900ecb153272c0b10f78550855d
+date: 2026-10-17 13:00:17 +0200
+
+# vLLM image (local, deployed profile)
+vllm/vllm-openai:<none> 4a2f33a88422 2 months ago
+inside-image: docker run --rm --entrypoint python3 <image> -c 'import vllm; print(vllm.__version__)'
+inside-image version: 0.1.dev19754+g3a0914114
+
+# NInfer
+profile image: llm-server/ninfer-tp2:v0.4.6 (container name llama-swap)
+engine tree: ValerioDolci/ninfer-tp2 @ 47d47864b9e903ab7f800e7c128b7e300230ec00 (v0.4.6)
+docs used: https://raw.githubusercontent.com/ValerioDolci/ninfer-tp2/47d47864b9e903ab7f800e7c128b7e300230ec00/docs/serving.md
+template used: .../tools/chat_templates/qwen3_8.jinja (same commit)

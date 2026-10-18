@@ -1,0 +1,80 @@
+[INFO] using nvidia-smi for GPU monitoring
+[INFO] preloading model: backend-ninfer
+[INFO] llama-swap is reachable by all hosts on the network, use -listen localhost:8080 to restrict to loopback only
+[INFO] llama-swap listening on http://:8080
+2026-10-17 16:12:13.750  INFO  starting engine
+2026-10-17 16:12:14.349  INFO  loading weights | 20.3 GiB
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.9µs
+2026-10-17 16:12:19.306  INFO  weights ready | 20.3 GiB | 5.0s | 4.10 GiB/s
+2026-10-17 16:12:20.698  INFO  CUDA graphs ready | 1.4s
+2026-10-17 16:12:20.699  INFO  engine ready | qwen3.8-27b | total 6.9s | weights 20.3 GiB | CUDA sync spin
+2026-10-17 16:12:20.699  INFO  rank 0 | device 0 | weights 10.2 GiB | sharded 9.65 GiB | replicated 259.6 MiB | local 282.0 MiB | host-mapped 1.18 GiB
+2026-10-17 16:12:20.699  INFO  rank 1 | device 1 | weights 10.1 GiB | sharded 9.65 GiB | replicated 259.6 MiB | local 245.0 MiB | host-mapped 1.18 GiB
+2026-10-17 16:12:20.699  INFO  host-mapped weights | 1.18 GiB of pinned host memory | read in place by 2 devices over PCIe
+2026-10-17 16:12:20.699  INFO  capacity | KV 358,400 tokens, nvfp4, auto | pages 5,600/8,192 | runtime 4.04 GiB | free 710.0 MiB
+2026-10-17 16:12:20.699  INFO  tensor parallel | tp 2 on devices 0,1 | p2p on | KV, StateImages and runtime reserved per rank | Host context-cache tiers off (rank 1 state has no Host replica) | 4 Device checkpoint StateImages; a prefill checkpoint that finds them full first reclaims idle private continuations and is skipped only when none can be released (raise --device-state-slots for many conversations)
+2026-10-17 16:12:20.699  INFO  tensor parallel | captured all-reduces: copies
+2026-10-17 16:12:20.699  INFO  tensor parallel | DFlash2 proposal head: split by vocabulary
+2026-10-17 16:12:20.699  INFO  tensor parallel | DFlash2 drafter: split (16/4 attention heads, MLP halves per rank; selector on rank 1)
+2026-10-17 16:12:20.699  INFO  cuda graphs | rank 0: observed 60.0 MiB, allowance 132.0 MiB
+2026-10-17 16:12:20.699  INFO  cuda graphs | rank 1: observed 60.0 MiB, allowance 132.0 MiB
+2026-10-17 16:12:20.699  INFO  context cache | 2 active + 4 cached device states | host 0 states, 0 B KV | private 8 | shared 4 | anchors 2
+2026-10-17 16:12:20.699  INFO  media | Vision on device 0 | 16 preprocess workers | cache 1.00 GiB | live 2.00 GiB
+2026-10-17 16:12:20.760  INFO  listening on http://127.0.0.1:5801 | model qwen3.8-27b | auth disabled
+[INFO] <backend-ninfer> Health check passed on http://localhost:5801/health
+[ERROR] failed to preload model backend-ninfer: status 404
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.97µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.53µs
+[INFO] Request 172.19.0.1 "GET /api/profiles HTTP/1.1" 200 312 "curl/8.18.0" 115.97µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.01µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.81µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 7.95µs
+2026-10-17 16:12:43.966  INFO  req#1 started | openai-chat stream | 1 message | max output 300 | thinking template default
+2026-10-17 16:12:44.938  INFO  req#1 done | openai-chat | stop token | prompt 74 | output 258 | cache 0 (0.0%) | TTFT 103 ms | total 972 ms | queue 28.9 ms | prefill 730.8 tok/s | decode 295.9 tok/s | dflash2 accepted 214/308 (69.5%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 10580 "curl/8.18.0" 974.122362ms
+2026-10-17 16:12:44.954  INFO  req#2 started | openai-chat stream | 1 message | max output 300 | thinking off
+2026-10-17 16:12:45.061  INFO  req#2 done | openai-chat | stop token | prompt 34 | output 6 | cache 0 (0.0%) | TTFT 68.3 ms | total 108 ms | prefill 511.3 tok/s | decode 127.4 tok/s | dflash2 accepted 4/14 (28.6%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 1354 "curl/8.18.0" 108.905465ms
+2026-10-17 16:12:45.076  INFO  req#3 started | openai-chat stream | 1 message | max output 300 | thinking low
+2026-10-17 16:12:45.719  INFO  req#3 done | openai-chat | stop token | prompt 62 | output 194 | cache 0 (0.0%) | TTFT 71.0 ms | total 644 ms | prefill 897.0 tok/s | decode 337.0 tok/s | dflash2 accepted 165/203 (81.3%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 7340 "curl/8.18.0" 645.49701ms
+2026-10-17 16:12:45.734  INFO  req#4 started | openai-chat stream | 1 message | max output 300 | thinking medium
+2026-10-17 16:12:45.760  INFO  throughput | 5.0s | prefill 34.0 tok/s (170 tok) | decode 91.0 tok/s (455 tok) | running 1 (prefill 1) | batch 1.00 | host 3.2% (162 ms)
+2026-10-17 16:12:46.417  INFO  req#4 done | openai-chat | stop token | prompt 32 | output 214 | cache 27 (84.4%, turn closure) | TTFT 32.7 ms | total 683 ms | prefill 155.3 tok/s | decode 327.5 tok/s | dflash2 accepted 181/231 (78.4%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 8253 "curl/8.18.0" 684.676269ms
+2026-10-17 16:12:46.432  INFO  req#5 started | openai-chat stream | 1 message | max output 300 | thinking xhigh
+2026-10-17 16:12:46.917  INFO  req#5 done | openai-chat | stop token | prompt 74 | output 148 | cache 67 (90.5%, shared prefix) | TTFT 51.8 ms | total 485 ms | prefill 143.3 tok/s | decode 339.2 tok/s | dflash2 accepted 126/154 (81.8%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 5949 "curl/8.18.0" 486.135183ms
+2026-10-17 16:12:46.931  INFO  req#6 started | openai-chat stream | 1 message | max output 300 | thinking off
+2026-10-17 16:12:47.003  INFO  req#6 done | openai-chat | stop token | prompt 34 | output 6 | cache 27 (79.4%, turn closure) | TTFT 33.0 ms | total 72.2 ms | prefill 215.4 tok/s | decode 127.5 tok/s | dflash2 accepted 4/14 (28.6%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 1336 "curl/8.18.0" 73.002745ms
+2026-10-17 16:12:47.018  INFO  req#7 started | openai-chat stream | 1 message | max output 300 | thinking off
+2026-10-17 16:12:47.090  INFO  req#7 done | openai-chat | stop token | prompt 34 | output 6 | cache 27 (79.4%, turn closure) | TTFT 33.1 ms | total 72.5 ms | prefill 214.8 tok/s | decode 127.3 tok/s | dflash2 accepted 4/14 (28.6%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 1336 "curl/8.18.0" 73.204025ms
+[WARN] non-200 response, recording partial metrics: status=400, path=/v1/chat/completions
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 400 183 "curl/8.18.0" 597.322µs
+2026-10-17 16:12:47.118  INFO  req#8 started | openai-chat stream | 1 message | max output 300 | thinking low
+2026-10-17 16:12:47.642  INFO  req#8 done | openai-chat | stop token | prompt 62 | output 162 | cache 0 (0.0%) | TTFT 71.0 ms | total 525 ms | prefill 896.7 tok/s | decode 355.0 tok/s | dflash2 accepted 139/161 (86.3%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 6255 "curl/8.18.0" 525.585013ms
+2026-10-17 16:12:47.656  INFO  req#9 started | openai-chat stream | 1 message | max output 300 | thinking xhigh
+2026-10-17 16:12:48.179  INFO  req#9 done | openai-chat | stop token | prompt 74 | output 163 | cache 67 (90.5%, shared prefix) | TTFT 50.4 ms | total 523 ms | prefill 147.8 tok/s | decode 343.1 tok/s | dflash2 accepted 139/168 (82.7%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 6517 "curl/8.18.0" 523.691139ms
+2026-10-17 16:12:48.193  INFO  req#10 rejected during prepare | openai-chat stream | HTTP 400 | invalid template option | messages 1
+[WARN] non-200 response, recording partial metrics: status=400, path=/v1/chat/completions
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 400 139 "curl/8.18.0" 609.671µs
+2026-10-17 16:12:48.206  INFO  req#11 started | openai-chat stream | 1 message | max output 300 | thinking low
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 18.38µs
+2026-10-17 16:12:48.851  INFO  req#11 done | openai-chat | stop token | prompt 62 | output 229 | cache 57 (91.9%, turn closure) | TTFT 32.7 ms | total 645 ms | prefill 155.7 tok/s | decode 372.6 tok/s | dflash2 accepted 198/217 (91.2%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 7831 "curl/8.18.0" 645.736161ms
+2026-10-17 16:12:48.869  INFO  req#12 started | openai-chat non-stream | 1 message | max output 300 | thinking template default | tools 1
+2026-10-17 16:12:49.213  INFO  req#12 done | openai-chat | tool calls 1 | prompt 333 | output 60 | cache 0 (0.0%) | TTFT 107 ms | total 344 ms | prefill 3.17k tok/s | decode 248.9 tok/s | dflash2 accepted 48/84 (57.1%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 1004 "curl/8.18.0" 345.085498ms
+2026-10-17 16:12:49.228  INFO  req#13 started | openai-chat non-stream | 1 message | max output 300 | thinking off | tools 1
+2026-10-17 16:12:49.429  INFO  req#13 done | openai-chat | tool calls 1 | prompt 297 | output 26 | cache 0 (0.0%) | TTFT 103 ms | total 202 ms | prefill 2.94k tok/s | decode 252.8 tok/s | dflash2 accepted 21/35 (60.0%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 856 "curl/8.18.0" 202.658708ms
+2026-10-17 16:12:49.443  INFO  req#14 started | openai-chat non-stream | 1 message | max output 300 | thinking template default
+2026-10-17 16:12:49.868  INFO  req#14 done | openai-chat | stop token | prompt 66 | output 52 | cache 0 (0.0%) | TTFT 71.5 ms | total 425 ms | prefill 944.5 tok/s | decode 144.5 tok/s | dflash2 accepted 34/126 (27.0%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 969 "curl/8.18.0" 425.366563ms
+2026-10-17 16:12:49.882  INFO  req#15 started | openai-chat non-stream | 1 message | max output 300 | thinking off
+2026-10-17 16:12:50.499  INFO  req#15 done | openai-chat | stop token | prompt 26 | output 114 | cache 0 (0.0%) | TTFT 66.8 ms | total 617 ms | prefill 398.5 tok/s | decode 205.4 tok/s | dflash2 accepted 86/196 (43.9%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 1201 "curl/8.18.0" 618.188004ms

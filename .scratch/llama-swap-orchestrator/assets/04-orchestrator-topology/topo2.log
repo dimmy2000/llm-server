@@ -1,0 +1,23 @@
+[DEBUG] PID: 215856
+[DEBUG] LACT: no GPU monitoring tool available
+[INFO] using nvidia-smi for GPU monitoring
+[INFO] preloading model: backend-llama
+[DEBUG] group: starting swap for model backend-llama, evicting []
+[DEBUG] <backend-llama> Executing start command: sleep 3600, env: 
+[INFO] llama-swap listening on http://127.0.0.1:8129
+[DEBUG] capcompat: capcompat:v1:local:backend-llama:ad6fbd12: capcompat: unsupported upstream (owned_by "unknown")
+[INFO] active profile changed to "ninfer"
+[INFO] Request 127.0.0.1 "PUT /api/profiles/active HTTP/1.1" 200 20 "curl/8.18.0" 76.57µs
+[DEBUG] dispatch: using local process for model: backend-ninfer
+[DEBUG] group: starting swap for model backend-ninfer, evicting [backend-llama]
+[DEBUG] [backend-llama] sending stop signal with timeout 30s
+[DEBUG] <backend-llama> process stopped by llama-swap: signal: terminated
+[DEBUG] <backend-ninfer> Executing start command: sleep 3600, env: 
+[DEBUG] capcompat: capcompat:v1:local:backend-ninfer:001baa56: capcompat: unsupported upstream (owned_by "unknown")
+[DEBUG] Capture 1 compressed and saved: 426 bytes -> 312 bytes (26.8% compression)
+[INFO] Request 127.0.0.1 "POST /v1/chat/completions HTTP/1.1" 200 73 "curl/8.18.0" 2.298475ms
+[INFO] Request 127.0.0.1 "GET /v1/models HTTP/1.1" 200 180 "curl/8.18.0" 80.83µs
+[INFO] received signal terminated, shutting down
+[DEBUG] [backend-ninfer] sending stop signal with timeout 29.999952099s
+[DEBUG] <backend-ninfer> process stopped by llama-swap: signal: terminated
+[INFO] shutdown complete

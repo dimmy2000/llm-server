@@ -1,0 +1,6 @@
+HTTP 200 OK
+Content-Type: application/json
+Date: Sat, 17 Oct 2026 18:23:05 GMT
+Content-Length: 180
+
+{"data":[{"id":"qwen3.8-27b","object":"model","created":1792261385,"owned_by":"llama-swap","meta":{"llamaswap":{"type":"profile"}},"status":{"value":"unloaded"}}],"object":"list"}

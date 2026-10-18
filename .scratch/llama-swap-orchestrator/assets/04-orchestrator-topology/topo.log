@@ -1,0 +1,31 @@
+[DEBUG] PID: 215383
+[DEBUG] LACT: no GPU monitoring tool available
+[INFO] using nvidia-smi for GPU monitoring
+[INFO] preloading model: backend-llama
+[DEBUG] group: starting swap for model backend-llama, evicting []
+[INFO] llama-swap listening on http://127.0.0.1:8128
+[DEBUG] <backend-llama> Executing start command: sleep 3600, env: 
+[DEBUG] capcompat: capcompat:v1:local:backend-llama:ad6fbd12: capcompat: unsupported upstream (owned_by "unknown")
+[INFO] Request 127.0.0.1 "GET /v1/models HTTP/1.1" 200 180 "curl/8.18.0" 156.751µs
+[INFO] Request 127.0.0.1 "GET /api/profiles HTTP/1.1" 200 244 "curl/8.18.0" 73.94µs
+[INFO] Request 127.0.0.1 "POST /v1/chat/completions HTTP/1.1" 404 137 "curl/8.18.0" 106.88µs
+[DEBUG] dispatch: using local process for model: backend-llama
+[DEBUG] group: fast-path serving model backend-llama (already ready)
+[DEBUG] Capture 1 compressed and saved: 425 bytes -> 316 bytes (25.6% compression)
+[INFO] Request 127.0.0.1 "POST /v1/chat/completions HTTP/1.1" 200 72 "curl/8.18.0" 1.482484ms
+[INFO] active profile changed to "ninfer"
+[INFO] Request 127.0.0.1 "PUT /api/profiles/active HTTP/1.1" 200 20 "curl/8.18.0" 85.74µs
+[INFO] Request 127.0.0.1 "GET /v1/models HTTP/1.1" 200 180 "curl/8.18.0" 42.3µs
+[DEBUG] dispatch: using local process for model: backend-ninfer
+[DEBUG] group: starting swap for model backend-ninfer, evicting [backend-llama]
+[DEBUG] [backend-llama] sending stop signal with timeout 30s
+[DEBUG] <backend-llama> process stopped by llama-swap: signal: terminated
+[DEBUG] <backend-ninfer> Executing start command: sleep 3600, env: 
+[DEBUG] capcompat: capcompat:v1:local:backend-ninfer:001baa56: capcompat: unsupported upstream (owned_by "unknown")
+[DEBUG] Capture 2 compressed and saved: 426 bytes -> 318 bytes (25.4% compression)
+[INFO] Request 127.0.0.1 "POST /v1/chat/completions HTTP/1.1" 200 73 "curl/8.18.0" 1.675214ms
+[INFO] Request 127.0.0.1 "POST /v1/chat/completions HTTP/1.1" 404 137 "curl/8.18.0" 43.11µs
+[INFO] received signal terminated, shutting down
+[DEBUG] [backend-ninfer] sending stop signal with timeout 29.9999606s
+[DEBUG] <backend-ninfer> process stopped by llama-swap: signal: terminated
+[INFO] shutdown complete

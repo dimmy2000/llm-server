@@ -1,0 +1,34 @@
+# grep -a 'reasoning_effort:' in opencode binary 1.18.35
+reasoning_effort:$.reasoningEffort
+reasoning_effort:A.reasoningEffort
+reasoning_effort:B
+reasoning_effort:D.reasoningEffort
+reasoning_effort:E.reasoningEffort
+reasoning_effort:H
+reasoning_effort:H.reasoningEffort
+reasoning_effort:i
+reasoning_effort:J
+reasoning_effort:L.reasoningEffort
+reasoning_effort:M.reasoningEffort
+reasoning_effort:O.reasoningEffort
+reasoning_effort:P.reasoningEffort
+reasoning_effort:q.optional
+reasoning_effort:Q.optional
+reasoning_effort:this.asOpenAIReasoningEffort
+reasoning_effort:VL
+reasoning_effort:void
+reasoning_effort:z
+reasoning_effort:Z
+
+# grep -a 'reasoning_content??' in opencode binary
+reasoning_content??E
+reasoning_content??h.reasoning
+
+# grep -a 'providerOptionsName(){' in opencode binary
+providerOptionsName(){let L=this.config.provider,Y=L.indexOf(".");return Y===-1?L:L.substring(0,Y)}
+providerOptionsName(){let Q=this.config.provider,Z=Q.indexOf(".");return Z===-1?Q:Q.substring(0,Z)}
+providerOptionsName(){return this.config.provider.split(".")[0].trim()}
+providerOptionsName(){return this.config.provider?.split(".")[0]?.trim()??"venice"}
+
+# grep -a spread/filter snippet
+providerOptionsName)]}).filter(([d])=>!Object.keys(g.shape).includes(d)))

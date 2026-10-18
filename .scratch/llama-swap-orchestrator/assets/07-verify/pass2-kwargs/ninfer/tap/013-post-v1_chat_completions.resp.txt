@@ -1,0 +1,54 @@
+HTTP 200 OK
+Cache-Control: no-cache
+Content-Type: text/event-stream
+X-Accel-Buffering: no
+X-Request-Id: req_b4a8d63998919652536105377eab74cd
+Date: Sat, 17 Oct 2026 15:09:44 GMT
+Transfer-Encoding: chunked
+
+data: {"choices":[{"delta":{"content":"","role":"assistant"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249784,"id":"chatcmpl-af83aca173a91526","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":"We"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249784,"id":"chatcmpl-af83aca173a91526","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":" need respond to user:"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249784,"id":"chatcmpl-af83aca173a91526","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":" \"Read the file ./notes.txt using"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249784,"id":"chatcmpl-af83aca173a91526","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":" the read tool. Reply with only the"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249784,"id":"chatcmpl-af83aca173a91526","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":" number stored in it, multiplied by "},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249784,"id":"chatcmpl-af83aca173a91526","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":"137.\" We need use"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249784,"id":"chatcmpl-af83aca173a91526","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":" tool"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249784,"id":"chatcmpl-af83aca173a91526","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":"? User"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249784,"id":"chatcmpl-af83aca173a91526","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":" explicitly"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249784,"id":"chatcmpl-af83aca173a91526","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":" says using read tool. We have"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249784,"id":"chatcmpl-af83aca173a91526","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":" read tool. Need call read_file"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249784,"id":"chatcmpl-af83aca173a91526","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":". Then final only number. Need"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249784,"id":"chatcmpl-af83aca173a91526","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":" maybe if"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249784,"id":"chatcmpl-af83aca173a91526","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":" file missing? We'll call"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249784,"id":"chatcmpl-af83aca173a91526","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":".\n"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249784,"id":"chatcmpl-af83aca173a91526","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"content":"{\""},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249784,"id":"chatcmpl-af83aca173a91526","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"content":"tool"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249784,"id":"chatcmpl-af83aca173a91526","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"content":"\":\"read_file\",\"arguments"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249784,"id":"chatcmpl-af83aca173a91526","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"content":"\":{\"path\":\"./notes.txt\"}}"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249784,"id":"chatcmpl-af83aca173a91526","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{},"finish_reason":"stop","index":0,"logprobs":null}],"created":1792249784,"id":"chatcmpl-af83aca173a91526","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[],"created":1792249784,"id":"chatcmpl-af83aca173a91526","model":"qwen3.8-27b","object":"chat.completion.chunk","timings":{"cache_n":599,"draft_n":133,"draft_n_accepted":70,"predicted_ms":525.540138,"predicted_n":89,"predicted_per_second":167.44677263832511,"predicted_per_token_ms":5.972047022727272,"prompt_ms":32.607867,"prompt_n":5,"prompt_per_second":153.33722993902055,"prompt_per_token_ms":6.521573399999999},"usage":{"completion_tokens":89,"completion_tokens_details":{"reasoning_tokens":73},"prompt_tokens":604,"prompt_tokens_details":{"cached_tokens":599},"total_tokens":693}}
+
+data: [DONE]
+

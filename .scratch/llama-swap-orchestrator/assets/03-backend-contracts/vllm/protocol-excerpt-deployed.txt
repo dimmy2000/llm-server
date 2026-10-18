@@ -1,0 +1,133 @@
+
+
+class ChatCompletionRequest(OpenAIBaseModel):
+    # Ordered by official OpenAI API documentation
+    # https://platform.openai.com/docs/api-reference/chat/create
+    messages: list[ChatCompletionMessageParam]
+    model: str | None = None
+    frequency_penalty: float | None = 0.0
+    logit_bias: dict[str, float] | None = None
+    logprobs: bool | None = False
+    top_logprobs: int | None = 0
+    max_tokens: int | None = Field(
+        default=None,
+        deprecated="max_tokens is deprecated in favor of "
+        "the max_completion_tokens field",
+    )
+    max_completion_tokens: int | None = None
+    n: int | None = 1
+    presence_penalty: float | None = 0.0
+    response_format: AnyResponseFormat | None = None
+    seed: int | None = Field(None, ge=_INT64_MIN, le=_INT64_MAX)
+    stop: str | list[str] | None = []
+    stream: bool | None = False
+    stream_options: StreamOptions | None = None
+    temperature: float | None = None
+    top_p: float | None = None
+    tools: list[ChatCompletionToolsParam] | None = None
+    tool_choice: (
+        Literal["none"]
+        | Literal["auto"]
+        | Literal["required"]
+        | ChatCompletionNamedToolChoiceParam
+        | None
+    ) = "none"
+    reasoning_effort: (
+        Literal["none", "minimal", "low", "medium", "high", "xhigh", "max"] | None
+    ) = Field(
+        default=None,
+        description=(
+            "Constrains effort on reasoning for reasoning models. "
+            "Currently supported values are none, minimal, low, medium, "
+            "high, xhigh, and max. Reducing reasoning effort can result in "
+            "faster responses and fewer tokens used on reasoning in a response. "
+            "Note that 'max' is specific to the DeepSeek V4 series and is not "
+            "part of the standard OpenAI API specification."
+        ),
+    )
+    thinking_token_budget: ThinkingTokenBudget = None
+    include_reasoning: bool = True
+    parallel_tool_calls: bool | None = True
+
+    # NOTE this will be ignored by vLLM
+    user: str | None = None
+
+    # --8<-- [start:chat-completion-sampling-params]
+    use_beam_search: bool = False
+    top_k: int | None = None
+    min_p: float | None = None
+    repetition_penalty: float | None = None
+    length_penalty: float = 1.0
+    stop_token_ids: list[int] | None = []
+    include_stop_str_in_output: bool = False
+    ignore_eos: bool = False
+    min_tokens: int = 0
+    skip_special_tokens: bool = True
+    spaces_between_special_tokens: bool = True
+        description=(
+            "A Jinja template to use for this conversion. "
+            "As of transformers v4.44, default chat template is no longer "
+            "allowed, so you must provide a chat template if the tokenizer "
+            "does not define one."
+        ),
+    )
+    chat_template_kwargs: dict[str, Any] | None = Field(
+        default=None,
+        description=(
+            "Additional keyword args to pass to the template renderer. "
+            "Will be accessible by the chat template."
+        ),
+    )
+    media_io_kwargs: dict[str, dict[str, Any]] | None = Field(
+        default=None,
+
+    _grammar_from_parser: bool = PrivateAttr(default=False)
+    """CAUTION: Should only be set by the parser-engine adapter's adjust_request."""
+
+    def build_chat_params(
+        self,
+        default_template: str | None,
+        default_template_content_format: ChatTemplateContentFormatOption,
+    ) -> ChatParams:
+        extra_kwargs: dict[str, Any] = dict(
+            add_generation_prompt=self.add_generation_prompt,
+            continue_final_message=self.continue_final_message,
+            documents=self.documents,
+            reasoning_effort=self.reasoning_effort,
+        )
+
+        # When reasoning is requested, activate thinking for models whose
+        # chat templates require explicit opt-in (e.g., Gemma4 defaults
+        # enable_thinking to false). For templates that don't declare the
+        # variable, resolve_chat_template_kwargs filters it out harmlessly.
+        user_kwargs = self.chat_template_kwargs or {}
+        if self.reasoning_effort is not None and "enable_thinking" not in user_kwargs:
+            extra_kwargs["enable_thinking"] = self.reasoning_effort != "none"
+
+        return ChatParams(
+            chat_template=self.chat_template or default_template,
+            chat_template_content_format=default_template_content_format,
+            chat_template_kwargs=merge_kwargs(
+                self.chat_template_kwargs,
+                extra_kwargs,
+            ),
+            media_io_kwargs=self.media_io_kwargs,
+            return_assistant_tokens_mask=bool(self.return_assistant_tokens_mask),
+            # No-tools requests default to tool_choice="none" at the API
+            # layer. Collapse that default before rendering, so K3 emits a
+            # model-visible tool-choice instruction only for requests with a
+
+=== OpenAIBaseModel ===
+logger = init_logger(__name__)
+
+
+class OpenAIBaseModel(BaseModel):
+    # OpenAI API does allow extra fields
+    model_config = ConfigDict(extra="allow")
+
+    # Cache class field names
+    field_names: ClassVar[set[str] | None] = None
+
+    @model_validator(mode="wrap")
+    @classmethod
+    def __log_extra_fields__(cls, data, handler):

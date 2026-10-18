@@ -1,0 +1,43 @@
+# POST /apply-template на llama-server b10438 (напрямую, минуя llama-swap)
+# messages = [{"role": "user", "content": "Compute 419 multiplied by 137."}]
+
+== bare: {}
+   prompt len 325 (bare=325, delta +0)
+   first block: '<|im_start|>system\nReasoning effort is set to xhigh. Please think carefully through the task, validate key assumptions, consider plausible alternatives, and prioritize correctness, consistency, and clarity in the final answer.'
+
+== effort-none: {"reasoning_effort": "none"}
+   prompt len 325 (bare=325, delta +0)
+   first block: '<|im_start|>system\nReasoning effort is set to xhigh. Please think carefully through the task, validate key assumptions, consider plausible alternatives, and prioritize correctness, consistency, and clarity in the final answer.'
+
+== effort-low: {"reasoning_effort": "low"}
+   prompt len 254 (bare=325, delta -71)
+   first block: '<|im_start|>system\nReasoning effort is set to low. Keep your thinking brief and focused, moving directly to the conclusion without unnecessary elaboration.'
+
+== effort-medium: {"reasoning_effort": "medium"}
+   prompt len 88 (bare=325, delta -237)
+   first block: '<|im_start|>user\nCompute 419 multiplied by 137.'
+
+== effort-xhigh: {"reasoning_effort": "xhigh"}
+   prompt len 325 (bare=325, delta +0)
+   first block: '<|im_start|>system\nReasoning effort is set to xhigh. Please think carefully through the task, validate key assumptions, consider plausible alternatives, and prioritize correctness, consistency, and clarity in the final answer.'
+
+== effort-banana: {"reasoning_effort": "banana"}
+   ERROR: {"code": 500, "message": "\n------------\nWhile executing CallExpression at line 64, column 28 in source:\n...', 'low') %}↵        {{- raise_exception('Unexpected reasoning effort ' ~ reason...\n     
+== kwargs-enable-false: {"chat_template_kwargs": {"enable_thinking": false}}
+   prompt len 99 (bare=325, delta -226)
+   first block: '<|im_start|>user\nCompute 419 multiplied by 137.'
+
+== kwargs-effort-low: {"chat_template_kwargs": {"reasoning_effort": "low"}}
+   prompt len 254 (bare=325, delta -71)
+   first block: '<|im_start|>system\nReasoning effort is set to low. Keep your thinking brief and focused, moving directly to the conclusion without unnecessary elaboration.'
+
+== none+kwargs-false: {"reasoning_effort": "none", "chat_template_kwargs": {"enable_thinking": false}}
+   prompt len 99 (bare=325, delta -226)
+   first block: '<|im_start|>user\nCompute 419 multiplied by 137.'
+
+== none + kwargs-effort-low: {"reasoning_effort": "none", "chat_template_kwargs": {"reasoning_effort": "low"}}
+   prompt len 325 | first block: '<|im_start|>system\nReasoning effort is set to xhigh. Please think carefully through the task, validate key assumptions, '
+
+== banana + kwargs-effort-low: {"reasoning_effort": "banana", "chat_template_kwargs": {"reasoning_effort": "low"}}
+   ERROR: {"code": 500, "message": "\n------------\nWhile executing CallExpression at line 64, column 28 in source:\n...', 'low') %}↵        {{- raise_exception('Unexpected reasoning effort ' ~ reason...\n     
+

@@ -1,0 +1,50 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "self-hosted/qwen3.8-27b",
+  "agents": {
+    "no-think-no-tools": {
+      "model": "self-hosted/qwen3.8-27b#none",
+      "permissions": [{ "action": "*", "resource": "*", "effect": "deny" }]
+    },
+    "think-no-tools": {
+      "model": "self-hosted/qwen3.8-27b#low",
+      "permissions": [{ "action": "*", "resource": "*", "effect": "deny" }]
+    },
+    "no-think-tools": {
+      "model": "self-hosted/qwen3.8-27b#none"
+    },
+    "think-tools": {
+      "model": "self-hosted/qwen3.8-27b#medium"
+    },
+    "default-bare": {
+      "model": "self-hosted/qwen3.8-27b",
+      "permissions": [{ "action": "*", "resource": "*", "effect": "deny" }]
+    },
+    "think-xhigh-no-tools": {
+      "model": "self-hosted/qwen3.8-27b#xhigh",
+      "permissions": [{ "action": "*", "resource": "*", "effect": "deny" }]
+    }
+  },
+  "providers": {
+    "self-hosted": {
+      "name": "Self Hosted (tap)",
+      "package": "@opencode/ai/providers/openai-compatible",
+      "settings": {
+        "baseURL": "http://127.0.0.1:8090/v1"
+      },
+      "models": {
+        "qwen3.8-27b": {
+          "name": "Qwen 3.8 27B (single public ID)",
+          "compatibility": { "reasoningField": "reasoning_content" },
+          "limit": { "context": 262144, "output": 16384 },
+          "variants": [
+            { "id": "none", "settings": { "reasoningEffort": "none" } },
+            { "id": "low", "settings": { "reasoningEffort": "low" } },
+            { "id": "medium", "settings": { "reasoningEffort": "medium" } },
+            { "id": "xhigh", "settings": { "reasoningEffort": "xhigh" } }
+          ]
+        }
+      }
+    }
+  }
+}

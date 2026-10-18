@@ -1,0 +1,284 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "llama-swap/qwen3.8-27b",
+  "agent": {
+    "plan": {
+      "model": "llama-swap/qwen3.8-27b"
+    }
+  },
+  "provider": {
+    "self-hosted": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Self Hosted",
+      "options": {
+        "baseURL": "http://192.168.17.69:9000/v1"
+      },
+      "models": {
+        "rus-gpt/anthropic/claude-fable-5.1": {
+          "name": "Claude Fable 5.1 (rus-gpt)"
+        },
+        "rus-gpt/anthropic/claude-haiku-4.5": {
+          "name": "Claude Haiku 4.5 (rus-gpt)"
+        },
+        "rus-gpt/anthropic/claude-opus-5": {
+          "name": "Claude Opus 5 (rus-gpt)"
+        },
+        "rus-gpt/anthropic/claude-sonnet-5": {
+          "name": "Claude Sonnet 5 (rus-gpt)"
+        },
+        "rus-gpt/deepseek/deepseek-v4.1-flash": {
+          "name": "Deepseek V4.1 Flash (rus-gpt)"
+        },
+        "rus-gpt/google/gemini-3-flash-preview": {
+          "name": "Gemini 3 Flash Preview (rus-gpt)"
+        },
+        "rus-gpt/google/gemini-3.1-pro-preview": {
+          "name": "Gemini 3.1 Pro Preview (rus-gpt)"
+        },
+        "rus-gpt/google/gemini-3.5-flash": {
+          "name": "Gemini 3.5 Flash (rus-gpt)"
+        },
+        "rus-gpt/google/gemini-3.8-flash": {
+          "name": "Gemini 3.8 Flash (rus-gpt)"
+        },
+        "rus-gpt/meituan/longcat-2.0": {
+          "name": "Longcat 2.0 (rus-gpt)"
+        },
+        "rus-gpt/meta/muse-spark-1.2": {
+          "name": "Muse Spark 1.2 (rus-gpt)"
+        },
+        "rus-gpt/minimax/minimax-m3": {
+          "name": "Minimax M3 (rus-gpt)"
+        },
+        "rus-gpt/moonshotai/kimi-k2.6": {
+          "name": "Kimi K2.6 (rus-gpt)"
+        },
+        "rus-gpt/moonshotai/kimi-k2.7-code": {
+          "name": "Kimi K2.7 Code (rus-gpt)"
+        },
+        "rus-gpt/moonshotai/kimi-k3": {
+          "name": "Kimi K3 (rus-gpt)"
+        },
+        "rus-gpt/openai/gpt-5.6-luna": {
+          "name": "GPT-5.6 Luna (rus-gpt)"
+        },
+        "rus-gpt/openai/gpt-5.6-sol": {
+          "name": "GPT-5.6 Sol (rus-gpt)"
+        },
+        "rus-gpt/openai/gpt-5.6-terra": {
+          "name": "GPT-5.6 Terra (rus-gpt)"
+        },
+        "rus-gpt/qwen/qwen3.5-122b-a10b": {
+          "name": "Qwen 3.5 122B A10B (rus-gpt)"
+        },
+        "rus-gpt/qwen/qwen3.5-397b-a17b": {
+          "name": "Qwen 3.5 397B A17B (rus-gpt)"
+        },
+        "rus-gpt/qwen/qwen3.6-35b-a3b": {
+          "name": "Qwen 3.6 35B A3B (rus-gpt)"
+        },
+        "rus-gpt/qwen/qwen3.7-flash": {
+          "name": "Qwen 3.7 Flash (rus-gpt)"
+        },
+        "rus-gpt/qwen/qwen3.7-plus": {
+          "name": "Qwen 3.7 Plus (rus-gpt)"
+        },
+        "rus-gpt/qwen/qwen3.8-27b": {
+          "name": "Qwen 3.8 27B (rus-gpt)"
+        },
+        "rus-gpt/qwen/qwen3.8-max": {
+          "name": "Qwen 3.8 Max (rus-gpt)"
+        },
+        "rus-gpt/tencent/hy3": {
+          "name": "Hy3 (rus-gpt)"
+        },
+        "rus-gpt/z-ai/glm-4.6v": {
+          "name": "GLM 4.6V (rus-gpt)"
+        },
+        "rus-gpt/z-ai/glm-4.7-flash": {
+          "name": "GLM 4.7 Flash (rus-gpt)"
+        },
+        "rus-gpt/z-ai/glm-5.3": {
+          "name": "GLM 5.3 (rus-gpt)"
+        },
+        "rus-gpt/z-ai/glm-5.3-flash": {
+          "name": "GLM 5.3 Flash (rus-gpt)"
+        },
+        "qwencloud/deepseek-v3.2": {
+          "name": "Deepseek V3.2 (qwencloud)"
+        },
+        "qwencloud/kimi-k2.7-code": {
+          "name": "Kimi K2.7 Code (qwencloud)"
+        },
+        "qwencloud/qwen3-coder-480b-a35b-instruct": {
+          "name": "Qwen3 Coder 480B A35B Instruct (qwencloud)"
+        },
+        "qwencloud/qwen3-coder-flash": {
+          "name": "Qwen3 Coder Flash (qwencloud)"
+        },
+        "qwencloud/qwen3-coder-next": {
+          "name": "Qwen3 Coder Next (qwencloud)"
+        },
+        "qwencloud/qwen3-coder-plus": {
+          "name": "Qwen3 Coder Plus (qwencloud)"
+        },
+        "qwencloud/qwen3-coder-plus-2025-07-22": {
+          "name": "Qwen3 Coder Plus 2025-07-22 (qwencloud)"
+        },
+        "qwencloud/qwen3-coder-plus-2025-09-23": {
+          "name": "Qwen3 Coder Plus 2025-09-23 (qwencloud)"
+        },
+        "qwencloud/qwen-coder-plus": {
+          "name": "Qwen Coder Plus (qwencloud)"
+        },
+        "qwencloud/qwen3.5-122b-a10b": {
+          "name": "Qwen 3.5 122B A10B (qwencloud)"
+        },
+        "qwencloud/qwen3.5-397b-a17b": {
+          "name": "Qwen 3.5 397B A17B (qwencloud)"
+        },
+        "qwencloud/qwen3.5-flash": {
+          "name": "Qwen 3.5 Flash (qwencloud)"
+        },
+        "qwencloud/qwen3.5-flash-2026-02-23": {
+          "name": "Qwen 3.5 Flash 2026-02-23 (qwencloud)"
+        },
+        "qwencloud/qwen3.5-plus": {
+          "name": "Qwen 3.5 Plus (qwencloud)"
+        },
+        "qwencloud/qwen3.5-plus-2026-02-15": {
+          "name": "Qwen 3.5 Plus 2026-02-15 (qwencloud)"
+        },
+        "qwencloud/qwen3.5-plus-2026-04-20": {
+          "name": "Qwen 3.5 Plus 2026-04-20 (qwencloud)"
+        },
+        "qwencloud/qwen3.6-flash": {
+          "name": "Qwen 3.6 Flash (qwencloud)"
+        },
+        "qwencloud/qwen3.6-flash-2026-04-16": {
+          "name": "Qwen 3.6 Flash 2026-04-16 (qwencloud)"
+        },
+        "qwencloud/qwen3.6-max-preview": {
+          "name": "Qwen 3.6 Max Preview (qwencloud)"
+        },
+        "qwencloud/qwen3.6-plus": {
+          "name": "Qwen 3.6 Plus (qwencloud)"
+        },
+        "qwencloud/qwen3.6-plus-2026-04-02": {
+          "name": "Qwen 3.6 Plus 2026-04-02 (qwencloud)"
+        },
+        "qwencloud/qwen3.7-flash": {
+          "name": "Qwen 3.7 Flash (qwencloud)"
+        },
+        "qwencloud/qwen3.7-flash-2026-07-15": {
+          "name": "Qwen 3.7 Flash 2026-07-15 (qwencloud)"
+        },
+        "qwencloud/qwen3.7-max": {
+          "name": "Qwen 3.7 Max (qwencloud)"
+        },
+        "qwencloud/qwen3.7-max-2026-05-17": {
+          "name": "Qwen 3.7 Max 2026-05-17 (qwencloud)"
+        },
+        "qwencloud/qwen3.7-max-2026-05-20": {
+          "name": "Qwen 3.7 Max 2026-05-20 (qwencloud)"
+        },
+        "qwencloud/qwen3.7-max-2026-06-08": {
+          "name": "Qwen 3.7 Max 2026-06-08 (qwencloud)"
+        },
+        "qwencloud/qwen3.7-max-preview": {
+          "name": "Qwen 3.7 Max Preview (qwencloud)"
+        },
+        "qwencloud/qwen3.7-plus": {
+          "name": "Qwen 3.7 Plus (qwencloud)"
+        },
+        "qwencloud/qwen3.7-plus-2026-05-26": {
+          "name": "Qwen 3.7 Plus 2026-05-26 (qwencloud)"
+        },
+        "qwencloud/qwen3.8-2.4t-a95b": {
+          "name": "Qwen 3.8 2.4T A95B (qwencloud)"
+        },
+        "qwencloud/qwen3.8-flash": {
+          "name": "Qwen 3.8 Flash (qwencloud)"
+        },
+        "qwencloud/qwen3.8-max-0902": {
+          "name": "Qwen 3.8 Max 0902 (qwencloud)"
+        },
+        "qwencloud/qwen-flash": {
+          "name": "Qwen Flash (qwencloud)"
+        },
+        "qwencloud/qwen-max": {
+          "name": "Qwen Max (qwencloud)"
+        },
+        "qwencloud/qwq-plus": {
+          "name": "Qwq Plus (qwencloud)"
+        }
+      }
+    },
+    "openai": {
+      "options": {
+        "reasoningEffort": "medium",
+        "reasoningSummary": "auto",
+        "textVerbosity": "medium",
+        "include": [
+          "reasoning.encrypted_content"
+        ],
+        "store": false
+      }
+    }
+  },
+  "providers": {
+    "llama-swap": {
+      "name": "llama-swap (single public ID)",
+      "package": "@opencode/ai/providers/openai-compatible",
+      "settings": {
+        "baseURL": "http://localhost:8080/v1"
+      },
+      "models": {
+        "qwen3.8-27b": {
+          "name": "Qwen 3.8 27B (llama-swap)",
+          "compatibility": {
+            "reasoningField": "reasoning_content"
+          },
+          "limit": {
+            "context": 262144,
+            "output": 16384
+          },
+          "variants": [
+            {
+              "id": "off",
+              "body": {
+                "chat_template_kwargs": {
+                  "enable_thinking": false
+                }
+              }
+            },
+            {
+              "id": "low",
+              "body": {
+                "chat_template_kwargs": {
+                  "reasoning_effort": "low"
+                }
+              }
+            },
+            {
+              "id": "medium",
+              "body": {
+                "chat_template_kwargs": {
+                  "reasoning_effort": "medium"
+                }
+              }
+            },
+            {
+              "id": "xhigh",
+              "body": {
+                "chat_template_kwargs": {
+                  "reasoning_effort": "xhigh"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

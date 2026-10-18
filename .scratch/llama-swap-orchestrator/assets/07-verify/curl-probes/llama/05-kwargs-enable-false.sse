@@ -1,0 +1,16 @@
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"role":"assistant","content":null}}],"created":1792249487,"id":"chatcmpl-zDlo2FxLZNSIOC7NHzSExXmODhlSKizq","model":"/models/Qwen3.8-27B-NVFP4-MTP-GGUF/Qwen3.8-27B-NVFP4-MTP-HIGH.gguf","system_fingerprint":"b10068-571d0d540","object":"chat.completion.chunk"}
+
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"content":"5"}}],"created":1792249487,"id":"chatcmpl-zDlo2FxLZNSIOC7NHzSExXmODhlSKizq","model":"/models/Qwen3.8-27B-NVFP4-MTP-GGUF/Qwen3.8-27B-NVFP4-MTP-HIGH.gguf","system_fingerprint":"b10068-571d0d540","object":"chat.completion.chunk"}
+
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"content":"7"}}],"created":1792249487,"id":"chatcmpl-zDlo2FxLZNSIOC7NHzSExXmODhlSKizq","model":"/models/Qwen3.8-27B-NVFP4-MTP-GGUF/Qwen3.8-27B-NVFP4-MTP-HIGH.gguf","system_fingerprint":"b10068-571d0d540","object":"chat.completion.chunk"}
+
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"content":"4"}}],"created":1792249487,"id":"chatcmpl-zDlo2FxLZNSIOC7NHzSExXmODhlSKizq","model":"/models/Qwen3.8-27B-NVFP4-MTP-GGUF/Qwen3.8-27B-NVFP4-MTP-HIGH.gguf","system_fingerprint":"b10068-571d0d540","object":"chat.completion.chunk"}
+
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"content":"0"}}],"created":1792249487,"id":"chatcmpl-zDlo2FxLZNSIOC7NHzSExXmODhlSKizq","model":"/models/Qwen3.8-27B-NVFP4-MTP-GGUF/Qwen3.8-27B-NVFP4-MTP-HIGH.gguf","system_fingerprint":"b10068-571d0d540","object":"chat.completion.chunk"}
+
+data: {"choices":[{"finish_reason":null,"index":0,"delta":{"content":"3"}}],"created":1792249487,"id":"chatcmpl-zDlo2FxLZNSIOC7NHzSExXmODhlSKizq","model":"/models/Qwen3.8-27B-NVFP4-MTP-GGUF/Qwen3.8-27B-NVFP4-MTP-HIGH.gguf","system_fingerprint":"b10068-571d0d540","object":"chat.completion.chunk"}
+
+data: {"choices":[{"finish_reason":"stop","index":0,"delta":{}}],"created":1792249487,"id":"chatcmpl-zDlo2FxLZNSIOC7NHzSExXmODhlSKizq","model":"/models/Qwen3.8-27B-NVFP4-MTP-GGUF/Qwen3.8-27B-NVFP4-MTP-HIGH.gguf","system_fingerprint":"b10068-571d0d540","object":"chat.completion.chunk","timings":{"cache_n":30,"prompt_n":4,"prompt_ms":90.045,"prompt_per_token_ms":22.51125,"prompt_per_second":44.42223332778055,"predicted_n":6,"predicted_ms":132.39,"predicted_per_token_ms":22.064999999999998,"predicted_per_second":45.32064355313846,"draft_n":5,"draft_n_accepted":5}}
+
+data: [DONE]
+

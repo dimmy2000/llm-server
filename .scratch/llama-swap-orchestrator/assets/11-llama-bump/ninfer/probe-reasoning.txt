@@ -1,0 +1,24 @@
+  - 01-bare
+      reasoning:   515 chars | content: '57403'
+  - 02-effort-none
+      reasoning:     0 chars | content: '57403'
+  - 03-effort-low
+      reasoning:   249 chars | content: '57403'
+  - 04-effort-medium
+      reasoning:   290 chars | content: '57403'
+  - 05-effort-xhigh
+      reasoning:   328 chars | content: '57403'
+  - 06-kwargs-enable-false
+      reasoning:     0 chars | content: '57403'
+  - 07-kwargs-effort-none
+      reasoning:     0 chars | content: '57403'
+  - 08-effort-invalid
+      ERROR: {"error":{"code":null,"message":"reasoning_effort must be one of none, minimal, low, medium, high, xhigh, max, or adaptive","param":"reasoning_effort","type":"invalid_request_error"}}
+  - 09-kwargs-effort-low
+      reasoning:   218 chars | content: '57403'
+  - 10-kwargs-effort-xhigh
+      reasoning:   288 chars | content: '57403'
+  - 11-kwargs-invalid
+      ERROR: {"error":{"code":"invalid_template_option","message":"invalid reasoning_effort","param":"reasoning_effort","type":"invalid_request_error"}}
+  - 12-kwargs-both
+      reasoning:   297 chars | content: '57403'

@@ -1,0 +1,38 @@
+{
+  "choices": [
+    {
+      "finish_reason": "length",
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "The rain in the city of Aethelgard did not fall; it hovered, suspended in a perpetual mist that smelled of ozone and wet stone. Here, where the fog rolled off the harbor like a gray tide, words were currency, and instruments were more valuable than gold.\n\nElias Thorne adjusted his spectacles, the lenses clouded with the humidity from the lighthouse keeper’s quarters. He was not a baker, nor a cartographer, though he had worked in both trades before the Great Silence. Now, he was an archivist of the *Catalogue of Borrowed Instruments*, a role that required more patience than any other profession in Aethelgard. His task was simple on paper: record every object that entered or left the city’s collective memory, assigning each a unique number and a numerical weight—a value derived from its resonance, its rarity, and its emotional gravity.\n\nEntry 6930 sat at the top of his ledger today. *Cinder tide cipher glimmer parchment (657).*\n\nElias picked up the first item: a piece of parchment that felt warm to the touch. It was not paper made from wood, but from compressed ash and dried seaweed, a material known as *cinder-parchment"
+      }
+    }
+  ],
+  "created": 1792263828,
+  "model": "/models/Qwen3.8-27B-NVFP4-MTP-GGUF/Qwen3.8-27B-NVFP4-MTP-HIGH.gguf",
+  "system_fingerprint": "b10068-571d0d540",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 256,
+    "prompt_tokens": 159767,
+    "total_tokens": 160023,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    }
+  },
+  "id": "chatcmpl-159F15EWgMPwjBcd03d0TPRWmeJPAczn",
+  "timings": {
+    "cache_n": 0,
+    "prompt_n": 159767,
+    "prompt_ms": 98455.351,
+    "prompt_per_token_ms": 0.616243348125708,
+    "prompt_per_second": 1622.7355687351114,
+    "predicted_n": 256,
+    "predicted_ms": 8666.035,
+    "predicted_per_token_ms": 33.85169921875,
+    "predicted_per_second": 29.540614594794505,
+    "draft_n": 198,
+    "draft_n_accepted": 113
+  }
+}

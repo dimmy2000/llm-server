@@ -1,0 +1,17 @@
+POST /v1/chat/completions HTTP/1.1
+Host: 127.0.0.1:8091
+User-Agent: curl/8.18.0
+Accept: */*
+Content-Type: application/json
+Content-Length: 87
+
+{
+  "model": "qwen3.8-27b",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Say OK"
+    }
+  ],
+  "max_tokens": 10
+}

@@ -1,0 +1,45 @@
+healthCheckTimeout: 30
+logLevel: warn
+logToStdout: both
+
+hooks:
+  on_startup:
+    profile: llama
+    preload:
+      - backend-llama
+
+models:
+  qwen3.8-27b:
+    name: "Qwen3.8-27B (public ID, shadow)"
+    cmd: "sleep 3600"
+    checkEndpoint: none
+    proxy: "http://127.0.0.1:19099"
+    capabilities:
+      in: [text, image]
+      out: [text]
+      tools: true
+      context: 180224
+  backend-llama:
+    name: "llama.cpp"
+    cmd: "sleep 3600"
+    checkEndpoint: none
+    unlisted: true
+    useModelName: qwen3.8-27b
+    proxy: "http://127.0.0.1:19001"
+  backend-ninfer:
+    name: "NInfer"
+    cmd: "sleep 3600"
+    checkEndpoint: none
+    unlisted: true
+    useModelName: qwen3.8-27b
+    proxy: "http://127.0.0.1:19002"
+
+profiles:
+  llama:
+    pins:
+      qwen3.8-27b: backend-llama
+      backend-ninfer: ~
+  ninfer:
+    pins:
+      qwen3.8-27b: backend-ninfer
+      backend-llama: ~

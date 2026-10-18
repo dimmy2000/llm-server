@@ -1,0 +1,46 @@
+== image: llm-server/router:v265 после бампа (тикет 11)
+sha256:ef2b62774977470f52c82aed870e27e91fa56f31782ece8a06e6707fdecef349 created=2026-10-17T19:11:28.042026209+03:00
+
+== llama-server --version:
+version: 0.1.0-dev (build 10438, commit 9d57ce456)
+built with GNU 14.2.0 for Linux x86_64
+
+== /app (файлы llama.cpp):
+total 233164
+drwxr-xr-x 1 root root      4096 Oct 17 16:10 .
+drwxr-xr-x 1 root root      4096 Oct 17 16:13 ..
+lrwxrwxrwx 1 root root        17 Aug 15 06:18 libggml-base.so -> libggml-base.so.0
+lrwxrwxrwx 1 root root        22 Aug 15 06:18 libggml-base.so.0 -> libggml-base.so.0.20.0
+-rwxr-xr-x 1 root root    911656 Aug 15 06:18 libggml-base.so.0.20.0
+-rwxr-xr-x 1 root root   1168624 Aug 15 06:18 libggml-cpu-alderlake.so
+-rwxr-xr-x 1 root root   1403720 Aug 15 06:18 libggml-cpu-cannonlake.so
+-rwxr-xr-x 1 root root   1399624 Aug 15 06:18 libggml-cpu-cascadelake.so
+-rwxr-xr-x 1 root root   1399792 Aug 15 06:18 libggml-cpu-cooperlake.so
+-rwxr-xr-x 1 root root   1168624 Aug 15 06:18 libggml-cpu-haswell.so
+-rwxr-xr-x 1 root root   1399624 Aug 15 06:18 libggml-cpu-icelake.so
+-rwxr-xr-x 1 root root   1109776 Aug 15 06:18 libggml-cpu-ivybridge.so
+-rwxr-xr-x 1 root root   1105680 Aug 15 06:18 libggml-cpu-piledriver.so
+-rwxr-xr-x 1 root root   1100464 Aug 15 06:18 libggml-cpu-sandybridge.so
+-rwxr-xr-x 1 root root   1673896 Aug 15 06:18 libggml-cpu-sapphirerapids.so
+-rwxr-xr-x 1 root root   1403720 Aug 15 06:18 libggml-cpu-skylakex.so
+-rwxr-xr-x 1 root root    938128 Aug 15 06:18 libggml-cpu-sse42.so
+-rwxr-xr-x 1 root root    909576 Aug 15 06:18 libggml-cpu-x64.so
+-rwxr-xr-x 1 root root   1399792 Aug 15 06:18 libggml-cpu-zen4.so
+
+== вхождения строк в бинарниках (grep -a, без binutils):
+libllama-server-impl.so        reasoning_effort=1 enable_thinking=4
+libllama-common.so.0.1.0       reasoning_effort=5 enable_thinking=5
+llama-server                   reasoning_effort=0 enable_thinking=0
+
+== контроль: старый пин b10068 (тот же grep):
+Unable to find image 'ghcr.io/ggml-org/llama.cpp:server-cuda13-b10068@sha256:6447a865bd031283c5f66ff2a82984cdb282ec37484cf2a9bfc7b4cb1f85708e' locally
+ghcr.io/ggml-org/llama.cpp@sha256:6447a865bd031283c5f66ff2a82984cdb282ec37484cf2a9bfc7b4cb1f85708e: Pulling from ggml-org/llama.cpp
+ed2dfd4fb268: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+491b6d53abf8: Pulling fs layer
+f1c5c23c34f5: Pulling fs layer
+Digest: sha256:6447a865bd031283c5f66ff2a82984cdb282ec37484cf2a9bfc7b4cb1f85708e
+Status: Downloaded newer image for ghcr.io/ggml-org/llama.cpp@sha256:6447a865bd031283c5f66ff2a82984cdb282ec37484cf2a9bfc7b4cb1f85708e
+version: 10068 (571d0d540)
+libllama-server-impl.so        reasoning_effort=0 enable_thinking=4
+libllama-common.so.0.0.10068   reasoning_effort=0 enable_thinking=5

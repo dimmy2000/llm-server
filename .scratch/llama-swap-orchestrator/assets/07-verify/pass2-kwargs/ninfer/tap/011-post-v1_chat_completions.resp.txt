@@ -1,0 +1,56 @@
+HTTP 200 OK
+Cache-Control: no-cache
+Content-Type: text/event-stream
+X-Accel-Buffering: no
+X-Request-Id: req_b4a2e040ca3bcdf4f436446962cb39a1
+Date: Sat, 17 Oct 2026 15:09:43 GMT
+Transfer-Encoding: chunked
+
+data: {"choices":[{"delta":{"content":"","role":"assistant"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249783,"id":"chatcmpl-870c9c629a0d036d","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":"We"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249783,"id":"chatcmpl-870c9c629a0d036d","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":" need answer user"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249783,"id":"chatcmpl-870c9c629a0d036d","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":"'s request. Need read"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249783,"id":"chatcmpl-870c9c629a0d036d","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":" file ./notes.txt using read tool."},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249783,"id":"chatcmpl-870c9c629a0d036d","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":" But system"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249783,"id":"chatcmpl-870c9c629a0d036d","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":"? We are"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249783,"id":"chatcmpl-870c9c629a0d036d","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":" title"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249783,"id":"chatcmpl-870c9c629a0d036d","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":" generator?"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249783,"id":"chatcmpl-870c9c629a0d036d","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":" Wait initial"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249783,"id":"chatcmpl-870c9c629a0d036d","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":" system"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249783,"id":"chatcmpl-870c9c629a0d036d","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":":"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249783,"id":"chatcmpl-870c9c629a0d036d","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":" \"You are a title generator. You"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249783,"id":"chatcmpl-870c9c629a0d036d","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":" output ONLY"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249783,"id":"chatcmpl-870c9c629a0d036d","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":" a thread title. Nothing else.\" Then"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249783,"id":"chatcmpl-870c9c629a0d036d","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":" task generate"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249783,"id":"chatcmpl-870c9c629a0d036d","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":" title."},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249783,"id":"chatcmpl-870c9c629a0d036d","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":" But user asks"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249783,"id":"chatcmpl-870c9c629a0d036d","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":" read file"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249783,"id":"chatcmpl-870c9c629a0d036d","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":" and compute"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249783,"id":"chatcmpl-870c9c629a0d036d","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":". There"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249783,"id":"chatcmpl-870c9c629a0d036d","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":"'s conflict. We need likely follow"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249783,"id":"chatcmpl-870c9c629a0d036d","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":" system?"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249783,"id":"chatcmpl-870c9c629a0d036d","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":" The current"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249783,"id":"chatcmpl-870c9c629a0d036d","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+

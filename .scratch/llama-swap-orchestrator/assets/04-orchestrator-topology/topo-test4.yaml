@@ -1,0 +1,43 @@
+healthCheckTimeout: 30
+logLevel: info
+logToStdout: both
+
+hooks:
+  on_startup:
+    profile: ninfer
+    preload:
+      - backend-ninfer
+
+models:
+  backend-llama:
+    name: "llama.cpp"
+    cmd: "sleep 3600"
+    checkEndpoint: none
+    unlisted: true
+    useModelName: qwen3.8-27b
+    proxy: "http://127.0.0.1:19001"
+  backend-ninfer:
+    name: "NInfer"
+    cmd: "sleep 3600"
+    checkEndpoint: none
+    unlisted: true
+    useModelName: qwen3.8-27b
+    proxy: "http://127.0.0.1:19002"
+  # Гипотетический третий backend с собственным публичным ID:
+  # объявлен как обычно, из профилей не выключен -> доступен по запросу.
+  other-model:
+    name: "Third backend"
+    cmd: "sleep 3600"
+    checkEndpoint: none
+    useModelName: other-model
+    proxy: "http://127.0.0.1:19003"
+
+profiles:
+  llama:
+    pins:
+      qwen3.8-27b: backend-llama
+      backend-ninfer: ~
+  ninfer:
+    pins:
+      qwen3.8-27b: backend-ninfer
+      backend-llama: ~

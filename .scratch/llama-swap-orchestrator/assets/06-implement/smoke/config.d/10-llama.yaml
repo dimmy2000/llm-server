@@ -1,0 +1,17 @@
+# Приближение router/config.d/10-llama.yaml: cmd -> sleep, proxy -> fake backend.
+models:
+  backend-llama:
+    name: "llama.cpp"
+    unlisted: true
+    env:
+      - LD_LIBRARY_PATH=/app:/usr/local/cuda-13.3/lib64
+    cmd: "sleep 3600"
+    checkEndpoint: none
+    proxy: "http://127.0.0.1:19011"
+    capabilities:
+      in: [text, image]
+      out: [text]
+      tools: true
+      context: 180224
+    filters:
+      stripParams: "repetition_penalty"

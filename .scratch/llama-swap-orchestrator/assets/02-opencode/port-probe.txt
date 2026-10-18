@@ -1,0 +1,5 @@
+# port probe
+localhost:8080 -> 200
+curl: (7) Failed to connect to localhost port 9000 after 0 ms: Could not connect to server
+localhost:9000 -> 000
+WSL IP: 192.168.17.99 172.19.0.1 172.17.0.1 172.18.0.1 

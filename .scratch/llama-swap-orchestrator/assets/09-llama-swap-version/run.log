@@ -1,0 +1,59 @@
+=== workdir: /tmp/tmp.slMJ8eUwEL
+
+=== [1] плавающий тег vs локальный образ ===
+local image: sha256:3d49d5d957e1642b1719b1e5edc9e1d102f6a88198074e29f7f3b49e8fb0e0f8 created 2026-07-19T12:17:16.875684892Z
+version: v240 (6b5320d), built at 2026-07-15T01:08:41Z
+version: 10068 (571d0d540)
+built with GNU 14.2.0 for Linux x86_64
+remote :cuda13 digest: docker-content-digest: sha256:62f47d09302da4a43f0ba776ac0b880558d1f5f0316e4fbfcb8743c85a65856c
+remote :v265-cuda13-b11706 digest: docker-content-digest: sha256:62f47d09302da4a43f0ba776ac0b880558d1f5f0316e4fbfcb8743c85a65856c
+local image digest still in registry (expect 404): 404
+
+=== [2] пинуемый релиз llama-swap v265 ===
+cb1f9a94be05afa129d3c17868f1dd2ca710b919333c7b868239dc31575dcfa1  ls265.tar.gz
+version: v265 (d1e743f), built at 2026-10-14T08:30:34Z
+
+=== [3] текущие конфиги проекта на v265 ===
+--- /home/dimmy/projects/00 infra/llm-server/llama/config.yaml
+config is valid: 1 model(s), 0 peer(s)
+exit: 0
+--- /home/dimmy/projects/00 infra/llm-server/ninfer/config.yaml
+config is valid: 1 model(s), 0 peer(s)
+exit: 0
+
+=== [4] v240 как negative control: пины не принимаются ===
+--- v240: -validate неизвестен
+flag provided but not defined: -validate
+Usage of /app/llama-swap:
+  -config string
+    	path to config file
+  -config-dir string
+    	directory of *.yml/*.yaml config files (additive to -config)
+  -listen string
+    	listen address (default :8080 or :8443 for TLS)
+  -tls-cert-file string
+    	TLS certificate file
+  -tls-key-file string
+    	TLS key file
+  -version
+    	show version and exit
+  -watch-config
+    	reload config on file change
+exit: 2
+--- v265: тот же конфиг с пинами
+config is valid: 2 model(s), 0 peer(s)
+exit: 0
+
+=== [5] единый ID переключается между backend'ами ===
+--- /v1/models без активного профиля
+['backend-llama', 'backend-ninfer']
+--- профиль llama: /v1/models
+['backend-llama', 'backend-ninfer', 'qwen3.8-27b']
+--- профиль llama: POST model=qwen3.8-27b -> {"backend": "llama.cpp", "port": 19001, "received_model": "qwen3.8-27b"}
+--- профиль ninfer: /v1/models
+['backend-llama', 'backend-ninfer', 'qwen3.8-27b']
+--- профиль ninfer: POST model=qwen3.8-27b -> {"backend": "ninfer", "port": 19002, "received_model": "qwen3.8-27b"}
+--- профиль disabled (пин ~) убирает публичный ID
+['backend-llama', 'backend-ninfer']
+
+=== done ===

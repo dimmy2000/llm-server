@@ -1,0 +1,2387 @@
+[INFO] using nvidia-smi for GPU monitoring
+[INFO] preloading model: backend-ninfer
+[INFO] llama-swap is reachable by all hosts on the network, use -listen localhost:8080 to restrict to loopback only
+[INFO] llama-swap listening on http://:8080
+2026-10-17 16:12:13.750  INFO  starting engine
+2026-10-17 16:12:14.349  INFO  loading weights | 20.3 GiB
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.9µs
+2026-10-17 16:12:19.306  INFO  weights ready | 20.3 GiB | 5.0s | 4.10 GiB/s
+2026-10-17 16:12:20.698  INFO  CUDA graphs ready | 1.4s
+2026-10-17 16:12:20.699  INFO  engine ready | qwen3.8-27b | total 6.9s | weights 20.3 GiB | CUDA sync spin
+2026-10-17 16:12:20.699  INFO  rank 0 | device 0 | weights 10.2 GiB | sharded 9.65 GiB | replicated 259.6 MiB | local 282.0 MiB | host-mapped 1.18 GiB
+2026-10-17 16:12:20.699  INFO  rank 1 | device 1 | weights 10.1 GiB | sharded 9.65 GiB | replicated 259.6 MiB | local 245.0 MiB | host-mapped 1.18 GiB
+2026-10-17 16:12:20.699  INFO  host-mapped weights | 1.18 GiB of pinned host memory | read in place by 2 devices over PCIe
+2026-10-17 16:12:20.699  INFO  capacity | KV 358,400 tokens, nvfp4, auto | pages 5,600/8,192 | runtime 4.04 GiB | free 710.0 MiB
+2026-10-17 16:12:20.699  INFO  tensor parallel | tp 2 on devices 0,1 | p2p on | KV, StateImages and runtime reserved per rank | Host context-cache tiers off (rank 1 state has no Host replica) | 4 Device checkpoint StateImages; a prefill checkpoint that finds them full first reclaims idle private continuations and is skipped only when none can be released (raise --device-state-slots for many conversations)
+2026-10-17 16:12:20.699  INFO  tensor parallel | captured all-reduces: copies
+2026-10-17 16:12:20.699  INFO  tensor parallel | DFlash2 proposal head: split by vocabulary
+2026-10-17 16:12:20.699  INFO  tensor parallel | DFlash2 drafter: split (16/4 attention heads, MLP halves per rank; selector on rank 1)
+2026-10-17 16:12:20.699  INFO  cuda graphs | rank 0: observed 60.0 MiB, allowance 132.0 MiB
+2026-10-17 16:12:20.699  INFO  cuda graphs | rank 1: observed 60.0 MiB, allowance 132.0 MiB
+2026-10-17 16:12:20.699  INFO  context cache | 2 active + 4 cached device states | host 0 states, 0 B KV | private 8 | shared 4 | anchors 2
+2026-10-17 16:12:20.699  INFO  media | Vision on device 0 | 16 preprocess workers | cache 1.00 GiB | live 2.00 GiB
+2026-10-17 16:12:20.760  INFO  listening on http://127.0.0.1:5801 | model qwen3.8-27b | auth disabled
+[INFO] <backend-ninfer> Health check passed on http://localhost:5801/health
+[ERROR] failed to preload model backend-ninfer: status 404
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.97µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.53µs
+[INFO] Request 172.19.0.1 "GET /api/profiles HTTP/1.1" 200 312 "curl/8.18.0" 115.97µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.01µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.81µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 7.95µs
+2026-10-17 16:12:43.966  INFO  req#1 started | openai-chat stream | 1 message | max output 300 | thinking template default
+2026-10-17 16:12:44.938  INFO  req#1 done | openai-chat | stop token | prompt 74 | output 258 | cache 0 (0.0%) | TTFT 103 ms | total 972 ms | queue 28.9 ms | prefill 730.8 tok/s | decode 295.9 tok/s | dflash2 accepted 214/308 (69.5%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 10580 "curl/8.18.0" 974.122362ms
+2026-10-17 16:12:44.954  INFO  req#2 started | openai-chat stream | 1 message | max output 300 | thinking off
+2026-10-17 16:12:45.061  INFO  req#2 done | openai-chat | stop token | prompt 34 | output 6 | cache 0 (0.0%) | TTFT 68.3 ms | total 108 ms | prefill 511.3 tok/s | decode 127.4 tok/s | dflash2 accepted 4/14 (28.6%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 1354 "curl/8.18.0" 108.905465ms
+2026-10-17 16:12:45.076  INFO  req#3 started | openai-chat stream | 1 message | max output 300 | thinking low
+2026-10-17 16:12:45.719  INFO  req#3 done | openai-chat | stop token | prompt 62 | output 194 | cache 0 (0.0%) | TTFT 71.0 ms | total 644 ms | prefill 897.0 tok/s | decode 337.0 tok/s | dflash2 accepted 165/203 (81.3%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 7340 "curl/8.18.0" 645.49701ms
+2026-10-17 16:12:45.734  INFO  req#4 started | openai-chat stream | 1 message | max output 300 | thinking medium
+2026-10-17 16:12:45.760  INFO  throughput | 5.0s | prefill 34.0 tok/s (170 tok) | decode 91.0 tok/s (455 tok) | running 1 (prefill 1) | batch 1.00 | host 3.2% (162 ms)
+2026-10-17 16:12:46.417  INFO  req#4 done | openai-chat | stop token | prompt 32 | output 214 | cache 27 (84.4%, turn closure) | TTFT 32.7 ms | total 683 ms | prefill 155.3 tok/s | decode 327.5 tok/s | dflash2 accepted 181/231 (78.4%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 8253 "curl/8.18.0" 684.676269ms
+2026-10-17 16:12:46.432  INFO  req#5 started | openai-chat stream | 1 message | max output 300 | thinking xhigh
+2026-10-17 16:12:46.917  INFO  req#5 done | openai-chat | stop token | prompt 74 | output 148 | cache 67 (90.5%, shared prefix) | TTFT 51.8 ms | total 485 ms | prefill 143.3 tok/s | decode 339.2 tok/s | dflash2 accepted 126/154 (81.8%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 5949 "curl/8.18.0" 486.135183ms
+2026-10-17 16:12:46.931  INFO  req#6 started | openai-chat stream | 1 message | max output 300 | thinking off
+2026-10-17 16:12:47.003  INFO  req#6 done | openai-chat | stop token | prompt 34 | output 6 | cache 27 (79.4%, turn closure) | TTFT 33.0 ms | total 72.2 ms | prefill 215.4 tok/s | decode 127.5 tok/s | dflash2 accepted 4/14 (28.6%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 1336 "curl/8.18.0" 73.002745ms
+2026-10-17 16:12:47.018  INFO  req#7 started | openai-chat stream | 1 message | max output 300 | thinking off
+2026-10-17 16:12:47.090  INFO  req#7 done | openai-chat | stop token | prompt 34 | output 6 | cache 27 (79.4%, turn closure) | TTFT 33.1 ms | total 72.5 ms | prefill 214.8 tok/s | decode 127.3 tok/s | dflash2 accepted 4/14 (28.6%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 1336 "curl/8.18.0" 73.204025ms
+[WARN] non-200 response, recording partial metrics: status=400, path=/v1/chat/completions
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 400 183 "curl/8.18.0" 597.322µs
+2026-10-17 16:12:47.118  INFO  req#8 started | openai-chat stream | 1 message | max output 300 | thinking low
+2026-10-17 16:12:47.642  INFO  req#8 done | openai-chat | stop token | prompt 62 | output 162 | cache 0 (0.0%) | TTFT 71.0 ms | total 525 ms | prefill 896.7 tok/s | decode 355.0 tok/s | dflash2 accepted 139/161 (86.3%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 6255 "curl/8.18.0" 525.585013ms
+2026-10-17 16:12:47.656  INFO  req#9 started | openai-chat stream | 1 message | max output 300 | thinking xhigh
+2026-10-17 16:12:48.179  INFO  req#9 done | openai-chat | stop token | prompt 74 | output 163 | cache 67 (90.5%, shared prefix) | TTFT 50.4 ms | total 523 ms | prefill 147.8 tok/s | decode 343.1 tok/s | dflash2 accepted 139/168 (82.7%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 6517 "curl/8.18.0" 523.691139ms
+2026-10-17 16:12:48.193  INFO  req#10 rejected during prepare | openai-chat stream | HTTP 400 | invalid template option | messages 1
+[WARN] non-200 response, recording partial metrics: status=400, path=/v1/chat/completions
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 400 139 "curl/8.18.0" 609.671µs
+2026-10-17 16:12:48.206  INFO  req#11 started | openai-chat stream | 1 message | max output 300 | thinking low
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 18.38µs
+2026-10-17 16:12:48.851  INFO  req#11 done | openai-chat | stop token | prompt 62 | output 229 | cache 57 (91.9%, turn closure) | TTFT 32.7 ms | total 645 ms | prefill 155.7 tok/s | decode 372.6 tok/s | dflash2 accepted 198/217 (91.2%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 7831 "curl/8.18.0" 645.736161ms
+2026-10-17 16:12:48.869  INFO  req#12 started | openai-chat non-stream | 1 message | max output 300 | thinking template default | tools 1
+2026-10-17 16:12:49.213  INFO  req#12 done | openai-chat | tool calls 1 | prompt 333 | output 60 | cache 0 (0.0%) | TTFT 107 ms | total 344 ms | prefill 3.17k tok/s | decode 248.9 tok/s | dflash2 accepted 48/84 (57.1%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 1004 "curl/8.18.0" 345.085498ms
+2026-10-17 16:12:49.228  INFO  req#13 started | openai-chat non-stream | 1 message | max output 300 | thinking off | tools 1
+2026-10-17 16:12:49.429  INFO  req#13 done | openai-chat | tool calls 1 | prompt 297 | output 26 | cache 0 (0.0%) | TTFT 103 ms | total 202 ms | prefill 2.94k tok/s | decode 252.8 tok/s | dflash2 accepted 21/35 (60.0%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 856 "curl/8.18.0" 202.658708ms
+2026-10-17 16:12:49.443  INFO  req#14 started | openai-chat non-stream | 1 message | max output 300 | thinking template default
+2026-10-17 16:12:49.868  INFO  req#14 done | openai-chat | stop token | prompt 66 | output 52 | cache 0 (0.0%) | TTFT 71.5 ms | total 425 ms | prefill 944.5 tok/s | decode 144.5 tok/s | dflash2 accepted 34/126 (27.0%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 969 "curl/8.18.0" 425.366563ms
+2026-10-17 16:12:49.882  INFO  req#15 started | openai-chat non-stream | 1 message | max output 300 | thinking off
+2026-10-17 16:12:50.499  INFO  req#15 done | openai-chat | stop token | prompt 26 | output 114 | cache 0 (0.0%) | TTFT 66.8 ms | total 617 ms | prefill 398.5 tok/s | decode 205.4 tok/s | dflash2 accepted 86/196 (43.9%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 1201 "curl/8.18.0" 618.188004ms
+2026-10-17 16:12:50.760  INFO  throughput | 5.0s | prefill 164.4 tok/s (822 tok) | decode 233.8 tok/s (1,169 tok) | running 0 | batch 1.00 | host 7.5% (377 ms)
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.1µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.06µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.74µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.63µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.33µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 32.17µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 20.08µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.35µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.8µs
+[INFO] active profile changed to "llama"
+[INFO] Request 172.19.0.1 "PUT /api/profiles/active HTTP/1.1" 200 19 "curl/8.18.0" 93.07µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.82µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.51µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.07µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.17µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.441µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.07µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.43µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.35µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.62µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 26.82µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.22µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.91µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 28.77µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.94µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.44µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.07µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.4µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.11µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.96µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.99µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.83µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.15µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.87µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.52µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.081µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.69µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.62µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.44µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.65µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.69µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.85µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.49µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.731µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.74µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.05µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 15.8µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 14.35µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.59µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.42µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.89µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.86µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.42µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.87µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.69µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.55µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.97µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.45µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.74µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.39µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.56µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.28µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.84µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.98µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 16.57µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.17µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.79µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.21µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.281µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.33µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.73µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.89µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.75µs
+2026-10-17 16:18:50.112  INFO  server stopped
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.76µs
+0.00.149.558 I cmn  common_param: common_params_print_info: verbosity = 3 (adjust with the `-lv N` CLI arg)
+0.00.257.068 W srv  llama_server: -----------------
+0.00.257.071 W srv  llama_server: CORS is set to allow all origins ('*') and no API key is set
+0.00.257.071 W srv  llama_server: this can be a security risk (cross-origin attacks)
+0.00.257.071 W srv  llama_server: more info: https://github.com/ggml-org/llama.cpp/pull/25655
+0.00.257.071 W srv  llama_server: -----------------
+0.00.258.257 I srv    load_model: loading model '/models/Qwen3.8-27B-NVFP4-MTP-GGUF/Qwen3.8-27B-NVFP4-MTP-HIGH.gguf'
+0.01.752.434 W NCCL not compiled in; falling back to internal AllReduce.  Recompile with -DGGML_CUDA_NCCL=ON for best multi-GPU performance.
+0.01.819.279 I cmn          init: llama threadpool init, n_threads = 8
+0.01.889.068 I common_speculative_init_result: creating MTP draft context against the target model '/models/Qwen3.8-27B-NVFP4-MTP-GGUF/Qwen3.8-27B-NVFP4-MTP-HIGH.gguf'
+0.01.889.100 W NCCL not compiled in; falling back to internal AllReduce.  Recompile with -DGGML_CUDA_NCCL=ON for best multi-GPU performance.
+0.01.935.007 W load_hparams: Qwen-VL models require at minimum 1024 image tokens to function correctly on grounding tasks
+0.01.935.010 W load_hparams: if you encounter problems with accuracy, try adding --image-min-tokens 1024
+0.01.935.010 W load_hparams: more info: https://github.com/ggml-org/llama.cpp/issues/16842
+
+0.02.044.597 I srv    load_model: loaded multimodal model, '/models/Qwen3.8-27B-NVFP4-MTP-GGUF/mmproj-BF16.gguf'
+0.02.078.760 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 180224, kv_unified = 'false'
+0.02.081.660 W set_sampler: backend sampling not supported with SPLIT_MODE_TENSOR; using CPU
+0.02.081.662 W spec common_specu: backend offload failed for seq_id=0; using CPU sampler
+0.02.088.729 I srv          init: chat template supports preserving reasoning, consider enabling it via --reasoning-preserve
+0.02.088.763 I srv  llama_server: model loaded
+0.02.088.767 I srv  llama_server: listening on http://127.0.0.1:5800
+[INFO] <backend-llama> Health check passed on http://localhost:5800/health
+0.02.253.455 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = -1
+0.02.253.532 I slot launch_slot_: id  0 | task 0 | processing task, is_child = 0
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 6.61µs
+0.05.748.253 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =     42, progress = 0.79, t =   3.49 s / 12.03 tokens per second
+0.05.819.480 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =     49, progress = 0.92, t =   3.56 s / 13.75 tokens per second
+0.05.896.851 I slot print_timing: id  0 | task 0 | prompt eval time =    3643.28 ms /    53 tokens (   68.74 ms per token,    14.55 tokens per second)
+0.05.896.855 I slot print_timing: id  0 | task 0 |        eval time =       0.00 ms /     1 tokens (    0.00 ms per token,     0.00 tokens per second)
+0.05.896.856 I slot print_timing: id  0 | task 0 |       total time =    3643.29 ms /    54 tokens
+0.05.896.858 I slot print_timing: id  0 | task 0 |    graphs reused =          1
+0.05.896.908 I slot      release: id  0 | task 0 | stop processing: n_tokens = 53, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 676 "curl/8.18.0" 6.889644872s
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.38µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.76µs
+0.17.216.502 I slot get_availabl: id  0 | task -1 | selected slot by LCP similarity, f_sim_best = 0.608 (> 0.100 thold), f_keep = 0.849
+0.17.216.544 I slot launch_slot_: id  0 | task 4 | processing task, is_child = 0
+0.18.995.546 I slot print_timing: id  0 | task 4 | prompt eval time =     177.98 ms /    32 tokens (    5.56 ms per token,   179.79 tokens per second)
+0.18.995.549 I slot print_timing: id  0 | task 4 |        eval time =    1600.90 ms /   161 tokens (   10.01 ms per token,    99.94 tokens per second)
+0.18.995.550 I slot print_timing: id  0 | task 4 |       total time =    1778.88 ms /   193 tokens
+0.18.995.550 I slot print_timing: id  0 | task 4 |    graphs reused =         19
+0.18.995.558 I slot print_timing: id  0 | task 4 | draft acceptance = 0.87597 (  113 accepted /   129 generated), mean len =  3.63
+0.18.995.585 I slot      release: id  0 | task 4 | stop processing: n_tokens = 234, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 49755 "curl/8.18.0" 1.781559988s
+0.19.011.638 I slot get_availabl: id  0 | task -1 | selected slot by LCP similarity, f_sim_best = 1.000 (> 0.100 thold), f_keep = 0.316
+0.19.128.864 I slot launch_slot_: id  0 | task 54 | processing task, is_child = 0
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 6.54µs
+0.22.251.412 I slot print_timing: id  0 | task 54 | n_gen =    101, tg =  33.06 t/s, tg_3s =  33.39 t/s
+0.23.654.324 I slot print_timing: id  0 | task 54 | prompt eval time =      97.23 ms /     4 tokens (   24.31 ms per token,    41.14 tokens per second)
+0.23.654.327 I slot print_timing: id  0 | task 54 |        eval time =    4428.11 ms /   204 tokens (   21.81 ms per token,    45.84 tokens per second)
+0.23.654.327 I slot print_timing: id  0 | task 54 |       total time =    4525.34 ms /   208 tokens
+0.23.654.329 I slot print_timing: id  0 | task 54 |    graphs reused =         36
+0.23.654.336 I slot print_timing: id  0 | task 54 | draft acceptance = 0.48621 (  141 accepted /   290 generated), mean len =  3.82
+0.23.654.365 I slot      release: id  0 | task 54 | stop processing: n_tokens = 281, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 63014 "curl/8.18.0" 4.645322669s
+0.23.670.263 I slot get_availabl: id  0 | task -1 | selected slot by LCP similarity, f_sim_best = 0.145 (> 0.100 thold), f_keep = 0.032
+0.23.759.708 I slot launch_slot_: id  0 | task 122 | processing task, is_child = 0
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 20.04µs
+0.25.039.951 I slot print_timing: id  0 | task 122 | prompt eval time =     194.07 ms /    62 tokens (    3.13 ms per token,   319.47 tokens per second)
+0.25.039.954 I slot print_timing: id  0 | task 122 |        eval time =    1086.04 ms /   154 tokens (    7.10 ms per token,   140.88 tokens per second)
+0.25.039.954 I slot print_timing: id  0 | task 122 |       total time =    1280.11 ms /   216 tokens
+0.25.039.955 I slot print_timing: id  0 | task 122 |    graphs reused =         60
+0.25.039.963 I slot print_timing: id  0 | task 122 | draft acceptance = 0.93651 (  118 accepted /   126 generated), mean len =  4.37
+0.25.039.991 I slot      release: id  0 | task 122 | stop processing: n_tokens = 215, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 47441 "curl/8.18.0" 1.372139555s
+0.25.055.308 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 34365386331
+0.25.144.142 I slot launch_slot_: id  0 | task 161 | processing task, is_child = 0
+0.26.796.331 I slot print_timing: id  0 | task 161 | prompt eval time =     115.99 ms /    32 tokens (    3.62 ms per token,   275.89 tokens per second)
+0.26.796.333 I slot print_timing: id  0 | task 161 |        eval time =    1536.08 ms /   221 tokens (    6.98 ms per token,   143.22 tokens per second)
+0.26.796.334 I slot print_timing: id  0 | task 161 |       total time =    1652.07 ms /   253 tokens
+0.26.796.334 I slot print_timing: id  0 | task 161 |    graphs reused =         74
+0.26.796.343 I slot print_timing: id  0 | task 161 | draft acceptance = 0.66304 (  183 accepted /   276 generated), mean len =  6.23
+0.26.796.367 I slot      release: id  0 | task 161 | stop processing: n_tokens = 254, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 68211 "curl/8.18.0" 1.743442415s
+0.26.813.053 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 34367142707
+0.26.909.741 I slot launch_slot_: id  0 | task 203 | processing task, is_child = 0
+0.29.031.122 I slot print_timing: id  0 | task 203 | prompt eval time =      97.58 ms /     4 tokens (   24.39 ms per token,    40.99 tokens per second)
+0.29.031.125 I slot print_timing: id  0 | task 203 |        eval time =    2023.68 ms /   207 tokens (    9.82 ms per token,   101.79 tokens per second)
+0.29.031.125 I slot print_timing: id  0 | task 203 |       total time =    2121.26 ms /   211 tokens
+0.29.031.126 I slot print_timing: id  0 | task 203 |    graphs reused =         99
+0.29.031.134 I slot print_timing: id  0 | task 203 | draft acceptance = 0.52632 (  150 accepted /   285 generated), mean len =  4.33
+0.29.031.166 I slot      release: id  0 | task 203 | stop processing: n_tokens = 281, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 63936 "curl/8.18.0" 2.22055589s
+0.29.046.256 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 34369377505
+0.29.138.259 I slot launch_slot_: id  0 | task 262 | processing task, is_child = 0
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 4.95µs
+0.29.453.205 I slot print_timing: id  0 | task 262 | prompt eval time =     116.14 ms /    34 tokens (    3.42 ms per token,   292.76 tokens per second)
+0.29.453.207 I slot print_timing: id  0 | task 262 |        eval time =     198.68 ms /    16 tokens (   13.25 ms per token,    75.50 tokens per second)
+0.29.453.208 I slot print_timing: id  0 | task 262 |       total time =     314.82 ms /    50 tokens
+0.29.453.208 I slot print_timing: id  0 | task 262 |    graphs reused =        102
+0.29.453.216 I slot print_timing: id  0 | task 262 | draft acceptance = 0.72222 (   13 accepted /    18 generated), mean len =  3.17
+0.29.453.246 I slot      release: id  0 | task 262 | stop processing: n_tokens = 53, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 5376 "curl/8.18.0" 408.774461ms
+0.29.467.308 W srv    operator(): got exception: {"error":{"code":500,"message":"\n------------\nWhile executing CallExpression at line 64, column 28 in source:\n...', 'low') %}↵        {{- raise_exception('Unexpected reasoning effort ' ~ reason...\n                                           ^\nError: Jinja Exception: Unexpected reasoning effort none. Supported types are xhigh (default), medium, and low.","type":"server_error"}}
+[WARN] non-200 response, recording partial metrics: status=500, path=/v1/chat/completions
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 500 385 "curl/8.18.0" 816.502µs
+0.29.479.170 W srv    operator(): got exception: {"error":{"code":500,"message":"\n------------\nWhile executing CallExpression at line 64, column 28 in source:\n...', 'low') %}↵        {{- raise_exception('Unexpected reasoning effort ' ~ reason...\n                                           ^\nError: Jinja Exception: Unexpected reasoning effort banana. Supported types are xhigh (default), medium, and low.","type":"server_error"}}
+[WARN] non-200 response, recording partial metrics: status=500, path=/v1/chat/completions
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 500 387 "curl/8.18.0" 567.742µs
+0.29.492.609 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 34369799586
+0.29.585.848 I slot launch_slot_: id  0 | task 271 | processing task, is_child = 0
+0.30.333.051 I slot print_timing: id  0 | task 271 | prompt eval time =      89.33 ms /     4 tokens (   22.33 ms per token,    44.78 tokens per second)
+0.30.333.054 I slot print_timing: id  0 | task 271 |        eval time =     657.75 ms /   181 tokens (    3.65 ms per token,   273.66 tokens per second)
+0.30.333.055 I slot print_timing: id  0 | task 271 |       total time =     747.08 ms /   185 tokens
+0.30.333.055 I slot print_timing: id  0 | task 271 |    graphs reused =        107
+0.30.333.063 I slot print_timing: id  0 | task 271 | draft acceptance = 0.81643 (  169 accepted /   207 generated), mean len = 16.36
+0.30.333.098 I slot      release: id  0 | task 271 | stop processing: n_tokens = 245, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 55771 "curl/8.18.0" 842.131548ms
+0.30.346.846 I slot get_availabl: id  0 | task -1 | selected slot by LCP similarity, f_sim_best = 0.122 (> 0.100 thold), f_keep = 0.037
+0.30.471.035 I slot launch_slot_: id  0 | task 287 | processing task, is_child = 0
+0.32.651.699 I slot print_timing: id  0 | task 287 | prompt eval time =      92.92 ms /     4 tokens (   23.23 ms per token,    43.05 tokens per second)
+0.32.651.702 I slot print_timing: id  0 | task 287 |        eval time =    2087.63 ms /   206 tokens (   10.18 ms per token,    98.20 tokens per second)
+0.32.651.702 I slot print_timing: id  0 | task 287 |       total time =    2180.54 ms /   210 tokens
+0.32.651.703 I slot print_timing: id  0 | task 287 |    graphs reused =        127
+0.32.651.711 I slot print_timing: id  0 | task 287 | draft acceptance = 0.44868 (  153 accepted /   341 generated), mean len =  5.03
+0.32.651.741 I slot      release: id  0 | task 287 | stop processing: n_tokens = 283, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 63685 "curl/8.18.0" 2.306852022s
+0.32.666.526 W srv    operator(): got exception: {"error":{"code":500,"message":"\n------------\nWhile executing CallExpression at line 64, column 28 in source:\n...', 'low') %}↵        {{- raise_exception('Unexpected reasoning effort ' ~ reason...\n                                           ^\nError: Jinja Exception: Unexpected reasoning effort banana. Supported types are xhigh (default), medium, and low.","type":"server_error"}}
+[WARN] non-200 response, recording partial metrics: status=500, path=/v1/chat/completions
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 500 387 "curl/8.18.0" 948.803µs
+0.32.680.532 I slot get_availabl: id  0 | task -1 | selected slot by LCP similarity, f_sim_best = 0.145 (> 0.100 thold), f_keep = 0.032
+0.32.803.847 I slot launch_slot_: id  0 | task 345 | processing task, is_child = 0
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.9µs
+0.34.372.282 I slot print_timing: id  0 | task 345 | prompt eval time =      93.67 ms /     4 tokens (   23.42 ms per token,    42.70 tokens per second)
+0.34.372.284 I slot print_timing: id  0 | task 345 |        eval time =    1474.64 ms /   176 tokens (    8.43 ms per token,   118.67 tokens per second)
+0.34.372.285 I slot print_timing: id  0 | task 345 |       total time =    1568.32 ms /   180 tokens
+0.34.372.285 I slot print_timing: id  0 | task 345 |    graphs reused =        145
+0.34.372.293 I slot print_timing: id  0 | task 345 | draft acceptance = 0.74725 (  136 accepted /   182 generated), mean len =  4.49
+0.34.372.326 I slot      release: id  0 | task 345 | stop processing: n_tokens = 239, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 54240 "curl/8.18.0" 1.693913261s
+0.34.394.185 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 34374718665
+0.34.484.456 I slot launch_slot_: id  0 | task 388 | processing task, is_child = 0
+0.35.250.678 I slot print_timing: id  0 | task 388 | prompt eval time =     270.70 ms /   328 tokens (    0.83 ms per token,  1211.65 tokens per second)
+0.35.250.682 I slot print_timing: id  0 | task 388 |        eval time =     495.37 ms /    52 tokens (    9.71 ms per token,   102.95 tokens per second)
+0.35.250.682 I slot print_timing: id  0 | task 388 |       total time =     766.08 ms /   380 tokens
+0.35.250.683 I slot print_timing: id  0 | task 388 |    graphs reused =        153
+0.35.250.691 I slot print_timing: id  0 | task 388 | draft acceptance = 0.95000 (   38 accepted /    40 generated), mean len =  3.92
+0.35.250.790 I slot      release: id  0 | task 388 | stop processing: n_tokens = 381, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 994 "curl/8.18.0" 859.535914ms
+0.35.265.552 I slot get_availabl: id  0 | task -1 | selected slot by LCP similarity, f_sim_best = 1.000 (> 0.100 thold), f_keep = 0.861
+0.35.265.670 I slot launch_slot_: id  0 | task 407 | processing task, is_child = 0
+0.36.014.053 I slot print_timing: id  0 | task 407 | prompt eval time =      92.17 ms /     4 tokens (   23.04 ms per token,    43.40 tokens per second)
+0.36.014.056 I slot print_timing: id  0 | task 407 |        eval time =     656.11 ms /    61 tokens (   10.94 ms per token,    91.45 tokens per second)
+0.36.014.057 I slot print_timing: id  0 | task 407 |       total time =     748.27 ms /    65 tokens
+0.36.014.058 I slot print_timing: id  0 | task 407 |    graphs reused =        161
+0.36.014.065 I slot print_timing: id  0 | task 407 | draft acceptance = 0.40000 (   42 accepted /   105 generated), mean len =  5.20
+0.36.014.114 I slot      release: id  0 | task 407 | stop processing: n_tokens = 388, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 1027 "curl/8.18.0" 751.242423ms
+0.36.028.829 I slot get_availabl: id  0 | task -1 | selected slot by LCP similarity, f_sim_best = 0.606 (> 0.100 thold), f_keep = 0.103
+0.36.121.371 I slot launch_slot_: id  0 | task 427 | processing task, is_child = 0
+0.37.581.075 I slot print_timing: id  0 | task 427 | prompt eval time =     192.72 ms /    66 tokens (    2.92 ms per token,   342.46 tokens per second)
+0.37.581.078 I slot print_timing: id  0 | task 427 |        eval time =    1266.86 ms /    78 tokens (   16.45 ms per token,    60.78 tokens per second)
+0.37.581.078 I slot print_timing: id  0 | task 427 |       total time =    1459.58 ms /   144 tokens
+0.37.581.079 I slot print_timing: id  0 | task 427 |    graphs reused =        183
+0.37.581.087 I slot print_timing: id  0 | task 427 | draft acceptance = 0.79070 (   34 accepted /    43 generated), mean len =  2.70
+0.37.581.121 I slot      release: id  0 | task 427 | stop processing: n_tokens = 145, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 1097 "curl/8.18.0" 1.554313145s
+0.37.596.864 I slot get_availabl: id  0 | task -1 | selected slot by LCP similarity, f_sim_best = 1.000 (> 0.100 thold), f_keep = 0.455
+0.37.686.534 I slot launch_slot_: id  0 | task 476 | processing task, is_child = 0
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 36.92µs
+0.40.783.277 I slot print_timing: id  0 | task 476 | n_gen =    161, tg =  53.26 t/s, tg_3s =  53.59 t/s
+0.43.130.266 I slot print_timing: id  0 | task 476 | prompt eval time =      92.21 ms /     4 tokens (   23.05 ms per token,    43.38 tokens per second)
+0.43.130.270 I slot print_timing: id  0 | task 476 |        eval time =    5351.49 ms /   300 tokens (   17.90 ms per token,    55.87 tokens per second)
+0.43.130.270 I slot print_timing: id  0 | task 476 |       total time =    5443.71 ms /   304 tokens
+0.43.130.271 I slot print_timing: id  0 | task 476 |    graphs reused =        278
+0.43.130.281 I slot print_timing: id  0 | task 476 | draft acceptance = 0.49537 (  107 accepted /   216 generated), mean len =  2.47
+0.43.130.323 I slot      release: id  0 | task 476 | stop processing: n_tokens = 365, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 2131 "curl/8.18.0" 5.535533326s
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.17µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.41µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.94µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.56µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.08µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.21µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.33µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 28.44µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.85µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 29.75µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.1µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9µs
+1.49.278.306 I slot get_availabl: id  0 | task -1 | selected slot by LCP similarity, f_sim_best = 0.608 (> 0.100 thold), f_keep = 0.123
+1.49.421.376 I slot launch_slot_: id  0 | task 670 | processing task, is_child = 0
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.53µs
+1.50.664.151 I slot print_timing: id  0 | task 670 | prompt eval time =     110.85 ms /     4 tokens (   27.71 ms per token,    36.09 tokens per second)
+1.50.664.155 I slot print_timing: id  0 | task 670 |        eval time =    1131.81 ms /    80 tokens (   14.33 ms per token,    69.80 tokens per second)
+1.50.664.155 I slot print_timing: id  0 | task 670 |       total time =    1242.65 ms /    84 tokens
+1.50.664.156 I slot print_timing: id  0 | task 670 |    graphs reused =        281
+1.50.664.164 I slot print_timing: id  0 | task 670 | draft acceptance = 0.24664 (   55 accepted /   223 generated), mean len =  4.24
+1.50.664.199 I slot      release: id  0 | task 670 | stop processing: n_tokens = 153, truncated = 0
+1.50.694.407 I slot get_availabl: id  0 | task -1 | selected slot by LCP similarity, f_sim_best = 0.145 (> 0.100 thold), f_keep = 0.059
+1.50.818.677 I slot launch_slot_: id  0 | task 697 | processing task, is_child = 0
+1.51.048.917 I slot print_timing: id  0 | task 697 | prompt eval time =      93.35 ms /     4 tokens (   23.34 ms per token,    42.85 tokens per second)
+1.51.048.922 I slot print_timing: id  0 | task 697 |        eval time =     136.75 ms /    80 tokens (    1.73 ms per token,   577.68 tokens per second)
+1.51.048.922 I slot print_timing: id  0 | task 697 |       total time =     230.11 ms /    84 tokens
+1.51.048.923 I slot print_timing: id  0 | task 697 |    graphs reused =        281
+1.51.048.932 I slot print_timing: id  0 | task 697 | draft acceptance = 1.00000 (   77 accepted /    77 generated), mean len = 39.50
+1.51.048.971 I slot      release: id  0 | task 697 | stop processing: n_tokens = 141, truncated = 0
+1.51.076.681 W srv    operator(): got exception: {"error":{"code":500,"message":"\n------------\nWhile executing CallExpression at line 64, column 28 in source:\n...', 'low') %}↵        {{- raise_exception('Unexpected reasoning effort ' ~ reason...\n                                           ^\nError: Jinja Exception: Unexpected reasoning effort banana. Supported types are xhigh (default), medium, and low.","type":"server_error"}}
+1.51.104.058 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 34451395311
+1.51.224.217 I slot launch_slot_: id  0 | task 701 | processing task, is_child = 0
+1.51.441.958 I slot print_timing: id  0 | task 701 | prompt eval time =      90.31 ms /     4 tokens (   22.58 ms per token,    44.29 tokens per second)
+1.51.441.962 I slot print_timing: id  0 | task 701 |        eval time =     127.31 ms /     6 tokens (   25.46 ms per token,    39.27 tokens per second)
+1.51.441.963 I slot print_timing: id  0 | task 701 |       total time =     217.62 ms /    10 tokens
+1.51.441.964 I slot print_timing: id  0 | task 701 |    graphs reused =        282
+1.51.441.971 I slot print_timing: id  0 | task 701 | draft acceptance = 1.00000 (    5 accepted /     5 generated), mean len =  3.50
+1.51.442.004 I slot      release: id  0 | task 701 | stop processing: n_tokens = 43, truncated = 0
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.93µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.16µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.18µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.76µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.03µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.53µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.7µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.17µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.74µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.28µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.75µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.73µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.68µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.7µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.56µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.73µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.04µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.72µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.05µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 26.47µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.09µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.93µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.1µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.59µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.68µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.87µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.66µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.66µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.62µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.52µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.23µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.46µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.29µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.84µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.86µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.2µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.19µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.51µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.95µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.11µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.14µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.26µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.84µs
+5.43.026.300 W srv    operator(): got exception: {"error":{"code":500,"message":"[json.exception.parse_error.101] parse error at line 1, column 76: syntax error while parsing object separator - invalid literal; last read: '\"\"r'; expected ':'","type":"server_error"}}
+5.43.055.153 W srv    operator(): got exception: {"error":{"code":500,"message":"[json.exception.parse_error.101] parse error at line 1, column 76: syntax error while parsing object separator - invalid literal; last read: '\"\"r'; expected ':'","type":"server_error"}}
+5.43.083.479 W srv    operator(): got exception: {"error":{"code":500,"message":"[json.exception.parse_error.101] parse error at line 1, column 76: syntax error while parsing object separator - invalid literal; last read: '\"\"r'; expected ':'","type":"server_error"}}
+5.43.114.508 W srv    operator(): got exception: {"error":{"code":500,"message":"[json.exception.parse_error.101] parse error at line 1, column 76: syntax error while parsing object separator - invalid literal; last read: '\"\"r'; expected ':'","type":"server_error"}}
+5.43.143.151 W srv    operator(): got exception: {"error":{"code":500,"message":"[json.exception.parse_error.101] parse error at line 1, column 76: syntax error while parsing object separator - invalid literal; last read: '\"\"r'; expected ':'","type":"server_error"}}
+5.43.170.346 W srv    operator(): got exception: {"error":{"code":500,"message":"[json.exception.parse_error.101] parse error at line 1, column 76: syntax error while parsing object separator - invalid literal; last read: '\"\"c'; expected ':'","type":"server_error"}}
+5.43.199.197 W srv    operator(): got exception: {"error":{"code":500,"message":"[json.exception.parse_error.101] parse error at line 1, column 76: syntax error while parsing object separator - invalid literal; last read: '\"\"c'; expected ':'","type":"server_error"}}
+5.43.226.796 W srv    operator(): got exception: {"error":{"code":500,"message":"[json.exception.parse_error.101] parse error at line 1, column 76: syntax error while parsing object separator - invalid literal; last read: '\"\"r'; expected ':'","type":"server_error"}}
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.17µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.51µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.79µs
+5.57.503.061 W srv    operator(): got exception: {"error":{"code":500,"message":"\n------------\nWhile executing CallExpression at line 64, column 28 in source:\n...', 'low') %}↵        {{- raise_exception('Unexpected reasoning effort ' ~ reason...\n                                           ^\nError: Jinja Exception: Unexpected reasoning effort banana. Supported types are xhigh (default), medium, and low.","type":"server_error"}}
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.93µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.4µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.05µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.75µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.33µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.03µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.07µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.59µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.76µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.97µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.3µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 13.37µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.83µs
+7.03.920.628 W srv    operator(): got exception: {"error":{"code":500,"message":"\n------------\nWhile executing CallExpression at line 64, column 28 in source:\n...', 'low') %}↵        {{- raise_exception('Unexpected reasoning effort ' ~ reason...\n                                           ^\nError: Jinja Exception: Unexpected reasoning effort banana. Supported types are xhigh (default), medium, and low.","type":"server_error"}}
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.97µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.95µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.74µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.39µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.78µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.76µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.69µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.63µs
+[INFO] active profile changed to "ninfer"
+[INFO] Request 172.19.0.1 "PUT /api/profiles/active HTTP/1.1" 200 20 "curl/8.18.0" 68.3µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.72µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.95µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.41µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.5µs
+8.08.033.857 I srv    operator(): operator(): cleaning up before exit...
+2026-10-17 16:27:00.429  INFO  starting engine
+2026-10-17 16:27:01.052  INFO  loading weights | 20.3 GiB
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.91µs
+2026-10-17 16:27:06.020  INFO  weights ready | 20.3 GiB | 5.0s | 4.09 GiB/s
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 7.37µs
+2026-10-17 16:27:07.427  INFO  CUDA graphs ready | 1.4s
+2026-10-17 16:27:07.427  INFO  engine ready | qwen3.8-27b | total 7.0s | weights 20.3 GiB | CUDA sync spin
+2026-10-17 16:27:07.427  INFO  rank 0 | device 0 | weights 10.2 GiB | sharded 9.65 GiB | replicated 259.6 MiB | local 282.0 MiB | host-mapped 1.18 GiB
+2026-10-17 16:27:07.427  INFO  rank 1 | device 1 | weights 10.1 GiB | sharded 9.65 GiB | replicated 259.6 MiB | local 245.0 MiB | host-mapped 1.18 GiB
+2026-10-17 16:27:07.427  INFO  host-mapped weights | 1.18 GiB of pinned host memory | read in place by 2 devices over PCIe
+2026-10-17 16:27:07.427  INFO  capacity | KV 357,696 tokens, nvfp4, auto | pages 5,589/8,192 | runtime 4.03 GiB | free 709.8 MiB
+2026-10-17 16:27:07.427  INFO  tensor parallel | tp 2 on devices 0,1 | p2p on | KV, StateImages and runtime reserved per rank | Host context-cache tiers off (rank 1 state has no Host replica) | 4 Device checkpoint StateImages; a prefill checkpoint that finds them full first reclaims idle private continuations and is skipped only when none can be released (raise --device-state-slots for many conversations)
+2026-10-17 16:27:07.427  INFO  tensor parallel | captured all-reduces: copies
+2026-10-17 16:27:07.427  INFO  tensor parallel | DFlash2 proposal head: split by vocabulary
+2026-10-17 16:27:07.427  INFO  tensor parallel | DFlash2 drafter: split (16/4 attention heads, MLP halves per rank; selector on rank 1)
+2026-10-17 16:27:07.427  INFO  cuda graphs | rank 0: observed 60.0 MiB, allowance 132.0 MiB
+2026-10-17 16:27:07.427  INFO  cuda graphs | rank 1: observed 60.0 MiB, allowance 132.0 MiB
+2026-10-17 16:27:07.427  INFO  context cache | 2 active + 4 cached device states | host 0 states, 0 B KV | private 8 | shared 4 | anchors 2
+2026-10-17 16:27:07.427  INFO  media | Vision on device 0 | 16 preprocess workers | cache 1.00 GiB | live 2.00 GiB
+2026-10-17 16:27:07.507  INFO  listening on http://127.0.0.1:5801 | model qwen3.8-27b | auth disabled
+[INFO] <backend-ninfer> Health check passed on http://localhost:5801/health
+2026-10-17 16:27:07.509  INFO  req#1 started | openai-chat non-stream | 1 message | max output 8 | thinking off
+2026-10-17 16:27:07.595  INFO  req#1 done | openai-chat | stop token | prompt 18 | output 2 | cache 0 (0.0%) | TTFT 66.9 ms | total 86.7 ms | prefill 276.9 tok/s | decode 50.6 tok/s | dflash2 accepted 1/6 (16.7%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 683 "curl/8.18.0" 8.458226337s
+[INFO] Request 172.19.0.1 "GET /api/profiles HTTP/1.1" 200 312 "curl/8.18.0" 65.681µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.32µs
+2026-10-17 16:27:12.508  INFO  throughput | 5.0s | prefill 3.6 tok/s (18 tok) | decode 0.2 tok/s (1 tok) | running 0 | batch 1.00 | host 0.4% (19.4 ms)
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.62µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.16µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.22µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.81µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.73µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.85µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.5µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.74µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.54µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.16µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.42µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.85µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.69µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.85µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.72µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.06µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.41µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.29µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.29µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.45µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.2µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.24µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.35µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.68µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.8µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.66µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.88µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.33µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.04µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 13.341µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.25µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.66µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.55µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.03µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.201µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.95µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.7µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.22µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.63µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.54µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.85µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.02µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.39µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.49µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.59µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.07µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.28µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.33µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.59µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.27µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.46µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.76µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.77µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.98µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.44µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.62µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.79µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.271µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.08µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.3µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.5µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.08µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.16µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.61µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.79µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.94µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.611µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.39µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.77µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.51µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.19µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.61µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.67µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.69µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.61µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.24µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.47µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.36µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.23µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.01µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.32µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.17µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.83µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.53µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.7µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.41µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.77µs
+[WARN] non-200 response, recording partial metrics: status=404, path=/v1/chat/completions
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 404 135 "opencode/latest/2.0.32/cli" 3.048299ms
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.76µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.13µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.44µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.73µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.67µs
+[WARN] non-200 response, recording partial metrics: status=404, path=/v1/chat/completions
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 404 135 "opencode/latest/2.0.32/cli" 2.647587ms
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.91µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 24.03µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.88µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.93µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.67µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.76µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.51µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.65µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.1µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 26.37µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.32µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.77µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.06µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.4µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.39µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.22µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.19µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.89µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.48µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.06µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.81µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.79µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.18µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.04µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.15µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.84µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.81µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.66µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.74µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.55µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.87µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.64µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.61µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 28.6µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.17µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.2µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.98µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.01µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.71µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.02µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.55µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.62µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.21µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.27µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.63µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.48µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.12µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.82µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.25µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.01µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.01µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.14µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.18µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.65µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.89µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.17µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.31µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.12µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.55µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.73µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.1µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 25.37µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.84µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.68µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.77µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.19µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.57µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.56µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.63µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.37µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.82µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.66µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.84µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.23µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.63µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.89µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.92µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.31µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.56µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.38µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.64µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 27.75µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.7µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.25µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.6µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.46µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.63µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.7µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.87µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.02µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.55µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.23µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.13µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.77µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.51µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.88µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.97µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.66µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.28µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.49µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.94µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.39µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.48µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.65µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.85µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.89µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.43µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.09µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 46.171µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.66µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.3µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.86µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.99µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.74µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.12µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.72µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.48µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.93µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.11µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.06µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.63µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.75µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.65µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.32µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.2µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.75µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.49µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.12µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.06µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.25µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.54µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 23.171µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.51µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.17µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.8µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.05µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.01µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.02µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.34µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.77µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.1µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.61µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.62µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.49µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.97µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.84µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.19µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.641µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.66µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.19µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.74µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.02µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.55µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.87µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.69µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.73µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.75µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.62µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.08µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.91µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.68µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.92µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.96µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.81µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.94µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.27µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.02µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.35µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.8µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.67µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.16µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.15µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.81µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.55µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.8µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.601µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.02µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.95µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.47µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 26.85µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.98µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.121µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.07µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.62µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.77µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.64µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.65µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.68µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.63µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.7µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.67µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.44µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.02µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 16.28µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.89µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.59µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.39µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.7µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.46µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.29µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.16µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.43µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 18.39µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.24µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.26µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.77µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.1µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.89µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.7µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.48µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.511µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.65µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.27µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.53µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.62µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.29µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.49µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.69µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.75µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.65µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.79µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.56µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.2µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.79µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 21.65µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.56µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 25.09µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.74µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.75µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.77µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.36µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.45µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.1µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.21µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.97µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.01µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.66µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.98µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.75µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.64µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.63µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.76µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 36.88µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.67µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.45µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.62µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.02µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.35µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.53µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.08µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 13.49µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.98µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.28µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.8µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.55µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.67µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.33µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.35µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.57µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.68µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.51µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.59µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.06µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.61µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.58µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.24µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.36µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.62µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.61µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.85µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.48µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 26.08µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.92µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.31µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.34µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.32µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.55µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 13.2µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.44µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.17µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 13.98µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.77µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.16µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.13µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.14µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.61µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.55µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 22.29µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.91µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 13.34µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.83µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.771µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.61µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.95µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.13µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.49µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.09µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.5µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.46µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.93µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.27µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 68.09µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.64µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.3µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.3µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.76µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.49µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.51µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.59µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.85µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.5µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.97µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.82µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.7µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.48µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.76µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.18µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.32µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 23.79µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.95µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 19.19µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.5µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.4µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.65µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.88µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.981µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.53µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 16.28µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.75µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.68µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.98µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.55µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.62µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.29µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.65µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.47µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.93µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.12µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.26µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.02µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.63µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.97µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.27µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.12µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.62µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.59µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.03µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.76µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.38µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.11µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.51µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.57µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.68µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.66µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.52µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.25µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.45µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.7µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.3µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.58µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.11µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.43µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.57µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 24.98µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.05µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.19µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.71µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.26µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.12µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.3µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 15.2µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.07µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.71µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.03µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.95µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.37µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.71µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.82µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.54µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.56µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.89µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.64µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.46µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.07µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.81µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.84µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 14.26µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.94µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.98µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.39µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.19µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.12µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.43µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.09µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 28.281µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.01µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.89µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.65µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.22µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.92µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.5µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.13µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.03µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.6µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.78µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.76µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.89µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.37µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.95µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.88µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.96µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.01µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 21.24µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.11µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.71µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.68µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.74µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.17µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.91µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.3µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.77µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.45µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.61µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.69µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.72µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.86µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.48µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.44µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.32µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.87µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.8µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.65µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.05µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.07µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.71µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.83µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.391µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.39µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.55µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.95µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 26.26µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.88µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.67µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.93µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.45µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.7µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.87µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.6µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.48µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.85µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.32µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.73µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.58µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.55µs
+[INFO] Request 172.19.0.1 "GET /api/profiles/active HTTP/1.1" 405 19 "curl/8.18.0" 29.86µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.8µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.72µs
+[INFO] Request 172.19.0.1 "GET /api/profiles HTTP/1.1" 200 312 "curl/8.18.0" 68.73µs
+[INFO] Request 172.19.0.1 "GET /api/profiles HTTP/1.1" 200 312 "curl/8.18.0" 28.02µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.34µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.09µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.41µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.65µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.89µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.88µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.07µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.55µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.75µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.73µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.61µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.33µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.43µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.49µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.32µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.79µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.54µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.12µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.78µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.68µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.88µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.69µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.48µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.55µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.32µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.15µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.84µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.22µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.04µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.68µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.3µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.55µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.82µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.98µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.17µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.77µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.03µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.61µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.74µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.15µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.47µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.41µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.45µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.64µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.43µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.53µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.01µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.67µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.71µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.88µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.88µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 25.98µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.93µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.58µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.97µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.46µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.91µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.43µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.36µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.99µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.18µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.48µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.86µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.77µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.88µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.28µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.99µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.79µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 22.74µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.98µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.96µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 22.66µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.71µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.75µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.97µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 28.06µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.56µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.24µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.65µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.47µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.54µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.85µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.44µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.37µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.65µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.01µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 16.05µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.73µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.48µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.15µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.13µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.91µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.37µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.61µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.45µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.68µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.89µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.43µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.28µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.09µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.57µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.72µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.24µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.33µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.72µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.91µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.32µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.3µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.02µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.7µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.08µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.62µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.91µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.41µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.641µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.8µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.76µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 25.99µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.91µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.61µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.65µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.68µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.33µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.52µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.51µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.98µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.28µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.02µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.74µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.95µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.17µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.53µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.89µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.8µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.78µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.63µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.84µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.92µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.98µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 23.601µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.36µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.47µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.12µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.31µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.7µs
+[INFO] Request 172.19.0.1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.91µs
+[INFO] Request 172.19.0.1 "GET /v1/models HTTP/1.1" 200 180 "curl/8.18.0" 101.361µs
+[INFO] Request 172.19.0.1 "GET /api/profiles HTTP/1.1" 200 312 "curl/8.18.0" 29.59µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.18µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.09µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.15µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.08µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.75µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.3µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.31µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.83µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.75µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.95µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.54µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.2µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.89µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.1µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.85µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.1µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.61µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.96µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.58µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.37µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.82µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.61µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.41µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.72µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.72µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 28.97µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.69µs
+[INFO] Request 172.19.0.1 "GET /api/models HTTP/1.1" 404 19 "curl/8.18.0" 32.73µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.94µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.78µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.8µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.94µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.62µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.85µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.68µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.73µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.6µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.23µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.96µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.74µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.93µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.84µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.84µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.48µs
+[INFO] Request 172.19.0.1 "GET /v1/models HTTP/1.1" 200 180 "curl/8.18.0" 84.431µs
+[INFO] Request 172.19.0.1 "GET /api/profiles HTTP/1.1" 200 312 "curl/8.18.0" 58.82µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.41µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 24.67µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.77µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 15.99µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.14µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.87µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.86µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.51µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.57µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.901µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.85µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.62µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.92µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.94µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.42µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.71µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.49µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.34µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.8µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.19µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.66µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.8µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.67µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.3µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.51µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.8µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 23.96µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.73µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.71µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 14.971µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.71µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.781µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.53µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.88µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.26µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.56µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.71µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.52µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.22µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.56µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.52µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.02µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.6µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.22µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.82µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.03µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.66µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.97µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.1µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.59µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.99µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.5µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.25µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.35µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.98µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.62µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.951µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.15µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 18.44µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.06µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.95µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.59µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.161µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.84µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.961µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.78µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.71µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.14µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 25.02µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.08µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.92µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.71µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 13.38µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.81µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.87µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.78µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.78µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.06µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.36µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.98µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.56µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.73µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.91µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.48µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.86µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.46µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.99µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.21µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.63µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.42µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.69µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.44µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.87µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.51µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.171µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.851µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.79µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.74µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.61µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.65µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.46µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.771µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.73µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 24.34µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.58µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.92µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.18µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.85µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.63µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.03µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.85µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.49µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.87µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.77µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.27µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.85µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.82µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.63µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.43µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.81µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.6µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.47µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.03µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.99µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.53µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.76µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.84µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.06µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.02µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.64µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.67µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.89µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.081µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.71µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.89µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.55µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.57µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.16µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.67µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.68µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 26.35µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.78µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.8µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.39µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.78µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.94µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.75µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.45µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.56µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.65µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.74µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.7µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.63µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.53µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.86µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.12µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.84µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.24µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.78µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.02µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.87µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.67µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.89µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.24µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.99µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.82µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.19µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 24.19µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.7µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.01µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.79µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.66µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.67µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.63µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.44µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.6µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.58µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.8µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.43µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.78µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.75µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.84µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.78µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.67µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.06µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.92µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.95µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 32.95µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.43µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.55µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.74µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.6µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.31µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.82µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.49µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.411µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.41µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.53µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.05µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.99µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.02µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.73µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.91µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.62µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.71µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.09µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.66µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.66µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 21.47µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.18µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.58µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.11µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.74µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.89µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.83µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.39µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.28µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.3µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 14.45µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.1µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.7µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.77µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.521µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.83µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.33µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.53µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.65µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.68µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 13.301µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.79µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.3µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 21.8µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.79µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.66µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.62µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.73µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.33µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.98µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 26.5µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.68µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.86µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.32µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.92µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.26µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.24µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.3µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.2µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.67µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.59µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.81µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.85µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.28µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.96µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.23µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.21µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.63µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 21.35µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.83µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.36µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.63µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.93µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.33µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.51µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.24µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.04µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.86µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.43µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.27µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.95µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.88µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.72µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.73µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.64µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.48µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.43µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.52µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.54µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.11µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.19µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.75µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.86µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.95µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 14.08µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 13.03µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.71µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.29µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.84µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.16µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.84µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.54µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.45µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.61µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.37µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.48µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.35µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.79µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.96µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.75µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.52µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.86µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.32µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 23.65µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.72µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.61µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.65µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.76µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.54µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.93µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.92µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.4µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.66µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.28µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.67µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.52µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.82µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.44µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.1µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.37µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.67µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.98µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.7µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.03µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.13µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 21.62µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.22µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.88µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.62µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.01µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.67µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.15µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 13.061µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.59µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.87µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.96µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.741µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.23µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.72µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.47µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.5µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.43µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.76µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.98µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.47µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.75µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.42µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.86µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.23µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.86µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.7µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.62µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.37µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.76µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.48µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.83µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.74µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.44µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.11µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.6µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.96µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.78µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.42µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.41µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.55µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.61µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.25µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.75µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.65µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.67µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.41µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.13µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.63µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 23.21µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.62µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.3µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.81µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.61µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.53µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.87µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.97µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.67µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 29.19µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.62µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.04µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.27µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.97µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.84µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.12µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.07µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.96µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.78µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.59µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.11µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.93µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.62µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.28µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.72µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.1µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.52µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.31µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.68µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.42µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.57µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.45µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.12µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.69µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.61µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.04µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.32µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.57µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.3µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.55µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.28µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.27µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.39µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.93µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.91µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.46µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.82µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.57µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.35µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.14µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.19µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.68µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 25.08µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.55µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.8µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.05µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.31µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.82µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.23µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.95µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.02µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.6µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.49µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.8µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.28µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.46µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.15µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.95µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.55µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.2µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.71µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.04µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.36µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.34µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.31µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.77µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.64µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.39µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 23µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.31µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.77µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.61µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.64µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.49µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.72µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.44µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 21.25µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.28µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.72µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.79µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.85µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.16µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.14µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.16µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.86µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.92µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.52µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.5µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 14.45µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.41µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.96µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.25µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.32µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.81µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.1µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.06µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.64µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.83µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 13.9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.84µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.62µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.93µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.82µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.36µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.22µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.75µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.29µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.31µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.97µs
+[INFO] Request 172.19.0.1 "GET /api/profiles HTTP/1.1" 200 312 "curl/8.18.0" 70.451µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.11µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.95µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.6µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.23µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.16µs
+[INFO] received signal terminated, shutting down
+2026-10-17 18:12:36.981  INFO  server stopped
+[INFO] shutdown complete
+[INFO] using nvidia-smi for GPU monitoring
+[INFO] preloading model: backend-ninfer
+[INFO] llama-swap is reachable by all hosts on the network, use -listen localhost:8080 to restrict to loopback only
+[INFO] llama-swap listening on http://:8080
+2026-10-17 18:12:38.574  INFO  starting engine
+2026-10-17 18:12:39.195  INFO  loading weights | 20.3 GiB
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 23.11µs
+2026-10-17 18:12:44.186  INFO  weights ready | 20.3 GiB | 5.0s | 4.07 GiB/s
+2026-10-17 18:12:45.569  INFO  CUDA graphs ready | 1.4s
+2026-10-17 18:12:45.569  INFO  engine ready | qwen3.8-27b | total 7.0s | weights 20.3 GiB | CUDA sync spin
+2026-10-17 18:12:45.569  INFO  rank 0 | device 0 | weights 10.2 GiB | sharded 9.65 GiB | replicated 259.6 MiB | local 282.0 MiB | host-mapped 1.18 GiB
+2026-10-17 18:12:45.569  INFO  rank 1 | device 1 | weights 10.1 GiB | sharded 9.65 GiB | replicated 259.6 MiB | local 245.0 MiB | host-mapped 1.18 GiB
+2026-10-17 18:12:45.569  INFO  host-mapped weights | 1.18 GiB of pinned host memory | read in place by 2 devices over PCIe
+2026-10-17 18:12:45.569  INFO  capacity | KV 347,584 tokens, nvfp4, auto | pages 5,431/8,192 | runtime 3.94 GiB | free 708.8 MiB
+2026-10-17 18:12:45.569  INFO  tensor parallel | tp 2 on devices 0,1 | p2p on | KV, StateImages and runtime reserved per rank | Host context-cache tiers off (rank 1 state has no Host replica) | 4 Device checkpoint StateImages; a prefill checkpoint that finds them full first reclaims idle private continuations and is skipped only when none can be released (raise --device-state-slots for many conversations)
+2026-10-17 18:12:45.569  INFO  tensor parallel | captured all-reduces: copies
+2026-10-17 18:12:45.569  INFO  tensor parallel | DFlash2 proposal head: split by vocabulary
+2026-10-17 18:12:45.569  INFO  tensor parallel | DFlash2 drafter: split (16/4 attention heads, MLP halves per rank; selector on rank 1)
+2026-10-17 18:12:45.569  INFO  cuda graphs | rank 0: observed 60.0 MiB, allowance 132.0 MiB
+2026-10-17 18:12:45.569  INFO  cuda graphs | rank 1: observed 60.0 MiB, allowance 132.0 MiB
+2026-10-17 18:12:45.569  INFO  context cache | 2 active + 4 cached device states | host 0 states, 0 B KV | private 8 | shared 4 | anchors 2
+2026-10-17 18:12:45.569  INFO  media | Vision on device 0 | 16 preprocess workers | cache 1.00 GiB | live 2.00 GiB
+2026-10-17 18:12:45.649  INFO  listening on http://127.0.0.1:5801 | model qwen3.8-27b | auth disabled
+[INFO] <backend-ninfer> Health check passed on http://localhost:5801/health
+[ERROR] failed to preload model backend-ninfer: status 404
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.32µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.76µs
+[INFO] Request 172.19.0.1 "GET /v1/models HTTP/1.1" 200 180 "curl/8.18.0" 120.39µs
+[INFO] Request 172.19.0.1 "GET /api/profiles HTTP/1.1" 200 312 "curl/8.18.0" 53µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.09µs
+[INFO] active profile changed to "llama"
+[INFO] Request 172.19.0.1 "PUT /api/profiles/active HTTP/1.1" 200 19 "curl/8.18.0" 112.391µs
+2026-10-17 18:13:01.924  INFO  server stopped
+0.00.154.991 I cmn  common_param: common_params_print_info: verbosity = 3 (adjust with the `-lv N` CLI arg)
+0.00.267.459 W srv  llama_server: -----------------
+0.00.267.462 W srv  llama_server: CORS is set to allow all origins ('*') and no API key is set
+0.00.267.462 W srv  llama_server: this can be a security risk (cross-origin attacks)
+0.00.267.462 W srv  llama_server: more info: https://github.com/ggml-org/llama.cpp/pull/25655
+0.00.267.462 W srv  llama_server: -----------------
+0.00.268.654 I srv    load_model: loading model '/models/Qwen3.8-27B-NVFP4-MTP-GGUF/Qwen3.8-27B-NVFP4-MTP-HIGH.gguf'
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.11µs
+0.01.779.820 W NCCL not compiled in; falling back to internal AllReduce.  Recompile with -DGGML_CUDA_NCCL=ON for best multi-GPU performance.
+0.01.846.435 I cmn          init: llama threadpool init, n_threads = 8
+0.01.917.270 I common_speculative_init_result: creating MTP draft context against the target model '/models/Qwen3.8-27B-NVFP4-MTP-GGUF/Qwen3.8-27B-NVFP4-MTP-HIGH.gguf'
+0.01.917.304 W NCCL not compiled in; falling back to internal AllReduce.  Recompile with -DGGML_CUDA_NCCL=ON for best multi-GPU performance.
+0.01.965.901 W load_hparams: Qwen-VL models require at minimum 1024 image tokens to function correctly on grounding tasks
+0.01.965.904 W load_hparams: if you encounter problems with accuracy, try adding --image-min-tokens 1024
+0.01.965.905 W load_hparams: more info: https://github.com/ggml-org/llama.cpp/issues/16842
+
+0.02.249.189 I srv    load_model: loaded multimodal model, '/models/Qwen3.8-27B-NVFP4-MTP-GGUF/mmproj-BF16.gguf'
+0.02.283.339 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 180224, kv_unified = 'false'
+0.02.286.307 W set_sampler: backend sampling not supported with SPLIT_MODE_TENSOR; using CPU
+0.02.286.310 W spec common_specu: backend offload failed for seq_id=0; using CPU sampler
+0.02.293.479 I srv          init: chat template supports preserving reasoning, consider enabling it via --reasoning-preserve
+0.02.293.513 I srv  llama_server: model loaded
+0.02.293.518 I srv  llama_server: listening on http://127.0.0.1:5800
+[INFO] <backend-llama> Health check passed on http://localhost:5800/health
+0.03.253.190 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = -1
+0.03.253.281 I slot launch_slot_: id  0 | task 0 | processing task, is_child = 0
+0.03.523.705 I slot print_timing: id  0 | task 0 | prompt eval time =     215.14 ms /    17 tokens (   12.66 ms per token,    79.02 tokens per second)
+0.03.523.707 I slot print_timing: id  0 | task 0 |        eval time =      55.16 ms /     2 tokens (   55.16 ms per token,    18.13 tokens per second)
+0.03.523.708 I slot print_timing: id  0 | task 0 |       total time =     270.29 ms /    19 tokens
+0.03.523.710 I slot print_timing: id  0 | task 0 |    graphs reused =          1
+0.03.523.717 I slot print_timing: id  0 | task 0 | draft acceptance = 1.00000 (    4 accepted /     4 generated), mean len =  5.00
+0.03.523.758 I slot      release: id  0 | task 0 | stop processing: n_tokens = 22, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 1199 "curl/8.18.0" 3.854107559s
+0.03.530.313 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 41195008377
+0.03.597.159 I slot launch_slot_: id  0 | task 4 | processing task, is_child = 0
+0.04.065.535 I slot print_timing: id  0 | task 4 | prompt eval time =     191.51 ms /    62 tokens (    3.09 ms per token,   323.75 tokens per second)
+0.04.065.538 I slot print_timing: id  0 | task 4 |        eval time =     276.74 ms /    27 tokens (   10.64 ms per token,    93.95 tokens per second)
+0.04.065.538 I slot print_timing: id  0 | task 4 |       total time =     468.25 ms /    89 tokens
+0.04.065.539 I slot print_timing: id  0 | task 4 |    graphs reused =          4
+0.04.065.546 I slot print_timing: id  0 | task 4 | draft acceptance = 1.00000 (   19 accepted /    19 generated), mean len =  3.71
+0.04.065.576 I slot      release: id  0 | task 4 | stop processing: n_tokens = 89, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 8350 "curl/8.18.0" 537.567654ms
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.68µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.34µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.74µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.48µs
+[INFO] active profile changed to "ninfer"
+[INFO] Request 172.19.0.1 "PUT /api/profiles/active HTTP/1.1" 200 20 "curl/8.18.0" 84.861µs
+0.25.572.257 I srv    operator(): operator(): cleaning up before exit...
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 4.53µs
+2026-10-17 18:13:29.077  INFO  starting engine
+2026-10-17 18:13:29.660  INFO  loading weights | 20.3 GiB
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 7.39µs
+2026-10-17 18:13:34.643  INFO  weights ready | 20.3 GiB | 5.0s | 4.08 GiB/s
+2026-10-17 18:13:36.047  INFO  CUDA graphs ready | 1.4s
+2026-10-17 18:13:36.047  INFO  engine ready | qwen3.8-27b | total 7.0s | weights 20.3 GiB | CUDA sync spin
+2026-10-17 18:13:36.047  INFO  rank 0 | device 0 | weights 10.2 GiB | sharded 9.65 GiB | replicated 259.6 MiB | local 282.0 MiB | host-mapped 1.18 GiB
+2026-10-17 18:13:36.047  INFO  rank 1 | device 1 | weights 10.1 GiB | sharded 9.65 GiB | replicated 259.6 MiB | local 245.0 MiB | host-mapped 1.18 GiB
+2026-10-17 18:13:36.047  INFO  host-mapped weights | 1.18 GiB of pinned host memory | read in place by 2 devices over PCIe
+2026-10-17 18:13:36.047  INFO  capacity | KV 347,584 tokens, nvfp4, auto | pages 5,431/8,192 | runtime 3.94 GiB | free 708.8 MiB
+2026-10-17 18:13:36.047  INFO  tensor parallel | tp 2 on devices 0,1 | p2p on | KV, StateImages and runtime reserved per rank | Host context-cache tiers off (rank 1 state has no Host replica) | 4 Device checkpoint StateImages; a prefill checkpoint that finds them full first reclaims idle private continuations and is skipped only when none can be released (raise --device-state-slots for many conversations)
+2026-10-17 18:13:36.047  INFO  tensor parallel | captured all-reduces: copies
+2026-10-17 18:13:36.047  INFO  tensor parallel | DFlash2 proposal head: split by vocabulary
+2026-10-17 18:13:36.047  INFO  tensor parallel | DFlash2 drafter: split (16/4 attention heads, MLP halves per rank; selector on rank 1)
+2026-10-17 18:13:36.047  INFO  cuda graphs | rank 0: observed 60.0 MiB, allowance 132.0 MiB
+2026-10-17 18:13:36.047  INFO  cuda graphs | rank 1: observed 60.0 MiB, allowance 132.0 MiB
+2026-10-17 18:13:36.047  INFO  context cache | 2 active + 4 cached device states | host 0 states, 0 B KV | private 8 | shared 4 | anchors 2
+2026-10-17 18:13:36.047  INFO  media | Vision on device 0 | 16 preprocess workers | cache 1.00 GiB | live 2.00 GiB
+2026-10-17 18:13:36.107  INFO  listening on http://127.0.0.1:5801 | model qwen3.8-27b | auth disabled
+[INFO] <backend-ninfer> Health check passed on http://localhost:5801/health
+2026-10-17 18:13:36.108  INFO  req#1 started | openai-chat non-stream | 1 message | max output 4 | thinking off
+2026-10-17 18:13:36.193  INFO  req#1 done | openai-chat | output limit | prompt 13 | output 4 | cache 0 (0.0%) | TTFT 65.5 ms | total 85.0 ms | prefill 203.9 tok/s | decode 154.2 tok/s | dflash2 accepted 2/2 (100.0%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 710 "curl/8.18.0" 8.380089036s
+[INFO] Request 172.19.0.1 "GET /api/profiles HTTP/1.1" 200 312 "curl/8.18.0" 79.18µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.69µs
+2026-10-17 18:13:41.108  INFO  throughput | 5.0s | prefill 2.6 tok/s (13 tok) | decode 0.6 tok/s (3 tok) | running 0 | batch 1.00 | host 0.4% (18.6 ms)
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.77µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.81µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 34.15µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.53µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.7µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.33µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.29µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.55µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.56µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.33µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.46µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.67µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.31µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.91µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.56µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.17µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.51µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.43µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.77µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.47µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.77µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.79µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.57µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.63µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.18µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 22.111µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.84µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.22µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.43µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.61µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.4µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.5µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.17µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.66µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 16.81µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.2µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.11µs
+[INFO] Request 172.19.0.1 "GET /api/profiles HTTP/1.1" 200 312 "curl/8.18.0" 69.94µs
+[INFO] Request 172.19.0.1 "GET /v1/models HTTP/1.1" 200 180 "curl/8.18.0" 78.351µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.76µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.061µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 26.93µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.8µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.6µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.71µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.64µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.62µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.72µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.08µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.18µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.71µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.63µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.13µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.77µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.75µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.96µs
+[INFO] Request 192.168.17.69 "GET /v1/models HTTP/1.1" 200 180 "fasthttp" 81.31µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.26µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.27µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 21.81µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 13.42µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.64µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.101µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.2µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.151µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.23µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.16µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.61µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.32µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 21.71µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.54µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.57µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.34µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.73µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.43µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.54µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 23.47µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.74µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.62µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.18µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.92µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.39µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.52µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.7µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.35µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 20.58µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.5µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.67µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.79µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.32µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.65µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.77µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.37µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.63µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.94µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.62µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.88µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.67µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.65µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.63µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.17µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.34µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.99µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.64µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.81µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.15µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 14.26µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.29µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.75µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.03µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.44µs
+2026-10-17 18:22:58.331  INFO  req#2 started | openai-chat non-stream | 1 message | max output 200 | thinking template default
+2026-10-17 18:22:58.511  INFO  req#2 done | openai-chat | stop token | prompt 54 | output 22 | cache 0 (0.0%) | TTFT 102 ms | total 181 ms | queue 31.2 ms | prefill 540.5 tok/s | decode 266.0 tok/s | dflash2 accepted 17/28 (60.7%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 801 "curl/8.18.0" 182.395776ms
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.51µs
+2026-10-17 18:23:01.107  INFO  throughput | 5.0s | prefill 10.8 tok/s (54 tok) | decode 4.2 tok/s (21 tok) | running 0 | batch 1.00 | host 1.1% (54.5 ms)
+[INFO] Request 172.19.0.1 "GET /v1/models HTTP/1.1" 200 180 "curl/8.18.0" 74.64µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.15µs
+[INFO] Request 172.19.0.1 "GET /v1/models HTTP/1.1" 200 180 "curl/8.18.0" 65.91µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.13µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.57µs
+[INFO] Request 172.19.0.1 "GET /v1/models HTTP/1.1" 200 180 "curl/8.18.0" 68.38µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.46µs
+2026-10-17 18:23:22.342  INFO  req#3 started | openai-chat stream | 2 messages | max output 16,384 | thinking off
+2026-10-17 18:23:22.353  INFO  req#4 started | openai-chat stream | 2 messages | max output 16,384 | thinking off | tools 12
+2026-10-17 18:23:22.541  INFO  req#3 done | openai-chat | stop token | prompt 549 | output 4 | cache 0 (0.0%) | TTFT 180 ms | total 200 ms | queue 26.0 ms | prefill 3.12k tok/s | decode 148.6 tok/s | dflash2 accepted 3/7 (42.9%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 1486 "opencode/latest/2.0.32/cli" 201.460368ms
+2026-10-17 18:23:23.411  INFO  req#4 done | openai-chat | stop token | prompt 5,474 | output 4 | cache 0 (0.0%) | TTFT 1.0s | total 1.1s | queue 189 ms | prefill 6.45k tok/s | decode 148.8 tok/s | dflash2 accepted 3/7 (42.9%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 1498 "opencode/latest/2.0.32/cli" 1.063202254s
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.77µs
+2026-10-17 18:23:26.108  INFO  throughput | 5.0s | prefill 1.20k tok/s (6,023 tok) | decode 1.2 tok/s (6 tok) | running 0 | batch 1.00 | host 6.5% (325 ms)
+2026-10-17 18:23:27.392  INFO  req#5 started | openai-chat stream | 2 messages | max output 16,384 | thinking medium
+2026-10-17 18:23:27.400  INFO  req#6 started | openai-chat stream | 2 messages | max output 16,384 | thinking medium | tools 12
+2026-10-17 18:23:28.675  INFO  req#6 done | openai-chat | stop token | prompt 5,472 | output 26 | cache 0 (0.0%) | TTFT 1.2s | total 1.3s | queue 166 ms | prefill 6.47k tok/s | decode 235.3 tok/s | dflash2 accepted 21/35 (60.0%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 2696 "opencode/latest/2.0.32/cli" 1.280000392s
+2026-10-17 18:23:28.912  INFO  req#5 done | openai-chat | stop token | prompt 547 | output 109 | cache 0 (0.0%) | TTFT 154 ms | total 1.5s | prefill 3.65k tok/s | decode 207.5 tok/s | dflash2 accepted 83/182 (45.6%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 7837 "opencode/latest/2.0.32/cli" 1.522178618s
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.42µs
+2026-10-17 18:23:31.107  INFO  throughput | 5.0s | prefill 1.20k tok/s (6,019 tok) | decode 26.6 tok/s (133 tok) | running 0 | batch 1.19 | host 6.5% (323 ms)
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.57µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.34µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.101µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 24.13µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.57µs
+2026-10-17 18:23:57.318  INFO  req#7 started | openai-chat non-stream | 1 message | max output 10 | thinking template default
+2026-10-17 18:23:57.448  INFO  req#7 done | openai-chat | output limit | prompt 54 | output 10 | cache 0 (0.0%) | TTFT 91.6 ms | total 131 ms | queue 21.8 ms | prefill 608.0 tok/s | decode 229.5 tok/s | dflash2 accepted 7/7 (100.0%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 759 "curl/8.18.0" 132.002372ms
+2026-10-17 18:24:01.108  INFO  throughput | 5.0s | prefill 10.8 tok/s (54 tok) | decode 1.8 tok/s (9 tok) | running 0 | batch 1.00 | host 0.8% (41.9 ms)
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.01µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.88µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 21.07µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.95µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.81µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 16.861µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.2µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.33µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.43µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.77µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.29µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.68µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.61µs
+2026-10-17 18:25:03.396  INFO  req#8 started | openai-chat stream | 2 messages | max output 16,384 | thinking off
+2026-10-17 18:25:03.404  INFO  req#9 started | openai-chat stream | 2 messages | max output 16,384 | thinking off | tools 12
+2026-10-17 18:25:03.595  INFO  req#8 done | openai-chat | stop token | prompt 549 | output 4 | cache 0 (0.0%) | TTFT 180 ms | total 200 ms | queue 25.5 ms | prefill 3.13k tok/s | decode 150.3 tok/s | dflash2 accepted 3/7 (42.9%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 1488 "opencode/latest/2.0.32/cli" 200.884785ms
+2026-10-17 18:25:03.667  INFO  req#9 done | openai-chat | stop token | prompt 5,474 | output 4 | cache 5,465 (99.8%, shared prefix) | TTFT 246 ms | total 266 ms | queue 194 ms | prefill 185.9 tok/s | decode 149.8 tok/s | dflash2 accepted 3/7 (42.9%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 1508 "opencode/latest/2.0.32/cli" 267.349263ms
+2026-10-17 18:25:03.741  INFO  req#10 started | openai-chat stream | 2 messages | max output 16,384 | thinking medium
+2026-10-17 18:25:03.749  INFO  req#11 started | openai-chat stream | 2 messages | max output 16,384 | thinking medium | tools 12
+2026-10-17 18:25:04.878  INFO  req#11 done | openai-chat | stop token | prompt 5,472 | output 20 | cache 0 (0.0%) | TTFT 1.1s | total 1.1s | queue 62.1 ms | prefill 6.48k tok/s | decode 297.7 tok/s | dflash2 accepted 16/21 (76.2%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 2250 "opencode/latest/2.0.32/cli" 1.133281381s
+2026-10-17 18:25:05.372  INFO  req#10 done | openai-chat | stop token | prompt 547 | output 146 | cache 540 (98.7%, shared prefix) | TTFT 50.1 ms | total 1.6s | prefill 146.1 tok/s | decode 197.0 tok/s | dflash2 accepted 109/259 (42.1%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 10451 "opencode/latest/2.0.32/cli" 1.632202941s
+2026-10-17 18:25:06.107  INFO  throughput | 5.0s | prefill 1.21k tok/s (6,037 tok) | decode 34.0 tok/s (170 tok) | running 0 | batch 1.08 | host 7.8% (391 ms)
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.13µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.55µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.06µs
+2026-10-17 18:25:22.695  INFO  req#12 started | openai-chat stream | 2 messages | max output 16,384 | thinking template default
+2026-10-17 18:25:22.703  INFO  req#13 started | openai-chat stream | 2 messages | max output 16,384 | thinking template default | tools 12
+2026-10-17 18:25:24.090  INFO  req#13 done | openai-chat | stop token | prompt 5,510 | output 37 | cache 0 (0.0%) | TTFT 1.2s | total 1.4s | queue 186 ms | prefill 6.47k tok/s | decode 188.0 tok/s | dflash2 accepted 28/63 (44.4%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 3444 "opencode/latest/2.0.32/cli" 1.391377199s
+2026-10-17 18:25:24.586  INFO  req#12 done | openai-chat | stop token | prompt 585 | output 123 | cache 0 (0.0%) | TTFT 174 ms | total 1.9s | queue 20.7 ms | prefill 3.41k tok/s | decode 140.9 tok/s | dflash2 accepted 80/301 (26.6%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 11513 "opencode/latest/2.0.32/cli" 1.893366167s
+2026-10-17 18:25:26.108  INFO  throughput | 5.0s | prefill 1.22k tok/s (6,095 tok) | decode 31.6 tok/s (158 tok) | running 0 | batch 1.21 | host 7.2% (361 ms)
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.13µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.73µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.25µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.39µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.01µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.58µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.25µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.27µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.14µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.09µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 19.78µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.83µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.32µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.53µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.58µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 19.14µs
+2026-10-17 18:26:43.846  INFO  req#14 started | openai-chat stream | 2 messages | max output 16,384 | thinking xhigh
+2026-10-17 18:26:43.858  INFO  req#15 started | openai-chat stream | 2 messages | max output 16,384 | thinking xhigh | tools 12
+2026-10-17 18:26:45.289  INFO  req#15 done | openai-chat | stop token | prompt 5,510 | output 38 | cache 0 (0.0%) | TTFT 1.2s | total 1.4s | queue 191 ms | prefill 6.50k tok/s | decode 158.2 tok/s | dflash2 accepted 27/77 (35.1%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 3897 "opencode/latest/2.0.32/cli" 1.436109588s
+2026-10-17 18:26:46.003  INFO  req#14 done | openai-chat | stop token | prompt 585 | output 175 | cache 0 (0.0%) | TTFT 183 ms | total 2.2s | queue 28.4 ms | prefill 3.27k tok/s | decode 154.6 tok/s | dflash2 accepted 119/392 (30.4%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 14705 "opencode/latest/2.0.32/cli" 2.159192116s
+2026-10-17 18:26:46.108  INFO  throughput | 5.0s | prefill 1.22k tok/s (6,095 tok) | decode 42.2 tok/s (211 tok) | running 0 | batch 1.20 | host 7.7% (384 ms)
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.52µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.03µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.32µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.82µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.42µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.44µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.43µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.56µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.65µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.92µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.64µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.63µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.97µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.81µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.58µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.69µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.79µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.61µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.43µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.85µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.6µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.461µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.05µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.65µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.12µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 13.84µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.29µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.19µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.69µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.08µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.92µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.95µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.83µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.92µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.61µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.94µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.52µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.79µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.27µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.25µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.4µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.22µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.65µs
+[INFO] Request 172.19.0.1 "GET /api/profiles HTTP/1.1" 200 312 "curl/8.18.0" 63.33µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.34µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.58µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.85µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.14µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.06µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.69µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.71µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.36µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.42µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.67µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.491µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.44µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.71µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.62µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.46µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.79µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.831µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.25µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.72µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.4µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.87µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.68µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.74µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.49µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.21µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.58µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.75µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.88µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.97µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.521µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.17µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.1µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.11µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.09µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 13.09µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.89µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.38µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.78µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.76µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.55µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.98µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.3µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.72µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.62µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.84µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.1µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.031µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 21.3µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.64µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.01µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.1µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.74µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.7µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.95µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.77µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 14.421µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.73µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.02µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.58µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.53µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.08µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.68µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.41µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.41µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.79µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.23µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.86µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.52µs
+[INFO] active profile changed to "llama"
+[INFO] Request 172.19.0.1 "PUT /api/profiles/active HTTP/1.1" 200 19 "curl/8.18.0" 74.351µs
+[INFO] Request 172.19.0.1 "GET /api/profiles HTTP/1.1" 200 311 "curl/8.18.0" 74.18µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.04µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.75µs
+2026-10-17 18:36:21.657  INFO  server stopped
+0.00.159.158 I cmn  common_param: common_params_print_info: verbosity = 3 (adjust with the `-lv N` CLI arg)
+0.00.271.482 W srv  llama_server: -----------------
+0.00.271.484 W srv  llama_server: CORS is set to allow all origins ('*') and no API key is set
+0.00.271.484 W srv  llama_server: this can be a security risk (cross-origin attacks)
+0.00.271.484 W srv  llama_server: more info: https://github.com/ggml-org/llama.cpp/pull/25655
+0.00.271.484 W srv  llama_server: -----------------
+0.00.272.671 I srv    load_model: loading model '/models/Qwen3.8-27B-NVFP4-MTP-GGUF/Qwen3.8-27B-NVFP4-MTP-HIGH.gguf'
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 7.85µs
+0.01.801.141 W NCCL not compiled in; falling back to internal AllReduce.  Recompile with -DGGML_CUDA_NCCL=ON for best multi-GPU performance.
+0.01.870.585 I cmn          init: llama threadpool init, n_threads = 8
+0.01.941.711 I common_speculative_init_result: creating MTP draft context against the target model '/models/Qwen3.8-27B-NVFP4-MTP-GGUF/Qwen3.8-27B-NVFP4-MTP-HIGH.gguf'
+0.01.941.746 W NCCL not compiled in; falling back to internal AllReduce.  Recompile with -DGGML_CUDA_NCCL=ON for best multi-GPU performance.
+0.01.990.024 W load_hparams: Qwen-VL models require at minimum 1024 image tokens to function correctly on grounding tasks
+0.01.990.027 W load_hparams: if you encounter problems with accuracy, try adding --image-min-tokens 1024
+0.01.990.027 W load_hparams: more info: https://github.com/ggml-org/llama.cpp/issues/16842
+
+0.02.363.573 I srv    load_model: loaded multimodal model, '/models/Qwen3.8-27B-NVFP4-MTP-GGUF/mmproj-BF16.gguf'
+0.02.398.103 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 180224, kv_unified = 'false'
+0.02.401.381 W set_sampler: backend sampling not supported with SPLIT_MODE_TENSOR; using CPU
+0.02.401.383 W spec common_specu: backend offload failed for seq_id=0; using CPU sampler
+0.02.408.427 I srv          init: chat template supports preserving reasoning, consider enabling it via --reasoning-preserve
+0.02.408.462 I srv  llama_server: model loaded
+0.02.408.466 I srv  llama_server: listening on http://127.0.0.1:5800
+[INFO] <backend-llama> Health check passed on http://localhost:5800/health
+0.03.251.455 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = -1
+0.03.251.539 I slot launch_slot_: id  0 | task 0 | processing task, is_child = 0
+0.03.523.512 I slot print_timing: id  0 | task 0 | prompt eval time =     216.76 ms /    19 tokens (   11.41 ms per token,    87.65 tokens per second)
+0.03.523.515 I slot print_timing: id  0 | task 0 |        eval time =      55.08 ms /     2 tokens (   55.08 ms per token,    18.16 tokens per second)
+0.03.523.516 I slot print_timing: id  0 | task 0 |       total time =     271.84 ms /    21 tokens
+0.03.523.519 I slot print_timing: id  0 | task 0 |    graphs reused =          1
+0.03.523.526 I slot print_timing: id  0 | task 0 | draft acceptance = 1.00000 (    4 accepted /     4 generated), mean len =  5.00
+0.03.523.572 I slot      release: id  0 | task 0 | stop processing: n_tokens = 24, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 704 "curl/8.18.0" 4.76437405s
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.9µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.14µs
+[INFO] Request 172.19.0.1 "GET /v1/models HTTP/1.1" 200 180 "curl/8.18.0" 68.201µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.45µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.43µs
+0.24.316.486 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 42595662678
+0.24.411.752 I slot launch_slot_: id  0 | task 4 | processing task, is_child = 0
+0.24.905.182 I slot print_timing: id  0 | task 4 | prompt eval time =     410.64 ms /   568 tokens (    0.72 ms per token,  1383.22 tokens per second)
+0.24.905.185 I slot print_timing: id  0 | task 4 |        eval time =      82.66 ms /     6 tokens (   16.53 ms per token,    60.49 tokens per second)
+0.24.905.185 I slot print_timing: id  0 | task 4 |       total time =     493.29 ms /   574 tokens
+0.24.905.186 I slot print_timing: id  0 | task 4 |    graphs reused =          1
+0.24.905.193 I slot print_timing: id  0 | task 4 | draft acceptance = 0.50000 (    3 accepted /     6 generated), mean len =  2.50
+0.24.905.239 I slot      release: id  0 | task 4 | stop processing: n_tokens = 573, truncated = 0
+0.24.905.251 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 42617044344
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 2784 "opencode/latest/2.0.32/cli" 592.08682ms
+0.25.031.005 I slot launch_slot_: id  0 | task 5 | processing task, is_child = 0
+0.25.756.187 I slot print_timing: id  0 | task 5 | prompt eval time =     287.76 ms /   395 tokens (    0.73 ms per token,  1372.65 tokens per second)
+0.25.756.190 I slot print_timing: id  0 | task 5 |        eval time =     437.27 ms /    53 tokens (    8.41 ms per token,   118.92 tokens per second)
+0.25.756.191 I slot print_timing: id  0 | task 5 |       total time =     725.04 ms /   448 tokens
+0.25.756.192 I slot print_timing: id  0 | task 5 |    graphs reused =          8
+0.25.756.198 I slot print_timing: id  0 | task 5 | draft acceptance = 0.93182 (   41 accepted /    44 generated), mean len =  4.42
+0.25.756.238 I slot      release: id  0 | task 5 | stop processing: n_tokens = 449, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 16898 "opencode/latest/2.0.32/cli" 1.438092938s
+0.26.120.587 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 42617895342
+0.26.214.633 I slot launch_slot_: id  0 | task 28 | processing task, is_child = 0
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 20.08µs
+0.28.019.885 I slot print_timing: id  0 | task 28 | prompt eval time =     405.18 ms /   592 tokens (    0.68 ms per token,  1461.09 tokens per second)
+0.28.019.888 I slot print_timing: id  0 | task 28 |        eval time =    1399.95 ms /   112 tokens (   12.61 ms per token,    79.29 tokens per second)
+0.28.019.889 I slot print_timing: id  0 | task 28 |       total time =    1805.13 ms /   704 tokens
+0.28.019.889 I slot print_timing: id  0 | task 28 |    graphs reused =         19
+0.28.019.897 I slot print_timing: id  0 | task 28 | draft acceptance = 0.87654 (   71 accepted /    81 generated), mean len =  3.29
+0.28.019.947 I slot      release: id  0 | task 28 | stop processing: n_tokens = 704, truncated = 0
+0.28.019.956 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 42620159051
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 35083 "opencode/latest/2.0.32/cli" 1.903091888s
+0.28.140.279 I slot launch_slot_: id  0 | task 29 | processing task, is_child = 0
+0.29.483.959 I slot print_timing: id  0 | task 29 | prompt eval time =     292.00 ms /   419 tokens (    0.70 ms per token,  1434.92 tokens per second)
+0.29.483.962 I slot print_timing: id  0 | task 29 |        eval time =    1051.55 ms /    90 tokens (   11.82 ms per token,    84.64 tokens per second)
+0.29.483.962 I slot print_timing: id  0 | task 29 |       total time =    1343.55 ms /   509 tokens
+0.29.483.963 I slot print_timing: id  0 | task 29 |    graphs reused =         29
+0.29.483.970 I slot print_timing: id  0 | task 29 | draft acceptance = 0.54545 (   66 accepted /   121 generated), mean len =  3.87
+0.29.484.011 I slot      release: id  0 | task 29 | stop processing: n_tokens = 511, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 27794 "opencode/latest/2.0.32/cli" 3.361348106s
+0.29.831.638 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 42621623115
+0.29.963.296 I slot launch_slot_: id  0 | task 104 | processing task, is_child = 0
+0.30.942.345 I slot print_timing: id  0 | task 104 | prompt eval time =      97.15 ms /     2 tokens (   48.58 ms per token,    20.59 tokens per second)
+0.30.942.348 I slot print_timing: id  0 | task 104 |        eval time =     881.86 ms /    56 tokens (   16.03 ms per token,    62.37 tokens per second)
+0.30.942.348 I slot print_timing: id  0 | task 104 |       total time =     979.02 ms /    58 tokens
+0.30.942.349 I slot print_timing: id  0 | task 104 |    graphs reused =         33
+0.30.942.357 I slot print_timing: id  0 | task 104 | draft acceptance = 0.25000 (   33 accepted /   132 generated), mean len =  3.36
+0.30.942.405 I slot      release: id  0 | task 104 | stop processing: n_tokens = 621, truncated = 0
+0.30.942.416 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 42623081509
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 17743 "opencode/latest/2.0.32/cli" 1.114194503s
+0.31.074.928 I slot launch_slot_: id  0 | task 105 | processing task, is_child = 0
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 16.3µs
+0.34.202.531 I slot print_timing: id  0 | task 105 | n_gen =    176, tg =  57.68 t/s, tg_3s =  58.01 t/s
+0.34.980.590 I slot print_timing: id  0 | task 105 | prompt eval time =      93.40 ms /     2 tokens (   46.70 ms per token,    21.41 tokens per second)
+0.34.980.593 I slot print_timing: id  0 | task 105 |        eval time =    3812.15 ms /   245 tokens (   15.62 ms per token,    64.01 tokens per second)
+0.34.980.593 I slot print_timing: id  0 | task 105 |       total time =    3905.55 ms /   247 tokens
+0.34.980.594 I slot print_timing: id  0 | task 105 |    graphs reused =         66
+0.34.980.602 I slot print_timing: id  0 | task 105 | draft acceptance = 0.75723 (  131 accepted /   173 generated), mean len =  2.85
+0.34.980.641 I slot      release: id  0 | task 105 | stop processing: n_tokens = 640, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 76149 "opencode/latest/2.0.32/cli" 5.146260327s
+0.35.348.677 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 42627119745
+0.35.443.010 I slot launch_slot_: id  0 | task 246 | processing task, is_child = 0
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.69µs
+0.38.791.394 I slot print_timing: id  0 | task 246 | prompt eval time =     417.42 ms /   604 tokens (    0.69 ms per token,  1446.97 tokens per second)
+0.38.791.397 I slot print_timing: id  0 | task 246 |        eval time =    2930.84 ms /   205 tokens (   14.37 ms per token,    69.60 tokens per second)
+0.38.791.397 I slot print_timing: id  0 | task 246 |       total time =    3348.26 ms /   809 tokens
+0.38.791.398 I slot print_timing: id  0 | task 246 |    graphs reused =         87
+0.38.791.406 I slot print_timing: id  0 | task 246 | draft acceptance = 0.61616 (  122 accepted /   198 generated), mean len =  3.26
+0.38.791.454 I slot      release: id  0 | task 246 | stop processing: n_tokens = 809, truncated = 0
+0.38.791.466 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 42630930558
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 64010 "opencode/latest/2.0.32/cli" 3.446685371s
+0.38.912.773 I slot launch_slot_: id  0 | task 247 | processing task, is_child = 0
+0.40.021.388 I slot print_timing: id  0 | task 247 | prompt eval time =     304.01 ms /   431 tokens (    0.71 ms per token,  1417.72 tokens per second)
+0.40.021.390 I slot print_timing: id  0 | task 247 |        eval time =     804.48 ms /    71 tokens (   11.49 ms per token,    87.01 tokens per second)
+0.40.021.391 I slot print_timing: id  0 | task 247 |       total time =    1108.49 ms /   502 tokens
+0.40.021.391 I slot print_timing: id  0 | task 247 |    graphs reused =         93
+0.40.021.398 I slot print_timing: id  0 | task 247 | draft acceptance = 0.52041 (   51 accepted /    98 generated), mean len =  4.00
+0.40.021.444 I slot      release: id  0 | task 247 | stop processing: n_tokens = 503, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 22148 "opencode/latest/2.0.32/cli" 4.67069239s
+0.40.381.850 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 42632160548
+0.40.515.850 I slot launch_slot_: id  0 | task 359 | processing task, is_child = 0
+0.40.649.181 I slot print_timing: id  0 | task 359 | prompt eval time =      94.32 ms /     4 tokens (   23.58 ms per token,    42.41 tokens per second)
+0.40.649.184 I slot print_timing: id  0 | task 359 |        eval time =      38.88 ms /     4 tokens (   12.96 ms per token,    77.16 tokens per second)
+0.40.649.184 I slot print_timing: id  0 | task 359 |       total time =     133.20 ms /     8 tokens
+0.40.649.185 I slot print_timing: id  0 | task 359 |    graphs reused =         93
+0.40.649.192 I slot print_timing: id  0 | task 359 | draft acceptance = 1.00000 (    2 accepted /     2 generated), mean len =  3.00
+0.40.649.242 I slot      release: id  0 | task 359 | stop processing: n_tokens = 571, truncated = 0
+0.40.649.253 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 42632788346
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 2147 "opencode/latest/2.0.32/cli" 270.977941ms
+0.40.746.348 I slot launch_slot_: id  0 | task 360 | processing task, is_child = 0
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 22.66µs
+0.43.104.471 I slot print_timing: id  0 | task 360 | prompt eval time =    2030.94 ms /  5426 tokens (    0.37 ms per token,  2671.67 tokens per second)
+0.43.104.474 I slot print_timing: id  0 | task 360 |        eval time =     327.01 ms /    26 tokens (   13.08 ms per token,    76.45 tokens per second)
+0.43.104.474 I slot print_timing: id  0 | task 360 |       total time =    2357.95 ms /  5452 tokens
+0.43.104.475 I slot print_timing: id  0 | task 360 |    graphs reused =         95
+0.43.104.483 I slot print_timing: id  0 | task 360 | draft acceptance = 0.31250 (   20 accepted /    64 generated), mean len =  5.00
+0.43.104.687 I slot      release: id  0 | task 360 | stop processing: n_tokens = 5453, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 3748 "opencode/latest/2.0.32/cli" 2.709136985s
+0.43.139.249 I slot get_availabl: id  0 | task -1 | selected slot by LCP similarity, f_sim_best = 0.994 (> 0.100 thold), f_keep = 1.000
+0.43.139.619 I slot launch_slot_: id  0 | task 376 | processing task, is_child = 0
+0.43.406.306 I slot print_timing: id  0 | task 376 | prompt eval time =     157.04 ms /    34 tokens (    4.62 ms per token,   216.50 tokens per second)
+0.43.406.310 I slot print_timing: id  0 | task 376 |        eval time =     109.62 ms /     6 tokens (   21.92 ms per token,    45.61 tokens per second)
+0.43.406.310 I slot print_timing: id  0 | task 376 |       total time =     266.67 ms /    40 tokens
+0.43.406.311 I slot print_timing: id  0 | task 376 |    graphs reused =         95
+0.43.406.318 I slot print_timing: id  0 | task 376 | draft acceptance = 0.66667 (    2 accepted /     3 generated), mean len =  2.00
+0.43.406.555 I slot      release: id  0 | task 376 | stop processing: n_tokens = 5492, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 2757 "opencode/latest/2.0.32/cli" 279.856564ms
+0.43.776.235 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 42635545659
+0.43.987.865 I slot launch_slot_: id  0 | task 382 | processing task, is_child = 0
+0.46.050.402 I slot print_timing: id  0 | task 382 | prompt eval time =      97.73 ms /     2 tokens (   48.87 ms per token,    20.46 tokens per second)
+0.46.050.405 I slot print_timing: id  0 | task 382 |        eval time =    1964.68 ms /   153 tokens (   12.93 ms per token,    77.37 tokens per second)
+0.46.050.405 I slot print_timing: id  0 | task 382 |       total time =    2062.41 ms /   155 tokens
+0.46.050.406 I slot print_timing: id  0 | task 382 |    graphs reused =        110
+0.46.050.413 I slot print_timing: id  0 | task 382 | draft acceptance = 0.50000 (  103 accepted /   206 generated), mean len =  3.45
+0.46.050.463 I slot      release: id  0 | task 382 | stop processing: n_tokens = 722, truncated = 0
+0.46.050.500 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 42638189567
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 47805 "opencode/latest/2.0.32/cli" 2.277979021s
+0.46.237.241 I slot launch_slot_: id  0 | task 383 | processing task, is_child = 0
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 24.471µs
+0.47.151.499 I slot print_timing: id  0 | task 383 | prompt eval time =     395.22 ms /   514 tokens (    0.77 ms per token,  1300.53 tokens per second)
+0.47.151.502 I slot print_timing: id  0 | task 383 |        eval time =     518.85 ms /    50 tokens (   10.59 ms per token,    94.44 tokens per second)
+0.47.151.502 I slot print_timing: id  0 | task 383 |       total time =     914.07 ms /   564 tokens
+0.47.151.503 I slot print_timing: id  0 | task 383 |    graphs reused =        118
+0.47.151.511 I slot print_timing: id  0 | task 383 | draft acceptance = 0.73469 (   36 accepted /    49 generated), mean len =  3.57
+0.47.151.730 I slot      release: id  0 | task 383 | stop processing: n_tokens = 5475, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 10570 "opencode/latest/2.0.32/cli" 3.37130159s
+0.47.185.856 I slot get_availabl: id  0 | task -1 | selected slot by LCP similarity, f_sim_best = 0.994 (> 0.100 thold), f_keep = 1.000
+0.47.186.354 I slot launch_slot_: id  0 | task 456 | processing task, is_child = 0
+0.48.510.341 I slot print_timing: id  0 | task 456 | prompt eval time =     164.87 ms /    31 tokens (    5.32 ms per token,   188.03 tokens per second)
+0.48.510.344 I slot print_timing: id  0 | task 456 |        eval time =    1159.00 ms /   121 tokens (    9.66 ms per token,   103.54 tokens per second)
+0.48.510.345 I slot print_timing: id  0 | task 456 |       total time =    1323.87 ms /   152 tokens
+0.48.510.345 I slot print_timing: id  0 | task 456 |    graphs reused =        129
+0.48.510.353 I slot print_timing: id  0 | task 456 | draft acceptance = 0.89796 (   88 accepted /    98 generated), mean len =  3.84
+0.48.510.585 I slot      release: id  0 | task 456 | stop processing: n_tokens = 5626, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 37610 "opencode/latest/2.0.32/cli" 1.337392064s
+0.48.869.251 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 42640649689
+0.49.075.591 I slot launch_slot_: id  0 | task 491 | processing task, is_child = 0
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.88µs
+0.52.206.245 I slot print_timing: id  0 | task 491 | n_gen =    203, tg =  66.66 t/s, tg_3s =  66.99 t/s
+0.54.236.992 I slot print_timing: id  0 | task 491 | prompt eval time =     100.36 ms /     4 tokens (   25.09 ms per token,    39.86 tokens per second)
+0.54.236.995 I slot print_timing: id  0 | task 491 |        eval time =    5060.90 ms /   363 tokens (   13.98 ms per token,    71.53 tokens per second)
+0.54.236.996 I slot print_timing: id  0 | task 491 |       total time =    5161.26 ms /   367 tokens
+0.54.236.997 I slot print_timing: id  0 | task 491 |    graphs reused =        179
+0.54.237.005 I slot print_timing: id  0 | task 491 | draft acceptance = 0.67610 (  215 accepted /   318 generated), mean len =  3.26
+0.54.237.068 I slot      release: id  0 | task 491 | stop processing: n_tokens = 970, truncated = 0
+0.54.237.108 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 42646376172
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 112876 "opencode/latest/2.0.32/cli" 5.372243575s
+0.54.371.947 I slot launch_slot_: id  0 | task 492 | processing task, is_child = 0
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.69µs
+0.57.353.393 I slot print_timing: id  0 | task 492 | prompt eval time =      97.46 ms /     4 tokens (   24.37 ms per token,    41.04 tokens per second)
+0.57.353.396 I slot print_timing: id  0 | task 492 |        eval time =    2883.86 ms /   183 tokens (   15.85 ms per token,    63.11 tokens per second)
+0.57.353.396 I slot print_timing: id  0 | task 492 |       total time =    2981.32 ms /   187 tokens
+0.57.353.397 I slot print_timing: id  0 | task 492 |    graphs reused =        206
+0.57.353.405 I slot print_timing: id  0 | task 492 | draft acceptance = 0.54857 (   96 accepted /   175 generated), mean len =  2.81
+0.57.353.447 I slot      release: id  0 | task 492 | stop processing: n_tokens = 613, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 56940 "opencode/latest/2.0.32/cli" 8.473623457s

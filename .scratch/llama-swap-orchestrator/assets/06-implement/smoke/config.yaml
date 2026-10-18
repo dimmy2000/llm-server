@@ -1,0 +1,27 @@
+# Тестовый конфиг для offline-проверки router-топологии: те же globals/hooks/
+# profiles/пины, что в router/config.yaml. Настоящие cmd заменены заглушками.
+healthCheckTimeout: 30
+logLevel: warn
+logToStdout: both
+sendLoadingState: true
+
+hooks:
+  on_startup:
+    profile: ninfer
+    preload:
+      - backend-ninfer
+
+profiles:
+  llama:
+    description: "llama.cpp active (single public ID qwen3.8-27b)"
+    pins:
+      qwen3.8-27b: backend-llama
+      backend-ninfer: ~
+  ninfer:
+    description: "NInfer TP=2 active (single public ID qwen3.8-27b)"
+    pins:
+      qwen3.8-27b: backend-ninfer
+      backend-llama: ~
+  none:
+    pins:
+      qwen3.8-27b: ~

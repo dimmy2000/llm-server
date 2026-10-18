@@ -1,0 +1,38 @@
+{
+  "choices": [
+    {
+      "finish_reason": "length",
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "The rain in the city of Aethelgard did not fall; it hovered. It was a fine, persistent mist that clung to the copper spires and the glass-domed observatories, turning the world into a watercolor painting left out in the damp. For Elara, a Senior Cartographer for the Guild of Clockmakers, this weather was less an annoyance and more a metaphor for her current state: suspended, blurred, and difficult to define.\n\nHer workshop was a chaotic symphony of ticking gears, whirring fans, and the soft *hiss* of pneumatic lifts. The walls were lined with maps that weren’t quite right—coastlines that shifted when viewed from different angles, mountains that only existed in certain frequencies of light. Elara’s task was to catalog these anomalies, to find the \"borrowed instruments\" that allowed reality to slip through its fingers.\n\nShe sat at her desk, a sprawling beast of mahogany and brass, surrounded by stacks of parchment. On her left lay **Entry 6155**, a catalogue of borrowed instruments from the deep archives. The paper was old, yellowed, smelling of ozone and stale tea. She adjusted her magnifying loupe, focusing on the first line: *"
+      }
+    }
+  ],
+  "created": 1792263054,
+  "model": "/models/Qwen3.8-27B-NVFP4-MTP-GGUF/Qwen3.8-27B-NVFP4-MTP-HIGH.gguf",
+  "system_fingerprint": "b10438-9d57ce456",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 256,
+    "prompt_tokens": 159480,
+    "total_tokens": 159736,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    }
+  },
+  "id": "chatcmpl-7Ps0WwLMZsyZ68f6EN7XynL1f3CL7vRe",
+  "timings": {
+    "cache_n": 0,
+    "prompt_n": 159480,
+    "prompt_ms": 93843.085,
+    "prompt_per_token_ms": 0.5884316842237272,
+    "prompt_per_second": 1699.4326220200453,
+    "predicted_n": 256,
+    "predicted_ms": 6874.151,
+    "predicted_per_token_ms": 26.957454901960784,
+    "predicted_per_second": 37.09549004669813,
+    "draft_n": 206,
+    "draft_n_accepted": 115
+  }
+}

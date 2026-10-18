@@ -1,0 +1,1 @@
+{"error":{"code":null,"message":"reasoning_effort must be one of none, minimal, low, medium, high, xhigh, max, or adaptive","param":"reasoning_effort","type":"invalid_request_error"}}

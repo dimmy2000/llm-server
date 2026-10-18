@@ -1,0 +1,25 @@
+## llama-swap startup log (docker logs llama-swap, 2026-10-17)
+[INFO] preloading model: backend-ninfer
+[INFO] <backend-ninfer> Health check passed on http://localhost:5801/health
+[ERROR] failed to preload model backend-ninfer: status 404
+[INFO] <backend-llama> Health check passed on http://localhost:5800/health
+[INFO] <backend-ninfer> Health check passed on http://localhost:5801/health
+
+## GET /v1/models при активном профиле ninfer
+{"data":[{"id":"qwen3.8-27b","object":"model","created":1792258229,"owned_by":"llama-swap","meta":{"llamaswap":{"type":"profile"}},"status":{"value":"unloaded"}}],"object":"list"}
+
+## GET /api/profiles
+{"active":"ninfer","profiles":[{"id":"llama","description":"llama.cpp active (single public ID qwen3.8-27b)","pins":{"backend-ninfer":"","qwen3.8-27b":"backend-llama"}},{"id":"ninfer","description":"NInfer TP=2 active (single public ID qwen3.8-27b)","pins":{"backend-llama":"","qwen3.8-27b":"backend-ninfer"}}]}
+
+## NInfer upstream (localhost:5801 внутри контейнера llama-swap)
+/ -> 404
+/health -> 200
+/v1/models -> 200
+--- /health body:
+{"status":"ok"}
+## VRAM движка в этот момент
+index, memory.used [MiB]
+0, 14727 MiB
+1, 15310 MiB
+## образ
+llm-server/router:v265

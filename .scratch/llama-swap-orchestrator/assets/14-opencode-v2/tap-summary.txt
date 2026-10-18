@@ -1,0 +1,12 @@
+001-get-v1_models: not JSON body
+002-get-v1_models: not JSON body
+003-get-v1_models: not JSON body
+004-post-v1_chat_completions [title/other] status=200 kwargs=null top_level_reasoning_effort=None tools=no reasoning_chars=0 content_chars=0
+005-post-v1_chat_completions [title/other] status=200 kwargs={"enable_thinking": false} top_level_reasoning_effort=None tools=no reasoning_chars=0 content_chars=6
+006-post-v1_chat_completions [AGENT] status=200 kwargs={"enable_thinking": false} top_level_reasoning_effort=None tools=yes reasoning_chars=0 content_chars=6
+007-post-v1_chat_completions [title/other] status=200 kwargs={"reasoning_effort": "medium"} top_level_reasoning_effort=None tools=no reasoning_chars=595 content_chars=23
+008-post-v1_chat_completions [AGENT] status=200 kwargs={"reasoning_effort": "medium"} top_level_reasoning_effort=None tools=yes reasoning_chars=54 content_chars=9
+009-post-v1_chat_completions [title/other] status=200 kwargs=null top_level_reasoning_effort=None tools=no reasoning_chars=546 content_chars=7
+010-post-v1_chat_completions [AGENT] status=200 kwargs=null top_level_reasoning_effort=None tools=yes reasoning_chars=133 content_chars=7
+011-post-v1_chat_completions [title/other] status=200 kwargs={"reasoning_effort": "xhigh"} top_level_reasoning_effort=None tools=no reasoning_chars=790 content_chars=22
+012-post-v1_chat_completions [AGENT] status=200 kwargs={"reasoning_effort": "xhigh"} top_level_reasoning_effort=None tools=yes reasoning_chars=138 content_chars=8

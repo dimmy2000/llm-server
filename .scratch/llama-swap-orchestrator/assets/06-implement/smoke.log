@@ -1,0 +1,43 @@
+=== llama-swap: version: v265 (d1e743f), built at 2026-10-14T08:30:34Z
+config is valid: 2 model(s), 0 peer(s)
+
+--- стартовый профиль (hooks.on_startup.profile): ninfer
+--- /v1/models при активном ninfer (ожидаем ровно qwen3.8-27b):
+['qwen3.8-27b']
+--- backend-записи скрыты (unlisted): регекс не должен найти backend-*
+backend-* в списке: []
+
+--- прямой запрос к backend-ninfer при активном ninfer (unlisted, но достижим по имени):
+  POST backend-ninfer -> HTTP 200
+
+=== профиль llama ===
+active: llama
+--- неактивный backend-ninfer закрыт пином ~ (ожидаем 404 и на /v1, и на /upstream):
+  POST /v1 model=backend-ninfer       -> HTTP 404
+  POST /upstream/backend-ninfer/...    -> HTTP 404
+--- запрос model=qwen3.8-27b -> куда пришёл, с каким телом:
+{"backend": "llama.cpp", "body": {"messages": [{"content": "hi", "role": "user"}], "model": "backend-llama", "reasoning_effort": "medium", "temperature": 0.3}, "port": 19011}
+--- cmd-процессов sleep в момент запроса: 2
+
+=== профиль ninfer ===
+active: ninfer
+--- запрос model=qwen3.8-27b (useModelName перепишет имя; repetition_penalty стрипается):
+{"backend": "ninfer", "body": {"messages": [{"content": "hi", "role": "user"}], "model": "qwen3.8-27b", "reasoning_effort": "medium", "temperature": 0.3}, "port": 19012}
+--- cmd-процессов sleep: 2
+
+=== профиль none (публичный ID выключен пином ~) ===
+active: none
+--- /v1/models:
+[]
+
+=== done ===
+-- children of llama-swap после старта (профиль ninfer):
+ 253327 nvidia-smi --query-gpu=index,name,uuid,temperature.gpu,utilization.gpu,memory.used,memory.total,fan.speed,power.draw --format=csv,noheader,nounits --loop 5
+ 253331 sleep 3600
+-- children после запроса (ninfer):
+ 253327 nvidia-smi --query-gpu=index,name,uuid,temperature.gpu,utilization.gpu,memory.used,memory.total,fan.speed,power.draw --format=csv,noheader,nounits --loop 5
+ 253331 sleep 3600
+-- children после переключения на llama:
+ 253327 nvidia-smi --query-gpu=index,name,uuid,temperature.gpu,utilization.gpu,memory.used,memory.total,fan.speed,power.draw --format=csv,noheader,nounits --loop 5
+ 253363 sleep 3600
+-- всего cmd-детей: 2

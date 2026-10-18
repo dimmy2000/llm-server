@@ -1,0 +1,26 @@
+# Тестовый конфиг: проверка, что v265 принимает `profiles.pins`.
+# cmd — `sleep`, GPU не нужен. На v240 (образ cuda13) конфиг не проходит уже
+# на разборе флагов: у v240 нет `-validate`.
+healthCheckTimeout: 30
+logLevel: info
+models:
+  backend-llama:
+    name: "llama.cpp"
+    cmd: "sleep 3600"
+    proxy: "http://127.0.0.1:1"
+  backend-ninfer:
+    name: "NInfer"
+    cmd: "sleep 3600"
+    proxy: "http://127.0.0.1:2"
+profiles:
+  llama:
+    description: "llama.cpp за единым ID"
+    pins:
+      qwen3.8-27b: backend-llama
+  ninfer:
+    description: "NInfer за единым ID"
+    pins:
+      qwen3.8-27b: backend-ninfer
+  disabled:
+    pins:
+      qwen3.8-27b: ~

@@ -1,0 +1,16 @@
+HTTP 200 OK
+Cache-Control: no-cache
+Content-Type: text/event-stream
+X-Accel-Buffering: no
+X-Request-Id: req_2f37cffa609b9c7d0afad422f5b2c533
+Date: Sat, 17 Oct 2026 14:53:09 GMT
+Transfer-Encoding: chunked
+
+data: {"choices":[{"delta":{"content":"","role":"assistant"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792248789,"id":"chatcmpl-2212e2a511fb433f","model":"qwen3.8-27b","object":"chat.completion.chunk"}
+
+data: {"choices":[{"delta":{"content":"ping"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792248789,"id":"chatcmpl-2212e2a511fb433f","model":"qwen3.8-27b","object":"chat.completion.chunk"}
+
+data: {"choices":[{"delta":{},"finish_reason":"stop","index":0,"logprobs":null}],"created":1792248789,"id":"chatcmpl-2212e2a511fb433f","model":"qwen3.8-27b","object":"chat.completion.chunk","timings":{"cache_n":0,"draft_n":6,"draft_n_accepted":1,"predicted_ms":19.716726,"predicted_n":2,"predicted_per_second":50.718359630295616,"predicted_per_token_ms":19.716726,"prompt_ms":91.902585,"prompt_n":19,"prompt_per_second":206.74064826359344,"prompt_per_token_ms":4.836978157894737}}
+
+data: [DONE]
+

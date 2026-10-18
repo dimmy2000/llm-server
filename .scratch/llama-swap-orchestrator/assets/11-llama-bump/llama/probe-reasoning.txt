@@ -1,0 +1,24 @@
+  - 01-bare
+      reasoning:   384 chars | content: '57403'
+  - 02-effort-none
+      reasoning:   441 chars | content: '57403'
+  - 03-effort-low
+      reasoning:   191 chars | content: '57403'
+  - 04-effort-medium
+      reasoning:   391 chars | content: '57403'
+  - 05-effort-xhigh
+      reasoning:   444 chars | content: '57403'
+  - 06-kwargs-enable-false
+      reasoning:     0 chars | content: '419 × 137 = 57403'
+  - 07-kwargs-effort-none
+      ERROR: {"error":{"code":500,"message":"\n------------\nWhile executing CallExpression at line 64, column 28 in source:\n...', 'low') %}↵        {{- raise_exception('Unexpected reasoning effort ' ~ reason...\n                   
+  - 08-effort-invalid
+      ERROR: {"error":{"code":500,"message":"\n------------\nWhile executing CallExpression at line 64, column 28 in source:\n...', 'low') %}↵        {{- raise_exception('Unexpected reasoning effort ' ~ reason...\n                   
+  - 09-kwargs-effort-low
+      reasoning:   243 chars | content: '57403'
+  - 10-kwargs-effort-xhigh
+      reasoning:   497 chars | content: '57403'
+  - 11-kwargs-invalid
+      ERROR: {"error":{"code":500,"message":"\n------------\nWhile executing CallExpression at line 64, column 28 in source:\n...', 'low') %}↵        {{- raise_exception('Unexpected reasoning effort ' ~ reason...\n                   
+  - 12-kwargs-both
+      reasoning:   242 chars | content: '57403'

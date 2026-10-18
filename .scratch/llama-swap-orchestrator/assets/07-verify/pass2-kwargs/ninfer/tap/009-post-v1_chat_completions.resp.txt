@@ -1,0 +1,26 @@
+HTTP 200 OK
+Cache-Control: no-cache
+Content-Type: text/event-stream
+X-Accel-Buffering: no
+X-Request-Id: req_6e9b5d338845362482b57f93df048fa9
+Date: Sat, 17 Oct 2026 15:09:40 GMT
+Transfer-Encoding: chunked
+
+data: {"choices":[{"delta":{"content":"","role":"assistant"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249780,"id":"chatcmpl-09acf333e6cd2499","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":"Let"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249780,"id":"chatcmpl-09acf333e6cd2499","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":" me read the"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249780,"id":"chatcmpl-09acf333e6cd2499","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":" file first"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249780,"id":"chatcmpl-09acf333e6cd2499","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":".\n"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249780,"id":"chatcmpl-09acf333e6cd2499","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"tool_calls":[{"function":{"arguments":"{\"path\":\"./notes.txt\"}","name":"read"},"id":"call_2924a6feada76777","index":0,"type":"function"}]},"finish_reason":null,"index":0,"logprobs":null}],"created":1792249780,"id":"chatcmpl-09acf333e6cd2499","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{},"finish_reason":"tool_calls","index":0,"logprobs":null}],"created":1792249780,"id":"chatcmpl-09acf333e6cd2499","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[],"created":1792249780,"id":"chatcmpl-09acf333e6cd2499","model":"qwen3.8-27b","object":"chat.completion.chunk","timings":{"cache_n":0,"draft_n":70,"draft_n_accepted":26,"predicted_ms":211.67940499999997,"predicted_n":36,"predicted_per_second":165.34438010159752,"predicted_per_token_ms":6.047982999999999,"prompt_ms":1005.6898510000001,"prompt_n":5488,"prompt_per_second":5456.950763242811,"prompt_per_token_ms":0.18325252387026242},"usage":{"completion_tokens":36,"completion_tokens_details":{"reasoning_tokens":9},"prompt_tokens":5488,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":5524}}
+
+data: [DONE]
+

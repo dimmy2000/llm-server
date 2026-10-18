@@ -1,0 +1,6 @@
+[INFO] using nvidia-smi for GPU monitoring
+[INFO] preloading model: backend-ninfer
+[INFO] llama-swap listening on http://127.0.0.1:8131
+[INFO] Request 127.0.0.1 "GET /v1/models HTTP/1.1" 200 354 "curl/8.18.0" 244.37µs
+[INFO] Request 127.0.0.1 "POST /v1/chat/completions HTTP/1.1" 200 73 "curl/8.18.0" 1.757744ms
+[INFO] Request 127.0.0.1 "POST /v1/chat/completions HTTP/1.1" 200 72 "curl/8.18.0" 1.462474ms

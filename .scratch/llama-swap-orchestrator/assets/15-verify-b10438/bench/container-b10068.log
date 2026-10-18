@@ -1,0 +1,346 @@
+[INFO] using nvidia-smi for GPU monitoring
+[INFO] preloading model: backend-ninfer
+[INFO] llama-swap is reachable by all hosts on the network, use -listen localhost:8080 to restrict to loopback only
+[INFO] llama-swap listening on http://:8080
+2026-10-17 18:57:51.075  INFO  starting engine
+2026-10-17 18:57:51.695  INFO  loading weights | 20.3 GiB
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 16.7µs
+2026-10-17 18:57:56.950  INFO  weights ready | 20.3 GiB | 5.3s | 3.87 GiB/s
+2026-10-17 18:57:58.364  INFO  CUDA graphs ready | 1.4s
+2026-10-17 18:57:58.364  INFO  engine ready | qwen3.8-27b | total 7.3s | weights 20.3 GiB | CUDA sync spin
+2026-10-17 18:57:58.364  INFO  rank 0 | device 0 | weights 10.2 GiB | sharded 9.65 GiB | replicated 259.6 MiB | local 282.0 MiB | host-mapped 1.18 GiB
+2026-10-17 18:57:58.364  INFO  rank 1 | device 1 | weights 10.1 GiB | sharded 9.65 GiB | replicated 259.6 MiB | local 245.0 MiB | host-mapped 1.18 GiB
+2026-10-17 18:57:58.364  INFO  host-mapped weights | 1.18 GiB of pinned host memory | read in place by 2 devices over PCIe
+2026-10-17 18:57:58.364  INFO  capacity | KV 347,584 tokens, nvfp4, auto | pages 5,431/8,192 | runtime 3.94 GiB | free 708.8 MiB
+2026-10-17 18:57:58.364  INFO  tensor parallel | tp 2 on devices 0,1 | p2p on | KV, StateImages and runtime reserved per rank | Host context-cache tiers off (rank 1 state has no Host replica) | 4 Device checkpoint StateImages; a prefill checkpoint that finds them full first reclaims idle private continuations and is skipped only when none can be released (raise --device-state-slots for many conversations)
+2026-10-17 18:57:58.364  INFO  tensor parallel | captured all-reduces: copies
+2026-10-17 18:57:58.364  INFO  tensor parallel | DFlash2 proposal head: split by vocabulary
+2026-10-17 18:57:58.364  INFO  tensor parallel | DFlash2 drafter: split (16/4 attention heads, MLP halves per rank; selector on rank 1)
+2026-10-17 18:57:58.364  INFO  cuda graphs | rank 0: observed 60.0 MiB, allowance 132.0 MiB
+2026-10-17 18:57:58.364  INFO  cuda graphs | rank 1: observed 60.0 MiB, allowance 132.0 MiB
+2026-10-17 18:57:58.364  INFO  context cache | 2 active + 4 cached device states | host 0 states, 0 B KV | private 8 | shared 4 | anchors 2
+2026-10-17 18:57:58.364  INFO  media | Vision on device 0 | 16 preprocess workers | cache 1.00 GiB | live 2.00 GiB
+2026-10-17 18:57:58.425  INFO  listening on http://127.0.0.1:5801 | model qwen3.8-27b | auth disabled
+[INFO] <backend-ninfer> Health check passed on http://localhost:5801/health
+[ERROR] failed to preload model backend-ninfer: status 404
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.12µs
+[INFO] Request 172.19.0.1 "GET /api/profiles HTTP/1.1" 200 312 "curl/8.18.0" 92.72µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.64µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.14µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.58µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.69µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.05µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.68µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.72µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.94µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.26µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.79µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.64µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.24µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 18.12µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.51µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.76µs
+[INFO] active profile changed to "llama"
+[INFO] Request 172.19.0.1 "PUT /api/profiles/active HTTP/1.1" 200 19 "curl/8.18.0" 100.37µs
+2026-10-17 18:59:20.348  INFO  server stopped
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.68µs
+0.00.181.524 I cmn  common_param: common_params_print_info: verbosity = 3 (adjust with the `-lv N` CLI arg)
+0.00.299.625 W srv  llama_server: -----------------
+0.00.299.628 W srv  llama_server: CORS is set to allow all origins ('*') and no API key is set
+0.00.299.628 W srv  llama_server: this can be a security risk (cross-origin attacks)
+0.00.299.628 W srv  llama_server: more info: https://github.com/ggml-org/llama.cpp/pull/25655
+0.00.299.628 W srv  llama_server: -----------------
+0.00.300.823 I srv    load_model: loading model '/models/Qwen3.8-27B-NVFP4-MTP-GGUF/Qwen3.8-27B-NVFP4-MTP-HIGH.gguf'
+0.01.817.265 W NCCL not compiled in; falling back to internal AllReduce.  Recompile with -DGGML_CUDA_NCCL=ON for best multi-GPU performance.
+0.01.953.871 W NCCL not compiled in; falling back to internal AllReduce.  Recompile with -DGGML_CUDA_NCCL=ON for best multi-GPU performance.
+0.02.000.841 W load_hparams: Qwen-VL models require at minimum 1024 image tokens to function correctly on grounding tasks
+0.02.000.845 W load_hparams: if you encounter problems with accuracy, try adding --image-min-tokens 1024
+0.02.000.845 W load_hparams: more info: https://github.com/ggml-org/llama.cpp/issues/16842
+
+0.02.113.535 I srv    load_model: loaded multimodal model, '/models/Qwen3.8-27B-NVFP4-MTP-GGUF/mmproj-BF16.gguf'
+0.02.147.602 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 180224, kv_unified = 'false'
+0.02.150.459 W set_sampler: backend sampling not supported with SPLIT_MODE_TENSOR; using CPU
+0.02.150.461 W spec common_specu: backend offload failed for seq_id=0; using CPU sampler
+0.02.165.746 I srv          init: chat template supports preserving reasoning, consider enabling it via --reasoning-preserve
+0.02.165.781 I srv  llama_server: model loaded
+0.02.165.785 I srv  llama_server: listening on http://127.0.0.1:5800
+[INFO] <backend-llama> Health check passed on http://localhost:5800/health
+0.02.261.288 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = -1
+0.02.261.339 I slot launch_slot_: id  0 | task 0 | processing task, is_child = 0
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.08µs
+0.05.778.279 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =     15, progress = 0.79, t =   3.52 s / 4.27 tokens per second
+0.05.911.174 I slot print_timing: id  0 | task 0 | prompt eval time =    3594.43 ms /    19 tokens (  189.18 ms per token,     5.29 tokens per second)
+0.05.911.178 I slot print_timing: id  0 | task 0 |        eval time =      55.28 ms /     2 tokens (   27.64 ms per token,    36.18 tokens per second)
+0.05.911.179 I slot print_timing: id  0 | task 0 |       total time =    3649.71 ms /    21 tokens
+0.05.911.182 I slot print_timing: id  0 | task 0 |    graphs reused =          1
+0.05.911.189 I slot print_timing: id  0 | task 0 | draft acceptance = 1.00000 (    4 accepted /     4 generated), mean len =  5.00
+0.05.911.234 I slot      release: id  0 | task 0 | stop processing: n_tokens = 24, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 708 "curl/8.18.0" 7.229143677s
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 29.74µs
+0.12.281.769 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 43976792210
+0.12.349.068 I slot launch_slot_: id  0 | task 4 | processing task, is_child = 0
+0.13.310.784 I slot print_timing: id  0 | task 4 | prompt eval time =     154.72 ms /   155 tokens (    1.00 ms per token,  1001.82 tokens per second)
+0.13.310.788 I slot print_timing: id  0 | task 4 |        eval time =     806.88 ms /   128 tokens (    6.30 ms per token,   158.63 tokens per second)
+0.13.310.789 I slot print_timing: id  0 | task 4 |       total time =     961.60 ms /   283 tokens
+0.13.310.790 I slot print_timing: id  0 | task 4 |    graphs reused =         24
+0.13.310.797 I slot print_timing: id  0 | task 4 | draft acceptance = 1.00000 (  101 accepted /   101 generated), mean len =  4.88
+0.13.310.829 I slot      release: id  0 | task 4 | stop processing: n_tokens = 282, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 893 "Python-urllib/3.14" 1.041141398s
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.75µs
+0.16.357.927 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 43984191805
+0.16.427.425 I slot launch_slot_: id  0 | task 33 | processing task, is_child = 0
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.93µs
+0.20.182.367 I slot print_timing: id  0 | task 33 | prompt processing, n_tokens =  10240, progress = 0.39, t =   3.75 s / 2727.09 tokens per second
+0.20.960.854 I slot print_timing: id  0 | task 33 | prompt processing, n_tokens =  12288, progress = 0.47, t =   4.53 s / 2710.54 tokens per second
+0.21.752.210 I slot print_timing: id  0 | task 33 | prompt processing, n_tokens =  14336, progress = 0.55, t =   5.32 s / 2692.33 tokens per second
+0.22.555.172 I slot print_timing: id  0 | task 33 | prompt processing, n_tokens =  16384, progress = 0.63, t =   6.13 s / 2673.75 tokens per second
+0.23.370.497 I slot print_timing: id  0 | task 33 | prompt processing, n_tokens =  18432, progress = 0.71, t =   6.94 s / 2654.74 tokens per second
+0.24.198.409 I slot print_timing: id  0 | task 33 | prompt processing, n_tokens =  20480, progress = 0.79, t =   7.77 s / 2635.45 tokens per second
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.45µs
+0.25.042.047 I slot print_timing: id  0 | task 33 | prompt processing, n_tokens =  22528, progress = 0.87, t =   8.61 s / 2615.09 tokens per second
+0.25.897.420 I slot print_timing: id  0 | task 33 | prompt processing, n_tokens =  24576, progress = 0.95, t =   9.47 s / 2595.15 tokens per second
+0.26.281.355 I slot print_timing: id  0 | task 33 | prompt processing, n_tokens =  25455, progress = 0.98, t =   9.85 s / 2583.24 tokens per second
+0.26.550.903 I slot print_timing: id  0 | task 33 | prompt processing, n_tokens =  25967, progress = 1.00, t =  10.12 s / 2565.03 tokens per second
+0.29.648.632 I slot print_timing: id  0 | task 33 | n_decoded =    156, tg =  51.85 t/s, tg_3s =  51.85 t/s
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.03µs
+0.32.652.536 I slot print_timing: id  0 | task 33 | n_decoded =    294, tg =  48.90 t/s, tg_3s =  45.94 t/s
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.41µs
+0.35.670.116 I slot print_timing: id  0 | task 33 | n_decoded =    454, tg =  50.28 t/s, tg_3s =  53.02 t/s
+0.38.692.388 I slot print_timing: id  0 | task 33 | n_decoded =    619, tg =  51.36 t/s, tg_3s =  54.59 t/s
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.95µs
+0.41.724.607 I slot print_timing: id  0 | task 33 | n_decoded =    777, tg =  51.51 t/s, tg_3s =  52.11 t/s
+0.44.753.175 I slot print_timing: id  0 | task 33 | n_decoded =    942, tg =  52.01 t/s, tg_3s =  54.48 t/s
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.53µs
+0.46.207.562 I slot print_timing: id  0 | task 33 | prompt eval time =   10212.35 ms / 25971 tokens (    0.39 ms per token,  2543.10 tokens per second)
+0.46.207.566 I slot print_timing: id  0 | task 33 |        eval time =   19567.66 ms /  1024 tokens (   19.11 ms per token,    52.33 tokens per second)
+0.46.207.567 I slot print_timing: id  0 | task 33 |       total time =   29780.02 ms / 26995 tokens
+0.46.207.568 I slot print_timing: id  0 | task 33 |    graphs reused =        179
+0.46.207.576 I slot print_timing: id  0 | task 33 | draft acceptance = 0.66286 (  464 accepted /   700 generated), mean len =  2.36
+0.46.207.883 I slot      release: id  0 | task 33 | stop processing: n_tokens = 26994, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 5037 "Python-urllib/3.14" 29.876696419s
+0.49.255.661 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 44017088859
+0.49.583.316 I slot launch_slot_: id  0 | task 608 | processing task, is_child = 0
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.04µs
+0.52.590.967 I slot print_timing: id  0 | task 608 | prompt processing, n_tokens =   8192, progress = 0.32, t =   3.01 s / 2723.74 tokens per second
+0.53.365.498 I slot print_timing: id  0 | task 608 | prompt processing, n_tokens =  10240, progress = 0.39, t =   3.78 s / 2707.45 tokens per second
+0.54.150.537 I slot print_timing: id  0 | task 608 | prompt processing, n_tokens =  12288, progress = 0.47, t =   4.57 s / 2690.49 tokens per second
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.31µs
+0.54.947.598 I slot print_timing: id  0 | task 608 | prompt processing, n_tokens =  14336, progress = 0.55, t =   5.36 s / 2672.50 tokens per second
+0.55.755.883 I slot print_timing: id  0 | task 608 | prompt processing, n_tokens =  16384, progress = 0.63, t =   6.17 s / 2654.33 tokens per second
+0.56.574.419 I slot print_timing: id  0 | task 608 | prompt processing, n_tokens =  18432, progress = 0.71, t =   6.99 s / 2636.50 tokens per second
+0.57.406.123 I slot print_timing: id  0 | task 608 | prompt processing, n_tokens =  20480, progress = 0.79, t =   7.82 s / 2617.99 tokens per second
+0.58.250.452 I slot print_timing: id  0 | task 608 | prompt processing, n_tokens =  22528, progress = 0.87, t =   8.67 s / 2599.25 tokens per second
+0.59.106.439 I slot print_timing: id  0 | task 608 | prompt processing, n_tokens =  24576, progress = 0.95, t =   9.52 s / 2580.67 tokens per second
+0.59.503.529 I slot print_timing: id  0 | task 608 | prompt processing, n_tokens =  25479, progress = 0.98, t =   9.92 s / 2568.40 tokens per second
+0.59.774.249 I slot print_timing: id  0 | task 608 | prompt processing, n_tokens =  25991, progress = 1.00, t =  10.19 s / 2550.41 tokens per second
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.96µs
+1.02.875.803 I slot print_timing: id  0 | task 608 | n_decoded =    147, tg =  48.80 t/s, tg_3s =  48.80 t/s
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.45µs
+1.05.889.886 I slot print_timing: id  0 | task 608 | n_decoded =    318, tg =  52.77 t/s, tg_3s =  56.73 t/s
+1.08.915.757 I slot print_timing: id  0 | task 608 | n_decoded =    476, tg =  52.58 t/s, tg_3s =  52.22 t/s
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.59µs
+1.11.921.943 I slot print_timing: id  0 | task 608 | n_decoded =    641, tg =  53.16 t/s, tg_3s =  54.89 t/s
+1.14.941.605 I slot print_timing: id  0 | task 608 | n_decoded =    805, tg =  53.39 t/s, tg_3s =  54.31 t/s
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 19.03µs
+1.17.954.031 I slot print_timing: id  0 | task 608 | n_decoded =    960, tg =  53.07 t/s, tg_3s =  51.45 t/s
+1.19.184.581 I slot print_timing: id  0 | task 608 | prompt eval time =   10280.20 ms / 25995 tokens (    0.40 ms per token,  2528.65 tokens per second)
+1.19.184.585 I slot print_timing: id  0 | task 608 |        eval time =   19321.05 ms /  1024 tokens (   18.87 ms per token,    53.00 tokens per second)
+1.19.184.585 I slot print_timing: id  0 | task 608 |       total time =   29601.24 ms / 27019 tokens
+1.19.184.586 I slot print_timing: id  0 | task 608 |    graphs reused =        321
+1.19.184.594 I slot print_timing: id  0 | task 608 | draft acceptance = 0.69044 (  484 accepted /   701 generated), mean len =  2.45
+1.19.184.911 I slot      release: id  0 | task 608 | stop processing: n_tokens = 27018, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 5142 "Python-urllib/3.14" 29.955224429s
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 35.12µs
+1.22.530.226 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 44050065886
+1.22.851.195 I slot launch_slot_: id  0 | task 1164 | processing task, is_child = 0
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.99µs
+1.25.861.809 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =   8192, progress = 0.08, t =   3.01 s / 2721.06 tokens per second
+1.26.636.304 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  10240, progress = 0.11, t =   3.79 s / 2705.35 tokens per second
+1.27.423.114 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  12288, progress = 0.13, t =   4.57 s / 2687.72 tokens per second
+1.28.221.651 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  14336, progress = 0.15, t =   5.37 s / 2669.43 tokens per second
+1.29.031.420 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  16384, progress = 0.17, t =   6.18 s / 2651.05 tokens per second
+1.29.854.374 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  18432, progress = 0.19, t =   7.00 s / 2631.96 tokens per second
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.17µs
+1.30.689.026 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  20480, progress = 0.21, t =   7.84 s / 2612.98 tokens per second
+1.31.536.075 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  22528, progress = 0.23, t =   8.68 s / 2593.94 tokens per second
+1.32.395.649 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  24576, progress = 0.25, t =   9.54 s / 2574.90 tokens per second
+1.33.268.647 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  26624, progress = 0.28, t =  10.42 s / 2555.72 tokens per second
+1.34.155.499 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  28672, progress = 0.30, t =  11.30 s / 2536.38 tokens per second
+1.35.054.674 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  30720, progress = 0.32, t =  12.20 s / 2517.32 tokens per second
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 15.24µs
+1.35.968.263 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  32768, progress = 0.34, t =  13.12 s / 2498.12 tokens per second
+1.36.893.117 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  34816, progress = 0.36, t =  14.04 s / 2479.44 tokens per second
+1.37.830.097 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  36864, progress = 0.38, t =  14.98 s / 2461.07 tokens per second
+1.38.778.893 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  38912, progress = 0.40, t =  15.93 s / 2443.04 tokens per second
+1.39.742.175 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  40960, progress = 0.42, t =  16.89 s / 2424.97 tokens per second
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.85µs
+1.40.719.387 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  43008, progress = 0.45, t =  17.87 s / 2406.96 tokens per second
+1.41.711.554 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  45056, progress = 0.47, t =  18.86 s / 2388.93 tokens per second
+1.42.718.135 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  47104, progress = 0.49, t =  19.87 s / 2370.98 tokens per second
+1.43.737.153 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  49152, progress = 0.51, t =  20.89 s / 2353.35 tokens per second
+1.44.770.034 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  51200, progress = 0.53, t =  21.92 s / 2335.89 tokens per second
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.05µs
+1.45.815.958 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  53248, progress = 0.55, t =  22.96 s / 2318.68 tokens per second
+1.46.874.450 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  55296, progress = 0.57, t =  24.02 s / 2301.77 tokens per second
+1.47.948.627 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  57344, progress = 0.59, t =  25.10 s / 2284.86 tokens per second
+1.49.036.305 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  59392, progress = 0.61, t =  26.19 s / 2268.16 tokens per second
+1.50.134.620 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  61440, progress = 0.64, t =  27.28 s / 2251.92 tokens per second
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.86µs
+1.51.242.265 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  63488, progress = 0.66, t =  28.39 s / 2236.20 tokens per second
+1.52.365.226 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  65536, progress = 0.68, t =  29.51 s / 2220.50 tokens per second
+1.53.502.648 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  67584, progress = 0.70, t =  30.65 s / 2204.92 tokens per second
+1.54.654.234 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  69632, progress = 0.72, t =  31.80 s / 2189.48 tokens per second
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.15µs
+1.55.820.409 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  71680, progress = 0.74, t =  32.97 s / 2174.15 tokens per second
+1.57.002.001 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  73728, progress = 0.76, t =  34.15 s / 2158.90 tokens per second
+1.58.204.802 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  75776, progress = 0.78, t =  35.35 s / 2143.38 tokens per second
+1.59.427.217 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  77824, progress = 0.81, t =  36.58 s / 2127.73 tokens per second
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.06µs
+2.00.649.940 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  79872, progress = 0.83, t =  37.80 s / 2113.09 tokens per second
+2.01.898.445 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  81920, progress = 0.85, t =  39.05 s / 2097.97 tokens per second
+2.03.156.225 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  83968, progress = 0.87, t =  40.31 s / 2083.31 tokens per second
+2.04.425.618 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  86016, progress = 0.89, t =  41.57 s / 2068.97 tokens per second
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.02µs
+2.05.711.029 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  88064, progress = 0.91, t =  42.86 s / 2054.70 tokens per second
+2.07.013.980 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  90112, progress = 0.93, t =  44.16 s / 2040.45 tokens per second
+2.08.332.525 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  92160, progress = 0.95, t =  45.48 s / 2026.33 tokens per second
+2.09.664.083 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  94208, progress = 0.97, t =  46.81 s / 2012.44 tokens per second
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.02µs
+2.10.933.979 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  96131, progress = 0.99, t =  48.08 s / 1999.28 tokens per second
+2.11.363.172 I slot print_timing: id  0 | task 1164 | prompt processing, n_tokens =  96643, progress = 1.00, t =  48.51 s / 1992.15 tokens per second
+2.14.513.873 I slot print_timing: id  0 | task 1164 | n_decoded =    133, tg =  44.23 t/s, tg_3s =  44.23 t/s
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.55µs
+2.17.534.918 I slot print_timing: id  0 | task 1164 | n_decoded =    271, tg =  44.95 t/s, tg_3s =  45.68 t/s
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.1µs
+2.20.585.912 I slot print_timing: id  0 | task 1164 | n_decoded =    405, tg =  44.61 t/s, tg_3s =  43.92 t/s
+2.23.628.505 I slot print_timing: id  0 | task 1164 | n_decoded =    523, tg =  43.15 t/s, tg_3s =  38.78 t/s
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.34µs
+2.26.641.945 I slot print_timing: id  0 | task 1164 | n_decoded =    662, tg =  43.74 t/s, tg_3s =  46.13 t/s
+2.29.666.830 I slot print_timing: id  0 | task 1164 | n_decoded =    780, tg =  42.95 t/s, tg_3s =  39.01 t/s
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.98µs
+2.32.671.742 I slot print_timing: id  0 | task 1164 | n_decoded =    927, tg =  43.80 t/s, tg_3s =  48.92 t/s
+2.34.489.468 I slot print_timing: id  0 | task 1164 | prompt eval time =   48655.40 ms / 96647 tokens (    0.50 ms per token,  1986.36 tokens per second)
+2.34.489.472 I slot print_timing: id  0 | task 1164 |        eval time =   22982.75 ms /  1024 tokens (   22.44 ms per token,    44.56 tokens per second)
+2.34.489.473 I slot print_timing: id  0 | task 1164 |       total time =   71638.15 ms / 97671 tokens
+2.34.489.474 I slot print_timing: id  0 | task 1164 |    graphs reused =        482
+2.34.489.482 I slot print_timing: id  0 | task 1164 | draft acceptance = 0.67705 (  478 accepted /   706 generated), mean len =  2.44
+2.34.490.513 I slot      release: id  0 | task 1164 | stop processing: n_tokens = 97670, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 5119 "Python-urllib/3.14" 1m12.026615195s
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.99µs
+2.38.374.897 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 44125371488
+2.39.294.439 I slot launch_slot_: id  0 | task 1761 | processing task, is_child = 0
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 23.6µs
+2.42.333.154 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =   8192, progress = 0.05, t =   3.04 s / 2695.90 tokens per second
+2.43.110.224 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  10240, progress = 0.06, t =   3.82 s / 2683.61 tokens per second
+2.43.899.176 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  12288, progress = 0.08, t =   4.60 s / 2668.57 tokens per second
+2.44.698.761 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  14336, progress = 0.09, t =   5.40 s / 2652.70 tokens per second
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.94µs
+2.45.511.258 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  16384, progress = 0.10, t =   6.22 s / 2635.44 tokens per second
+2.46.335.127 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  18432, progress = 0.12, t =   7.04 s / 2617.94 tokens per second
+2.47.171.792 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  20480, progress = 0.13, t =   7.88 s / 2599.87 tokens per second
+2.48.021.158 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  22528, progress = 0.14, t =   8.73 s / 2581.50 tokens per second
+2.48.882.877 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  24576, progress = 0.15, t =   9.59 s / 2563.09 tokens per second
+2.49.757.272 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  26624, progress = 0.17, t =  10.46 s / 2544.63 tokens per second
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.35µs
+2.50.646.561 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  28672, progress = 0.18, t =  11.35 s / 2525.70 tokens per second
+2.51.548.619 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  30720, progress = 0.19, t =  12.25 s / 2506.90 tokens per second
+2.52.462.660 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  32768, progress = 0.21, t =  13.17 s / 2488.42 tokens per second
+2.53.389.547 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  34816, progress = 0.22, t =  14.10 s / 2470.08 tokens per second
+2.54.328.800 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  36864, progress = 0.23, t =  15.03 s / 2451.99 tokens per second
+2.55.283.347 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  38912, progress = 0.24, t =  15.99 s / 2433.69 tokens per second
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.33µs
+2.56.249.237 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  40960, progress = 0.26, t =  16.95 s / 2415.84 tokens per second
+2.57.227.596 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  43008, progress = 0.27, t =  17.93 s / 2398.24 tokens per second
+2.58.219.961 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  45056, progress = 0.28, t =  18.93 s / 2380.70 tokens per second
+2.59.226.620 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  47104, progress = 0.29, t =  19.93 s / 2363.22 tokens per second
+3.00.245.480 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  49152, progress = 0.31, t =  20.95 s / 2346.04 tokens per second
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 14.46µs
+3.01.278.670 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  51200, progress = 0.32, t =  21.98 s / 2328.94 tokens per second
+3.02.326.371 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  53248, progress = 0.33, t =  23.03 s / 2311.92 tokens per second
+3.03.387.332 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  55296, progress = 0.35, t =  24.09 s / 2295.12 tokens per second
+3.04.459.000 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  57344, progress = 0.36, t =  25.16 s / 2278.76 tokens per second
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.95µs
+3.05.542.288 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  59392, progress = 0.37, t =  26.25 s / 2262.74 tokens per second
+3.06.641.199 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  61440, progress = 0.38, t =  27.35 s / 2246.70 tokens per second
+3.07.752.143 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  63488, progress = 0.40, t =  28.46 s / 2230.96 tokens per second
+3.08.876.163 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  65536, progress = 0.41, t =  29.58 s / 2215.42 tokens per second
+3.10.014.218 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  67584, progress = 0.42, t =  30.72 s / 2200.02 tokens per second
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.64µs
+3.11.167.497 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  69632, progress = 0.44, t =  31.87 s / 2184.67 tokens per second
+3.12.334.847 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  71680, progress = 0.45, t =  33.04 s / 2169.47 tokens per second
+3.13.514.384 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  73728, progress = 0.46, t =  34.22 s / 2154.53 tokens per second
+3.14.717.157 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  75776, progress = 0.47, t =  35.42 s / 2139.19 tokens per second
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.2µs
+3.15.931.416 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  77824, progress = 0.49, t =  36.64 s / 2124.19 tokens per second
+3.17.160.275 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  79872, progress = 0.50, t =  37.87 s / 2109.34 tokens per second
+3.18.405.081 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  81920, progress = 0.51, t =  39.11 s / 2094.57 tokens per second
+3.19.662.096 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  83968, progress = 0.53, t =  40.37 s / 2080.08 tokens per second
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.77µs
+3.20.934.758 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  86016, progress = 0.54, t =  41.64 s / 2065.69 tokens per second
+3.22.218.840 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  88064, progress = 0.55, t =  42.92 s / 2051.61 tokens per second
+3.23.518.813 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  90112, progress = 0.56, t =  44.22 s / 2037.61 tokens per second
+3.24.836.153 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  92160, progress = 0.58, t =  45.54 s / 2023.64 tokens per second
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.66µs
+3.26.168.150 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  94208, progress = 0.59, t =  46.87 s / 2009.83 tokens per second
+3.27.510.326 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  96256, progress = 0.60, t =  48.22 s / 1996.36 tokens per second
+3.28.868.383 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens =  98304, progress = 0.62, t =  49.57 s / 1982.98 tokens per second
+3.30.245.737 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens = 100352, progress = 0.63, t =  50.95 s / 1969.57 tokens per second
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.56µs
+3.31.647.556 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens = 102400, progress = 0.64, t =  52.35 s / 1955.95 tokens per second
+3.33.064.770 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens = 104448, progress = 0.65, t =  53.77 s / 1942.48 tokens per second
+3.34.496.116 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens = 106496, progress = 0.67, t =  55.20 s / 1929.22 tokens per second
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 57.991µs
+3.35.948.839 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens = 108544, progress = 0.68, t =  56.65 s / 1915.90 tokens per second
+3.37.416.599 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens = 110592, progress = 0.69, t =  58.12 s / 1902.75 tokens per second
+3.38.898.384 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens = 112640, progress = 0.71, t =  59.60 s / 1889.81 tokens per second
+3.40.397.174 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens = 114688, progress = 0.72, t =  61.10 s / 1876.97 tokens per second
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.54µs
+3.41.910.447 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens = 116736, progress = 0.73, t =  62.62 s / 1864.32 tokens per second
+3.43.437.690 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens = 118784, progress = 0.74, t =  64.14 s / 1851.86 tokens per second
+3.44.978.414 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens = 120832, progress = 0.76, t =  65.68 s / 1839.60 tokens per second
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.31µs
+3.46.532.692 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens = 122880, progress = 0.77, t =  67.24 s / 1827.53 tokens per second
+3.48.097.740 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens = 124928, progress = 0.78, t =  68.80 s / 1815.73 tokens per second
+3.49.676.826 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens = 126976, progress = 0.79, t =  70.38 s / 1804.09 tokens per second
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.19µs
+3.51.269.651 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens = 129024, progress = 0.81, t =  71.98 s / 1792.62 tokens per second
+3.52.885.214 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens = 131072, progress = 0.82, t =  73.59 s / 1781.09 tokens per second
+3.54.517.874 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens = 133120, progress = 0.83, t =  75.22 s / 1769.66 tokens per second
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.11µs
+3.56.159.797 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens = 135168, progress = 0.85, t =  76.87 s / 1758.50 tokens per second
+3.57.822.268 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens = 137216, progress = 0.86, t =  78.53 s / 1747.36 tokens per second
+3.59.499.949 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens = 139264, progress = 0.87, t =  80.21 s / 1736.34 tokens per second
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.58µs
+4.01.203.355 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens = 141312, progress = 0.88, t =  81.91 s / 1725.23 tokens per second
+4.02.909.550 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens = 143360, progress = 0.90, t =  83.62 s / 1714.52 tokens per second
+4.04.646.355 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens = 145408, progress = 0.91, t =  85.35 s / 1703.63 tokens per second
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.97µs
+4.06.391.169 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens = 147456, progress = 0.92, t =  87.10 s / 1693.01 tokens per second
+4.08.165.629 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens = 149504, progress = 0.94, t =  88.87 s / 1682.26 tokens per second
+4.09.966.411 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens = 151552, progress = 0.95, t =  90.67 s / 1671.43 tokens per second
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.22µs
+4.11.784.924 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens = 153600, progress = 0.96, t =  92.49 s / 1660.71 tokens per second
+4.13.629.354 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens = 155648, progress = 0.97, t =  94.33 s / 1649.95 tokens per second
+4.15.492.057 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens = 157696, progress = 0.99, t =  96.20 s / 1639.29 tokens per second
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 22.14µs
+4.16.967.156 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens = 159251, progress = 1.00, t =  97.67 s / 1630.46 tokens per second
+4.17.559.723 I slot print_timing: id  0 | task 1761 | prompt processing, n_tokens = 159763, progress = 1.00, t =  98.27 s / 1625.83 tokens per second
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.66µs
+4.22.566.051 I slot print_timing: id  0 | task 1761 | n_decoded =    100, tg =  20.76 t/s, tg_3s =  20.76 t/s
+4.25.579.415 I slot print_timing: id  0 | task 1761 | n_decoded =    225, tg =  28.74 t/s, tg_3s =  41.48 t/s
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.99µs
+4.26.415.947 I slot print_timing: id  0 | task 1761 | prompt eval time =   98455.35 ms / 159767 tokens (    0.62 ms per token,  1622.74 tokens per second)
+4.26.415.951 I slot print_timing: id  0 | task 1761 |        eval time =    8666.03 ms /   256 tokens (   33.85 ms per token,    29.54 tokens per second)
+4.26.415.952 I slot print_timing: id  0 | task 1761 |       total time =  107121.39 ms / 160023 tokens
+4.26.415.953 I slot print_timing: id  0 | task 1761 |    graphs reused =        538
+4.26.415.960 I slot print_timing: id  0 | task 1761 | draft acceptance = 0.57071 (  113 accepted /   198 generated), mean len =  2.33
+4.26.417.678 I slot      release: id  0 | task 1761 | stop processing: n_tokens = 160022, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 1884 "Python-urllib/3.14" 1m48.141738212s
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.96µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.65µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.68µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.98µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.28µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.16µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.14µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.7µs

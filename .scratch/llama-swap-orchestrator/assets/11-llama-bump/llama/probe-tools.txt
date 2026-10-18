@@ -1,0 +1,8 @@
+  - 01-tools-bare
+      finish='tool_calls' tool_calls=['get_weather'] args=['{"city":"Paris"}'] reasoning_chars=99
+  - 02-tools-none
+      finish='tool_calls' tool_calls=['get_weather'] args=['{"city":"Paris"}'] reasoning_chars=140
+  - 03-notools-bare
+      finish='stop' tool_calls=[] args=[] reasoning_chars=328
+  - 04-notools-none
+      finish='length' tool_calls=[] args=[] reasoning_chars=1378

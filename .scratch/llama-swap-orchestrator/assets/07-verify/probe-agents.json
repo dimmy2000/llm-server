@@ -1,0 +1,37 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "self-hosted/qwen3.8-27b",
+  "agent": {
+    "opt-none": {
+      "model": "self-hosted/qwen3.8-27b",
+      "options": { "reasoningEffort": "none" },
+      "permission": { "*": "deny" }
+    },
+    "top-none": {
+      "model": "self-hosted/qwen3.8-27b",
+      "reasoningEffort": "none",
+      "permission": { "*": "deny" }
+    },
+    "opt-xhigh": {
+      "model": "self-hosted/qwen3.8-27b",
+      "options": { "reasoningEffort": "xhigh" },
+      "permission": { "*": "deny" }
+    },
+    "top-medium-ctk": {
+      "model": "self-hosted/qwen3.8-27b",
+      "reasoningEffort": "medium",
+      "chat_template_kwargs": { "preserve_thinking": true },
+      "permission": { "*": "deny" }
+    }
+  },
+  "provider": {
+    "self-hosted": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Self Hosted (tap)",
+      "options": { "baseURL": "http://127.0.0.1:8090/v1" },
+      "models": {
+        "qwen3.8-27b": { "name": "Qwen 3.8 27B (probe)" }
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+model: /models/Qwen3.8-27B-NVFP4
+served-model-name:
+  - qwen3.8-27b
+model-impl: vllm
+host: 0.0.0.0
+port: 8000
+
+# The checkpoint is a VLM, but agent workloads are text-only. Skipping the
+# vision encoder leaves more VRAM for concurrent long-context requests.
+language-model-only: true
+tensor-parallel-size: 2
+disable-custom-all-reduce: true
+
+max-model-len: 49152
+max-num-seqs: 1
+max-num-batched-tokens: 1024
+enable-chunked-prefill: true
+# vLLM's YAML loader omits false booleans, so use the negative CLI form.
+no-enable-prefix-caching: true
+
+gpu-memory-utilization: 0.85
+kv-cache-dtype: fp8
+# Autotuning needs transient VRAM beyond the cache budget and hangs after an
+# OOM on the display GPU. The packaged default tactics remain available.
+no-enable-flashinfer-autotune: true
+
+reasoning-parser: qwen3
+enable-auto-tool-choice: true
+tool-call-parser: qwen3_xml
+renderer-num-workers: 2
+generation-config: auto
+uvicorn-log-level: info

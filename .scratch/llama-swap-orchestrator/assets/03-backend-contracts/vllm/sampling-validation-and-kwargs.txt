@@ -1,0 +1,124 @@
+    def _verify_args(self) -> None:
+        if not isinstance(self.n, int):
+            raise VLLMValidationError(
+                f"n must be an int, but is of type {type(self.n)}"
+            )
+        if self.n < 1:
+            raise VLLMValidationError(f"n must be at least 1, got {self.n}.")
+        max_n = envs.VLLM_MAX_N_SEQUENCES
+        if self.n > max_n:
+            raise VLLMValidationError(
+                f"n must be at most {max_n}, got {self.n}. "
+                "To increase this limit, set the VLLM_MAX_N_SEQUENCES "
+                "environment variable."
+            )
+        if not -2.0 <= self.presence_penalty <= 2.0:
+            raise VLLMValidationError(
+                f"presence_penalty must be in [-2, 2], got {self.presence_penalty}."
+            )
+        if not -2.0 <= self.frequency_penalty <= 2.0:
+            raise VLLMValidationError(
+                f"frequency_penalty must be in [-2, 2], got {self.frequency_penalty}."
+            )
+        if not math.isfinite(self.repetition_penalty):
+            raise VLLMValidationError(
+                "repetition_penalty must be a finite number, "
+                f"got {self.repetition_penalty}."
+            )
+        if self.repetition_penalty <= 0.0:
+            raise VLLMValidationError(
+                "repetition_penalty must be greater than zero, got "
+                f"{self.repetition_penalty}."
+            )
+        if not math.isfinite(self.temperature):
+            raise VLLMValidationError(
+                f"temperature must be a finite number, got {self.temperature}.",
+                parameter="temperature",
+                value=self.temperature,
+            )
+        if self.temperature < 0.0:
+            raise VLLMValidationError(
+                f"temperature must be non-negative, got {self.temperature}.",
+                parameter="temperature",
+                value=self.temperature,
+            )
+        if self.temperature > 2.0:
+            raise VLLMValidationError(
+                f"temperature must be in [0, 2], got {self.temperature}.",
+                parameter="temperature",
+                value=self.temperature,
+            )
+        if not 0.0 < self.top_p <= 1.0:
+            raise VLLMValidationError(
+                f"top_p must be in (0, 1], got {self.top_p}.",
+                parameter="top_p",
+                value=self.top_p,
+            )
+        # quietly accept -1 as disabled, but prefer 0
+        if self.top_k < -1:
+            raise VLLMValidationError(
+                f"top_k must be 0 (disable), or at least 1, got {self.top_k}."
+            )
+        if not isinstance(self.top_k, int):
+            raise VLLMValidationError(
+                f"top_k must be an integer, got {type(self.top_k).__name__}"
+            )
+        if not 0.0 <= self.min_p <= 1.0:
+            raise VLLMValidationError(f"min_p must be in [0, 1], got {self.min_p}.")
+        if self.max_tokens is not None and self.max_tokens < 1:
+            raise VLLMValidationError(
+                f"max_tokens must be at least 1, got {self.max_tokens}.",
+                parameter="max_tokens",
+
+=== merge_kwargs ===
+
+def merge_kwargs(
+    defaults: dict[str, Any] | None,
+    overrides: dict[str, Any] | None,
+    /,
+    *,
+    unset_values: tuple[object, ...] = (None, "auto"),
+) -> dict[str, Any]:
+    if defaults is None:
+        defaults = {}
+    if overrides is None:
+        overrides = {}
+
+    return defaults | {k: v for k, v in overrides.items() if v not in unset_values}
+
+
+def recursively_merge_kwargs(
+    defaults: dict[str, Any] | None,
+
+=== resolve_chat_template_kwargs filter ===
+def resolve_chat_template_kwargs(
+    tokenizer: HfTokenizer,
+    chat_template: str,
+    chat_template_kwargs: dict[str, Any],
+    raise_on_unexpected: bool = True,
+) -> dict[str, Any]:
+    # We exclude chat_template from kwargs here, because
+    # chat template has been already resolved at this stage
+    unexpected_vars = {"chat_template", "tokenize"}
+    if raise_on_unexpected and (
+        unexpected_in_kwargs := unexpected_vars & chat_template_kwargs.keys()
+    ):
+        raise ValueError(
+            "Found unexpected chat template kwargs from request: "
+            f"{unexpected_in_kwargs}"
+        )
+
+    fn_kw = {
+        k
+        for k in chat_template_kwargs
+        if supports_kw(tokenizer.apply_chat_template, k, allow_var_kwargs=False)
+    }
+    template_vars = _cached_resolve_chat_template_kwargs(chat_template)
+
+    # Allow standard HF parameters even if tokenizer uses **kwargs to receive them
+    hf_base_params = _get_hf_base_chat_template_params()
+
+    accept_vars = (fn_kw | template_vars | hf_base_params) - unexpected_vars
+    return {k: v for k, v in chat_template_kwargs.items() if k in accept_vars}
+
+

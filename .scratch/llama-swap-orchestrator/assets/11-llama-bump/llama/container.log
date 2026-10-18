@@ -1,0 +1,325 @@
+[INFO] using nvidia-smi for GPU monitoring
+[INFO] preloading model: backend-ninfer
+[INFO] llama-swap is reachable by all hosts on the network, use -listen localhost:8080 to restrict to loopback only
+[INFO] llama-swap listening on http://:8080
+2026-10-17 16:12:13.750  INFO  starting engine
+2026-10-17 16:12:14.349  INFO  loading weights | 20.3 GiB
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.9µs
+2026-10-17 16:12:19.306  INFO  weights ready | 20.3 GiB | 5.0s | 4.10 GiB/s
+2026-10-17 16:12:20.698  INFO  CUDA graphs ready | 1.4s
+2026-10-17 16:12:20.699  INFO  engine ready | qwen3.8-27b | total 6.9s | weights 20.3 GiB | CUDA sync spin
+2026-10-17 16:12:20.699  INFO  rank 0 | device 0 | weights 10.2 GiB | sharded 9.65 GiB | replicated 259.6 MiB | local 282.0 MiB | host-mapped 1.18 GiB
+2026-10-17 16:12:20.699  INFO  rank 1 | device 1 | weights 10.1 GiB | sharded 9.65 GiB | replicated 259.6 MiB | local 245.0 MiB | host-mapped 1.18 GiB
+2026-10-17 16:12:20.699  INFO  host-mapped weights | 1.18 GiB of pinned host memory | read in place by 2 devices over PCIe
+2026-10-17 16:12:20.699  INFO  capacity | KV 358,400 tokens, nvfp4, auto | pages 5,600/8,192 | runtime 4.04 GiB | free 710.0 MiB
+2026-10-17 16:12:20.699  INFO  tensor parallel | tp 2 on devices 0,1 | p2p on | KV, StateImages and runtime reserved per rank | Host context-cache tiers off (rank 1 state has no Host replica) | 4 Device checkpoint StateImages; a prefill checkpoint that finds them full first reclaims idle private continuations and is skipped only when none can be released (raise --device-state-slots for many conversations)
+2026-10-17 16:12:20.699  INFO  tensor parallel | captured all-reduces: copies
+2026-10-17 16:12:20.699  INFO  tensor parallel | DFlash2 proposal head: split by vocabulary
+2026-10-17 16:12:20.699  INFO  tensor parallel | DFlash2 drafter: split (16/4 attention heads, MLP halves per rank; selector on rank 1)
+2026-10-17 16:12:20.699  INFO  cuda graphs | rank 0: observed 60.0 MiB, allowance 132.0 MiB
+2026-10-17 16:12:20.699  INFO  cuda graphs | rank 1: observed 60.0 MiB, allowance 132.0 MiB
+2026-10-17 16:12:20.699  INFO  context cache | 2 active + 4 cached device states | host 0 states, 0 B KV | private 8 | shared 4 | anchors 2
+2026-10-17 16:12:20.699  INFO  media | Vision on device 0 | 16 preprocess workers | cache 1.00 GiB | live 2.00 GiB
+2026-10-17 16:12:20.760  INFO  listening on http://127.0.0.1:5801 | model qwen3.8-27b | auth disabled
+[INFO] <backend-ninfer> Health check passed on http://localhost:5801/health
+[ERROR] failed to preload model backend-ninfer: status 404
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.97µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.53µs
+[INFO] Request 172.19.0.1 "GET /api/profiles HTTP/1.1" 200 312 "curl/8.18.0" 115.97µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.01µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.81µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 7.95µs
+2026-10-17 16:12:43.966  INFO  req#1 started | openai-chat stream | 1 message | max output 300 | thinking template default
+2026-10-17 16:12:44.938  INFO  req#1 done | openai-chat | stop token | prompt 74 | output 258 | cache 0 (0.0%) | TTFT 103 ms | total 972 ms | queue 28.9 ms | prefill 730.8 tok/s | decode 295.9 tok/s | dflash2 accepted 214/308 (69.5%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 10580 "curl/8.18.0" 974.122362ms
+2026-10-17 16:12:44.954  INFO  req#2 started | openai-chat stream | 1 message | max output 300 | thinking off
+2026-10-17 16:12:45.061  INFO  req#2 done | openai-chat | stop token | prompt 34 | output 6 | cache 0 (0.0%) | TTFT 68.3 ms | total 108 ms | prefill 511.3 tok/s | decode 127.4 tok/s | dflash2 accepted 4/14 (28.6%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 1354 "curl/8.18.0" 108.905465ms
+2026-10-17 16:12:45.076  INFO  req#3 started | openai-chat stream | 1 message | max output 300 | thinking low
+2026-10-17 16:12:45.719  INFO  req#3 done | openai-chat | stop token | prompt 62 | output 194 | cache 0 (0.0%) | TTFT 71.0 ms | total 644 ms | prefill 897.0 tok/s | decode 337.0 tok/s | dflash2 accepted 165/203 (81.3%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 7340 "curl/8.18.0" 645.49701ms
+2026-10-17 16:12:45.734  INFO  req#4 started | openai-chat stream | 1 message | max output 300 | thinking medium
+2026-10-17 16:12:45.760  INFO  throughput | 5.0s | prefill 34.0 tok/s (170 tok) | decode 91.0 tok/s (455 tok) | running 1 (prefill 1) | batch 1.00 | host 3.2% (162 ms)
+2026-10-17 16:12:46.417  INFO  req#4 done | openai-chat | stop token | prompt 32 | output 214 | cache 27 (84.4%, turn closure) | TTFT 32.7 ms | total 683 ms | prefill 155.3 tok/s | decode 327.5 tok/s | dflash2 accepted 181/231 (78.4%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 8253 "curl/8.18.0" 684.676269ms
+2026-10-17 16:12:46.432  INFO  req#5 started | openai-chat stream | 1 message | max output 300 | thinking xhigh
+2026-10-17 16:12:46.917  INFO  req#5 done | openai-chat | stop token | prompt 74 | output 148 | cache 67 (90.5%, shared prefix) | TTFT 51.8 ms | total 485 ms | prefill 143.3 tok/s | decode 339.2 tok/s | dflash2 accepted 126/154 (81.8%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 5949 "curl/8.18.0" 486.135183ms
+2026-10-17 16:12:46.931  INFO  req#6 started | openai-chat stream | 1 message | max output 300 | thinking off
+2026-10-17 16:12:47.003  INFO  req#6 done | openai-chat | stop token | prompt 34 | output 6 | cache 27 (79.4%, turn closure) | TTFT 33.0 ms | total 72.2 ms | prefill 215.4 tok/s | decode 127.5 tok/s | dflash2 accepted 4/14 (28.6%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 1336 "curl/8.18.0" 73.002745ms
+2026-10-17 16:12:47.018  INFO  req#7 started | openai-chat stream | 1 message | max output 300 | thinking off
+2026-10-17 16:12:47.090  INFO  req#7 done | openai-chat | stop token | prompt 34 | output 6 | cache 27 (79.4%, turn closure) | TTFT 33.1 ms | total 72.5 ms | prefill 214.8 tok/s | decode 127.3 tok/s | dflash2 accepted 4/14 (28.6%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 1336 "curl/8.18.0" 73.204025ms
+[WARN] non-200 response, recording partial metrics: status=400, path=/v1/chat/completions
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 400 183 "curl/8.18.0" 597.322µs
+2026-10-17 16:12:47.118  INFO  req#8 started | openai-chat stream | 1 message | max output 300 | thinking low
+2026-10-17 16:12:47.642  INFO  req#8 done | openai-chat | stop token | prompt 62 | output 162 | cache 0 (0.0%) | TTFT 71.0 ms | total 525 ms | prefill 896.7 tok/s | decode 355.0 tok/s | dflash2 accepted 139/161 (86.3%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 6255 "curl/8.18.0" 525.585013ms
+2026-10-17 16:12:47.656  INFO  req#9 started | openai-chat stream | 1 message | max output 300 | thinking xhigh
+2026-10-17 16:12:48.179  INFO  req#9 done | openai-chat | stop token | prompt 74 | output 163 | cache 67 (90.5%, shared prefix) | TTFT 50.4 ms | total 523 ms | prefill 147.8 tok/s | decode 343.1 tok/s | dflash2 accepted 139/168 (82.7%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 6517 "curl/8.18.0" 523.691139ms
+2026-10-17 16:12:48.193  INFO  req#10 rejected during prepare | openai-chat stream | HTTP 400 | invalid template option | messages 1
+[WARN] non-200 response, recording partial metrics: status=400, path=/v1/chat/completions
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 400 139 "curl/8.18.0" 609.671µs
+2026-10-17 16:12:48.206  INFO  req#11 started | openai-chat stream | 1 message | max output 300 | thinking low
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 18.38µs
+2026-10-17 16:12:48.851  INFO  req#11 done | openai-chat | stop token | prompt 62 | output 229 | cache 57 (91.9%, turn closure) | TTFT 32.7 ms | total 645 ms | prefill 155.7 tok/s | decode 372.6 tok/s | dflash2 accepted 198/217 (91.2%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 7831 "curl/8.18.0" 645.736161ms
+2026-10-17 16:12:48.869  INFO  req#12 started | openai-chat non-stream | 1 message | max output 300 | thinking template default | tools 1
+2026-10-17 16:12:49.213  INFO  req#12 done | openai-chat | tool calls 1 | prompt 333 | output 60 | cache 0 (0.0%) | TTFT 107 ms | total 344 ms | prefill 3.17k tok/s | decode 248.9 tok/s | dflash2 accepted 48/84 (57.1%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 1004 "curl/8.18.0" 345.085498ms
+2026-10-17 16:12:49.228  INFO  req#13 started | openai-chat non-stream | 1 message | max output 300 | thinking off | tools 1
+2026-10-17 16:12:49.429  INFO  req#13 done | openai-chat | tool calls 1 | prompt 297 | output 26 | cache 0 (0.0%) | TTFT 103 ms | total 202 ms | prefill 2.94k tok/s | decode 252.8 tok/s | dflash2 accepted 21/35 (60.0%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 856 "curl/8.18.0" 202.658708ms
+2026-10-17 16:12:49.443  INFO  req#14 started | openai-chat non-stream | 1 message | max output 300 | thinking template default
+2026-10-17 16:12:49.868  INFO  req#14 done | openai-chat | stop token | prompt 66 | output 52 | cache 0 (0.0%) | TTFT 71.5 ms | total 425 ms | prefill 944.5 tok/s | decode 144.5 tok/s | dflash2 accepted 34/126 (27.0%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 969 "curl/8.18.0" 425.366563ms
+2026-10-17 16:12:49.882  INFO  req#15 started | openai-chat non-stream | 1 message | max output 300 | thinking off
+2026-10-17 16:12:50.499  INFO  req#15 done | openai-chat | stop token | prompt 26 | output 114 | cache 0 (0.0%) | TTFT 66.8 ms | total 617 ms | prefill 398.5 tok/s | decode 205.4 tok/s | dflash2 accepted 86/196 (43.9%)
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 1201 "curl/8.18.0" 618.188004ms
+2026-10-17 16:12:50.760  INFO  throughput | 5.0s | prefill 164.4 tok/s (822 tok) | decode 233.8 tok/s (1,169 tok) | running 0 | batch 1.00 | host 7.5% (377 ms)
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.1µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.06µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.74µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.63µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.33µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 32.17µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 20.08µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.35µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.8µs
+[INFO] active profile changed to "llama"
+[INFO] Request 172.19.0.1 "PUT /api/profiles/active HTTP/1.1" 200 19 "curl/8.18.0" 93.07µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.82µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.51µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.07µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.17µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.441µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.07µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.43µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.35µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.62µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 26.82µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.22µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.91µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 28.77µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.94µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.44µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.07µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.4µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.11µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.96µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.99µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.83µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.15µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.87µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.52µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.081µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.69µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.62µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.44µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.65µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.69µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.85µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.49µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.731µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.74µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.05µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 15.8µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 14.35µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.59µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.42µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.89µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.86µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.42µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.87µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.69µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.55µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.97µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.45µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.74µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.39µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.56µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.28µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.84µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.98µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 16.57µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.17µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.79µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.21µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.281µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.33µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.73µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.89µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.75µs
+2026-10-17 16:18:50.112  INFO  server stopped
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.76µs
+0.00.149.558 I cmn  common_param: common_params_print_info: verbosity = 3 (adjust with the `-lv N` CLI arg)
+0.00.257.068 W srv  llama_server: -----------------
+0.00.257.071 W srv  llama_server: CORS is set to allow all origins ('*') and no API key is set
+0.00.257.071 W srv  llama_server: this can be a security risk (cross-origin attacks)
+0.00.257.071 W srv  llama_server: more info: https://github.com/ggml-org/llama.cpp/pull/25655
+0.00.257.071 W srv  llama_server: -----------------
+0.00.258.257 I srv    load_model: loading model '/models/Qwen3.8-27B-NVFP4-MTP-GGUF/Qwen3.8-27B-NVFP4-MTP-HIGH.gguf'
+0.01.752.434 W NCCL not compiled in; falling back to internal AllReduce.  Recompile with -DGGML_CUDA_NCCL=ON for best multi-GPU performance.
+0.01.819.279 I cmn          init: llama threadpool init, n_threads = 8
+0.01.889.068 I common_speculative_init_result: creating MTP draft context against the target model '/models/Qwen3.8-27B-NVFP4-MTP-GGUF/Qwen3.8-27B-NVFP4-MTP-HIGH.gguf'
+0.01.889.100 W NCCL not compiled in; falling back to internal AllReduce.  Recompile with -DGGML_CUDA_NCCL=ON for best multi-GPU performance.
+0.01.935.007 W load_hparams: Qwen-VL models require at minimum 1024 image tokens to function correctly on grounding tasks
+0.01.935.010 W load_hparams: if you encounter problems with accuracy, try adding --image-min-tokens 1024
+0.01.935.010 W load_hparams: more info: https://github.com/ggml-org/llama.cpp/issues/16842
+
+0.02.044.597 I srv    load_model: loaded multimodal model, '/models/Qwen3.8-27B-NVFP4-MTP-GGUF/mmproj-BF16.gguf'
+0.02.078.760 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 180224, kv_unified = 'false'
+0.02.081.660 W set_sampler: backend sampling not supported with SPLIT_MODE_TENSOR; using CPU
+0.02.081.662 W spec common_specu: backend offload failed for seq_id=0; using CPU sampler
+0.02.088.729 I srv          init: chat template supports preserving reasoning, consider enabling it via --reasoning-preserve
+0.02.088.763 I srv  llama_server: model loaded
+0.02.088.767 I srv  llama_server: listening on http://127.0.0.1:5800
+[INFO] <backend-llama> Health check passed on http://localhost:5800/health
+0.02.253.455 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = -1
+0.02.253.532 I slot launch_slot_: id  0 | task 0 | processing task, is_child = 0
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 6.61µs
+0.05.748.253 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =     42, progress = 0.79, t =   3.49 s / 12.03 tokens per second
+0.05.819.480 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =     49, progress = 0.92, t =   3.56 s / 13.75 tokens per second
+0.05.896.851 I slot print_timing: id  0 | task 0 | prompt eval time =    3643.28 ms /    53 tokens (   68.74 ms per token,    14.55 tokens per second)
+0.05.896.855 I slot print_timing: id  0 | task 0 |        eval time =       0.00 ms /     1 tokens (    0.00 ms per token,     0.00 tokens per second)
+0.05.896.856 I slot print_timing: id  0 | task 0 |       total time =    3643.29 ms /    54 tokens
+0.05.896.858 I slot print_timing: id  0 | task 0 |    graphs reused =          1
+0.05.896.908 I slot      release: id  0 | task 0 | stop processing: n_tokens = 53, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 676 "curl/8.18.0" 6.889644872s
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.38µs
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.76µs
+0.17.216.502 I slot get_availabl: id  0 | task -1 | selected slot by LCP similarity, f_sim_best = 0.608 (> 0.100 thold), f_keep = 0.849
+0.17.216.544 I slot launch_slot_: id  0 | task 4 | processing task, is_child = 0
+0.18.995.546 I slot print_timing: id  0 | task 4 | prompt eval time =     177.98 ms /    32 tokens (    5.56 ms per token,   179.79 tokens per second)
+0.18.995.549 I slot print_timing: id  0 | task 4 |        eval time =    1600.90 ms /   161 tokens (   10.01 ms per token,    99.94 tokens per second)
+0.18.995.550 I slot print_timing: id  0 | task 4 |       total time =    1778.88 ms /   193 tokens
+0.18.995.550 I slot print_timing: id  0 | task 4 |    graphs reused =         19
+0.18.995.558 I slot print_timing: id  0 | task 4 | draft acceptance = 0.87597 (  113 accepted /   129 generated), mean len =  3.63
+0.18.995.585 I slot      release: id  0 | task 4 | stop processing: n_tokens = 234, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 49755 "curl/8.18.0" 1.781559988s
+0.19.011.638 I slot get_availabl: id  0 | task -1 | selected slot by LCP similarity, f_sim_best = 1.000 (> 0.100 thold), f_keep = 0.316
+0.19.128.864 I slot launch_slot_: id  0 | task 54 | processing task, is_child = 0
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 6.54µs
+0.22.251.412 I slot print_timing: id  0 | task 54 | n_gen =    101, tg =  33.06 t/s, tg_3s =  33.39 t/s
+0.23.654.324 I slot print_timing: id  0 | task 54 | prompt eval time =      97.23 ms /     4 tokens (   24.31 ms per token,    41.14 tokens per second)
+0.23.654.327 I slot print_timing: id  0 | task 54 |        eval time =    4428.11 ms /   204 tokens (   21.81 ms per token,    45.84 tokens per second)
+0.23.654.327 I slot print_timing: id  0 | task 54 |       total time =    4525.34 ms /   208 tokens
+0.23.654.329 I slot print_timing: id  0 | task 54 |    graphs reused =         36
+0.23.654.336 I slot print_timing: id  0 | task 54 | draft acceptance = 0.48621 (  141 accepted /   290 generated), mean len =  3.82
+0.23.654.365 I slot      release: id  0 | task 54 | stop processing: n_tokens = 281, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 63014 "curl/8.18.0" 4.645322669s
+0.23.670.263 I slot get_availabl: id  0 | task -1 | selected slot by LCP similarity, f_sim_best = 0.145 (> 0.100 thold), f_keep = 0.032
+0.23.759.708 I slot launch_slot_: id  0 | task 122 | processing task, is_child = 0
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 20.04µs
+0.25.039.951 I slot print_timing: id  0 | task 122 | prompt eval time =     194.07 ms /    62 tokens (    3.13 ms per token,   319.47 tokens per second)
+0.25.039.954 I slot print_timing: id  0 | task 122 |        eval time =    1086.04 ms /   154 tokens (    7.10 ms per token,   140.88 tokens per second)
+0.25.039.954 I slot print_timing: id  0 | task 122 |       total time =    1280.11 ms /   216 tokens
+0.25.039.955 I slot print_timing: id  0 | task 122 |    graphs reused =         60
+0.25.039.963 I slot print_timing: id  0 | task 122 | draft acceptance = 0.93651 (  118 accepted /   126 generated), mean len =  4.37
+0.25.039.991 I slot      release: id  0 | task 122 | stop processing: n_tokens = 215, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 47441 "curl/8.18.0" 1.372139555s
+0.25.055.308 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 34365386331
+0.25.144.142 I slot launch_slot_: id  0 | task 161 | processing task, is_child = 0
+0.26.796.331 I slot print_timing: id  0 | task 161 | prompt eval time =     115.99 ms /    32 tokens (    3.62 ms per token,   275.89 tokens per second)
+0.26.796.333 I slot print_timing: id  0 | task 161 |        eval time =    1536.08 ms /   221 tokens (    6.98 ms per token,   143.22 tokens per second)
+0.26.796.334 I slot print_timing: id  0 | task 161 |       total time =    1652.07 ms /   253 tokens
+0.26.796.334 I slot print_timing: id  0 | task 161 |    graphs reused =         74
+0.26.796.343 I slot print_timing: id  0 | task 161 | draft acceptance = 0.66304 (  183 accepted /   276 generated), mean len =  6.23
+0.26.796.367 I slot      release: id  0 | task 161 | stop processing: n_tokens = 254, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 68211 "curl/8.18.0" 1.743442415s
+0.26.813.053 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 34367142707
+0.26.909.741 I slot launch_slot_: id  0 | task 203 | processing task, is_child = 0
+0.29.031.122 I slot print_timing: id  0 | task 203 | prompt eval time =      97.58 ms /     4 tokens (   24.39 ms per token,    40.99 tokens per second)
+0.29.031.125 I slot print_timing: id  0 | task 203 |        eval time =    2023.68 ms /   207 tokens (    9.82 ms per token,   101.79 tokens per second)
+0.29.031.125 I slot print_timing: id  0 | task 203 |       total time =    2121.26 ms /   211 tokens
+0.29.031.126 I slot print_timing: id  0 | task 203 |    graphs reused =         99
+0.29.031.134 I slot print_timing: id  0 | task 203 | draft acceptance = 0.52632 (  150 accepted /   285 generated), mean len =  4.33
+0.29.031.166 I slot      release: id  0 | task 203 | stop processing: n_tokens = 281, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 63936 "curl/8.18.0" 2.22055589s
+0.29.046.256 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 34369377505
+0.29.138.259 I slot launch_slot_: id  0 | task 262 | processing task, is_child = 0
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 4.95µs
+0.29.453.205 I slot print_timing: id  0 | task 262 | prompt eval time =     116.14 ms /    34 tokens (    3.42 ms per token,   292.76 tokens per second)
+0.29.453.207 I slot print_timing: id  0 | task 262 |        eval time =     198.68 ms /    16 tokens (   13.25 ms per token,    75.50 tokens per second)
+0.29.453.208 I slot print_timing: id  0 | task 262 |       total time =     314.82 ms /    50 tokens
+0.29.453.208 I slot print_timing: id  0 | task 262 |    graphs reused =        102
+0.29.453.216 I slot print_timing: id  0 | task 262 | draft acceptance = 0.72222 (   13 accepted /    18 generated), mean len =  3.17
+0.29.453.246 I slot      release: id  0 | task 262 | stop processing: n_tokens = 53, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 5376 "curl/8.18.0" 408.774461ms
+0.29.467.308 W srv    operator(): got exception: {"error":{"code":500,"message":"\n------------\nWhile executing CallExpression at line 64, column 28 in source:\n...', 'low') %}↵        {{- raise_exception('Unexpected reasoning effort ' ~ reason...\n                                           ^\nError: Jinja Exception: Unexpected reasoning effort none. Supported types are xhigh (default), medium, and low.","type":"server_error"}}
+[WARN] non-200 response, recording partial metrics: status=500, path=/v1/chat/completions
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 500 385 "curl/8.18.0" 816.502µs
+0.29.479.170 W srv    operator(): got exception: {"error":{"code":500,"message":"\n------------\nWhile executing CallExpression at line 64, column 28 in source:\n...', 'low') %}↵        {{- raise_exception('Unexpected reasoning effort ' ~ reason...\n                                           ^\nError: Jinja Exception: Unexpected reasoning effort banana. Supported types are xhigh (default), medium, and low.","type":"server_error"}}
+[WARN] non-200 response, recording partial metrics: status=500, path=/v1/chat/completions
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 500 387 "curl/8.18.0" 567.742µs
+0.29.492.609 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 34369799586
+0.29.585.848 I slot launch_slot_: id  0 | task 271 | processing task, is_child = 0
+0.30.333.051 I slot print_timing: id  0 | task 271 | prompt eval time =      89.33 ms /     4 tokens (   22.33 ms per token,    44.78 tokens per second)
+0.30.333.054 I slot print_timing: id  0 | task 271 |        eval time =     657.75 ms /   181 tokens (    3.65 ms per token,   273.66 tokens per second)
+0.30.333.055 I slot print_timing: id  0 | task 271 |       total time =     747.08 ms /   185 tokens
+0.30.333.055 I slot print_timing: id  0 | task 271 |    graphs reused =        107
+0.30.333.063 I slot print_timing: id  0 | task 271 | draft acceptance = 0.81643 (  169 accepted /   207 generated), mean len = 16.36
+0.30.333.098 I slot      release: id  0 | task 271 | stop processing: n_tokens = 245, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 55771 "curl/8.18.0" 842.131548ms
+0.30.346.846 I slot get_availabl: id  0 | task -1 | selected slot by LCP similarity, f_sim_best = 0.122 (> 0.100 thold), f_keep = 0.037
+0.30.471.035 I slot launch_slot_: id  0 | task 287 | processing task, is_child = 0
+0.32.651.699 I slot print_timing: id  0 | task 287 | prompt eval time =      92.92 ms /     4 tokens (   23.23 ms per token,    43.05 tokens per second)
+0.32.651.702 I slot print_timing: id  0 | task 287 |        eval time =    2087.63 ms /   206 tokens (   10.18 ms per token,    98.20 tokens per second)
+0.32.651.702 I slot print_timing: id  0 | task 287 |       total time =    2180.54 ms /   210 tokens
+0.32.651.703 I slot print_timing: id  0 | task 287 |    graphs reused =        127
+0.32.651.711 I slot print_timing: id  0 | task 287 | draft acceptance = 0.44868 (  153 accepted /   341 generated), mean len =  5.03
+0.32.651.741 I slot      release: id  0 | task 287 | stop processing: n_tokens = 283, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 63685 "curl/8.18.0" 2.306852022s
+0.32.666.526 W srv    operator(): got exception: {"error":{"code":500,"message":"\n------------\nWhile executing CallExpression at line 64, column 28 in source:\n...', 'low') %}↵        {{- raise_exception('Unexpected reasoning effort ' ~ reason...\n                                           ^\nError: Jinja Exception: Unexpected reasoning effort banana. Supported types are xhigh (default), medium, and low.","type":"server_error"}}
+[WARN] non-200 response, recording partial metrics: status=500, path=/v1/chat/completions
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 500 387 "curl/8.18.0" 948.803µs
+0.32.680.532 I slot get_availabl: id  0 | task -1 | selected slot by LCP similarity, f_sim_best = 0.145 (> 0.100 thold), f_keep = 0.032
+0.32.803.847 I slot launch_slot_: id  0 | task 345 | processing task, is_child = 0
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.9µs
+0.34.372.282 I slot print_timing: id  0 | task 345 | prompt eval time =      93.67 ms /     4 tokens (   23.42 ms per token,    42.70 tokens per second)
+0.34.372.284 I slot print_timing: id  0 | task 345 |        eval time =    1474.64 ms /   176 tokens (    8.43 ms per token,   118.67 tokens per second)
+0.34.372.285 I slot print_timing: id  0 | task 345 |       total time =    1568.32 ms /   180 tokens
+0.34.372.285 I slot print_timing: id  0 | task 345 |    graphs reused =        145
+0.34.372.293 I slot print_timing: id  0 | task 345 | draft acceptance = 0.74725 (  136 accepted /   182 generated), mean len =  4.49
+0.34.372.326 I slot      release: id  0 | task 345 | stop processing: n_tokens = 239, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 54240 "curl/8.18.0" 1.693913261s
+0.34.394.185 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 34374718665
+0.34.484.456 I slot launch_slot_: id  0 | task 388 | processing task, is_child = 0
+0.35.250.678 I slot print_timing: id  0 | task 388 | prompt eval time =     270.70 ms /   328 tokens (    0.83 ms per token,  1211.65 tokens per second)
+0.35.250.682 I slot print_timing: id  0 | task 388 |        eval time =     495.37 ms /    52 tokens (    9.71 ms per token,   102.95 tokens per second)
+0.35.250.682 I slot print_timing: id  0 | task 388 |       total time =     766.08 ms /   380 tokens
+0.35.250.683 I slot print_timing: id  0 | task 388 |    graphs reused =        153
+0.35.250.691 I slot print_timing: id  0 | task 388 | draft acceptance = 0.95000 (   38 accepted /    40 generated), mean len =  3.92
+0.35.250.790 I slot      release: id  0 | task 388 | stop processing: n_tokens = 381, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 994 "curl/8.18.0" 859.535914ms
+0.35.265.552 I slot get_availabl: id  0 | task -1 | selected slot by LCP similarity, f_sim_best = 1.000 (> 0.100 thold), f_keep = 0.861
+0.35.265.670 I slot launch_slot_: id  0 | task 407 | processing task, is_child = 0
+0.36.014.053 I slot print_timing: id  0 | task 407 | prompt eval time =      92.17 ms /     4 tokens (   23.04 ms per token,    43.40 tokens per second)
+0.36.014.056 I slot print_timing: id  0 | task 407 |        eval time =     656.11 ms /    61 tokens (   10.94 ms per token,    91.45 tokens per second)
+0.36.014.057 I slot print_timing: id  0 | task 407 |       total time =     748.27 ms /    65 tokens
+0.36.014.058 I slot print_timing: id  0 | task 407 |    graphs reused =        161
+0.36.014.065 I slot print_timing: id  0 | task 407 | draft acceptance = 0.40000 (   42 accepted /   105 generated), mean len =  5.20
+0.36.014.114 I slot      release: id  0 | task 407 | stop processing: n_tokens = 388, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 1027 "curl/8.18.0" 751.242423ms
+0.36.028.829 I slot get_availabl: id  0 | task -1 | selected slot by LCP similarity, f_sim_best = 0.606 (> 0.100 thold), f_keep = 0.103
+0.36.121.371 I slot launch_slot_: id  0 | task 427 | processing task, is_child = 0
+0.37.581.075 I slot print_timing: id  0 | task 427 | prompt eval time =     192.72 ms /    66 tokens (    2.92 ms per token,   342.46 tokens per second)
+0.37.581.078 I slot print_timing: id  0 | task 427 |        eval time =    1266.86 ms /    78 tokens (   16.45 ms per token,    60.78 tokens per second)
+0.37.581.078 I slot print_timing: id  0 | task 427 |       total time =    1459.58 ms /   144 tokens
+0.37.581.079 I slot print_timing: id  0 | task 427 |    graphs reused =        183
+0.37.581.087 I slot print_timing: id  0 | task 427 | draft acceptance = 0.79070 (   34 accepted /    43 generated), mean len =  2.70
+0.37.581.121 I slot      release: id  0 | task 427 | stop processing: n_tokens = 145, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 1097 "curl/8.18.0" 1.554313145s
+0.37.596.864 I slot get_availabl: id  0 | task -1 | selected slot by LCP similarity, f_sim_best = 1.000 (> 0.100 thold), f_keep = 0.455
+0.37.686.534 I slot launch_slot_: id  0 | task 476 | processing task, is_child = 0
+[INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 36.92µs
+0.40.783.277 I slot print_timing: id  0 | task 476 | n_gen =    161, tg =  53.26 t/s, tg_3s =  53.59 t/s
+0.43.130.266 I slot print_timing: id  0 | task 476 | prompt eval time =      92.21 ms /     4 tokens (   23.05 ms per token,    43.38 tokens per second)
+0.43.130.270 I slot print_timing: id  0 | task 476 |        eval time =    5351.49 ms /   300 tokens (   17.90 ms per token,    55.87 tokens per second)
+0.43.130.270 I slot print_timing: id  0 | task 476 |       total time =    5443.71 ms /   304 tokens
+0.43.130.271 I slot print_timing: id  0 | task 476 |    graphs reused =        278
+0.43.130.281 I slot print_timing: id  0 | task 476 | draft acceptance = 0.49537 (  107 accepted /   216 generated), mean len =  2.47
+0.43.130.323 I slot      release: id  0 | task 476 | stop processing: n_tokens = 365, truncated = 0
+[INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 2131 "curl/8.18.0" 5.535533326s

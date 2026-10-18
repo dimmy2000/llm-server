@@ -1,0 +1,28 @@
+usage: /opt/ninfer/bin/ninfer-serve <model.ninfer> [--host H] [--port N] [--api-key KEY] [--model-id ID] [--max-context N] [--kv-capacity N|auto] [--max-concurrency N] [--max-pending-requests N] [--pending-timeout-ms N] [--prefill-chunk N] [--log-stats-interval-ms N] [--device N] [--tp 1|2 --devices A,B] [--context-cost-presets FILE] [--max-request-mib N] [--media-cache-mib N] [--media-live-mib N] [--media-preprocess-threads N] [--device-state-slots N] [--host-state-slots N] [--host-kv-mib N] [--max-private-continuations N] [--max-shared-prefixes N] [--max-long-anchors-per-continuation N] [--turn-anchors N] [--request-log-jsonl FILE] [--log-speculation-detail] [--log-speculation-detail-max-steps N] [--response-store-max-records N] [--response-store-max-mib N] [--kv-dtype bf16|int8|fp8|nvfp4|k8v4] [--spec mtp|dflash|dflash2 --draft-tokens N] [--default-max-tokens N] [--default-thinking-budget N] [--vision] [--vision-device N] [--max-vision-tokens N] [--no-cuda-graph] [--no-tp-mailbox] [--embedding-host] [--no-prefix-reuse] [--chat-template FILE] [--lm-head-draft] [--no-thinking] [--preserve-thinking] [--cors] [--temperature F] [--top-p F] [--top-k N] [--min-p F] [--presence-penalty F] [--frequency-penalty F] [--seed N] [--greedy]
+       [--log-level trace|debug|info|warning|error|critical|off]
+       serves OpenAI Responses/Chat Completions and Anthropic Messages endpoints
+       --default-max-tokens defaults to 8192 when omitted
+       --max-request-mib defaults to 384 and is enforced before JSON parsing
+       --media-cache-mib defaults to 1024; 0 disables retained media reuse
+       --media-live-mib defaults to 2048 and bounds all live BF16 patch payloads
+       --media-preprocess-threads defaults to 0 (auto, at most 16 workers)
+       --request-log-jsonl appends full-precision server/request records
+       --log-speculation-detail adds the per-step accepted draft lengths and the output/prompt 4-gram overlap to every request_done record (requires --request-log-jsonl; off by default);
+       --log-speculation-detail-max-steps caps them per request (default 4096, at most 1048576; longer requests are marked truncated)
+       --model-id overrides the artifact metadata.name reported by the server
+       Responses state is process-local and bounded to 1024 records / 256 MiB by default
+       --log-stats-interval-ms defaults to 5000; 0 disables periodic throughput logs
+       --vision enables media and loads the fixed Vision GPU allocations
+       --vision-device selects the CUDA device that holds the Vision tower and encodes (default: rank 0's); it must equal --device on one GPU and be one of --devices with --tp 2, where the other GPU only receives the encoded embeddings
+       --max-vision-tokens caps the merged Vision tokens of one image or video item (64-16384, default 16384): larger media are resized and the encode workspace is planned for N
+       --kv-capacity auto leaves 1024 MiB of sizing headroom; --vram-headroom-mib N changes that margin (requires auto)
+       --no-prefix-reuse disables compatible-prefix caching (enabled by default)
+       context cache defaults: device-state=max-concurrency, private=2x concurrency, shared=max(max-concurrency,4), anchors=2; Host state=8 slots, Host KV=8192 MiB
+       --tp 2 --devices A,B splits the dense model across two GPUs (rank 0 on A) for ordinary, --spec mtp or --spec dflash2 --lm-head-draft decoding, with or without --vision, with bf16, int8 or nvfp4 KV; it defaults device-state to max(2x concurrency,8), private to max(2x concurrency,8) and the Host tiers to 0
+       --no-tp-mailbox keeps the captured --tp 2 all-reduces on cross-device copies
+       --embedding-host keeps the token embedding table in one copy in pinned host memory that every GPU reads in place over PCIe, instead of one copy per GPU: frees the table's VRAM (1.18 GiB per GPU on Qwen3.8-27B) for the KV pool, identical results
+       --device-state-slots is extra checkpoint capacity beyond active lanes; --host-kv-mib uses MiB
+       --default-thinking-budget caps model-origin thinking for enabled requests; control tokens count toward the request output limit
+       --preserve-thinking retains closed-turn assistant reasoning in later prompts
+       sampler defaults come from the loaded model and resolved thinking mode; server flags and request fields override individual values.
+       --greedy forces temperature 0 (exact argmax).

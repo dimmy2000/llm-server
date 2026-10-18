@@ -1,0 +1,28 @@
+# Тестовый конфиг: сквозная проверка «единый ID -> выбранный backend».
+# proxy смотрит на fake_backend.py; useModelName обязателен для NInfer
+# (request.model должен совпасть с --model-id).
+healthCheckTimeout: 30
+logLevel: warn
+models:
+  backend-llama:
+    name: "llama.cpp"
+    cmd: "sleep 3600"
+    checkEndpoint: none
+    useModelName: qwen3.8-27b
+    proxy: "http://127.0.0.1:19001"
+  backend-ninfer:
+    name: "NInfer"
+    cmd: "sleep 3600"
+    checkEndpoint: none
+    useModelName: qwen3.8-27b
+    proxy: "http://127.0.0.1:19002"
+profiles:
+  llama:
+    pins:
+      qwen3.8-27b: backend-llama
+  ninfer:
+    pins:
+      qwen3.8-27b: backend-ninfer
+  disabled:
+    pins:
+      qwen3.8-27b: ~

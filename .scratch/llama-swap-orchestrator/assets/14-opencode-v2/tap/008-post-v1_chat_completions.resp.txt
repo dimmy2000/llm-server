@@ -1,0 +1,26 @@
+HTTP 200 OK
+Cache-Control: no-cache
+Content-Type: text/event-stream
+X-Accel-Buffering: no
+X-Request-Id: req_6d80d60c9350293a3a554139c1c88a4a
+Date: Sat, 17 Oct 2026 18:25:03 GMT
+Transfer-Encoding: chunked
+
+data: {"choices":[{"delta":{"content":"","role":"assistant"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792261503,"id":"chatcmpl-34ac865133dfe84f","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":"The"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792261503,"id":"chatcmpl-34ac865133dfe84f","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":" user is asking to"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792261503,"id":"chatcmpl-34ac865133dfe84f","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":" reply with exactly \"OK-MEDIUM\"."},"finish_reason":null,"index":0,"logprobs":null}],"created":1792261503,"id":"chatcmpl-34ac865133dfe84f","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"reasoning_content":"\n"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792261503,"id":"chatcmpl-34ac865133dfe84f","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{"content":"OK-MEDIUM"},"finish_reason":null,"index":0,"logprobs":null}],"created":1792261503,"id":"chatcmpl-34ac865133dfe84f","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[{"delta":{},"finish_reason":"stop","index":0,"logprobs":null}],"created":1792261503,"id":"chatcmpl-34ac865133dfe84f","model":"qwen3.8-27b","object":"chat.completion.chunk","usage":null}
+
+data: {"choices":[],"created":1792261503,"id":"chatcmpl-34ac865133dfe84f","model":"qwen3.8-27b","object":"chat.completion.chunk","timings":{"cache_n":0,"draft_n":21,"draft_n_accepted":16,"predicted_ms":63.882709999999996,"predicted_n":20,"predicted_per_second":297.42006874786625,"predicted_per_token_ms":3.362247894736842,"prompt_ms":1003.584285,"prompt_n":5472,"prompt_per_second":5452.456840732614,"prompt_per_token_ms":0.18340356085526316},"usage":{"completion_tokens":20,"completion_tokens_details":{"reasoning_tokens":15},"prompt_tokens":5472,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":5492}}
+
+data: [DONE]
+

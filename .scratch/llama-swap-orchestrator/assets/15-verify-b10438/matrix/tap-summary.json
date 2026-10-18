@@ -1,0 +1,454 @@
+[
+  {
+    "id": "001-post-v1_chat_completions",
+    "request": {
+      "model": "qwen3.8-27b",
+      "stream": true,
+      "reasoning_effort": "<отсутствует>",
+      "chat_template_kwargs": {
+        "enable_thinking": false
+      },
+      "tools_count": "нет поля tools",
+      "tool_names": [],
+      "tool_choice": "<отсутствует>",
+      "sampling": {},
+      "messages_count": 2
+    },
+    "response": {
+      "reasoning_nonempty": false,
+      "reasoning_chars": 0,
+      "reasoning_chunks": 0,
+      "tool_calls": [],
+      "text": "Read notes.txt and multiply",
+      "error": null
+    },
+    "meta": "started=1792262207.210 finished=1792262207.803 duration=0.593s status=200"
+  },
+  {
+    "id": "002-post-v1_chat_completions",
+    "request": {
+      "model": "qwen3.8-27b",
+      "stream": true,
+      "reasoning_effort": "<отсутствует>",
+      "chat_template_kwargs": {
+        "enable_thinking": false
+      },
+      "tools_count": "нет поля tools",
+      "tool_names": [],
+      "tool_choice": "<отсутствует>",
+      "sampling": {},
+      "messages_count": 2
+    },
+    "response": {
+      "reasoning_nonempty": false,
+      "reasoning_chars": 0,
+      "reasoning_chunks": 0,
+      "tool_calls": [],
+      "text": "<tool_call>\n<function=read_file>\n<parameter=limit>\n100\n</parameter>\n<parameter=offset>\n1\n</parameter>\n<parameter=path>\n./notes.txt\n</parameter>\n</function>\n</tool_call>",
+      "error": null
+    },
+    "meta": "started=1792262207.216 finished=1792262208.654 duration=1.438s status=200"
+  },
+  {
+    "id": "003-post-v1_chat_completions",
+    "request": {
+      "model": "qwen3.8-27b",
+      "stream": true,
+      "reasoning_effort": "<отсутствует>",
+      "chat_template_kwargs": {
+        "reasoning_effort": "low"
+      },
+      "tools_count": "нет поля tools",
+      "tool_names": [],
+      "tool_choice": "<отсутствует>",
+      "sampling": {},
+      "messages_count": 2
+    },
+    "response": {
+      "reasoning_nonempty": true,
+      "reasoning_chars": 389,
+      "reasoning_chunks": 100,
+      "tool_calls": [],
+      "text": "notes.txt value × 137 calculation",
+      "error": null
+    },
+    "meta": "started=1792262209.014 finished=1792262210.918 duration=1.904s status=200"
+  },
+  {
+    "id": "004-post-v1_chat_completions",
+    "request": {
+      "model": "qwen3.8-27b",
+      "stream": true,
+      "reasoning_effort": "<отсутствует>",
+      "chat_template_kwargs": {
+        "reasoning_effort": "low"
+      },
+      "tools_count": "нет поля tools",
+      "tool_names": [],
+      "tool_choice": "<отсутствует>",
+      "sampling": {},
+      "messages_count": 2
+    },
+    "response": {
+      "reasoning_nonempty": true,
+      "reasoning_chars": 134,
+      "reasoning_chunks": 37,
+      "tool_calls": [],
+      "text": "<tool_call>\n<function=read>\n<parameter=limit>\n100\n</parameter>\n<parameter=offset>\n0\n</parameter>\n<parameter=path>\nnotes.txt\n</parameter>\n</function>\n</tool_call>",
+      "error": null
+    },
+    "meta": "started=1792262209.020 finished=1792262212.382 duration=3.362s status=200"
+  },
+  {
+    "id": "005-post-v1_chat_completions",
+    "request": {
+      "model": "qwen3.8-27b",
+      "stream": true,
+      "reasoning_effort": "<отсутствует>",
+      "chat_template_kwargs": {
+        "reasoning_effort": "medium"
+      },
+      "tools_count": "нет поля tools",
+      "tool_names": [],
+      "tool_choice": "<отсутствует>",
+      "sampling": {},
+      "messages_count": 2
+    },
+    "response": {
+      "reasoning_nonempty": true,
+      "reasoning_chars": 219,
+      "reasoning_chunks": 48,
+      "tool_calls": [],
+      "text": "Reading notes.txt for multiplication",
+      "error": null
+    },
+    "meta": "started=1792262212.726 finished=1792262213.840 duration=1.115s status=200"
+  },
+  {
+    "id": "006-post-v1_chat_completions",
+    "request": {
+      "model": "qwen3.8-27b",
+      "stream": true,
+      "reasoning_effort": "<отсутствует>",
+      "chat_template_kwargs": {
+        "reasoning_effort": "medium"
+      },
+      "tools_count": "нет поля tools",
+      "tool_names": [],
+      "tool_choice": "<отсутствует>",
+      "sampling": {},
+      "messages_count": 2
+    },
+    "response": {
+      "reasoning_nonempty": true,
+      "reasoning_chars": 804,
+      "reasoning_chunks": 206,
+      "tool_calls": [],
+      "text": "<tool_call>\n<function=Read>\n<parameter=file_path>\n/tmp/opencode/oc-work-15/notes.txt\n</parameter>\n</function>\n</tool_call>",
+      "error": null
+    },
+    "meta": "started=1792262212.732 finished=1792262217.879 duration=5.147s status=200"
+  },
+  {
+    "id": "007-post-v1_chat_completions",
+    "request": {
+      "model": "qwen3.8-27b",
+      "stream": true,
+      "reasoning_effort": "<отсутствует>",
+      "chat_template_kwargs": {
+        "reasoning_effort": "xhigh"
+      },
+      "tools_count": "нет поля tools",
+      "tool_names": [],
+      "tool_choice": "<отсутствует>",
+      "sampling": {},
+      "messages_count": 2
+    },
+    "response": {
+      "reasoning_nonempty": true,
+      "reasoning_chars": 761,
+      "reasoning_chunks": 193,
+      "tool_calls": [],
+      "text": "Multiply notes.txt value by 137",
+      "error": null
+    },
+    "meta": "started=1792262218.242 finished=1792262221.690 duration=3.447s status=200"
+  },
+  {
+    "id": "008-post-v1_chat_completions",
+    "request": {
+      "model": "qwen3.8-27b",
+      "stream": true,
+      "reasoning_effort": "<отсутствует>",
+      "chat_template_kwargs": {
+        "reasoning_effort": "xhigh"
+      },
+      "tools_count": "нет поля tools",
+      "tool_names": [],
+      "tool_choice": "<отсутствует>",
+      "sampling": {},
+      "messages_count": 2
+    },
+    "response": {
+      "reasoning_nonempty": true,
+      "reasoning_chars": 160,
+      "reasoning_chunks": 41,
+      "tool_calls": [],
+      "text": "<tool_call>\n<function=Read>\n<parameter=file_path>\n./notes.txt\n</parameter>\n</function>\n</tool_call>",
+      "error": null
+    },
+    "meta": "started=1792262218.248 finished=1792262222.919 duration=4.671s status=200"
+  },
+  {
+    "id": "009-post-v1_chat_completions",
+    "request": {
+      "model": "qwen3.8-27b",
+      "stream": true,
+      "reasoning_effort": "<отсутствует>",
+      "chat_template_kwargs": {
+        "enable_thinking": false
+      },
+      "tools_count": "нет поля tools",
+      "tool_names": [],
+      "tool_choice": "<отсутствует>",
+      "sampling": {},
+      "messages_count": 2
+    },
+    "response": {
+      "reasoning_nonempty": false,
+      "reasoning_chars": 0,
+      "reasoning_chunks": 0,
+      "tool_calls": [],
+      "text": "Read notes.txt",
+      "error": null
+    },
+    "meta": "started=1792262223.276 finished=1792262223.547 duration=0.271s status=200"
+  },
+  {
+    "id": "010-post-v1_chat_completions",
+    "request": {
+      "model": "qwen3.8-27b",
+      "stream": true,
+      "reasoning_effort": "<отсутствует>",
+      "chat_template_kwargs": {
+        "enable_thinking": false
+      },
+      "tools_count": 12,
+      "tool_names": [
+        "edit",
+        "glob",
+        "grep",
+        "question",
+        "read",
+        "shell",
+        "skill",
+        "subagent",
+        "webfetch",
+        "websearch",
+        "write",
+        "execute"
+      ],
+      "tool_choice": "<отсутствует>",
+      "sampling": {},
+      "messages_count": 2
+    },
+    "response": {
+      "reasoning_nonempty": false,
+      "reasoning_chars": 0,
+      "reasoning_chunks": 0,
+      "tool_calls": [
+        "read"
+      ],
+      "text": "",
+      "error": null
+    },
+    "meta": "started=1792262223.293 finished=1792262226.003 duration=2.709s status=200"
+  },
+  {
+    "id": "011-post-v1_chat_completions",
+    "request": {
+      "model": "qwen3.8-27b",
+      "stream": true,
+      "reasoning_effort": "<отсутствует>",
+      "chat_template_kwargs": {
+        "enable_thinking": false
+      },
+      "tools_count": 12,
+      "tool_names": [
+        "edit",
+        "glob",
+        "grep",
+        "question",
+        "read",
+        "shell",
+        "skill",
+        "subagent",
+        "webfetch",
+        "websearch",
+        "write",
+        "execute"
+      ],
+      "tool_choice": "<отсутствует>",
+      "sampling": {},
+      "messages_count": 4
+    },
+    "response": {
+      "reasoning_nonempty": false,
+      "reasoning_chars": 0,
+      "reasoning_chunks": 0,
+      "tool_calls": [],
+      "text": "57403",
+      "error": null
+    },
+    "meta": "started=1792262226.024 finished=1792262226.305 duration=0.280s status=200"
+  },
+  {
+    "id": "012-post-v1_chat_completions",
+    "request": {
+      "model": "qwen3.8-27b",
+      "stream": true,
+      "reasoning_effort": "<отсутствует>",
+      "chat_template_kwargs": {
+        "reasoning_effort": "medium"
+      },
+      "tools_count": "нет поля tools",
+      "tool_names": [],
+      "tool_choice": "<отсутствует>",
+      "sampling": {},
+      "messages_count": 2
+    },
+    "response": {
+      "reasoning_nonempty": true,
+      "reasoning_chars": 524,
+      "reasoning_chunks": 141,
+      "tool_calls": [],
+      "text": "notes.txt number × 137 calculation",
+      "error": null
+    },
+    "meta": "started=1792262226.670 finished=1792262228.949 duration=2.278s status=200"
+  },
+  {
+    "id": "013-post-v1_chat_completions",
+    "request": {
+      "model": "qwen3.8-27b",
+      "stream": true,
+      "reasoning_effort": "<отсутствует>",
+      "chat_template_kwargs": {
+        "reasoning_effort": "medium"
+      },
+      "tools_count": 12,
+      "tool_names": [
+        "edit",
+        "glob",
+        "grep",
+        "question",
+        "read",
+        "shell",
+        "skill",
+        "subagent",
+        "webfetch",
+        "websearch",
+        "write",
+        "execute"
+      ],
+      "tool_choice": "<отсутствует>",
+      "sampling": {},
+      "messages_count": 2
+    },
+    "response": {
+      "reasoning_nonempty": true,
+      "reasoning_chars": 88,
+      "reasoning_chunks": 23,
+      "tool_calls": [
+        "read"
+      ],
+      "text": "",
+      "error": null
+    },
+    "meta": "started=1792262226.678 finished=1792262230.050 duration=3.372s status=200"
+  },
+  {
+    "id": "014-post-v1_chat_completions",
+    "request": {
+      "model": "qwen3.8-27b",
+      "stream": true,
+      "reasoning_effort": "<отсутствует>",
+      "chat_template_kwargs": {
+        "reasoning_effort": "medium"
+      },
+      "tools_count": 12,
+      "tool_names": [
+        "edit",
+        "glob",
+        "grep",
+        "question",
+        "read",
+        "shell",
+        "skill",
+        "subagent",
+        "webfetch",
+        "websearch",
+        "write",
+        "execute"
+      ],
+      "tool_choice": "<отсутствует>",
+      "sampling": {},
+      "messages_count": 4
+    },
+    "response": {
+      "reasoning_nonempty": true,
+      "reasoning_chars": 137,
+      "reasoning_chunks": 113,
+      "tool_calls": [],
+      "text": "57403",
+      "error": null
+    },
+    "meta": "started=1792262230.071 finished=1792262231.409 duration=1.338s status=200"
+  },
+  {
+    "id": "015-post-v1_chat_completions",
+    "request": {
+      "model": "qwen3.8-27b",
+      "stream": true,
+      "reasoning_effort": "<отсутствует>",
+      "chat_template_kwargs": "<отсутствует>",
+      "tools_count": "нет поля tools",
+      "tool_names": [],
+      "tool_choice": "<отсутствует>",
+      "sampling": {},
+      "messages_count": 2
+    },
+    "response": {
+      "reasoning_nonempty": true,
+      "reasoning_chars": 1126,
+      "reasoning_chunks": 352,
+      "tool_calls": [],
+      "text": "notes.txt value times 137",
+      "error": null
+    },
+    "meta": "started=1792262231.763 finished=1792262237.135 duration=5.373s status=200"
+  },
+  {
+    "id": "016-post-v1_chat_completions",
+    "request": {
+      "model": "qwen3.8-27b",
+      "stream": true,
+      "reasoning_effort": "<отсутствует>",
+      "chat_template_kwargs": "<отсутствует>",
+      "tools_count": "нет поля tools",
+      "tool_names": [],
+      "tool_choice": "<отсутствует>",
+      "sampling": {},
+      "messages_count": 2
+    },
+    "response": {
+      "reasoning_nonempty": true,
+      "reasoning_chars": 592,
+      "reasoning_chunks": 153,
+      "tool_calls": [],
+      "text": "<tool>\n<tool_name>execute</tool>\n<command>cat ./notes.txt</command>\n</tool>",
+      "error": null
+    },
+    "meta": "started=1792262231.777 finished=1792262240.251 duration=8.474s status=200"
+  }
+]

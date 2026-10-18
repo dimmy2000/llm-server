@@ -1,0 +1,26 @@
+217513:chat_template_kwargs
+217514:conflicting_template_option
+217529:temperature must be in [0,2]
+217605:top_k must be in [0,20]
+217607:min_p must be in [0,1]
+217610:invalid_template_option
+217887:repetition_penalty
+217977:conflicting_cache_ttl
+217983:temperature must be in [0,1]
+219935:preserve_thinking must be a boolean or null
+219936:chat_template_kwargs must be an object
+219937:chat_template_kwargs.preserve_thinking must be a boolean or null
+219995:sampling parameters must be finite
+219996:presence_penalty must be in [-2,2]
+219997:frequency_penalty must be in [-2,2]
+219998:reasoning_effort must be a string
+220002:assistant prefill cannot be combined with enabled thinking
+220081:repetition_penalty must be a number
+220082:repetition_penalty_not_supported
+220083:a non-neutral repetition_penalty requires a sampler transform that NInfer does not provide; only repetition_penalty=1 is accepted
+220101:reasoning_effort must be a string or null
+220102:reasoning_effort must be one of none, minimal, low, medium, high, xhigh, max, or adaptive
+220172:a final assistant prefill must contain only text
+220188:preserve_thinking must be a boolean
+220475:resolved top_k must be in [1,20]
+220539:chat_template_kwargs cannot override 

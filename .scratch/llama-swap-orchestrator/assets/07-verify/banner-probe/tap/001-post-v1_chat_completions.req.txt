@@ -1,0 +1,21 @@
+POST /v1/chat/completions HTTP/1.1
+Host: 127.0.0.1:8090
+User-Agent: curl/8.18.0
+Accept: */*
+Content-Type: application/json
+Content-Length: 162
+
+{
+  "model": "qwen3.8-27b",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Reply with only: ok"
+    }
+  ],
+  "max_tokens": 8,
+  "stream": true,
+  "chat_template_kwargs": {
+    "enable_thinking": false
+  }
+}

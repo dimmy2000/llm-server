@@ -1,0 +1,97 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mostlygeek/llama-swap/refs/heads/main/config-schema.json
+#
+# Профиль `ninfer`: llama-swap как маршрутизатор, NInfer TP=2 как движок.
+# Параметры движка задаются здесь и только здесь.
+
+healthCheckTimeout: 600
+logLevel: info
+logToStdout: both
+sendLoadingState: true
+includeAliasesInList: true
+
+# Единственная модель запускается llama-swap как дочерний процесс ninfer.
+# Модель прелоадится при старте: переключать нечего, поэтому первый запрос не
+# ждёт чтения весов с диска.
+hooks:
+  on_startup:
+    preload:
+      - qwen3.8-27b
+
+models:
+  qwen3.8-27b:
+    name: "qwen3.8-27b (NInfer TP=2, DFlash2, nvfp4 KV, 262144 ctx, 2 lanes)"
+    cmd: |
+      /opt/ninfer/bin/ninfer-serve
+      /models/Qwen3.8-27B-nvfp4-DFlash2NV-MTPNV-NInfer/qwen3_8_27b_nvfp4.ninfer
+      --host 127.0.0.1
+      --port ${PORT}
+      --model-id qwen3.8-27b
+      --tp 2
+      --devices 0,1
+      --kv-dtype nvfp4
+      --max-context 262144
+      --kv-capacity auto
+      --vram-headroom-mib 640
+      --max-concurrency 2
+      --device-state-slots 4
+      --spec dflash2
+      --draft-tokens 7
+      --lm-head-draft
+      --vision
+      --vision-device 0
+      --max-vision-tokens 4096
+      --embedding-host
+      --default-max-tokens 16384
+      --pending-timeout-ms 600000
+    # ninfer-serve отклоняет запрос, если request.model != --model-id, поэтому
+    # llama-swap обязан переписывать имя модели для всех алиасов режимов.
+    useModelName: qwen3.8-27b
+    capabilities:
+      in:
+        - text
+        - image
+      out:
+        - text
+      tools: true
+      context: 262144
+    filters:
+      # NInfer сам выбирает пресет сэмплирования по режиму thinking, который
+      # выводится из reasoning_effort: none -> 0.7/0.80/20/0/1.5,
+      # иначе -> 1.0/0.95/20/0/0. Клиентские sampling-параметры отбрасываются,
+      # иначе они ломают инварианты пресета.
+      stripParams: "temperature, top_p, top_k, min_p, presence_penalty, frequency_penalty, repetition_penalty"
+      setParamsByID:
+        # Режим 1: быстрые ответы без thinking
+        "qwen3.8-27b":
+          reasoning_effort: "none"
+
+        # Режим 2: чат с thinking, reasoning скрыт (preserve off), effort low
+        "qwen3.8-27b-chat-low":
+          reasoning_effort: "low"
+          chat_template_kwargs:
+            preserve_thinking: false
+        # Режим 3: чат с thinking, reasoning скрыт (preserve off), effort medium
+        "qwen3.8-27b-chat-medium":
+          reasoning_effort: "medium"
+          chat_template_kwargs:
+            preserve_thinking: false
+        # Режим 4: чат с thinking, reasoning скрыт (preserve off), effort xhigh
+        "qwen3.8-27b-chat-xhigh":
+          reasoning_effort: "xhigh"
+          chat_template_kwargs:
+            preserve_thinking: false
+        # Режим 5: агент, thinking возвращается (preserve on), effort low
+        "qwen3.8-27b-agent-low":
+          reasoning_effort: "low"
+          chat_template_kwargs:
+            preserve_thinking: true
+        # Режим 6: агент, thinking возвращается (preserve on), effort medium
+        "qwen3.8-27b-agent-medium":
+          reasoning_effort: "medium"
+          chat_template_kwargs:
+            preserve_thinking: true
+        # Режим 7: агент, thinking возвращается (preserve on), effort xhigh
+        "qwen3.8-27b-agent-xhigh":
+          reasoning_effort: "xhigh"
+          chat_template_kwargs:
+            preserve_thinking: true

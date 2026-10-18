@@ -1,0 +1,2 @@
+GPU0 min free MiB: 1199
+GPU1 min free MiB: 710

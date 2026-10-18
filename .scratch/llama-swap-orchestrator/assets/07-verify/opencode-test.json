@@ -1,0 +1,35 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "self-hosted/qwen3.8-27b",
+  "agents": {
+    "tools-on": {
+      "description": "All tools allowed (default tool set)"
+    },
+    "tools-off": {
+      "description": "No tools at all",
+      "permissions": [{ "action": "*", "resource": "*", "effect": "deny" }]
+    }
+  },
+  "providers": {
+    "self-hosted": {
+      "name": "Self Hosted (single public ID)",
+      "package": "@opencode/ai/providers/openai-compatible",
+      "settings": {
+        "baseURL": "http://127.0.0.1:8090/v1"
+      },
+      "models": {
+        "qwen3.8-27b": {
+          "name": "Qwen 3.8 27B (single public ID)",
+          "compatibility": { "reasoningField": "reasoning_content" },
+          "limit": { "context": 262144, "output": 16384 },
+          "variants": [
+            { "id": "off", "body": { "chat_template_kwargs": { "enable_thinking": false } } },
+            { "id": "low", "body": { "chat_template_kwargs": { "reasoning_effort": "low" } } },
+            { "id": "medium", "body": { "chat_template_kwargs": { "reasoning_effort": "medium" } } },
+            { "id": "xhigh", "body": { "chat_template_kwargs": { "reasoning_effort": "xhigh" } } }
+          ]
+        }
+      }
+    }
+  }
+}

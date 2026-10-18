@@ -1,0 +1,5 @@
+# Versions
+opencode: 1.18.35  (/home/dimmy/.opencode/bin/opencode)
+bundled @ai-sdk/openai-compatible (from packages/opencode/package.json@v1.18.35): 2.0.41
+bundled providers: see BUNDLED_PROVIDERS in packages/opencode/src/provider/provider.ts:158
+local ~/.config/opencode/node_modules/@ai-sdk/: only 'provider' present -> openai-compatible is BUNDLED, not locally installed

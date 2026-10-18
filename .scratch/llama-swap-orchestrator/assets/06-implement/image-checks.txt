@@ -1,0 +1,18 @@
+== llama-swap --version
+version: v265 (d1e743f), built at 2026-10-14T08:30:34Z
+== llama-server --version
+version: 10068 (571d0d540)
+built with GNU 14.2.0 for Linux x86_64
+== router config -validate (mounted, как в compose)
+config is valid: 2 model(s), 0 peer(s)
+== ninfer-serve ldd с пер-модельным LD_LIBRARY_PATH
+	libcuda.so.1 => not found
+	libavcodec.so.62 => /usr/lib/x86_64-linux-gnu/libavcodec.so.62 (0x00007a16dfb33000)
+	libcudart.so.13 => /opt/ninfer/lib/libcudart.so.13 (0x00007a16de400000)
+== glibc (исправлено ниже)
+== sizes
+226M	/app
+1.7G	/usr/local/cuda-13.3
+782M	/opt/ninfer
+glibc 2.43
+Ubuntu 26.04.1 LTS

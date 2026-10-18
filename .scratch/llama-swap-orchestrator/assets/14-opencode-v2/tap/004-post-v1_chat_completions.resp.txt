@@ -1,0 +1,7 @@
+HTTP 200 OK
+Content-Length: 759
+Content-Type: application/json
+X-Request-Id: req_d706a7e6d0218bfcde4414ba4d905b4a
+Date: Sat, 17 Oct 2026 18:23:57 GMT
+
+{"choices":[{"finish_reason":"length","index":0,"logprobs":null,"message":{"content":"","reasoning_content":"We need to respond to user: \"Say OK","refusal":null,"role":"assistant"}}],"created":1792261437,"id":"chatcmpl-4658ad0e51dc6612","model":"qwen3.8-27b","object":"chat.completion","timings":{"cache_n":0,"draft_n":7,"draft_n_accepted":7,"predicted_ms":39.243485,"predicted_n":10,"predicted_per_second":229.33743014923368,"predicted_per_token_ms":4.360387222222222,"prompt_ms":90.35694099999999,"prompt_n":54,"prompt_per_second":597.6297935982583,"prompt_per_token_ms":1.673276685185185},"usage":{"completion_tokens":10,"completion_tokens_details":{"reasoning_tokens":10},"prompt_tokens":54,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":64}}
