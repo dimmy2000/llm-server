@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/mostlygeek/llama-swap/refs/heads/main/config-schema.json
 #
-# backend-llama — llama.cpp b10068 как дочерний процесс llama-swap.
+# backend-llama — llama.cpp b10438 как дочерний процесс llama-swap.
 # Параметры ядра задаются здесь и только здесь; sampling-пресет — CLI-флаги
 # (thinking-пресет, совпадающий с thinking-пресетом NInfer), поля запроса его
 # перекрывают. См. router/config.yaml (пины, профили) и ADR-0006.

@@ -1,9 +1,9 @@
-# Единый образ-оркестратор: llama-swap v265 + два движка (llama.cpp b10068,
+# Единый образ-оркестратор: llama-swap v265 + два движка (llama.cpp b10438,
 # NInfer TP=2 v0.4.6).
 #
 # База — ubuntu:26.04: готовые бинарники ninfer-tp2 собраны под glibc 2.42 /
 # FFmpeg 8 (libavcodec62). Бинарники и CUDA-библиотеки llama.cpp копируются
-# из запиненного образа ghcr.io/ggml-org/llama.cpp:server-cuda13-b10068
+# из запиненного образа ghcr.io/ggml-org/llama.cpp:server-cuda13-b10438
 # (Ubuntu 24.04 + CUDA 13.3, бинарники в /app). llama-swap — запиненный
 # релиз v265; бинарник и тарбол NInfer проверяются по SHA-256 при сборке.
 #
@@ -32,11 +32,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libcurl4t64 \
     && rm -rf /var/lib/apt/lists/*
 
-# llama.cpp b10068 (пин тикета «Выбор версии образа llama-swap»): индекс
-# ghcr.io/ggml-org/llama.cpp:server-cuda13-b10068@sha256:6447a865…708e,
-# amd64-ребёнок sha256:1c0cc37e…4fea.
-COPY --from=ghcr.io/ggml-org/llama.cpp:server-cuda13-b10068@sha256:6447a865bd031283c5f66ff2a82984cdb282ec37484cf2a9bfc7b4cb1f85708e /app /app
-COPY --from=ghcr.io/ggml-org/llama.cpp:server-cuda13-b10068@sha256:6447a865bd031283c5f66ff2a82984cdb282ec37484cf2a9bfc7b4cb1f85708e /usr/local/cuda-13.3/lib64 /usr/local/cuda-13.3/lib64
+# llama.cpp b10438 (пин тикета 11, бамп с b10068 тикета «Выбор версии образа
+# llama-swap»): первая публикация образа cuda13 с обработкой OAI
+# `reasoning_effort` — b10121 (`none` выключает thinking) + b10434 (остальные
+# значения уходят в шаблон как `chat_template_kwargs.reasoning_effort`).
+# База та же (CUDA 13.3), поэтому путь к библиотекам не меняется; с b11706
+# ggml-org перешёл на CUDA 13.4 и путь стал бы /usr/local/cuda-13.4/lib64.
+# Индекс образа ghcr.io/ggml-org/llama.cpp:server-cuda13-b10438@sha256:bb81f3e4…6283,
+# amd64-ребёнок sha256:551298ae…564e.
+COPY --from=ghcr.io/ggml-org/llama.cpp:server-cuda13-b10438@sha256:bb81f3e4ef93697f025156849e55b8d6a92ef10b7cae3460bf0cf8a4d6ea6283 /app /app
+COPY --from=ghcr.io/ggml-org/llama.cpp:server-cuda13-b10438@sha256:bb81f3e4ef93697f025156849e55b8d6a92ef10b7cae3460bf0cf8a4d6ea6283 /usr/local/cuda-13.3/lib64 /usr/local/cuda-13.3/lib64
 
 # llama-swap v265: релизный бинарник (member llama-swap), проверяется по SHA-256.
 ARG LLAMA_SWAP_VERSION=v265
