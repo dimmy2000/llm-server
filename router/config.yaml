@@ -17,12 +17,30 @@
 healthCheckTimeout: 600   # максимум прежних 300 (llama) / 600 (ninfer); отсчёт сбрасывается на прогрессе загрузки
 logLevel: info
 logToStdout: both
-sendLoadingState: true
+# Баннер загрузки llama-swap стримит только в `delta.reasoning_content`
+# (internal/router/loading.go, sendData — канал зашит в код, настроить нельзя),
+# а потребители loading-state нет: monitoring-стек `reasoning_content` не
+# читает, opencode показал бы баннер как reasoning модели. Непустой
+# `reasoning_content` на первом запросе после смены профиля ломал бы контракт
+# «клиент управляет reasoning» — выключено (issues/13, ADR-0006). Плата:
+# первый запрос после переключения движка молчит 40–60 c (llama.cpp) без
+# in-stream индикатора.
+sendLoadingState: false
 
 # NInfer прелоадится на старте и активен по умолчанию: публичный ID есть сразу
 # после старта и не «мигает». Прелоад статичен и последователен, поэтому
 # второй движок не греется — переключение на llama.cpp платит 40–60 c первым
 # запросом. `globalTTL` не задаём (0 — движок не выгружается по простою).
+#
+# Ожидаемо в старте: `[ERROR] failed to preload model backend-ninfer: status
+# 404`. Прелоад llama-swap дёргает прокси `GET /` (api.go startPreload), а
+# ninfer-serve на `/` отвечает 404 — warmup-эндпоинта у движка нет. Это
+# косметика: сам прелоад запускает дочерний процесс и «Health check passed»
+# подтверждает прогрев; процесс не выгружается (TTL 0), ошибку никто не
+# потребляет (ModelPreloadedEvent без подписчиков). При этом `/v1/models`
+# всегда показывает `unloaded` для пин-записей (hardcode в handleListModels,
+# v265 api.go) — реальное состояние: `/api/profiles`, SSE `/api/events` или
+# `GET /health` upstream-порта. Разбор — issues/12, ADR-0006.
 hooks:
   on_startup:
     profile: ninfer
