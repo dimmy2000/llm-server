@@ -1,0 +1,92 @@
+# server-bootstrap.log IQ2_XS (окно 2026-10-18, все метки UTC)
+
+20:14:47Z baseline хоста: RAM avail 56988 MiB, swap used 716 MiB, GPU0 free 15919 MiB, GPU1 free 15187 MiB.
+watch.sh запущен → assets/IQ2_XS/watch.log, интервал 2 c. PID watch = 145227 (финализация: погасить).
+
+## Лествица потолка (prefill 4096, expert-cache 6800 стоят)
+
+20:16:12Z попытка 0 (смоук @32768, нативный конфиг): старт.
+20:16:26Z OK: READY ~12 c, health max_context 32768. Стартовая строка движка: «2070 MiB of VRAM free» (CUDA0), «CUDA1: 1708 MiB of VRAM free». STRATA_ROUTE_TAIL_SKIP=7 ON, adaptive overlap: off (layer split).
+20:16:35Z сервер остановлен; конфиг поднят на --max-context 131072 ( попытка 1 ).
+20:17:1?Z попытка 1 OK с первой: READY ~12 c, health max_context 131072. Стартовая строка: «1380 MiB of VRAM free» (CUDA0), «CUDA1: 1706 MiB of VRAM free» — обе ≥1 GiB → по протоколу поднимаем потолок.
+20:18:5?Z попытка 2 (@262144, cache 6800): старт OK ~12 c, health max_context 262144, НО стартовая строка «160 MiB of VRAM free» (CUDA0) — LOW, движок сам пишет «add --vram-reserve-mib 652 ... or lower --max-context»; критерий протокола (free ≥1 GiB на каждой карте) НЕ выполнен → понижаем expert-cache по лествице.
+20:19:1?Z сервер остановлен; попытка 3 (@262144, --expert-cache 5400): старт.
+20:20:0?Z попытка 3 ОК с cache 5400: READY ~12 c, health max_context 262144. Стартовая строка: «2176 MiB of VRAM free» (CUDA0), «CUDA1: 1706 MiB of VRAM free» — обе ≥1 GiB, без LOW/clamp.
+ИТОГ ЛЕСТВИЦЫ: финальный потолок IQ2_XS = 262144 (prefill 4096, expert-cache 5400, kv int8, draft cyrillic). Весь дальнейший прогон — на нём.
+20:20:4?Z сервер остановлен; калибровка ./setup.sh --calibrate --model IQ2_XS --yes (фон, синтаксис по --help).
+Консоль калибровки: /opt/strata/cal-iq2_xs-console.log; бэкап pre-cal: strata-iq2_xs.pre-cal.json.
+(движковый штамп финального калиброванного старта: 23:26:54 local = 20:26:54Z — калибровка ~6 мин)
+20:31:0?Z калибровка закончилась ~10 мин: потоковые измерения pcie-frac (мед 167.7 tok/s на 0.2),
+CPU-воркеры (лучший 15 → 163.4), expert-tier варианты: движковый дефолт 172.4, adaptive 1/80/0.97
+172.8, adaptive 1/160/0.97 174.9. Итог в конфиг записан: --pcie-frac 0.20 --spec-min-p 0.70
+(172.4 tok/s); ADAPTIVE-аргументы НЕ записаны (отличие от XXS/S — дефолтный expert-tier остался).
+Модель стартовала сама на 262144 (cache 5400 сохранён): READY ~20:31, стартовая строка
+«2176 MiB of VRAM free» (CUDA0), «CUDA1: 1706 MiB of VRAM free». STRATA_ROUTE_TAIL_SKIP=7 ON.
+
+## Сьюты
+20:26:5?Z bench.sh full запущен на калиброванном состоянии @262144 → assets/IQ2_XS/bench/full.
+~20:33Z done EXIT 0:
+  chat: decode мед 144.90 tok/s (135.6–189.3, n=9), TTFT 0.20 c (0.18–0.22)
+  4K: prefill 2698.2 tok/s (мед), TTFT 1.50 c
+  16K: prefill 4430.9 tok/s (16058 tok), TTFT 3.64 c
+  agent: hit 68.63 %, re-read 74 tok/сессия, turn TTFT 1.34 c, turn decode мед 154.70 (102.7–188.7),
+         last-turn prompt 14555 tok (reused 11656 + read 2899)
+  raw: assets/IQ2_XS/bench/full/2026-10-18-community-...-iq2-xs/README.md
+20:34Z bench.sh --long → assets/IQ2_XS/bench/32k-long; done ~20:35Z EXIT 0: 32K prefill 4886.5 tok/s (TTFT 6.59 c). (эталон: в 32k-прогоне chat decode 143.5, 16K 4413.2, agent 150.3 — согласуется)
+20:35:16Z gaps done: forced tool choice 200 (работает, tool_call get_weather); structured outputs+tools → 400
+  («structured response_format with tools/MCP is not supported»); json_schema БЕЗ tools → 200;
+  невалидный effort → 400 со словарём «none, low, medium or high»; xhigh 200; low 200. Профиль = XXS/S.
+  raw: gaps_raw.txt, свод: gaps.json.
+
+## Потолочный пробой
+20:35–20:36:40Z ceiling ×3 (ratio 0.90 @262144) done, pass=True. prompt 232118 tok (88.5 % потолка),
+  повтор 1 fresh: prefill 4571.7 tok/s (TTFT 50.9 c), decode 127.0 tok/s (engine 151.8);
+  повторы 2–3 reuse (TTFT 0.074 c), decode 136.4 / 139.1 (engine 162.7/165.7); gen 66 tok (EOS как у S-ceil);
+  VRAM min GPU0 2103 / GPU1 1611 MiB.
+
+20:37:0?Z longgen_xs.py (ratio 0.6 → целевой промпт ~157286, gen cap 4096, финальная инструкция
+  «не менее 3800 слов») запущен.
+20:37:49Z longgen done: 4096/4096 токенов @ **156.4 tok/s** wall (движок 159.7), промпт 157372 tok
+  (fresh read 141000, reused 16384), prefill 4635.0 tok/s, admission 2362/2885 = 81.9 %;
+  VRAM min GPU0 2103 / GPU1 1607 MiB (KV ~157k). ceiling-longgen.json — pass.
+
+## Multiturn
+20:37:5?–20:39:26Z multiturn (15 туров × 16000) done, pass. Промпт 16052 → 240258 tok (92 % потолка);
+  reuse каждый тур (read ~16009), TTFT 3.9→4.8 c (рост по контексту), VRAM min 2103/1607 MiB.
+  decode None с тура 3: ответы = 2 tok (EOS при temp 0 на filler-подтверждении) — артефакт данных
+  сценария (то же, что окно S туры 8–15), reuse-механика идеальна. Своп за сценарий: рост ~0 (точнее — в watch-аннотациях).
+
+## Agent-live
+20:40Z agent-live (opencode run --standalone, задача «проанализируй router-конфиг + ADR-0006»):
+  4 запроса — req1 14450 tok cold read @3394.6 tok/s (119 gen @163.4); req2 16832 = 14569 reused
+  + 2263 read (56 gen @176.6); req3 20678 = 16890 reused + 3788 read (44 gen @196.1);
+  req4 21565 = 20722 reused + 843 read, 995 generated @ 162.8 tok/s, admission 596/811 = 73.5 %.
+  Tool-вызовы корректны (Read ×4, Glob), отчёт качественный: публичный ID объявлен пинами профилей
+  (backend-* unlisted), stripParams repetition_penalty в обоих config.d, useModelName только на NInfer;
+  4 наблюдения по структуре (разделение слоёв, трих согласования имени, нормативные комментарии,
+  мелкое расхождение llama-NInfer пресетов). Файлы не изменял. sessionID не персистится (--standalone).
+  Side-запросы: до — 18 tok = 0 reused + 18 read; после — 18 tok = 0 reused + 18 read (холодные,
+  нет общего префикса) → prefix-cache в агентном цикле работает (reused 14569→20722 по турам),
+  re-read только на новые tool-выводы. Вывод: agent-live-opencode.log; строки движка:
+  agent-live-prompt-lines.log (before/after).
+
+## Vision-smoke
+20:41:28Z факт: strata-vision собран, секция vision добавлена
+  в конфиг XS по образцу S (model = native 1-й shard, gpu false, max_tokens 1024, threads 8), бэкап
+  strata-iq2_xs.pre-vision.json. Рестарт: READY ~12 c, images: true; с vision текстовый движок стартует
+  с --vision --layer-split auto; стартовая строка «2172 MiB» (CUDA0) / «CUDA1: 1706 MiB».
+20:42:28Z 2 пробы CPU-encoder: ОБЕ КОРРЕКТНЫ (синий фон+белый квадрат+красный круг — всё названо;
+  зелёный треугольник+жёлтый круг+светло-серый фон — верно, включая перекрытие). Полные 2.40 c /
+  2.14 c, prompt 134 tok (img+text) both, prompt_ms 648/458, engine decode 171.1/180.0 tok/s.
+  CPU-энкодер < 30 c порога → GPU-фоллбек не потребовался. vision-smoke.json записан.
+
+## Soak
+20:48:44–20:51:30Z soak (фореграунд, сам глушит всё): 3 холодных старта iq2_xs READY 17/16/16 c
+  (тёплый page-cache); цикл iq2_xs 16 c / iq3_s 24 c / iq3_xxs 16 c; моментное RAM падение до
+  ~6.0 GiB и своп-пик 2167 MiB — на загрузке весов S в цикле (non-resident свойство S, не XS).
+  После останова RAM avail 57306 MiB, своп 1365 MiB. PASS. soak.log.
+
+## Финализация
+20:52Z сервер остановлен (soak сам), pgrep пуст; RAM avail 57384 MiB ≥ 50 GiB ✓; своп 1365 MiB.
+watch погашен (PID 145227), watch.log закрыт 20:52:18Z (1069 сэмплов).
+watch-аннотации.md, срезы slices/, cover.json дополнены (thresholds_audit + verdict_final).

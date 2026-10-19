@@ -1,0 +1,9 @@
+strata serve: prompt 16058 tokens = 0 reused + 16058 read in 3723 ms (4312.6 tok/s), 24 generated in 202 ms (119.0 tok/s), drafts accepted 8 of 19, 1 checkpoints
+strata serve: prompt 16058 tokens = 0 reused + 16058 read in 3616 ms (4440.4 tok/s), 24 generated in 172 ms (139.5 tok/s), drafts accepted 10 of 13, 1 checkpoints
+strata serve: prompt 16058 tokens = 0 reused + 16058 read in 3624 ms (4430.9 tok/s), 24 generated in 170 ms (140.9 tok/s), drafts accepted 10 of 13, 1 checkpoints
+strata serve: prompt 16058 tokens = 0 reused + 16058 read in 3634 ms (4418.3 tok/s), 24 generated in 203 ms (118.3 tok/s), drafts accepted 8 of 20, 1 checkpoints
+strata serve: prompt 16058 tokens = 0 reused + 16058 read in 3639 ms (4413.3 tok/s), 24 generated in 199 ms (120.8 tok/s), drafts accepted 8 of 18, 1 checkpoints
+strata serve: prompt 16058 tokens = 0 reused + 16058 read in 3660 ms (4387.2 tok/s), 24 generated in 200 ms (119.9 tok/s), drafts accepted 8 of 18, 1 checkpoints
+strata serve: prompt 32049 tokens = 0 reused + 32049 read in 6566 ms (4880.8 tok/s), 24 generated in 187 ms (128.6 tok/s), drafts accepted 10 of 13, 2 checkpoints
+strata serve: prompt 32049 tokens = 0 reused + 32049 read in 6559 ms (4886.5 tok/s), 24 generated in 201 ms (119.5 tok/s), drafts accepted 10 of 17, 2 checkpoints
+strata serve: prompt 32049 tokens = 0 reused + 32049 read in 6493 ms (4935.6 tok/s), 24 generated in 186 ms (129.0 tok/s), drafts accepted 9 of 14, 2 checkpoints

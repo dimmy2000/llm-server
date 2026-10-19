@@ -1,0 +1,47 @@
+{
+ "a_forced_tool_choice": {
+  "status": 200,
+  "response": {
+   "tool_calls": [
+    {
+     "id": "call_a43a14e30b904a578f78cee3",
+     "type": "function",
+     "function": {
+      "name": "get_weather",
+      "arguments": "{\"city\":\"\\u041f\\u0430\\u0440\\u0438\\u0436\"}"
+     }
+    }
+   ],
+   "content": ""
+  }
+ },
+ "b_structured_plus_tools": {
+  "status": 400,
+  "response": "{\"error\": {\"type\": \"invalid_request_error\", \"message\": \"structured response_format with tools/MCP is not supported\"}}"
+ },
+ "b2_structured_no_tools": {
+  "status": 200,
+  "response": {
+   "tool_calls": null,
+   "content": "{\"capital\":\"Paris\"}"
+  }
+ },
+ "c_invalid_effort": {
+  "status": 400,
+  "response": "{\"error\": {\"type\": \"invalid_request_error\", \"message\": \"unknown reasoning effort 'klown': use none, low, medium or high\"}}"
+ },
+ "d_xhigh": {
+  "status": 200,
+  "response": {
+   "tool_calls": null,
+   "content": "56"
+  }
+ },
+ "d_low": {
+  "status": 200,
+  "response": {
+   "tool_calls": null,
+   "content": "кот"
+  }
+ }
+}

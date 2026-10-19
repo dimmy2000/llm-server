@@ -1,0 +1,13 @@
+strata serve: prompt 134 tokens = 0 reused + 134 read in 747 ms (179.4 tok/s), 319 generated in 2191 ms (145.6 tok/s), drafts accepted 195 of 227, 1 checkpoints
+strata serve: prompt 134 tokens = 0 reused + 134 read in 615 ms (218.0 tok/s), 381 generated in 2339 ms (162.9 tok/s), drafts accepted 225 of 274, 1 checkpoints
+strata serve: prompt 548 tokens = 0 reused + 548 read in 1056 ms (518.9 tok/s), 4 generated in 76 ms (52.9 tok/s), drafts accepted 3 of 3, 1 checkpoints
+strata serve: prompt 14382 tokens = 0 reused + 14382 read in 4313 ms (3334.8 tok/s), 2 generated in 38 ms (52.8 tok/s), drafts accepted 0 of 3, 2 checkpoints
+strata serve: prompt 14447 tokens = 14362 reused + 85 read in 394 ms (215.9 tok/s), 59 generated in 423 ms (139.6 tok/s), drafts accepted 43 of 53, 2 checkpoints
+strata serve: prompt 16705 tokens = 14505 reused + 2200 read in 1511 ms (1456.1 tok/s), 44 generated in 284 ms (155.2 tok/s), drafts accepted 31 of 36, 3 checkpoints
+strata serve: prompt 20526 tokens = 16749 reused + 3777 read in 1720 ms (2195.8 tok/s), 50 generated in 304 ms (164.4 tok/s), drafts accepted 37 of 43, 4 checkpoints
+strata serve: prompt 20657 tokens = 20578 reused + 79 read in 395 ms (199.9 tok/s), 1013 generated in 6452 ms (157.0 tok/s), drafts accepted 657 of 847, 5 checkpoints
+--- side-request сразу после основной сессии (21:35:5?Z):
+strata serve: prompt 67 tokens = 0 reused + 67 read in 518 ms (129.4 tok/s), 50 generated in 449 ms (111.3 tok/s) ---
+замечание: side-запрос с новым контентом прошёл чисто; agent-сессия держала prefix reuse
+(14447 = 14362 reused; 16705 = 14505 reused + 2200 read; 20526 = 16749 reused + 3777 read; 20657 = 20578 reused + 79 read).
+Вырезка выше — строки движка за agent-live (tail 8 строк "prompt N tokens = ...") из strata-iq3_s.log.

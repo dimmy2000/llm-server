@@ -1,0 +1,66 @@
+# server-bootstrap.log IQ3_S (окно 2026-10-19/20, все метки UTC)
+
+19:14:18Z baseline хоста: RAM avail 56541 MiB, swap used 540 MiB, GPU0 free 15919 MiB, GPU1 free 15262 MiB.
+watch.sh запущен (pid 97056) → assets/IQ3_S/watch.log, интервал 2 c.
+
+## Лествица потолка
+19:14:44Z попытка 1: конфиг strata-iq3_s.json поднят на --max-context 65536 (prefill 4096, expert-cache 4000 стоят), старт.
+19:15:XXZ OK с первой попытки: health ok, max_context 65536.
+Стартовая строка движка: «754 MiB of VRAM free with everything loaded» (CUDA0), «CUDA1: 1647 MiB of VRAM free with everything loaded».
+Старт ~25–30 c (тёплый page-cache моделей). Никаких правок chunk/cache не потребовалось — лествица S по протоколу не сработала/не нужна;
+потолок соответствует протокольным 64K.
+Дополнительно в стартовом логе: STRATA_ROUTE_TAIL_SKIP=7 ON (движок default), adaptive overlap: off (not on a layer split).
+
+## Калибровка
+19:15:5?Z сервер остановлен; запущена ./setup.sh --calibrate --model IQ3_S --yes (синтаксис проверен по --help).
+~19:24:17Z модель стартовала сама, готова на 65536 (raw ~8-9 мин, заметно быстрее XXS-37).
+В config args записаны: --pcie-frac 0.20, --spec-min-p 0.70, --adapt-every 1 --adapt-swaps 160 --adapt-decay 0.97
+(те же значения, что укалиброван XXS); chunk 4096 / cache 4000 сохранены.
+Стартовая строка откалиброванного старта: 754 / 1647 MiB free (совпала с некалиброванным).
+Консольный лог калибровки: /opt/strata/cal-iq3_s-console.log (обрывок snap/GTK — мусор от телеметрии хоста, не ошибки).
+
+## Сьюты
+19:30:0?Z bench.sh full (chat+4K+16K+agent) запущен фоном → assets/IQ3_S/bench/full.
+19:29:52-19:30:55Z bench.sh full: EXIT 0, 63 c.
+  chat: decode мед 122.4 tok/s (113.3–157.5), TTFT ~0.20–0.22 c (prompt ~43–51 tok)
+  4K: prefill 2426.2 tok/s (мед), TTFT 1.67 c
+  16K: prefill 4061.7 tok/s, TTFT 3.97 c (16058 tok)
+  agent: hit 68.68 %, reread мед 3 tok, turn decode мед 141.8 (115.8–174.5), turn TTFT 1.58 c,
+         first-turn TTFT 1.15 c, last-turn prompt 14599 tok
+  raw: assets/IQ3_S/bench/full/2026-10-18-community-.../results.json
+19:41:12Z gaps done
+19:36:32-19:37:57Z bench --long: 32K prefill 4524.7 tok/s (TTFT 7.11 c); raw bench/32k-long.
+19:4?Z гэп-чеклист завершен (gaps.json): forced tool choice 200; structured+tools 400; json_schema без tools 200; невалидный effort 400; xhigh/low 200.
+19:41:21-19:48Z ceiling ×3 (58 034 tok = 88.5% потолка): fresh prefill 4725.5 tok/s (TTFT 12.3 c),
+  повторы reuse 58 027 → TTFT 0.048–0.049 c; decode 121.8–144.2 tok/s (engine 145.8–172.0);
+  VRAM min GPU0 685 / GPU1 1338 MiB. pass (ceiling.json).
+19:48:36Z первый longgen (ratio 0.6): модель ответила 65 токенами — короткий ответ,
+  пере-прогон с принудительно длинной продолжающей задачей запущен (ceiling-longgen.json перезаписывается).
+
+## ПАРЦЕЛЬ: конфликт сессий (environment-retry, аккуратно задокументирован)
+- 20:00:09Z моя калибровочная оболочка отчиталась завершением; ПОСЛЕ неё движок был перезапущен (20:04:23Z)
+  КАКИМ-ТО внешним процессом c args S + --vision (строка движка в strata-iq3_s.log); в strata-iq3_s.json
+  ПОЯВИЛАСЬ секция vision (model = нативный shard S) — добавлена НЕ мною, факт зафиксирован без отката.
+- 20:07:27-20:14Z agent-live opencode подключился и работал (ходы видны в cal-iq3_s-console.log:
+  "answering: 1066 tokens @ 149.2 tok/s"), НО на финише сессия получила ConnectionRefused:
+  этот сторонний инстанс в 20:14 умер/остонален ("[strata] stopping ... Exited with code 1").
+- 20:16:14Z мой env-restart был убит SIGTERM: параллельно стартовало ДРУГОЕ окно (health свидетельствует:
+  iq2_xs 32768 → 131072 → 262144 — это лестница XS-окна по протоколу). Моё окно блокировано
+  их серией; согласно многосессионной политике перехватывать их нагрузку нельзя — ОЖИДАНИЕ освобождения
+  порта, после которого остаток окна S (agent-live, multiturn, soak, vision) дотягивается здесь.
+- Бенчи/калибровка/ceiling/longgen/gaps к этому моменту ЗАВЕРШЕНЫ и артефакты записаны.
+
+## agent-live (после сброса двух порт connectionRefused-вопросов)
+Причина первых двух ConnectionRefused (найдена и устранена):
+  1) http(s)_proxy=127.0.0.1:12334 (hiddify) в окружении — bun-fetch opencode не уважает no_proxy → connect refused;
+     фикс: запуск с env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY -u ALL_PROXY -u all_proxy.
+  2) имя провайдера "llama-swap" в strata-конфиге сливалось с глобальным llama.jsonc-провайдером на :8080
+     (llama-swap стоит — refused). Фикс: провайдер переименован в "strata-s" в /tmp/opencode/opencode-strata-iq3_s.json.
+21:28:19Z реальный agent-live: EXIT 0; sessionID ses_eaf159f5cffeBejAVFA6JgsdI1; отчёт качественный
+  (публичный ID = профильные пины; stripParams/useModelName таблица; 3 наблюдения — совпали по сути с XXS).
+  Числа: первый prompt 14382 tok fresh read @ 3334.8 tok/s; follow-ups reuse: 14447=14362+85, 16705=14505+2200,
+  20526=16749+3777, 20657=20578+79; финальный ответ 1013 tok @ 157.0 tok/s (drafts 657/847 = 77.6% admission).
+  Side-запрос после сессии: 200, новая строка 0 reused + 67 read — работоспособность при интерливинге ОК.
+  Артефакты: agent-live-opencode.jsonl, agent-live-prompt-lines.log, agent-live-stderr.log.
+21:54:52Z stop
+22:00:10Z окно закрыто

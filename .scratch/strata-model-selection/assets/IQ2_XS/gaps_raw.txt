@@ -1,0 +1,52 @@
+{
+ "a_forced_tool_choice": {
+  "status": 200,
+  "response": {
+   "role": "assistant",
+   "content": null,
+   "reasoning_content": "We need answer user in Russian likely. User asks \"Погода в Париже?\" Need use get_weather. Need call tool. Then answer. Let's call.\n",
+   "tool_calls": [
+    {
+     "id": "call_27e51c74d5794ec2a108f08b",
+     "type": "function",
+     "function": {
+      "name": "get_weather",
+      "arguments": "{\"city\":\"\\u041f\\u0430\\u0440\\u0438\\u0436\"}"
+     }
+    }
+   ]
+  }
+ },
+ "b_structured_plus_tools": {
+  "status": 400,
+  "response": "{\"error\": {\"type\": \"invalid_request_error\", \"message\": \"structured response_format with tools/MCP is not supported\"}}"
+ },
+ "b2_structured_no_tools": {
+  "status": 200,
+  "response": {
+   "role": "assistant",
+   "content": "{\"capital\":\"Париж\"}",
+   "reasoning_content": "We need answer user asks in Russian: \"Ответь JSON: столица Франции?\" Need output exactly one JSON object matching schema {\"type\":\"object\",\"properties\":{\"capital\":{\"type\":\"string\"}}}. No markdown. Need final only JSON. Ensure capital field string, likely \"Paris\" or \"Париж\"? User Russian. JSON value can be \"Париж\". Need only object. final: {\"capital\":\"Париж\"}\n"
+  }
+ },
+ "c_invalid_effort": {
+  "status": 400,
+  "response": "{\"error\": {\"type\": \"invalid_request_error\", \"message\": \"unknown reasoning effort 'klown': use none, low, medium or high\"}}"
+ },
+ "d_xhigh": {
+  "status": 200,
+  "response": {
+   "role": "assistant",
+   "content": "4",
+   "reasoning_content": "Пользователь просит ответить числом. 2+2=4. Нужно дать только число, возможно без лишних слов.\n"
+  }
+ },
+ "d_low": {
+  "status": 200,
+  "response": {
+   "role": "assistant",
+   "content": "Пушкин",
+   "reasoning_content": "The user asks who wrote the line \"Кот учёный\" (the Learned Cat) and wants a one-word answer.\n\n\"Кот учёный\" is a famous character from Alexander Pushkin's poem \"Руслан и Людмила\" (Ruslan and Ludmila), specifically from the prologue \"У лукоморья дуб зелёный...\" where the line \"Кот учёный\" appears.\n\nThe answer should be one word: Пушкин (Pushkin).\n"
+  }
+ }
+}

@@ -1,0 +1,126 @@
+{
+  "ticket": "07-run-matrix",
+  "model": "IQ3_XXS",
+  "date_session": "2026-10-18",
+  "engine": {
+    "version": "0.1.45",
+    "source": "local-build CUDA 13.3",
+    "git": "477ac13c"
+  },
+  "driver": "615.71.09-p2p (open modules), userland 615.71.09",
+  "host_baseline": {
+    "ram_avail_MiB": 53327,
+    "swap_used_MiB": 959,
+    "gpu0_free_MiB": 15919,
+    "gpu1_free_MiB": 14788,
+    "stack": "llama-swap down; llm-monitoring containers stopped for the window"
+  },
+  "config_before_run": {
+    "port": 8081,
+    "gpus": [
+      0,
+      1
+    ],
+    "gpu_order": "as_given",
+    "max_context": 131072,
+    "kv": "int8",
+    "draft_vocab": "cyrillic (заменён файлом data/draft_vocab_cyrillic.bin в mtp/rt; решение пользователя 2026-10-18 — русские ответы ~+30% decode, английский без потерь)",
+    "vram_reserve_mib": 300,
+    "vram_reserve_later_mib": 2048,
+    "vision": "off (текстовая серия; smoke CPU-encoder отдельно)",
+    "parallel": "default 1"
+  },
+  "startup_ladder": [
+    {
+      "attempt": 1,
+      "args_change": "none (chunk auto 8192, cache auto)",
+      "result": "fail: layer split, CUDA1 prompt path: cuBLASCreate status 1 (OOM/workspace) при инициализации prefill GEMM"
+    },
+    {
+      "attempt": 2,
+      "args_change": "--prefill 4096",
+      "result": "fail: strata serve: verify: the device arena (70 MiB) does not fit (CUDA0)"
+    },
+    {
+      "attempt": 3,
+      "args_change": "--prefill 4096 --expert-cache-device1 2600",
+      "result": "fail: движок exit 2: --expert-cache-remote with a layer split needs a GPU that runs no stage (нельзя применять на 2-stage сплите); дубликат --prefill (auto + 4096) убран"
+    },
+    {
+      "attempt": 4,
+      "args_change": "--prefill 4096 --expert-cache 6600",
+      "result": "fail: тот же verify-arena 70 MiB — движок сам склампил к 4795 слотам CUDA0, этого не хватило"
+    },
+    {
+      "attempt": 5,
+      "args_change": "--prefill 4096 --expert-cache 4400",
+      "result": "OK: health ok, max_context 131072; суммарный кеш 6606 слотов (CUDA0 ~3203 + CUDA1 3403)"
+    }
+  ],
+  "policy_noted": [
+    "Лестница старта (chunk 8192→4096, cache auto→ровно столько, чтобы стартовать) применяется одинаково к IQ3_S и IQ2_XS; если у них этот потолок стартует без лествницы — фиксируем их нативные значения.",
+    "Потолок IQ3_XXS = 131072 по протоколу; старт на нём потребовал понижения chunk и кеша — цена попадёт в prefill/decode, аккорд в выводах."
+  ],
+  "session_log": [
+    "12:38Z baseline записан (baseline-2026-10-18.txt), watch.log стартовал",
+    "12:41-12:47Z четыре неудачных старта, фиксируется ladder",
+    "12:47Z engine up на 131072; uncal-delta микробенч запущен",
+    "12:52Z uncal-delta готов (см. ниже); сервер остановлен; swap 0.96 → 3.31 GiB после бенча (аннотация в watch)",
+    "12:55Z калибровка запущена (./setup.sh --calibrate --model IQ3_XXS --yes), не прерывается",
+    "13:32Z калибровка закончилась (~37 мин): в конфиг --pcie-frac 0.20, --spec-min-p 0.5→0.70, adaptive (--adapt-every 1 --adapt-swaps 160 --adapt-decay 0.97); модель стартовала сама; пост-дельта-бенч запущен",
+    "13:50Z пост-дельта готова: chat decode 125.3→129.3 tok/s, TTFT 0.26→0.21 с, 4K +1%, 16K ровно, agent decode 146→153.1; калиброванное состояние принято как замер протокола",
+    "13:52Z сценарий 32K (--long) готов: prefill 4802.8 tok/s, отстальные сценарии ровно (raw bench/32k-long)",
+    "15:1?Z потолочный пробой 128K (custom_scenarios.py ceiling): 116066 токенов (88.5% потолка), fresh prefill 4782.2 tok/s (TTFT 24.3 c), decode при полном KV 118.2-148.9 tok/s; повторы 2-3 дали reused ~116k (TTFT 0.056 c) — prefix-cache при 128K работает; VRAM min GPU0 741 / GPU1 1612 MiB; доп-прогон 4096/4096 токенов длинной генерации: decode 141.5 tok/s, admission 80.6% (ceiling-longgen.json)",
+    "гэп-чеклист (gaps.json): forced tool choice РАБОТАЕТ (200, корректный call), structured outputs+tools -> 400 явная ошибка, невалидный effort -> 400 со словарём (none/low/medium/high), xhigh принят 200; low 200",
+    "многотуровый чат: запущен",
+    "multiturn (custom_scenarios.py multiturn, 15 туров по 8K): prompt вырос до 120265 (92% потолка), reuse каждый тур (read ~8011), TTFT 2.4-2.6 c, VRAM GPU1 min 1610 MiB, swap 0 — pass (multiturn.json)",
+    "agent-live (opencode run --standalone, '^qwen3.8-27b' против :8081): работа идёт; таск-анализ router-конфигов: 4 параллельных read-tool, качественный отчёт; первый prompt 14518 tok read @ 3235 tok/s, follow-up 21443 tok = 14664 reused + 6779 read, ответ 5384 tok @ 144.7 tok/s, MTP admission 75.6%; сессия ses_eaffb5f15ffe64gyaIJH7l8VuO; замечание: без --standalone opencode бьёт в свой background service (:8080) -> ConnectionRefused",
+    "soak pass: 3 холодных старта XXS по 16 с (тёплый page-cache); цикл переключений iq2_xs 12 с / iq3_s 24 с / iq3_xxs 16 с; после останова RAM avail 57.5 GiB, своп 586 MiB. До старта прогона холодный старт был ~40-60 с — page-cache эффект",
+    "лествница S/XS по ходу: IQ2_XS @32768 стартует с prefill 4096 + expert-cache 6800 (12 с); IQ3_S @32768: --resident-experts = блокер движка на 2-GPU сплите (prefill gemm cublasCreate status 3, три попытки: chunk 8192/4096, cache auto/4000); S без resident стартует (prefill 4096 + cache 4000, 24 с), но тогда RAM avail при загрузке падает до 5.4 GiB (page-cache shard2 51 GiB) без свопа; также кубlas status 3 повторялся при гонке двух запусков S (сначала почистили запуски, потом подтвердили блокер соло) — конфиги S/XS перезаписаны начисто (дубли аргументов убраны)",
+    "vision prep: strata-vision собран CPU (cmake -S tools/vision -DLLAMA_DIR=third_party/llama.cpp, ninja, venv-cmake 4.4.3) в engine/strata-vision; llama-quantize собирается (DGGML_CUDA=OFF, DSERVER=OFF — иначе tools/CMakeLists требует отсутствующий ui/) для Q8_0 mmproj",
+    "vision-smoke PASS: llama-quantize Q8_0 mmproj (588 MB, 27/334 fallback), strata-vision собран CPU (venv-cmake, tools/vision); секция vision добавлена начисто (бэкап pre-vision); пробы 1) синий фон+белый квадрат+красный круг -> ответ корректный (200 @ 2.88 c; img 377 tok read 935 мс; ген 152 tok/s) 2) зелёный треугольник+жёлтый круг -> корректно (2.26 c); VRAM GPU1 min 1604 MiB, RAM min 11.2 GiB",
+    "20:0?Z сервер остановлен, RAM вернулась (58.9 GiB avail); XXS-окно протокола закрыто — все сценарии done"
+  ],
+  "vision_note": "В апстриме mmproj только BF16 (907.5 MB); решение окна: локально квантовать в Q8_0 (llama-quantize, docs рекомендуют Q8_0 для --vision cpu) — если качество ск.temp не оправдано (smoke), вернуться к BF16. VRAM-цены нет (CPU encoder), RAM-цена ~1/два против BF16.",
+  "ceiling_start_facts": "на потолке 131072 нужно ~270 MiB VRAM сверх математик движка на CUDA0 (verify-arena 70 MiB + check 15 MiB); движок стартует только с пониженым chunk/expert-cache",
+  "statuses": {
+    "delta": {
+      "uncal": {
+        "chat_decode_tps": 125.3,
+        "4k_prefill_tps": 2538.7,
+        "16k_prefill_tps": 4309.3,
+        "ttft_chat_s": 0.26,
+        "agent_decode_tps": 146.0
+      },
+      "post_cal": {
+        "chat_decode_tps": 129.3,
+        "4k_prefill_tps": 2565.8,
+        "16k_prefill_tps": 4313.2,
+        "ttft_chat_s": 0.21,
+        "agent_decode_tps": 153.1
+      },
+      "verdict": "калибровка дала +3% decode, −20% TTFT, prefill безрещы (raw: bench/uncal-delta, bench/cal-delta-post); официально замеряем калиброванное состояние"
+    },
+    "calibrate": {
+      "minutes": 37,
+      "settings_written": [
+        "--pcie-frac 0.20",
+        "--spec-min-p 0.70",
+        "--adapt-every 1",
+        "--adapt-swaps 160",
+        "--adapt-decay 0.97"
+      ]
+    },
+    "chat": "done",
+    "16K": "done",
+    "32K": "done",
+    "ceiling": "done",
+    "agent-bench": "done",
+    "agent-live": "done (opencode --standalone; см. session_log и agent-live-*.log/jsonl)",
+    "gaps": "done",
+    "multiturn": "done",
+    "soak": "done, pass (soak.log)",
+    "vision-smoke": "done, PASS (vision-smoke.log; с отступлением от текста протокола зафиксировано: Q8_0 — локальное квантование, не апстрим-артефакт)",
+    "verdict_xxs": "XXS-окно закрыто полностью; все сценарии протокола done. Сводные выводы окна — assets/summary-matrix.md"
+  }
+}

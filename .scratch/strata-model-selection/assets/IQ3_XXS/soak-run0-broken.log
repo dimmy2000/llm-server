@@ -1,0 +1,8 @@
+2026-10-18T17:19:45Z soak start: 3 cold starts + switch cycle ram_avail_MiB=57146 swap_used_MiB=0
+2026-10-18T17:19:53Z cold_start_1: FAILED (нет health за 600 c) ram_avail_MiB=57148 swap_used_MiB=0
+2026-10-18T17:20:01Z cold_start_2: FAILED (нет health за 600 c) ram_avail_MiB=57138 swap_used_MiB=0
+2026-10-18T17:20:09Z cold_start_3: FAILED (нет health за 600 c) ram_avail_MiB=57135 swap_used_MiB=0
+2026-10-18T17:20:17Z switch_cycle iq2_xs: FAILED ram_avail_MiB=57117 swap_used_MiB=0
+2026-10-18T17:20:25Z switch_cycle iq3_s: FAILED ram_avail_MiB=57112 swap_used_MiB=0
+2026-10-18T17:20:33Z switch_cycle iq3_xxs: FAILED ram_avail_MiB=57112 swap_used_MiB=0
+2026-10-18T17:20:46Z soak end (все остановлены) ram_avail_MiB=57115 swap_used_MiB=0

@@ -1,0 +1,38 @@
+{
+ "scenario": "vision-smoke",
+ "gpu_encoder": false,
+ "probes": [
+  {
+   "name": "blue",
+   "ok": true,
+   "total_s": 2.397,
+   "ttft_s": 0.21,
+   "prompt_n": 134,
+   "reused": 0,
+   "read_n": 134,
+   "img_tokens_delta": null,
+   "gen_n": 263,
+   "wall_decode_tps": 39.3,
+   "engine_decode_tps": 171.1,
+   "prompt_ms": 648.4,
+   "answer": " На  картин ке  изобра жены  три  объекта : \n\n1 .  ** С ин ий  фон **  —  спло шной  синий  цвет ,  занима ющий  всю  площадь  изображения . \n2 .  ** Б ел ый  квадрат **  —  расположен  в  центре  ( нем ного  см ещ ён  вле во ). \n3 .  ** К рас ный  круг **  —  находится  в  правом  верх нем  углу  и",
+   "vram_min_mib": null
+  },
+  {
+   "name": "green",
+   "ok": true,
+   "total_s": 2.136,
+   "ttft_s": 0.192,
+   "prompt_n": 134,
+   "reused": 0,
+   "read_n": 134,
+   "img_tokens_delta": null,
+   "gen_n": 267,
+   "wall_decode_tps": 29.3,
+   "engine_decode_tps": 180.0,
+   "prompt_ms": 458.4,
+   "answer": " На  картин ке  изобра жены  два  объекта : \n\n1 .  ** Тре уго льник **  —  зелё ный . \n2 .  ** К руг **  —  ж ёл тый  ( рас поло жен  справа  и  частично  пер ек р ывает  треуго льник ). \n\nФ он  изображения  —  светло - сер ый  ( поч ти  белый ).",
+   "vram_min_mib": null
+  }
+ ]
+}

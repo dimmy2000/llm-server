@@ -1,0 +1,8 @@
+2026-10-18T20:48:44Z soak start: 3 cold starts iq2_xs + switch cycle ram_avail_MiB=17932 swap_used_MiB=713
+2026-10-18T20:49:09Z cold_start_1: READY in 17 s ram_avail_MiB=18464 swap_used_MiB=713
+2026-10-18T20:49:33Z cold_start_2: READY in 16 s ram_avail_MiB=18493 swap_used_MiB=713
+2026-10-18T20:49:57Z cold_start_3: READY in 16 s ram_avail_MiB=18427 swap_used_MiB=713
+2026-10-18T20:50:21Z switch_cycle iq2_xs: READY in 16 s ram_avail_MiB=18504 swap_used_MiB=713
+2026-10-18T20:50:53Z switch_cycle iq3_s: READY in 24 s ram_avail_MiB=5499 swap_used_MiB=2156
+2026-10-18T20:51:17Z switch_cycle iq3_xxs: READY in 16 s ram_avail_MiB=11847 swap_used_MiB=1369
+2026-10-18T20:51:30Z soak end (все остановлены) ram_avail_MiB=57434 swap_used_MiB=1369

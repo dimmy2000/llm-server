@@ -1,0 +1,197 @@
+{
+  "ticket": "07-run-matrix",
+  "model": "IQ3_S",
+  "date_session": "2026-10-19/20",
+  "engine": {
+    "version": "0.1.45",
+    "source": "local-build CUDA 13.3",
+    "git": "477ac13c"
+  },
+  "driver": "615.71.09-p2p (open modules), userland 615.71.09",
+  "host_baseline": {
+    "ram_avail_MiB": 56541,
+    "swap_used_MiB": 540,
+    "gpu0_free_MiB": 15919,
+    "gpu1_free_MiB": 15262,
+    "stack": "llama-swap down; llm-monitoring containers stopped for the window (основной сессией)"
+  },
+  "config_before_run": {
+    "port": 8081,
+    "gpus": [0, 1],
+    "gpu_order": "as_given",
+    "max_context": "32768 → поднято до 65536 (протокол: потолок S = 64K)",
+    "kv": "int8",
+    "draft_vocab": "cyrillic",
+    "prefill": 4096,
+    "expert_cache": 4000,
+    "resident_experts": "НЕ используется (блокер движка на 2-GPU сплите, cuBLAS status 3; трижды подтверждён 2026-10-18; не решался и в этом окне — факт)",
+    "vision": "секция vision появилась в конфиге в 20:04Z внешним процессом (не этим окном), model = нативный shard S, CPU encoder; использована как есть в step 9"
+  },
+  "startup_ladder": [
+    {
+      "attempt": 1,
+      "args_change": "--max-context 65536 (остальное нативное: chunk 4096, cache 4000)",
+      "result": "OK с первой попытки: health ok; «754 MiB of VRAM free with everything loaded» (CUDA0), «CUDA1: 1647 MiB»; старт ~25–30 c; лествица не потребовалась"
+    }
+  ],
+  "policy_noted": [
+    "Потолок S равен протокольным 64K и стартует на нативных chunk/cache без подвижек — дешевле XXS (тому требовалось chunk 4096 + cache 4400).",
+    "--resident-experts не пробовать (блокер движка) — S живёт non-resident (пул experts на SSD/mmap + expert-cache 4000 слот).",
+    "watch.log оборвался в ~20:05:3?Z из-за конфликта сессий; вторая половина окна отражена per-scenario Watcher'ом (VRAM min в JSON) и ручными точками — см. watch-аннотации.md."
+  ],
+  "calibration": {
+    "raw_time": "~8–9 мин (заметно быстрее XXS, ~37 мин)",
+    "settings_written": [
+      "--pcie-frac 0.20",
+      "--spec-min-p 0.70",
+      "--adapt-every 1",
+      "--adapt-swaps 160",
+      "--adapt-decay 0.97"
+    ],
+    "note": "те же значения, что у калиброванного XXS; expert-cache 4000 / prefill 4096 сохранены; стартовые цифры 754/1647 MiB — совпали с некалиброванным стартом"
+  },
+  "results_core": {
+    "chat_decode_tps_median": 122.4,
+    "chat_decode_range": "113.3–157.5",
+    "ttft_chat_s": 0.2,
+    "prefill_4k_tps": 2426.2,
+    "prefill_16k_tps": 4061.7,
+    "ttft_16k_s": 3.97,
+    "prefill_32k_tps": 4524.7,
+    "ttft_32k_s": 7.11,
+    "agent_hit_pct": 68.68,
+    "agent_turn_decode_tps": 141.8,
+    "agent_first_ttft_s": 1.15,
+    "ceiling_prompt_tokens": 58034,
+    "ceiling_prompt_pct": 88.5,
+    "ceiling_fresh_prefill_tps": 4725.5,
+    "ceiling_ttft_fresh_s": 12.31,
+    "ceiling_reused_ttft_s": 0.048,
+    "ceiling_decode_tps": "121.8–144.2 (engine 145.8–172.0)",
+    "longgen": {
+      "prompt_tokens": 59063,
+      "gen": "4500/4500 (cap)",
+      "decode_tps": 174.1,
+      "engine_decode_tps": 184.5,
+      "admission_pct": 93.2,
+      "fresh_prefill_tps": 4594.3
+    },
+    "multiturn": {
+      "turns": 15,
+      "turn_tokens": 4000,
+      "final_prompt_tokens": 60259,
+      "final_prompt_pct": 91.9,
+      "ttft_s": "1.70–1.79",
+      "reuse_every_turn": true,
+      "read_per_turn": 4011,
+      "vram_min_mib": 1589,
+      "pass": true
+    },
+    "soak": {
+      "cold_starts_s": [24, 24, 24],
+      "switch_xs_s": 12,
+      "switch_s_s": 24,
+      "switch_xxs_s": 16,
+      "ram_after_stop_MiB": 57232,
+      "swap_after_stop_MiB": 1310,
+      "pass": true
+    },
+    "vision": {
+      "probe1": "200 @ 3.76 c: синий фон, белый квадрат, красный круг — корректно; замечание: модель добавила «узкие чёрные полосы по краям» — мелкая галлюцинация",
+      "probe2": "200 @ 2.32 c: жёлтый круг слева, зелёный треугольник справа — корректно",
+      "img_prompt_tokens": [144, 142],
+      "vram_gpu1_free_mib": 1581,
+      "pass": true
+    },
+    "gaps": {
+      "forced_tool_choice": "работает (200, корректный call get_weather)",
+      "structured_plus_tools": "400 \"structured response_format with tools/MCP is not supported\"",
+      "structured_no_tools": "200 (json_schema без tools работает)",
+      "invalid_effort": "400: \"unknown reasoning effort 'klown': use none, low, medium or high\" (словарь в ошибке без xhigh)",
+      "xhigh": "200",
+      "low": "200"
+    },
+    "agent_live": {
+      "session_id": "ses_eaf159f5cffeBejAVFA6JgsdI1",
+      "first_prompt": "14382 tok fresh read @ 3334.8 tok/s",
+      "followups": [
+        "14447 = 14362 reused + 85 read",
+        "16705 = 14505 reused + 2200 read",
+        "20526 = 16749 reused + 3777 read",
+        "20657 = 20578 reused + 79 read"
+      ],
+      "final_answer": "1013 tok @ 157.0 tok/s (drafts 657/847 = 77.6 % admission)",
+      "environment_fixes": [
+        "1) http(s)_proxy=127.0.0.1:12334 (hiddify) в окружении ломает bun-fetch opencode даже к 127.0.0.1 при выставленном no_proxy — запуск с env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY -u ALL_PROXY -u all_proxy обязателен",
+        "2) имя провайдера «llama-swap» в strata-конфиге конфликтует с глобальным llama-swap-провайдером (:8080; llama-swap опущен → ЕCONNREFUSED); провайдер переименован в «strata-s» в /tmp/opencode/opencode-strata-iq3_s.json"
+      ],
+      "work": "task-анализ router/config.yaml + config.d/10-llama.yaml + ADR-0006: публичный ID = профильные пины, unlisted, stripParams таблица + 3 наблюдения; согласуется по сути с XXS"
+    },
+    "vram_series": {
+      "gpu0_min_mib": 683,
+      "gpu1_min_mib": "~1296 (watch-часть); 1338–1589 по JSON второй половины",
+      "red_line": "красная линия ≥ 512 MiB не нарушена ни разу"
+    },
+    "ram_series": {
+      "ram_min_MiB": 2983,
+      "swap_start_MiB": 540,
+      "swap_max_MiB": 1310,
+      "ram_after_stop_MiB": 57154
+    }
+  },
+  "session_log": [
+    "19:14:18Z baseline записан, watch.log стартовал (pid 97056)",
+    "19:14:44Z лествица потолка: --max-context 65536 — OK с первой попытки, health ok к ~19:15:0?Z, 754/1647 MiB",
+    "19:15:5?Z сервер остановлен; калибровка запущена фоном",
+    "~19:24Z калибровка отработала (~8–9 мин): значения как у XXS; модель стартовала сама, health ok @ 65536",
+    "19:29:52–19:30:55Z bench.sh full: chat decode 122.4 (113.3–157.5), TTFT ~0.20 c; 4K 2426.2; 16K 4061.7 (TTFT 3.97); agent hit 68.68 %, turn decode 141.8",
+    "19:36:32–19:37:57Z bench --long: 32K 4524.7 tok/s (TTFT 7.11 c)",
+    "19:4?Z гэп-чеклист: forced tool choice 200; structured+tools 400; json_schema без tools 200; невалидный effort 400; xhigh/low 200",
+    "19:41:21–19:48Z ceiling ×3 (58 034 tok = 88.5 %): fresh prefill 4725.5 (TTFT 12.3 c); reuse 58 027 → TTFT 0.048 c; decode 121.8–144.2; VRAM 685/1338 — pass",
+    "19:48:36Z первый longgen (ratio 0.6): модель ответила 65 токенами (короткий ответ); перезапущен с принудительно длинной задачей",
+    "20:00:09Z моя калибровочная оболочка закрылась; события ниже — наложение чужой сессии",
+    "20:04:23Z внешний процесс перезапустил движок S с --vision; в конфиге появилась секция vision (model = нативный shard S) — факт зафиксирован, откат не делался",
+    "20:07:27–20:14Z первая agent-live попытка terminated ConnectionRefused (родная причина см. ниже); строки движка показывали успешную серию ходов в cal-iq3_s-console.log (prompt 14 454, ~149 tok/s); сторонний инстанс умер/остановлен",
+    "20:16:14Z мой env-restart убит SIGTERM: параллельно стартовало XS-окно (health: iq2_xs 32768 → 131072 → 262144 — их лестница)",
+    "20:18–20:51Z ожидание под их окном; ~20:51 порт освобождён, RAM 57.2 GiB",
+    "21:12:41Z рестарт S (health 65536, images true)",
+    "21:13–21:27Z agent-live по-прежнему ConnectionRefused: диагностика → (1) http(s)_proxy env ломает bun-fetch; (2) имя провайдера llama-swap конфликтует с глобальным конфигом (:8080); фиксы применены",
+    "21:28–21:32Z реальный agent-live: sessionID ses_eaf159f5cffeBejAVFA6JgsdI1; prompt 14 382 fresh @ 3334.8; follow-ups reuse (14362/14505/16749/20578); финальный ответ 1013 tok @ 157.0; side-request после сессии 200",
+    "21:36:17–21:44:40Z multiturn 15 туров × 4000: prompt → 60 259 (91.9 %); reuse каждый тур (read 4011); TTFT 1.70–1.79 c; VRAM GPU1 min 1589 — pass",
+    "21:45:03–21:48:09Z soak: 3 холодных старта S по 24 с; переключения XS 12 / S 24 / XXS 16 c; RAM 57 232, своп 1310 (не выросло) — pass",
+    "21:53:21Z рестарт S (vision активна): vision-smoke 200 @ 3.76 c и 200 @ 2.32 c, оба ответа корректны",
+    "21:54–21:55Z стоп сервера (RAM 57 154, своп 1310); watch остановлен; аннотации и свод собраны"
+  ],
+  "conflict_notes": {
+    "what": "в 20:04–20:16Z параллельная сессия занимала :8081+GPUs (XS-окно); их stop_all в 20:16 убил мой env-restart; ~20:05:3?Z был побочно остановлен мой watch-монитор; в 20:04Z в S-конфиг была внесена секция vision",
+    "resolution": "ожидание конца их окна, затем дотягивание остатка этой сессии на чистом порте; после 21:12Z одновременно GPU-нагрузок не было",
+    "policy": "concurrent-GPU нагрузки избегали по протоколу; артефакты целостные — собственные результаты этого окна отделены"
+  },
+  "statuses": {
+    "calibrate": "done (~8–9 мин)",
+    "chat": "done (122.4 tok/s мед.)",
+    "16K": "done (4061.7 tok/s)",
+    "32K": "done (4524.7 tok/s)",
+    "gaps": "done (gaps.json; расхождений с XXS нет)",
+    "ceiling": "done, pass (58 034 = 88.5 %; fresh 4725.5; reuse → TTFT 0.048 c)",
+    "longgen": "done, pass (4500/4500 @ 174.1 tok/s; admission 93.2 %)",
+    "agent-bench": "done (в составе suite: hit 68.7 %, reread 3)",
+    "agent-live": "done, pass (sessionID ses_eaf159f5cffeBejAVFA6JgsdI1; два env-фикса зафиксированы)",
+    "multiturn": "done, pass (60 259 = 91.9 %)",
+    "soak": "done, pass (3×24 c; 12/24/16 c; RAM вернулась)",
+    "vision-smoke": "done, PASS (vision-smoke.log)",
+    "watch": "частично (оборван конфликтом; компенсировано JSON/ручными точками)",
+    "verdict": "все сценарии протокола done; потолок 65536 стартует нативно; красная линия держится; своп мал; серия стабильна"
+  },
+  "artifacts_index": {
+    "bootstrap": "server-bootstrap.log",
+    "bench": "bench/full/2026-10-18-community-rtx-5070-ti-qwen3-8-flash-next-iq3-s/results.json; bench/32k-long/",
+    "ceiling": "ceiling.json; ceiling-longgen.json",
+    "multiturn": "multiturn.json",
+    "gaps": "gaps.json (+ gaps_raw.txt)",
+    "agent_live": "agent-live-opencode.jsonl; agent-live-prompt-lines.log; agent-live-stderr.log",
+    "soak": "soak.log",
+    "vision": "vision-smoke.log",
+    "engine_log_slices": "engine-log-slice-step{1,5,6,7,8,9}.log"
+  }
+}

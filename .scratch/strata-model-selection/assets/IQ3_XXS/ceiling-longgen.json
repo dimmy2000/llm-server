@@ -1,0 +1,1 @@
+{"vram_min": {"vram_min_mib": {"0": 741, "1": 1612}}, "ok": true, "ttft_s": 2.568, "total_s": 31.214, "prompt_tokens": 105657, "reused_tokens": 98304, "read_tokens": 7353, "generated_tokens": 4096, "decode_tps": 141.5, "engine_decode_tps": 142.9, "engine_prompt_tps": 2915.9, "prompt_ms": 2521.7, "drafts_offered": 2527, "drafts_accepted": 2040}

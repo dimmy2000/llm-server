@@ -1,0 +1,37 @@
+{
+  "model": "IQ3_S",
+  "date": "2026-10-19",
+  "url": "http://127.0.0.1:8081/v1/chat/completions",
+  "results": {
+    "a_forced_named_tool_choice": {
+      "status": 200,
+      "verdict": "работает: корректный tool call get_weather {city: Париж}, content пустой; thinking off"
+    },
+    "b_structured_outputs_plus_tools": {
+      "status": 400,
+      "verdict": "явный отказ: \"structured response_format with tools/MCP is not supported\"; тот же отказ, что у XXS (идентичная строка ошибки)"
+    },
+    "b2_structured_outputs_without_tools": {
+      "status": 200,
+      "verdict": "json_schema без tools работает: валидный JSON в content (capital: Paris)"
+    },
+    "c_invalid_reasoning_effort": {
+      "status": 400,
+      "verdict": "400: \"unknown reasoning effort 'klown': use none, low, medium or high\"; заметка: словарь ошибки не называет xhigh, но топ-левел xhigh при этом принят (см. d_xhigh — 200)"
+    },
+    "d_xhigh": {
+      "status": 200,
+      "verdict": "топ-левел reasoning_effort xhigh → 200, ответ «56»"
+    },
+    "d_low": {
+      "status": 200,
+      "verdict": "топ-левел low → 200, ответ «кот»"
+    }
+  },
+  "comparable_to_XXS": "сходно с XXS: forced tool choice 200; structured+tools → 400 (та же строка); невалидный effort → 400; low/xhigh 200",
+  "notes": [
+    "противоречие движка: в тексте ошибки валидатор называет словарь none/low/medium/high без xhigh — xhigh при этом проходит",
+    "json_schema без tools работает нормально — отдельно от tools нет отказа"
+  ],
+  "raw_output": "gaps_raw.txt (в той же папке)"
+}

@@ -1,0 +1,36 @@
+[0m
+> build · qwen3.8-27b
+[0m→ [0mRead router/config.yaml 
+[0m→ [0mRead router/config.d/10-llama.yaml 
+[0m✱ [0mGlob "docs/adr/0006-*.md" [90m1 match[0m
+> build · qwen3.8-27b
+[0m→ [0mRead docs/adr/0006-single-endpoint-llama-swap-orchestrator.md 
+[0m→ [0mRead router/config.d/20-ninfer.yaml 
+> build · qwen3.8-27b
+# Отчёт: конфигурация роутера и ADR-0006
+
+## Где объявлены публичные model-ID
+
+Публичный ID ровно один — **`qwen3.8-27b`**, и он нигде не объявлен как самостоятельная запись модели. Он появляется только в `router/config.yaml` в секции `profiles` как ключ пинов:
+
+- профиль `llama`: `pins: qwen3.8-27b → backend-llama`, плюс `backend-ninfer: ~`
+- профиль `ninfer`: `pins: qwen3.8-27b → backend-ninfer`, плюс `backend-llama: ~`
+
+Сами движки объявлены как записи `backend-llama` / `backend-ninfer` в `router/config.d/10-llama.yaml` и `20-ninfer.yaml` соответственно, обе со `unlisted: true` — снаружи достижим только `qwen3.8-27b`. В неактивном профиле backend закрыт пином `~` (прямой запрос → 404). Пины применяются до алиасов; автоматического swap по запросу нет (нет селекторов, дефолтная exclusive-группа). ADR-0006 фиксирует это как решение («единый endpoint, ровно один публичный ID») со стартовым профилем `ninfer` и прелоадом через `hooks.on_startup`.
+
+## stripParams / useModelName
+
+| Запись | stripParams | useModelName |
+|---|---|---|
+| `backend-llama` (10-llama.yaml, строки 55–60) | `repetition_penalty` | — (не задан) |
+| `backend-ninfer` (20-ninfer.yaml, строки 48–50) | `repetition_penalty` | `qwen3.8-27b` |
+
+Оба фильтра симметричны и мотивированы: NInfer отвечает `400` при `repetition_penalty != 1`, а llama.cpp такого имени параметра не знает вовсе. При этом `repeat_penalty` (llama.cpp-only) не стрипается — NInfer молча его игнорирует. `useModelName` нужен только NInfer: `ninfer-serve` отклоняет запрос, если `request.model != --model-id`, поэтому llama-swap переписывает имя (в т.ч. пришедшее из пина) на каноническое. Больше тело запроса роутер не правит — sampling задают CLI-флаги в `cmd` (llama.cpp) и mode-aware пресет самого движка (NInfer).
+
+## Наблюдения по структуре
+
+1. **Чистое разделение ответственности по файлам**: `config.yaml` — только глобалы (`sendLoadingState: false`, `healthCheckTimeout`), hooks и профили с пинами; `config.d/NN-*.yaml` — по одному движку на файл с префиксами порядка. Ни один параметр ядра не дублируется между файлами, и комментарии в каждом файле явно указывают «задаётся здесь и только здесь». Это делает смену движка операцией над профилем (`PUT /api/profiles/active`), а не над compose-стеком.
+
+2. **Конфиг говорит на языке ADR**: каждая нетривиальная настройка в YAML снабжена комментарием со ссылкой на первопричину (issues/12, issues/13, `internal/router/loading.go`, hardcode пина в v265 api.go) и дублируется в ADR-0006 с разделом отвергнутых альтернатив. Законы контракта («клиент управляет reasoning», «движки не параллельны») проверяются не кодом, а структурой конфига: `setParamsByID` отсутствует, алиасы удалены, селекторов нет.
+
+3. **Симметрия между backend'ами неполная по существу, и это задокументировано**: записи структурно близнецы (`unlisted`, `capabilities`, одинаковый `stripParams`), но расхождения точечны и обоснованы средой — `useModelName` только у NInfer (требование движка), разный `LD_LIBRARY_PATH` (у NInfer нет RPATH), разные контексты в `capabilities` (180224 против 262144). Известная асимметрия поведения (top-level `reasoning_effort: none` работает только на NInfer из-за инжекта `--reasoning on`) перенесена в ADR как оговорка, а не «починена» фильтром — потому что `filters` llama-swap физически не выражают условный маппинг значений (проверено по исходникам).

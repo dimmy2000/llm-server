@@ -1,0 +1,26 @@
+{
+ "a_forced_tool_choice": {
+  "status": 200,
+  "verdict": "tool_call get_weather"
+ },
+ "b_structured_plus_tools": {
+  "status": 400,
+  "verdict": "{\"error\": {\"type\": \"invalid_request_error\", \"message\": \"structured response_format with tools/MCP is not supported\"}}"
+ },
+ "b2_structured_no_tools": {
+  "status": 200,
+  "verdict": "content: {\"capital\":\"Париж\"}"
+ },
+ "c_invalid_effort": {
+  "status": 400,
+  "verdict": "{\"error\": {\"type\": \"invalid_request_error\", \"message\": \"unknown reasoning effort 'klown': use none, low, medium or high\""
+ },
+ "d_xhigh": {
+  "status": 200,
+  "verdict": "content: 4"
+ },
+ "d_low": {
+  "status": 200,
+  "verdict": "content: Пушкин"
+ }
+}

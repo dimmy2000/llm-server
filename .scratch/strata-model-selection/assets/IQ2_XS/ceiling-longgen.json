@@ -1,0 +1,26 @@
+{
+ "scenario": "longgen",
+ "max_context": 262144,
+ "repeats": [
+  {
+   "ok": true,
+   "ttft_s": 30.48,
+   "total_s": 56.126,
+   "prompt_tokens": 157384,
+   "reused_tokens": 16384,
+   "read_tokens": 141000,
+   "generated_tokens": 4096,
+   "decode_tps": 156.4,
+   "engine_decode_tps": 159.7,
+   "engine_prompt_tps": 4635.0,
+   "prompt_ms": 30421.0,
+   "drafts_offered": 2885,
+   "drafts_accepted": 2362,
+   "vram_min_mib": {
+    "0": 2103,
+    "1": 1607
+   },
+   "prompt_built_tokens": 157372
+  }
+ ]
+}

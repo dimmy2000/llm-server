@@ -1,0 +1,143 @@
+{
+ "1_forced_tool_choice": {
+  "status": 200,
+  "body": {
+   "id": "chatcmpl-fc4beda27a97427c85881478",
+   "object": "chat.completion",
+   "created": 1792342783,
+   "model": "qwen3.8-flash-next-iq3_xxs",
+   "choices": [
+    {
+     "index": 0,
+     "message": {
+      "role": "assistant",
+      "content": null,
+      "reasoning_content": "We need answer user's request in Russian: \"Что такое 2+2? Ответь одним словом.\" Need answer one word. Need final only one word likely \"Четыре\". Ensure one word.\n",
+      "tool_calls": [
+       {
+        "id": "call_681c212027984b4c93b783e7",
+        "type": "function",
+        "function": {
+         "name": "get_time",
+         "arguments": "{}"
+        }
+       }
+      ]
+     },
+     "finish_reason": "tool_calls"
+    }
+   ],
+   "usage": {
+    "prompt_tokens": 295,
+    "completion_tokens": 59,
+    "total_tokens": 354,
+    "prompt_tokens_details": {
+     "cached_tokens": 0
+    }
+   },
+   "timings": {
+    "cache_n": 0,
+    "prompt_n": 295,
+    "prompt_ms": 845.8,
+    "prompt_per_token_ms": 2.867,
+    "prompt_per_second": 348.8,
+    "predicted_n": 59,
+    "predicted_ms": 408.7,
+    "predicted_per_token_ms": 7.86,
+    "predicted_per_second": 127.2,
+    "draft_n": 37,
+    "draft_n_accepted": 33
+   }
+  }
+ },
+ "2_structured_plus_tools": {
+  "status": 400,
+  "body": "{\"error\": {\"type\": \"invalid_request_error\", \"message\": \"structured response_format with tools/MCP is not supported\"}}"
+ },
+ "3_invalid_effort": {
+  "status": 400,
+  "body": "{\"error\": {\"type\": \"invalid_request_error\", \"message\": \"unknown reasoning effort 'turbo': use none, low, medium or high\"}}"
+ },
+ "4_xhigh": {
+  "status": 200,
+  "body": {
+   "id": "chatcmpl-4eccd440e39f4e73914b64a5",
+   "object": "chat.completion",
+   "created": 1792342784,
+   "model": "qwen3.8-flash-next-iq3_xxs",
+   "choices": [
+    {
+     "index": 0,
+     "message": {
+      "role": "assistant",
+      "content": "четыре",
+      "reasoning_content": "We need answer user's request in Russian: \"Что такое 2+2? Ответь одним словом.\" Means What is 2+2? Answer in one word. Need final one word likely \"четыре\". Ensure only one word.\n"
+     },
+     "finish_reason": "stop"
+    }
+   ],
+   "usage": {
+    "prompt_tokens": 64,
+    "completion_tokens": 55,
+    "total_tokens": 119,
+    "prompt_tokens_details": {
+     "cached_tokens": 0
+    }
+   },
+   "timings": {
+    "cache_n": 0,
+    "prompt_n": 64,
+    "prompt_ms": 282.5,
+    "prompt_per_token_ms": 4.414,
+    "prompt_per_second": 226.5,
+    "predicted_n": 55,
+    "predicted_ms": 365.3,
+    "predicted_per_token_ms": 6.642,
+    "predicted_per_second": 150.6,
+    "draft_n": 40,
+    "draft_n_accepted": 34
+   }
+  }
+ },
+ "4b_low": {
+  "status": 200,
+  "body": {
+   "id": "chatcmpl-7a8db978bff34e329dbd1cc1",
+   "object": "chat.completion",
+   "created": 1792342785,
+   "model": "qwen3.8-flash-next-iq3_xxs",
+   "choices": [
+    {
+     "index": 0,
+     "message": {
+      "role": "assistant",
+      "content": "Четыре",
+      "reasoning_content": "The user asks \"What is 2+2?\" and requests a one-word answer in Russian. The answer is 4, which in Russian is \"четыре\".\n"
+     },
+     "finish_reason": "stop"
+    }
+   ],
+   "usage": {
+    "prompt_tokens": 52,
+    "completion_tokens": 41,
+    "total_tokens": 93,
+    "prompt_tokens_details": {
+     "cached_tokens": 0
+    }
+   },
+   "timings": {
+    "cache_n": 0,
+    "prompt_n": 52,
+    "prompt_ms": 207.7,
+    "prompt_per_token_ms": 3.994,
+    "prompt_per_second": 250.4,
+    "predicted_n": 41,
+    "predicted_ms": 215.8,
+    "predicted_per_token_ms": 5.263,
+    "predicted_per_second": 190.0,
+    "draft_n": 33,
+    "draft_n_accepted": 29
+   }
+  }
+ }
+}

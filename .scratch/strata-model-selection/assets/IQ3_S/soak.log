@@ -1,0 +1,16 @@
+2026-10-18T20:02:30Z soak start: 3 cold starts + switch cycle ram_avail_MiB=3593 swap_used_MiB=721
+2026-10-18T20:02:58Z cold_start_1: READY in 20 s ram_avail_MiB=4208 swap_used_MiB=721
+2026-10-18T20:03:26Z cold_start_2: READY in 20 s ram_avail_MiB=4219 swap_used_MiB=720
+2026-10-18T20:03:54Z cold_start_3: READY in 20 s ram_avail_MiB=4226 swap_used_MiB=720
+2026-10-18T20:04:14Z switch_cycle iq2_xs: READY in 12 s ram_avail_MiB=19293 swap_used_MiB=720
+2026-10-18T20:04:46Z switch_cycle iq3_s: READY in 24 s ram_avail_MiB=4171 swap_used_MiB=720
+2026-10-18T20:05:10Z switch_cycle iq3_xxs: READY in 16 s ram_avail_MiB=11354 swap_used_MiB=720
+2026-10-18T20:05:23Z soak end (все остановлены) ram_avail_MiB=57004 swap_used_MiB=720
+2026-10-18T21:45:03Z soak start: 3 cold starts + switch cycle ram_avail_MiB=3208 swap_used_MiB=1311
+2026-10-18T21:45:35Z cold_start_1: READY in 24 s ram_avail_MiB=4399 swap_used_MiB=1311
+2026-10-18T21:46:07Z cold_start_2: READY in 24 s ram_avail_MiB=4394 swap_used_MiB=1311
+2026-10-18T21:46:39Z cold_start_3: READY in 24 s ram_avail_MiB=4376 swap_used_MiB=1311
+2026-10-18T21:47:00Z switch_cycle iq2_xs: READY in 12 s ram_avail_MiB=18789 swap_used_MiB=1311
+2026-10-18T21:47:32Z switch_cycle iq3_s: READY in 24 s ram_avail_MiB=4424 swap_used_MiB=1311
+2026-10-18T21:47:56Z switch_cycle iq3_xxs: READY in 16 s ram_avail_MiB=11568 swap_used_MiB=1311
+2026-10-18T21:48:09Z soak end (все остановлены) ram_avail_MiB=57232 swap_used_MiB=1310

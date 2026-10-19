@@ -1,0 +1,98 @@
+{
+  "ticket": "07-run-matrix",
+  "model": "IQ2_XS",
+  "date_session": "2026-10-18 (20:14–20:52 UTC)",
+  "engine": {
+    "version": "0.1.45",
+    "source": "local-build CUDA 13.3"
+  },
+  "driver": "615.71.09-p2p (open modules), userland 615.71.09",
+  "host_baseline": {
+    "ram_avail_MiB": 56988,
+    "swap_used_MiB": 716,
+    "gpu0_free_MiB": 15919,
+    "gpu1_free_MiB": 15187,
+    "stack": "llama-swap down; llm-monitoring контейнеры остановлены (docker пуст); порт :8081 свободен"
+  },
+  "config_before_run": {
+    "port": 8081,
+    "gpus": [0, 1],
+    "gpu_order": "as_given",
+    "max_context": "32768 → 131072 → 262144 (лествица, попытка 3); финальный потолок 262144",
+    "kv": "int8",
+    "draft_vocab": "cyrillic",
+    "prefill": 4096,
+    "expert_cache": "6800 → 5400 (подобрано лествицей для 262144)",
+    "vision": "off в текстовой серии; секция будет добавлена в конце для vision-smoke (CPU-encoder)",
+    "parallel": "default 1"
+  },
+  "startup_ladder": [
+    {"attempt": 0, "args_change": "смоук @32768 (нативный конфиг: prefill 4096, cache 6800)", "result": "OK ~12 c; стартовая строка 2070/1708 MiB (CUDA0/CUDA1)"},
+    {"attempt": 1, "args_change": "--max-context 131072 (cache 6800 стоит)", "result": "OK с первой попытки ~12 c; 1380/1706 MiB — обе ≥1 GiB → поднимаем до 262144"},
+    {"attempt": 2, "args_change": "--max-context 262144 (cache 6800)", "result": "стартует, но CUDA0 free 160 MiB — LOW («requests may stall»); движок сам предлагает понизить cache/max-context; критерий ≥1 GiB не выполнен"},
+    {"attempt": 3, "args_change": "--max-context 262144, --expert-cache 5400 (ступень лествицы 6800→5400)", "result": "OK ~12 c; «2176 MiB of VRAM free» (CUDA0), CUDA1 1706 MiB — PASS критерий, без LOW/clamp"}
+  ],
+  "policy_noted": [
+    "IQ2_XS страховочная модель: веса влезают в RAM целиком — RAM-теснота, виденная у S (non-resident), у XS не обязательна.",
+    "Финальный потолок фиксируется замером после лествицы; весь дальнейший прогон — на нём.",
+    "Для XS дельта-микробенч до/после калибровки по протоколу не делается (только XXS)."
+  ],
+  "session_log": [
+    "20:14:47Z baseline: RAM avail 56988 MiB, swap 716 MiB, GPU0 15919, GPU1 15187 MiB; watch.log стартовал (pid 145227)",
+    "20:16–20:20Z лествица потолка: смоук 32768 OK (2070/1708); 131072 OK с 1-й попытки (1380/1706, обе ≥1 GiB); 262144 с cache 6800 → CUDA0 160 MiB LOW (стартует, но критерий не выполнен); 262144 с cache 5400 → OK (2176/1706), PASS",
+    "20:20:47–20:26:54Z калибровка ~6 мин → pcie-frac 0.20, spec-min-p 0.70 (adaptive не записан: дефолт-tier 172.4 vs adapt 174.9 tok/s); модель стартовала сама на 262144, стартовая строка 2176/1706 MiB",
+    "20:27–20:33Z bench.sh full EXIT 0: chat decode мед 144.90 tok/s (135.6–189.3, n=9), TTFT 0.20 c (0.18–0.22); 4K prefill 2698.2 tok/s (TTFT 1.50 c); 16K 4430.9 (TTFT 3.64 c); agent hit 68.63 %, re-read 74 tok, turn TTFT 1.34, turn decode 154.70 (102.7–188.7)",
+    "20:34–20:35Z bench.sh --long EXIT 0: 32K prefill 4886.5 tok/s (TTFT 6.59 c); (этот же прогон: chat 143.5 / 16K 4413.2 / agent 150.3 — согласуется)",
+    "20:35:16Z gaps.json/gaps_raw.txt — forced tool 200; structured+tools 400; json_schema без tools 200; невалидный effort 400; xhigh/low 200 (профиль = XXS/S)",
+    "20:35–20:36:40Z ceiling ×3 (232118 tok = 88.5 %): fresh prefill 4571.7 (TTFT 50.9 c); reuse → TTFT 0.074 c; decode при полном KV мед 136.4 (127.0–139.1, engine 151.8–165.7); VRAM min 2103/1611",
+    "20:37:49Z longgen done: 4096/4096 tok @ 156.4 tok/s wall (движок 159.7) при KV ~157k; prefill 4635.0; admission 81.9 %; VRAM min 2103/1607",
+    "20:37:5?–20:39:26Z multiturn 15×16000 done: до 240258 tok (92 %), reuse каждый тур (read ~16010), TTFT 4.0–4.8 c; VRAM min 2103/1607; decode None с тура 3 (EOS-артефакт temp 0, как в S)",
+    "20:40–20:41Z agent-live (--standalone): 4 запроса 14450 cold → 14569 reused → 16890 reused (+3788 read) → 21565 = 20722 reused + 843 read, decode 995 tok @ 162.8 tok/s, admission 73.5 %; отчёт качественный; side-запросы до/после холодные (18 tok, 0 reused)",
+    "20:41:28–20:42:28Z vision-smoke: секция vision (бэкап pre-vision), рестарт images:true (стартовая строка 2172/1706), CPU-encoder 2 пробы корректны: 2.40/2.14 c, 134 img+text tok, engine decode 171.1/180.0",
+    "20:48:44–20:51:30Z soak (soak-iq2_xs.sh — копия scripts/soak.sh с cold-стартами на iq2_xs): 3 холодных старта XS по **17/16/16 c**; цикл переключений iq2_xs 16 c / iq3_s 24 c / iq3_xxs 16 c; после останова RAM avail 57306 MiB, своп 1365 MiB. PASS",
+    "20:52Z watch погашен (pid 145227); финализация: RAM avail 57306 MiB, своп 1365 MiB (бейслайн 716) — среда вернулась",
+    "20:52Z watch-аннотации: за окно GPU1 free min **1605 MiB** (линия ≥512 не тронута; лучшая из трёх моделей), GPU0 min 2103 (рабочий профиль; 161 — транзиент отброшенной попытки), RAM avail min 6047 MiB (только при загрузке весов S в soak-цикле), своп макс 2167 MiB (+1451 от бейслайна, пике в цикле на S; порог +2 GiB не тронут), NVMe-пики 13.4–13.7 GB/s — ТОЛЬКО фазы загрузки весов; на движковых этапах 0.0–0.3 MB/s — disk-storm нет"
+  ],
+  "calibrate": {
+    "minutes": 6,
+    "console": "/opt/strata/cal-iq2_xs-console.log",
+    "measured": [
+      "pcie-frac (мед 3 раундов): 0 → 158.9, 0.2 → 167.7, 0.35 → 156.6, 0.55 → 148.5, 0.75 → 140.8, 0.9 → 137.0, 1 → 124.3 tok/s → best 0.2",
+      "prompt chunks b/a 768/1536/3072/6144: 2946/2965/2955/2963 tok/s",
+      "CPU workers: 15 → 163.4, 10 → 161.5, 8 → 161.2, 4 → 153.5 tok/s",
+      "expert tier: движковый дефолт 172.4; adaptive 1/80/0.97 → 172.8; adaptive 1/160/0.97 → 174.9 tok/s"
+    ],
+    "settings_written": ["--pcie-frac 0.20", "--spec-min-p 0.70"],
+    "note": "adaptive-аргументы записаны НЕ были (в отличие от калиброванного XXS/S, где адаптив в конфиге) — калибратор оставил движковый default expert-tier; chunk 4096 / cache 5400 сохранены"
+  },
+  "statuses": {
+    "calibrate": "done (~6 мин, настройки в конфиге; adaptive не записан — см. calibrate.note)",
+    "chat": "done — decode мед 144.90 tok/s (135.6–189.3), TTFT 0.20 c (0.18–0.22; калиброванное; дельта до/после по протоколу для XS не меряется)",
+    "16K": "done — prefill 4430.9 tok/s, TTFT 3.64 c",
+    "32K": "done — prefill 4886.5 tok/s, TTFT 6.59 c",
+    "agent-bench": "done — hit 68.63 %, re-read 74 tok/сессия, turn decode мед 154.70 tok/s, last-turn prompt 14555 tok",
+    "ceiling": "done, pass — 232118 tok (88.5 % от 262144) ×3; fresh prefill 4571.7 tok/s (TTFT 50.9 c); reuse → TTFT 0.074 c; decode при полном KV мед 136.4 (127.0–139.1); VRAM min GPU0 2103 / GPU1 1611 MiB",
+    "longgen": "done — 4096 tok @ 156.4 tok/s wall (движок 159.7) при KV ~157k; admission 81.9 %; prefill 4635.0 tok/s; VRAM min 2103/1607 MiB",
+    "gaps": "done — forced tool choice 200 (работает); structured+tools → 400; json_schema без tools → 200; невалидный effort → 400 со словарём; xhigh 200; low 200 (профиль = XXS/S)",
+    "agent-live": "done, headless — 4 запроса: req1 14450 tok cold read @3394.6 tok/s; req2 16832 = 14569 reused + 2263 read; req3 20678 = 16890 reused + 3788 read; req4 21565 = 20722 reused + 843 read, decode 995 tok @ 162.8 tok/s (admission 73.5 %). Отчёт качественный (публичные ID через пины профилей, stripParams/useModelName по файлам, 4 наблюдения). Side-запросы до/после: 18 tok = 0 reused (холодные) — prefix-cache в агентном цикле работает (reused растёт 14569→20722)",
+    "multiturn": "done, pass — 15 туров ×16000: промпт вырос до 240258 tok (92 % потолка), reuse каждый тур (read ~16010), TTFT 4.0–4.8 c, VRAM min 2103/1607 MiB; decode None с тура 3 (ответы 2 tok — EOS при temp 0 на filler-подтверждении, тот же артефакт данных, что в S)",
+    "vision-smoke": "done, pass — секция vision в конфиге (бэкап pre-vision), CPU-encoder, mmproj Q8_0: 2 пробы ОБЕ КОРРЕКТНЫ (объекты+цвета), 200 за 2.40/2.14 c, img+text prompt 134 tok, engine decode 171.1/180.0 tok/s, prompt_ms 648/458; VRAM GPU1 min 1706 (стартовая строка) — геометрия unchanged",
+    "soak": "done, pass — 3 холодных старта XS: READY 17/16/16 c; цикл переключений iq2_xs 16 c / iq3_s 24 c / iq3_xxs 16 c; после останова RAM avail 57306 MiB, своп 1365 MiB (net +650 от бейслайна 716). soak.log"
+  },
+  "thresholds_audit": {
+    "gpu1_min_MiB": 1605,
+    "gpu0_min_MiB": "2103 (рабочий профиль; 161 — транзиент отброшенной попытки 2 с cache 6800)",
+    "ram_avail_min_MiB": 6047,
+    "swap_max_MiB": 2167,
+    "swap_growth_from_baseline_MiB": "+1451 (пик, момент цикла на S); net за окно +650",
+    "nvme": "пики 13.4–13.7 GB/s только в фазах загрузки весов (лествица, калибровка, vision-рестарт, soak); на движковых этапах 0.0–0.3 MB/s — disk-storm нет",
+    "hang": "не зафиксировано; падений движка 0, ретраев 0"
+  },
+  "resumption_note": {
+    "utc": "2026-10-19 03:23Z",
+    "fact": "контрольный визит-подтверждение после паузы (вывод сессии оборвался, окно уже было закрыто в 20:52Z): сервер Strata остановлен (pgrep пуст), watch не активен (закрыт финализацией, watch.log завершён 20:52:18Z), docker/monitoring не тронут",
+    "host_now": "RAM avail ~56.4 GiB (56 432 MiB), swap 1245 MiB — своп частично остался от окна (бейслайн был 716, после soak 1365; вернётся после штатной выгрузки, наблюдение Study не требует очистки)",
+    "baseline_change": "нет — бейслайн остаётся 56988/716 MiB от 20:14:47Z"
+  },
+  "verdict_final": "Окно IQ2_XS закрыто полностью: все сценарии протокола done/pass. Потолок 262144 (максимальный из трёх моделей, лествица cache 6800→5400).Decode 144.9/154.7/136.4/156.4 tok/s (chat/agent/ceil-KV/longgen), prefill 2698→4886 tok/s на 4K→32K, fresh 232k prefill 4571.7. Пороги: GPU1 min 1605, RAM min 6047, swap пик +1451 — всё в норме; лучшая из трёх по VRAM/RAM. IQ2_XS — стабильно."
+}

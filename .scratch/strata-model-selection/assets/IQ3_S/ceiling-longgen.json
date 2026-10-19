@@ -1,0 +1,25 @@
+{
+ "scenario": "longgen",
+ "repeats": [
+  {
+   "ok": true,
+   "ttft_s": 12.897,
+   "total_s": 37.265,
+   "prompt_tokens": 59063,
+   "reused_tokens": 0,
+   "read_tokens": 59063,
+   "generated_tokens": 4500,
+   "decode_tps": 174.1,
+   "engine_decode_tps": 184.5,
+   "engine_prompt_tps": 4594.3,
+   "prompt_ms": 12855.7,
+   "drafts_offered": 3399,
+   "drafts_accepted": 3169,
+   "vram_min_mib": {
+    "0": 683,
+    "1": 1352
+   },
+   "prompt_built_tokens": 59051
+  }
+ ]
+}

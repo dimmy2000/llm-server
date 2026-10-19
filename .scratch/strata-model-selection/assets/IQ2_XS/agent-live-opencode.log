@@ -1,0 +1,36 @@
+[0m
+> build · qwen3.8-27b
+[0m→ [0mRead router/config.yaml 
+[0m→ [0mRead router/config.d/10-llama.yaml 
+[0m✱ [0mGlob "docs/adr/0006-*.md" [90m1 match[0m
+> build · qwen3.8-27b
+[0m→ [0mRead docs/adr/0006-single-endpoint-llama-swap-orchestrator.md 
+> build · qwen3.8-27b
+[0m→ [0mRead router/config.d/20-ninfer.yaml 
+> build · qwen3.8-27b
+## Краткий отчёт
+
+### Где объявлены публичные model-ID
+
+- **Публичный ID ровно один — `qwen3.8-27b`**, и он объявлен не как модель, а через **пины профилей** в `router/config.yaml` (`profiles.llama.pins` и `profiles.ninfer.pins`). Сами движки — записи `backend-llama`/`backend-ninfer` с `unlisted: true`, то есть публичных ID у них нет; наружу выходит только имя, на которое их пинит активный профиль. Неактивный движок закрыт пином `~` → прямой запрос даёт 404.
+- В ADR-0006 это зафиксировано как решение п. 2: «один model-ID `qwen3.8-27b` на `http://localhost:8080`», старые алиасы `-chat-*`/`-agent-*` удалены без backcompat.
+- Двойник имени: в NInfer тот же `qwen3.8-27b` продублирован как `--model-id` движка (`20-ninfer.yaml`, строка 25) — это требование самого `ninfer-serve`, а не llama-swap.
+
+### stripParams / useModelName
+
+| Файл | Что объявлено | Зачем |
+|---|---|---|
+| `config.d/10-llama.yaml` | `filters.stripParams: "repetition_penalty"` | NInfer отвечает 400 при значении ≠ 1, llama.cpp такого имени не знает вовсе |
+| `config.d/20-ninfer.yaml` | `filters.stripParams: "repetition_penalty"` | симметрично — тот же 400 у NInfer |
+| `config.d/20-ninfer.yaml` | `useModelName: qwen3.8-27b` | `ninfer-serve` отклоняет запрос, если `request.model != --model-id`; llama-swap обязан переписать имя (в т.ч. из пина) |
+
+На llama.cpp-стороне `useModelName` нет — там не стрипается `repeat_penalty` (llama.cpp-only knob, NInfer молча игнорирует). Это единственные правки тела запроса во всей топологии; sampling-пресеты живут в `cmd` и клиентскими полями перекрываются.
+
+### Наблюдения по структуре
+
+1. **Разделение ответственности по слоям чистое:** `config.yaml` содержит только глобалы + hooks + профили с пинами (ничего про движки), `config.d/NN-*.yaml` — по одному движку на файл (только `cmd`, env, capabilities, filters). Ни в одном файле нет ни `setParams`, ни `setParamsByID` — сервер действительно не имеет мнения о reasoning, контракт клиентский.
+2. **Имя модели живёт в трёх местах одновременно** (пин в профиле, `useModelName`, `--model-id` движка) и должно совпадать; это единственная точка, где расхождение даёт реальную ошибку запроса, а не косметику. При этом `status: unloaded` у пин-записи в `/v1/models` — hardcode v265 для пинов, правдивое состояние только через `/api/profiles`, SSE или upstream-`/health`.
+3. **Комментарии в файлах — не пояснения, а нормативная часть контракта** (ссылки на issues/12–14 и ADR-0006 прямо в YAML): объяснено, почему `sendLoadingState: false`, почему стартовый 404 на прелоаде — косметика, почему `none` инертен на llama.cpp. Это делает конфиг самодокументируемым, но связывает файлы с ADR: правка без пересмотра ADR легко ломает задокументированный контракт.
+4. Мелкое несоответствие по объёму: `10-llama.yaml` описывает llama.cpp как «thinking-пресет, совпадающий с NInfer», но в ADR у NInfer пресет mode-aware — совпадение только в thinking-ветке. На практике это не конфликт (llama.cpp-флаги = дефолты), однако при чтении файла без ADR легко решить, что пресеты идентичны всегда.
+
+Файлы не изменял.

@@ -1,0 +1,30 @@
+Vision-smoke IQ3_XXS (2026-10-18, окно XXS-сессии)
+
+Конфигурация
+- mmproj: Q8_0, локальное квантование BF16→Q8_0 (llama-quantize, CPU-сборка b10438-дерева third_party):
+  865.48 MiB (16.17 BPW) → 588.12 MiB (10.99 BPW); 27/334 тензоров fallback.
+  SHA-256: assets/IQ3_XXS/mmproj-Q8_0.sha256
+- Энкодер: strata-vision, собран CPU (cmake tools/vision -DSTRATA_VISION_CUDA=OFF -DLLAMA_DIR=third_party/llama.cpp,
+  ninja, venv-cmake 4.4.3; GGML_CUDA не нужен) → engine/strata-vision.
+- Секция vision (strata-iq3_xxs.json): exe engine/strata-vision, mmproj Q8_0, model = native shard1,
+  gpu: false, threads 8, max_tokens 1024; аргумент --vision добавлен в args (калиброванные args не тронуты —
+  бэкап strata-iq3_xxs.pre-vision.json).
+
+Прогоны (порт 8081, чат по протоколу, русские вопросы)
+1) 640x480 JPEG (синий фон, белый квадрат слева-внизу, красный круг справа-вверху):
+   HTTP 200 за 2.88 c; ответ «Синий фон, белый квадрат (слева внизу) и красный круг (справа вверху).» — КОРРЕКТНО.
+   prompt 377 токенов (изображение), read 935 мс (403.2 tok/s), ген 73 токена @ 151.9 tok/s,
+   MTP admission 45/56.
+2) 512x512 JPEG (зелёный треугольник, жёлтый круг):
+   HTTP 200 за 2.26 c; ответ «Зелёный треугольник и жёлтый круг.» — КОРРЕКТНО.
+   prompt 325, read 695 мс (467.8 tok/s), ген 79 @ 175.8 tok/s, admission 48/60.
+
+Телеметрия
+- strata-vision: «model files loaded in 0.3 s», CPU 8 потоков без прогрева; кодирование одной картинки
+  ~0.9-1.2 c внутри wall-clock запроса (остальное — GPU prefill/decode).
+- watch.log (окно vision): GPU0 min 727 MiB, GPU1 min 1604 MiB (линия ≥512 MiB держится),
+  RAM avail min 11.2 GiB, своп 573 MiB (базовый уровень, не рос).
+- RAM-цена Q8_0 mmproj ≈ 0.58 GiB (против 0.88 GiB BF16); VRAM-цены нет (энкодер целиком на CPU).
+
+Вердикт: vision-smoke PASS — образы доходят, ответы корректны, Q8_0 mmproj работает на CPU-энкодере
+и «дешевле» по RAM, red-line VRAM не нарушена.
