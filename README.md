@@ -230,12 +230,3 @@ docker compose build llama-swap
 # Скачивание артефакта NInfer с проверкой SHA-256
 ./router/fetch-model.sh
 ```
-
-## Мониторинг
-
-Grafana, Prometheus, Loki и nvidia-smi-exporter находятся в отдельном проекте
-`llm-monitoring`. Его launcher принимает профиль вторым аргументом
-(`./llm-stack.sh up ninfer`) и мапит `llama`/`ninfer` на контейнер
-`llama-swap`; для `vllm` он исключает всегда-поднимающийся роутер, чтобы не
-конфликтовать за `:8080`. GPU-метрики и promtail/Loki-логи контейнеров от
-профиля не зависят.

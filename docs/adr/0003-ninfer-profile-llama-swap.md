@@ -24,8 +24,8 @@ upstream `Neroued/ninfer` публикует только одноплатовы
 3. Compose-сервис называется `ninfer-swap`, а контейнер — `llama-swap`.
    Имя сервиса обязано отличаться от `llama-swap` из `llama/docker-compose.yaml`:
    compose `include` молча сливает сервисы с одинаковым именем (проверено на
-   compose 5.5.1). Имя контейнера оставлено прежним, чтобы внешние потребители
-   (`docker logs`, дашборды) не зависели от движка за маршрутизатором.
+   compose 5.5.1). Имя контейнера оставлено прежним, чтобы внешний потребитель
+   (`docker logs`) не зависел от движка за маршрутизатором.
 4. Публичные model-ID не меняются: `qwen3.8-27b` (instruct) плюс шесть
    алиасов `-chat-{low,medium,xhigh}` и `-agent-{low,medium,xhigh}`.
    Разница между `chat-*` и `agent-*` — только `preserve_thinking`

@@ -122,6 +122,6 @@ VRAM по обеим картам, ищет в dmesg `Xid`/`NVRM`/CUDA-ошиб�
 свободной VRAM GPU1.
 
 Красная линия проекта: **под пиковой нагрузкой на дисплейной GPU1 ≥ 512 MiB
-свободной VRAM**. GPU-метрики в мониторинге — `llm-*` (nvidia-smi-exporter,
-Prometheus/Grafana в `llm-monitoring`); Xid и CUDA-ошибки удобнее смотреть
-через `soak.sh` (dmesg), VRAM — через дашборд или тот же лог soak-а.
+свободной VRAM**. Xid и CUDA-ошибки удобно смотреть через `soak.sh` (dmesg),
+свободную VRAM — через `nvidia-smi` или тот же лог soak-а (раз в секунду
+`free` VRAM по обеим картам).

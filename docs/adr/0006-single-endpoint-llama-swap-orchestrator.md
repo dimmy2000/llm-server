@@ -153,8 +153,7 @@ loading-state нет. Непустой `reasoning_content` на первом з�
 
 ## Последствия
 
-- Потребители: opencode — один ID `llama-swap/qwen3.8-27b` + варианты; launcher
-  `llm-monitoring` мапит `llama`/`ninfer` на `llama-swap`; старые ID
+- Потребители: opencode — один ID `llama-swap/qwen3.8-27b` + варианты; старые ID
   (`qwen3.8-27b-chat-*`/`-agent-*`) и compose-профили `llama`/`ninfer` не
   работают — миграция завершена, backcompat-алиасов нет.
 - Косметика, правки не требует: `[ERROR] failed to preload model
