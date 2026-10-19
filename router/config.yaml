@@ -19,12 +19,11 @@ logLevel: info
 logToStdout: both
 # Баннер загрузки llama-swap стримит только в `delta.reasoning_content`
 # (internal/router/loading.go, sendData — канал зашит в код, настроить нельзя),
-# а потребители loading-state нет: monitoring-стек `reasoning_content` не
-# читает, opencode показал бы баннер как reasoning модели. Непустой
-# `reasoning_content` на первом запросе после смены профиля ломал бы контракт
-# «клиент управляет reasoning» — выключено (issues/13, ADR-0006). Плата:
-# первый запрос после переключения движка молчит 40–60 c (llama.cpp) без
-# in-stream индикатора.
+# а потребители loading-state нет: opencode показал бы баннер как reasoning
+# модели. Непустой `reasoning_content` на первом запросе после смены профиля
+# ломал бы контракт «клиент управляет reasoning» — выключено (issues/13,
+# ADR-0006). Плата: первый запрос после переключения движка молчит 40–60 c
+# (llama.cpp) без in-stream индикатора.
 sendLoadingState: false
 
 # NInfer прелоадится на старте и активен по умолчанию: публичный ID есть сразу
@@ -52,14 +51,42 @@ hooks:
 # /v1/chat/completions, и на /upstream/<model>/…). Дефолтная exclusive-группа
 # (swap: true, exclusive: true) гарантирует, что движки никогда не работают
 # параллельно. Селекторов нет — автоматического выбора движка по запросу нет.
+#
+# Страта-ID (strata-iq3/strata-iq2, shim-модели из config.d/30-strata.yaml)
+# придерживаются той же ручной дисциплины: в родительских профилях они
+# закрыты пином `~` (не трогают резидентный родительский движок); strata-
+# профили закрывают родителя и соседний страта-размер (резидентен должен
+# быть только выбранный). Переключение только
+# вручную: PUT /api/profiles/active (см. «Переключение движков»).
+# Дефолтная exclusive-группа при первом запросе к страта-ID сама останавливает
+# родительский дочерний процесс (выставленный VRAM) — но нативный юнит Strata
+# llama-swap не грузит и не выгружает: это работа strata-use.sh.
 profiles:
   llama:
     description: "llama.cpp active (single public ID qwen3.8-27b)"
     pins:
       qwen3.8-27b: backend-llama
       backend-ninfer: ~
+      strata-iq3: ~
+      strata-iq2: ~
   ninfer:
     description: "NInfer TP=2 active (single public ID qwen3.8-27b)"
     pins:
       qwen3.8-27b: backend-ninfer
       backend-llama: ~
+      strata-iq3: ~
+      strata-iq2: ~
+  strata-iq3:
+    description: "Strata IQ3_XXS active (native unit :8081 must be running)"
+    pins:
+      qwen3.8-27b: ~
+      backend-llama: ~
+      backend-ninfer: ~
+      strata-iq2: ~
+  strata-iq2:
+    description: "Strata IQ2_XS active (native unit :8081 must be running)"
+    pins:
+      qwen3.8-27b: ~
+      backend-llama: ~
+      backend-ninfer: ~
+      strata-iq3: ~

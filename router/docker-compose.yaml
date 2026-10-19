@@ -1,12 +1,11 @@
 services:
   # Сервис без ключа `profiles:` — поднимается всегда, в т.ч. при вызове с
-  # любым `--profile`: команды `docker compose up -d` и прежние
-  # `--profile llama|ninfer` из launcher'а `llm-monitoring` продолжают его
-  # запускать. Профилей, выражающих «какой движок», больше нет: выбор движка
-  # живёт внутри контейнера (активный профиль llama-swap, см. config.yaml).
+  # любым `--profile`. Профилей, выражающих «какой движок», больше нет:
+  # выбор движка живёт внутри контейнера (активный профиль llama-swap,
+  # см. config.yaml).
   #
-  # Имя контейнера оставлено `llama-swap`: дашборды llm-monitoring,
-  # `docker logs/exec/restart llama-swap` и promtail/Loki работают без правок.
+  # Имя контейнера — `llama-swap`: по нему работают `docker logs/exec/restart
+  # llama-swap` и UI llama-swap.
   llama-swap:
     image: llm-server/router:v265
     build:
@@ -22,6 +21,13 @@ services:
     container_name: llama-swap
     ports:
       - "8080:8080"
+    # host.docker.internal → шлюз docker-bridge (дефолт 172.17.0.1, docker0):
+    # единственный сетевой мост к нативному Strata на хосте (:8081,
+    # config.d/30-strata.yaml). Нативный сервер привязан к этому же адресу,
+    # поэтому LAN-интерфейсы не публикуются. host-gateway расширяется в
+    # дефолт docker0 — если менять его флагом демона, поменять и привязку.
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     deploy:
       resources:
         reservations:
