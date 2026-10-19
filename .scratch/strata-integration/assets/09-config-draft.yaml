@@ -1,0 +1,98 @@
+# Черновик конфига llama-swap — артефакт тикета 09 (grilling 2026-10-19).
+# НЕ для прямого применения: реализация (пути, маунты, пороги в cmd) — тикет 10.
+# Комментарии в целевых файлах — минимальные и стабильные; нюансы, история
+# решений и тайминги живут в документации проекта (ADR-0006/0007,
+# docs/runbook-strata.md, docs/research/), не в конфигах.
+
+# ============================================================================
+# router/config.yaml
+# ============================================================================
+
+healthCheckTimeout: 600
+logLevel: info
+logToStdout: both
+sendLoadingState: false   # см. issues/13, ADR-0006
+
+# Профили задают только движок родителя для qwen3.8-27b. strata-iq3/iq2 не
+# запинены и переключаются автоматически по запросам (дефолтная
+# exclusive-группа v265). Ручное переключение движка родителя —
+# PUT /api/profiles/active; подробности — docs/runbook-strata.md, ADR-0007.
+hooks:
+  on_startup:
+    profile: ninfer
+    preload:
+      - backend-ninfer
+
+profiles:
+  llama:
+    description: "Движок родителя: llama.cpp"
+    pins:
+      qwen3.8-27b: backend-llama
+  ninfer:
+    description: "Движок родителя: NInfer TP=2 (дефолт)"
+    pins:
+      qwen3.8-27b: backend-ninfer
+
+# ============================================================================
+# router/config.d/30-strata.yaml
+# ============================================================================
+
+# Движок Strata — ребёнок llama-swap в роутер-контейнере; автостарт по
+# запросу, RAM-гейт в cmd (fail fast, без ретраев). Контракт strata-ID и
+# порядок переходов — ADR-0007 и docs/runbook-strata.md.
+
+models:
+  strata-iq3:
+    name: "Strata IQ3_XXS"
+    description: "Qwen3.8-Flash-Next IQ3_XXS @131072"
+    cmd: |
+      sh -c 'need=48234496;                                                        # 46 GiB в KiB
+             avail=$(awk "/^MemAvailable:/{print \$2}" /proc/meminfo);
+             if [ "$avail" -lt "$need" ]; then
+               echo "strata-iq3: RAM gate: need 46GiB, available $((avail/1024))MiB" >&2;
+               exit 1;
+             fi;
+             exec python /opt/strata/serve/server.py --engine strata
+                  --config /opt/strata/strata-iq3_xxs.container.json --port 8081'
+    proxy: http://127.0.0.1:8081
+    checkEndpoint: /health
+    capabilities:
+      in: [text, image]
+      out: [text]
+      tools: true
+      context: 131072
+    filters:
+      stripParams: "repetition_penalty"
+
+  strata-iq2:
+    name: "Strata IQ2_XS"
+    description: "Qwen3.8-Flash-Next IQ2_XS @262144"
+    cmd: |
+      sh -c 'need=37748736;                                                        # 36 GiB в KiB
+             avail=$(awk "/^MemAvailable:/{print \$2}" /proc/meminfo);
+             if [ "$avail" -lt "$need" ]; then
+               echo "strata-iq2: RAM gate: need 36GiB, available $((avail/1024))MiB" >&2;
+               exit 1;
+             fi;
+             exec python /opt/strata/serve/server.py --engine strata
+                  --config /opt/strata/strata-iq2_xs.container.json --port 8081'
+    proxy: http://127.0.0.1:8081
+    checkEndpoint: /health
+    capabilities:
+      in: [text, image]
+      out: [text]
+      tools: true
+      context: 262144
+    filters:
+      stripParams: "repetition_penalty"
+
+# ============================================================================
+# Заметки к реализации (тикет 10, в целевые файлы не идут):
+# - multi-line cmd — схематичный (оформить как в 10-llama.yaml);
+# - compose: memlock ulimit=-1, маунты RO /opt/strata/{models,packs,mtp,data},
+#   контейнерные конфиги *.container.json (host: 0.0.0.0);
+# - демонтаж: strata-use.sh, strata.service, strata-stop, watchdog-шимы,
+#   /etc/strata/active.json, страта-профили; extra_hosts: host-gateway —
+#   снять, если больше не нужен;
+# - сборка движка в роутер-образе по upstream-пути /opt/strata/Dockerfile.
+# ============================================================================
