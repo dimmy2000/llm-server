@@ -1,53 +1,37 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/mostlygeek/llama-swap/refs/heads/main/config-schema.json
 #
-# Страта-контракт: два видимых публичных ID — strata-iq3 (IQ3_XXS @131072) и
-# strata-iq2 (IQ2_XS @262144) — рядом с родительским qwen3.8-27b. Движок живёт
-# НАТИВНО на хосте (`/opt/strata`, systemd-юнит, порт 8081; переключение
-# ролей — `strata-use.sh`): llama-swap его не запускает и не останавливает.
+# Движок Strata — обычный ребёнок llama-swap в роутер-контейнере (ADR-0008):
+# автостарт по запросу к strata-iq3/strata-iq2, останов — вытеснением
+# дефолтной exclusive-группой (запрос к qwen3.8-27b) или UI (PowerOff =
+# SIGTERM, graceful QUIT движка). Ручных профилей и нативного юнита больше
+# нет; схема — router/config.yaml, ADR-0008.
 #
-# Механика shim-модели (feasibility selection-карты, тикет 02; ADR-0007):
-# llama-swap умеет только дочерние процессы (`cmd` обязателен), поэтому
-# процесс-носитель — «пустышка», а `proxy` ведёт на чужой уже работающий
-# сервер. `checkEndpoint: /health` llama-swap поллит до 200; exit процесса
-# во время поллинга → prematureExit, process_command.go:596.
+# cmd исполняется llama-swap БЕЗ shell (shlex-сплит), поэтому RAM-гейт — в
+# скрипте-лаунчере /app/strata/strata-launch.sh: при нехватке MemAvailable
+# мгновенный отказ с причиной (fail fast, без ретраев), иначе exec server.py.
+# Пороги унаследованы от strata-use.sh (решение 08): 46 ГиБ (iq3) / 36 ГиБ
+# (iq2) — page-locked эксперты 47/36 ГиБ + запас.
 #
-# WATCHDOG-shim: у llama-swap v265 пер-модельный healthCheckTimeout не
-# работает (load.go:136 перезаписывает его глобальным, у нас 600 c), поэтому
-# fast-fail при остановленном юните даёт сам cmd: shim живёт, только пока
-# нативный /health отвечает; refusal при старте → exit за ~2 c →
-# prematureExit → ошибка запроса сразу, без 600 c ожидания. Если юнит умирает
-# под живым shim — watcher выходит, и следующий запрос фейлится так же
-# быстро.
-#
-# Порт 8081 свободен (как в selection-карте). Привязка
-# нативного сервера — шлюз docker-bridge (172.17.0.1, docker0); контейнер
-# достаёт его через host-gateway (`extra_hosts:` в router/docker-compose.yaml).
-# Шлюзовое имя host.docker.internal при небэкап-привязке Strata уже допущено
-# её DNS-rebinding защитой (serve/server.py: host_names_for добавляет
-# host.docker.internal для не-loopback привязки). LAN-интерфейсы не
-# публикуются — с других хостов сервер не виден.
-#
-# Ответы Strata не зависят от имени запроса: `useModelName` не нужен
-# (OPENAI-путь: любой model отрабатывает, serve/server.py model_for), но
-# поле `model` в ответе — канон native-ID `qwen3.8-flash-next-iq*_…`
-# (llama-swap тело ответа не переписывает): имя запроса в ответ не
-# возвращается.
-#
-# Честность «ID ↔ загруженный размер» llama-swap не проверяет: /health
-# нативного сервера отвечает 200 при любом размере (дискриминатор — поле
-# `model` payload'а); рассинхрон ловит strata-use.sh. Пины профилей закрывают
-# видимое для llama-swap: в strata-профилях закрыты родитель и соседний
-# размер (`~` → 404), в родительских — strata-ID (см. router/config.yaml).
+# Артефакты: веса/паки/mtp/expert-profile — RO-маунты /opt/strata/{models,
+# packs,mtp,data} (compose); конфиги — /app/strata/*.container.json (копии
+# нативных с host 0.0.0.0); движок — /opt/strata/engine из образа. Контракт
+# strata-ID (reasoning-словарь none|low|medium|high, field model в ответе —
+# канон native-ID, llama-swap его не переписывает) — ADR-0007. Холодный старт
+# ~15–25 c, окна молчания клиентов — docs/runbook-strata.md.
 #
 # Изменение файла требует перезапуска llama-swap.
 
 models:
   strata-iq3:
     name: "Strata IQ3_XXS"
-    description: "Qwen3.8-Flash-Next IQ3_XXS @131072, нативный движок на хосте (:8081); юнит должен быть запущен strata-use.sh"
+    description: "Qwen3.8-Flash-Next IQ3_XXS @131072"
     cmd: |
-      sh -c 'while curl -sfm 2 http://host.docker.internal:8081/health >/dev/null 2>&1; do sleep 1; done'
-    proxy: http://host.docker.internal:8081
+      /app/strata/strata-launch.sh
+      48234496
+      /app/strata/strata-iq3_xxs.container.json
+      ${PORT}
+    proxy: http://127.0.0.1:${PORT}
+    checkEndpoint: /health
     capabilities:
       in: [text, image]
       out: [text]
@@ -58,10 +42,14 @@ models:
 
   strata-iq2:
     name: "Strata IQ2_XS"
-    description: "Qwen3.8-Flash-Next IQ2_XS @262144, нативный движок на хосте (:8081); юнит должен быть запущен strata-use.sh"
+    description: "Qwen3.8-Flash-Next IQ2_XS @262144"
     cmd: |
-      sh -c 'while curl -sfm 2 http://host.docker.internal:8081/health >/dev/null 2>&1; do sleep 1; done'
-    proxy: http://host.docker.internal:8081
+      /app/strata/strata-launch.sh
+      37748736
+      /app/strata/strata-iq2_xs.container.json
+      ${PORT}
+    proxy: http://127.0.0.1:${PORT}
+    checkEndpoint: /health
     capabilities:
       in: [text, image]
       out: [text]

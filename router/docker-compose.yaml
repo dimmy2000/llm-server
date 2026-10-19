@@ -7,10 +7,14 @@ services:
   # Имя контейнера — `llama-swap`: по нему работают `docker logs/exec/restart
   # llama-swap` и UI llama-swap.
   llama-swap:
-    image: llm-server/router:v265
+    image: llm-server/router:v265-strata1
     build:
       context: .
       dockerfile: Dockerfile
+      # Исходники Strata для build-стадии Dockerfile (upstream checkout с
+      # движком в /opt/strata); в образ идут только бинарники и serve/.
+      additional_contexts:
+        - strata-src=/opt/strata
       args:
         LLAMA_SWAP_VERSION: v265
         LLAMA_SWAP_ASSET: llama-swap_265_linux_amd64.tar.gz
@@ -18,16 +22,17 @@ services:
         NINFER_VERSION: v0.4.6
         NINFER_ASSET: ninfer-tp2-v0.4.6-linux-x86_64-sm120a-ubuntu26.04.tar.gz
         NINFER_SHA256: aadbaaf99e3204fd97a5afe130254a7dd06430f404f1951c5d3ab74f8588c614
+        CUDA_ARCHITECTURES: "120"
     container_name: llama-swap
     ports:
       - "8080:8080"
-    # host.docker.internal → шлюз docker-bridge (дефолт 172.17.0.1, docker0):
-    # единственный сетевой мост к нативному Strata на хосте (:8081,
-    # config.d/30-strata.yaml). Нативный сервер привязан к этому же адресу,
-    # поэтому LAN-интерфейсы не публикуются. host-gateway расширяется в
-    # дефолт docker0 — если менять его флагом демона, поменять и привязку.
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+    # Page-locked память движков (NInfer-веса, Strata-эксперты 47/36 ГиБ):
+    # без ulimit memlock=-1 движок Strata падает на mlock (требование
+    # upstream /opt/strata/Dockerfile).
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
     deploy:
       resources:
         reservations:
@@ -40,6 +45,15 @@ services:
       NVIDIA_DRIVER_CAPABILITIES: compute,utility
     volumes:
       - /opt/models:/models:ro
+      # Веса/артефакты Strata — по абсолютным путям контейнерных конфигов
+      # (router/strata/*.container.json); RO — движок только читает.
+      - /opt/strata/models:/opt/strata/models:ro
+      - /opt/strata/packs:/opt/strata/packs:ro
+      - /opt/strata/mtp:/opt/strata/mtp:ro
+      - /opt/strata/data:/opt/strata/data:ro
+      # Лаунчер (RAM-гейт) и контейнерные конфиги Strata — с хоста: правка
+      # переживает restart контейнера, пересборка не нужна.
+      - ./strata:/app/strata:ro
       - ./config.yaml:/app/config.yaml:ro
       - ./config.d:/app/config.d:ro
     restart: unless-stopped

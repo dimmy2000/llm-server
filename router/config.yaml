@@ -1,92 +1,51 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/mostlygeek/llama-swap/refs/heads/main/config-schema.json
 #
-# Единая точка входа: один llama-swap, два движка (llama.cpp и NInfer) как
-# дочерние процессы. Публичный контракт — ровно один model-ID `qwen3.8-27b`;
-# активный профиль выбирает, какой движок за ним стоит, вручную:
+# Единая точка входа: три публичных ID — qwen3.8-27b (llama.cpp или NInfer) и
+# strata-iq3/strata-iq2 (Strata, config.d/30-strata.yaml). Профили задают
+# ТОЛЬКО движок родителя: переключение llama.cpp ↔ NInfer вручную,
 #
 #   PUT http://localhost:8080/api/profiles/active {"name":"llama"|"ninfer"}
 #
-# Записи движков `backend-llama` / `backend-ninfer` скрыты (`unlisted`) и
-# закрыты пином `~`, пока их профиль не активен: снаружи достижим только
-# `qwen3.8-27b`, и никакой запрос клиента не запускает swap. Sampling и
-# reasoning клиент задаёт сам (см. ADR-0006); llama-swap тело запроса почти не
-# правит.
+# strata-ID нигде не запинены и переключаются автоматически по запросам:
+# все модели без явного routing живут в одной дефолтной exclusive-группе
+# v265 (swap: старт целевого процесса до старта нового, RAM/VRAM-порядок
+# гарантирован). 404-ловушек пин-схемы нет — /v1/models всегда показывает
+# три рабочих ID. Схема конфига — ADR-0008; политика отказов (RAM-гейт в
+# cmd, fail fast без ретраев) — там же; окна молчания холодного старта —
+# docs/runbook-strata.md.
 #
-# Изменение файла требует перезапуска llama-swap.
+# Записи движков backend-* скрыты (unlisted); прямой запрос к ним работает
+# как к обычной модели exclusive-группы (снаружи API только localhost/LAN).
+# Sampling и reasoning клиент задаёт сам (ADR-0006).
+#
+# Изменение файла требует перезапуска llama-swap. Маунт одиночным файлом:
+# правка подменой файла (rename редактором) меняет инод — тогда
+# `docker compose up -d --force-recreate llama-swap`, обычный restart видит
+# старое содержимое.
 
 healthCheckTimeout: 600   # максимум прежних 300 (llama) / 600 (ninfer); отсчёт сбрасывается на прогрессе загрузки
 logLevel: info
 logToStdout: both
-# Баннер загрузки llama-swap стримит только в `delta.reasoning_content`
-# (internal/router/loading.go, sendData — канал зашит в код, настроить нельзя),
-# а потребители loading-state нет: opencode показал бы баннер как reasoning
-# модели. Непустой `reasoning_content` на первом запросе после смены профиля
-# ломал бы контракт «клиент управляет reasoning» — выключено (issues/13,
-# ADR-0006). Плата: первый запрос после переключения движка молчит 40–60 c
-# (llama.cpp) без in-stream индикатора.
-sendLoadingState: false
+sendLoadingState: false   # баннер стримится только в reasoning_content, потребителей нет (issues/13, ADR-0006)
 
-# NInfer прелоадится на старте и активен по умолчанию: публичный ID есть сразу
-# после старта и не «мигает». Прелоад статичен и последователен, поэтому
-# второй движок не греется — переключение на llama.cpp платит 40–60 c первым
-# запросом. `globalTTL` не задаём (0 — движок не выгружается по простою).
-#
+# NInfer прелоадится на старте и активен по умолчанию: публичный ID есть сразу.
 # Ожидаемо в старте: `[ERROR] failed to preload model backend-ninfer: status
-# 404`. Прелоад llama-swap дёргает прокси `GET /` (api.go startPreload), а
-# ninfer-serve на `/` отвечает 404 — warmup-эндпоинта у движка нет. Это
-# косметика: сам прелоад запускает дочерний процесс и «Health check passed»
-# подтверждает прогрев; процесс не выгружается (TTL 0), ошибку никто не
-# потребляет (ModelPreloadedEvent без подписчиков). При этом `/v1/models`
-# всегда показывает `unloaded` для пин-записей (hardcode в handleListModels,
-# v265 api.go) — реальное состояние: `/api/profiles`, SSE `/api/events` или
-# `GET /health` upstream-порта. Разбор — issues/12, ADR-0006.
+# 404` — у движка нет warmup-эндпоинта, прелоад при этом прогревает его
+# (issues/12, ADR-0006). globalTTL не задаём (0 — движок не выгружается по
+# простою); `status: unloaded` в /v1/models — косметика v265, реальное
+# состояние: /api/profiles или /health upstream-порта.
 hooks:
   on_startup:
     profile: ninfer
     preload:
       - backend-ninfer
 
-# Пины применяются до алиасов: пока профиль активен, `qwen3.8-27b` уходит в
-# его движок, а неактивный движок запрещён (`~` → 404, и на
-# /v1/chat/completions, и на /upstream/<model>/…). Дефолтная exclusive-группа
-# (swap: true, exclusive: true) гарантирует, что движки никогда не работают
-# параллельно. Селекторов нет — автоматического выбора движка по запросу нет.
-#
-# Страта-ID (strata-iq3/strata-iq2, shim-модели из config.d/30-strata.yaml)
-# придерживаются той же ручной дисциплины: в родительских профилях они
-# закрыты пином `~` (не трогают резидентный родительский движок); strata-
-# профили закрывают родителя и соседний страта-размер (резидентен должен
-# быть только выбранный). Переключение только
-# вручную: PUT /api/profiles/active (см. «Переключение движков»).
-# Дефолтная exclusive-группа при первом запросе к страта-ID сама останавливает
-# родительский дочерний процесс (выставленный VRAM) — но нативный юнит Strata
-# llama-swap не грузит и не выгружает: это работа strata-use.sh.
 profiles:
   llama:
-    description: "llama.cpp active (single public ID qwen3.8-27b)"
+    description: "Движок родителя: llama.cpp"
     pins:
       qwen3.8-27b: backend-llama
-      backend-ninfer: ~
-      strata-iq3: ~
-      strata-iq2: ~
   ninfer:
-    description: "NInfer TP=2 active (single public ID qwen3.8-27b)"
+    description: "Движок родителя: NInfer TP=2 (дефолт)"
     pins:
       qwen3.8-27b: backend-ninfer
-      backend-llama: ~
-      strata-iq3: ~
-      strata-iq2: ~
-  strata-iq3:
-    description: "Strata IQ3_XXS active (native unit :8081 must be running)"
-    pins:
-      qwen3.8-27b: ~
-      backend-llama: ~
-      backend-ninfer: ~
-      strata-iq2: ~
-  strata-iq2:
-    description: "Strata IQ2_XS active (native unit :8081 must be running)"
-    pins:
-      qwen3.8-27b: ~
-      backend-llama: ~
-      backend-ninfer: ~
-      strata-iq3: ~
