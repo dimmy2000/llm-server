@@ -118,7 +118,7 @@ TTFT 22.3 с) каждые 30 мин, движок `qwen3.8-27b-chat-medium`.
 **Остаток:** полный 24h-soak не отработан по времени (прерван вручную).
 Для повторного прогона (когда будет окно): `scripts/nvidia-p2p/soak.sh
 --hours 24 --outdir .../07-stability/soak-24h --model qwen3.8-27b-chat-medium
---long-prompt assets/05-ninfer-p2p/prompt-90k.txt --long-every 1800`; итог —
+--long-prompt assets/01-preflight/prompt-90k.txt --long-every 1800`; итог —
 `summary-*.txt`.
 
 ## Answer
