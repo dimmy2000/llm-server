@@ -1,6 +1,6 @@
 # Нативный lifecycle: systemd-юнит и оркестрирующий скрипт
 
-Status: open
+Status: resolved
 Type: task
 Blocked by:
 
@@ -34,3 +34,83 @@ Resolved when: рабочий цикл `strata-use.sh` гоняет все со�
 (llama → strata-iq3 → strata-iq2 → ninfer → off) без ручных шагов, RAM/VRAM не
 конфликтуют, `journald -u strata` показывает запуск; например, старт «cold» после
 ребута не захватывает VRAM повторно.
+
+## Comments
+
+### 2026-10-19 (субагент тикета 02): сделано — юнит + strata-use.sh, живой цикл всех пяти состояний
+
+**Файлы** (источник правды — репозиторий, установлен симлинками; сырьё —
+`../assets/02-cycle-log.md`):
+- `scripts/strata/strata-use.sh` — оркестратор `{llama|ninfer|strata-iq3|strata-iq2|off}`,
+  единственная точка правды (конвенции `scripts/nvidia-p2p/`: исполняемые скрипты в репо).
+- `scripts/strata/strata.service` — юнит; симлинком `/etc/systemd/system/strata.service`
+  (state `linked`, **автостарт выключен**: `is-enabled` → rc=1).
+- `scripts/strata/strata-stop` — ExecStop-добивание дерева; симлинком
+  `/usr/local/sbin/strata-stop`. `/etc/strata/active.json` (симлинк на конфиг размера)
+  ставит только скрипт; руками юнит без него не запустить (ExecStartPre).
+- `scripts/strata/README.md` — установка/использование/коды выхода (0..7).
+
+**Формат запуска движка** (проверен по `run-iq3_xxs.sh`/`run-iq2_xs.sh` и коду
+`serve/server.py`): `python serve/server.py --engine strata --config <json> --port 8081`;
+HTTP-листенер берёт порт ТОЛЬКО из CLI (default 8095 — `--port 8081` в юните обязателен),
+host — только из конфига (172.17.0.1); конфиги `/opt/strata/*.json` не тронуты.
+
+**Ответы на вопросы тела.**
+- *RAM-гигиена*: механизм — **unload через API убивает процесс родителя**,
+  page-locked RAM уходит за секунды (`POST /api/models/unload` = unload-all: оба
+  родительских бэкенда + shim-процессы, идемпотентно). Замер: llama.cpp резидентен →
+  unload → available 55.9 ГБ → через ~20 с юнит. Перед стартом скрипт требует available ≥
+  46 ГБ (iq3) / 36 ГБ (iq2) — отказ (exit 5) с подсказкой эскалации, если idle-cache не
+  освободился. Отказная ветка (unload не освободил RAM) live не проверена — механика
+  процесса-килла делает её невозможной, пока llama-swap жив.
+- *Дискриминатор рассинхрона*: `/health :8081` → `model` == native-ID конфига
+  (`qwen3.8-flash-next-iq3_xxs` / `-iq2_xs`) + `loaded: true`; профиль strata-iq3/iq2
+  ставится ТОЛЬКО после совпадения; симлинк проверяется до старта; юнит, работающий
+  чужим размером, корректно останавливается и перезапускается (проверено iq3→iq2).
+- *Расположение*: `scripts/strata/` по конвенции репо (образец `scripts/nvidia-p2p/`);
+  юнит и helper — симлинками на файлы репо (правки версионированы, полный доступ systemd).
+- *ExecStop*: TERM всему дереву (server.py, engine/strata, strata-vision) → ждать ≤10 с →
+  KILL → проверка; подстраховка systemd `KillMode=control-group` +
+  `TimeoutStopSec=25`; скрипт после останова ждёт ухода процессов и из
+  `nvidia-smi --query-compute-apps` (VRAM свободна, exit 7 если нет).
+- *Автовосстановление*: `Restart=no`, юнит не enable — после ребута VRAM не
+  захватывается (проверено cold-имитацией: daemon-reload → inactive, страта-процессов
+  нет, GPU свободны).
+
+**Живой цикл** (все `strata-use.sh`, нуль ручных шагов; тайминги wall-clock):
+llama (2 c) → прогрев llama.cpp запросом (12 c) → strata-iq3 (22.7 c; /health через
+20 с) → санити-decode strata-iq3 «Париж» 200/1 c → strata-iq2 из живого iq3 (18.8 c;
+/health 14 c) → санити-decode strata-iq2 «Мадрид» 200 → ninfer (3.2 c) → прогрев
+ninfer (8 c) → off (no-op) → не-тривиальный off: strata-iq3 → off (18.5+3.2 c).
+VRAM после останова юнита — карты пусты (15.9/15.3 ГБ); под живой Strata GPU1
+свободно 1.7 ГБ (iq3) / 1.7 ГБ (iq2) — красная линия 512 MiB держится. RAM-пики
+page-locked: iq3 ~44-47 ГБ (available 11.7-13.6 ГБ), iq2 ~36 ГБ (19.0 ГБ), после
+переходов available 52-57 ГБ. journald -u strata показывает запуск/останов
+(«Deactivated successfully», memory peak 51.8G). Идемпотентность: повтор
+strata-iq3 → no-op; off из ninfer → no-op.
+
+### 2026-10-19 (сессия оркестратора): claim перед делегированием
+
+Сессия wayfinder «работа по карте» взяла тикет в работу (тикет 01 решён, 02 — первый
+открытый по порядку, блокировок нет) и передала исполнение субагенту. Изменения
+юнита и скрипта делает субагент в этой же машине.
+
+### 2026-10-19 (сессия оркестратора): верификация субагента — принято + находка stale mount
+
+Верификация по чек-листу: файлы `scripts/strata/` на месте и запинается симлинками;
+юнит `linked`, НЕ enabled (автозахвата VRAM после ребута нет — требование тикета);
+после цикла стек вернулся в исходное (профиль ninfer, 3 ID в /v1/models, GPU чисты,
+RAM available 55 ГиБ). Answer/сырьё (`assets/02-cycle-log.md`) достаточны.
+
+**Находка верификации (важно для ops).** После пересоздания контейнера в живом
+API описания страта-профилей ещё показывали «:8082 must be running» при файле
+на хосте «:8081»: single-file bind mount `/app/config.yaml` привязан к иноду —
+редактор заменил файл (rename) после старта контейнера, и старое содержимое
+продолжало резолвиться даже через `docker compose restart` (process просто
+переоткрывает тот же старый инод внутри namespace). Лечится
+`docker compose up -d --force-recreate llama-swap`; применено и перепроверено
+(API теперь «:8081», конфиг внутри с :8081, ninfer прелоадился). Для точечных
+правок следить: изменения `router/config.yaml` «вставать на restart» только если
+файл правился по месту (in-place), иначе — force-recreate. Директория
+`config.d/` смонтирована директорией — там старый-инод-ловушка невозможна.
+Отразить в док-тике (05) строкой в «Командах».

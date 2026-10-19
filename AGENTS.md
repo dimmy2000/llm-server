@@ -1,7 +1,8 @@
 # AGENTS.md
 
-Docker-стек локального LLM-инференса: единый маршрутизатор llama-swap с двумя
-взаимоисключающими движками (llama.cpp и NInfer) плюс отдельный compose-профиль
+Docker-стек локального LLM-инференса: единый маршрутизатор llama-swap с тремя
+взаимоисключающими движками — двумя в контейнере (llama.cpp и NInfer) и одним
+нативным на хосте (Strata, systemd-юнит) — плюс отдельный compose-профиль
 vLLM, выведенный из текущей топологии. Прикладного кода, тестов, CI и линтинга
 нет. Не выдумывать `make`, `npm`, `pytest` и подобные команды.
 
@@ -16,19 +17,17 @@ vLLM, выведенный из текущей топологии. Прикла�
   llama.cpp **b10438** и NInfer **v0.4.6**; оба движка запускаются llama-swap
   как дочерние процессы через `cmd`. Отдельных контейнеров движков нет,
   `docker.sock` не монтируется.
-- Публичный API — `http://localhost:8080`, ровно один model-ID
-  `qwen3.8-27b`. Какой движок за ним стоит, выбирает активный профиль
-  llama-swap: `llama` или `ninfer`. Переключение только вручную
-  (см. «Переключение движков»); движки никогда не работают параллельно,
-  автоматического swap по запросу нет (дефолтная exclusive-группа, селекторов
-  нет, backend'ы `unlisted` с пинами).
-- **Черновик интеграции Strata (карта `.scratch/strata-integration/`, финал —
-  ADR-0007):** публичных ID становится три — добавлены `strata-iq3` и
-  `strata-iq2` (shim-модели из `router/config.d/30-strata.yaml`; нативный
-  движок Strata на хосте, `:8081`, юнит + `strata-use.sh` — в работе).
-  Профили `strata-iq3`/`strata-iq2`; в родительских профилях strata-ID
-  закрыты пинами, последовательный доступ. Этот пункт заменится разделом
-  «Движок Strata» по готовности юнита.
+- Публичный API — `http://localhost:8080`, три model-ID: `qwen3.8-27b`
+  (llama.cpp или NInfer по активному профилю `llama`/`ninfer`) и `strata-iq3` /
+  `strata-iq2` (нативная Strata на хосте, см. «Движок Strata»). Движки никогда
+  не работают параллельно — доступ строго последовательный, ровно один бэкенд
+  резидентен. Переключение ролей — через `scripts/strata/strata-use.sh`
+  (см. «Переключение ролей»); автоматического swap по запросу нет
+  (дефолтная exclusive-группа, селекторов нет, backend'ы `unlisted` с пинами).
+- Профили llama-swap: `llama`, `ninfer`, `strata-iq3`, `strata-iq2` (шим-модели
+  страта-ID — в `router/config.d/30-strata.yaml`). В родительских профилях
+  strata-ID закрыты пинами `~`, в страта-профилях закрыты родитель
+  `qwen3.8-27b`, оба родительских backend'а и соседний размер.
 - Профиль `vllm` (сервис `vllm-server`) — отдельная топология на том же
   `:8080` и тех же GPU; вне текущего усилия, одновременно с роутером не
   запускать.
@@ -37,20 +36,27 @@ vLLM, выведенный из текущей топологии. Прикла�
   `ninfer-tp2 v0.4.6` (SHA-256 архива). Обновление движка = новый пин/тег в
   `router/Dockerfile` + новые build-args + `docker compose build llama-swap`.
 
-Решение — ADR-0006 (`docs/adr/0006-single-endpoint-llama-swap-orchestrator.md`);
-проверка на живом железе — `docs/research/0014`, `0015`; доказательства —
-`.scratch/llama-swap-orchestrator/assets/`.
+Решения — ADR-0006 (`docs/adr/0006-single-endpoint-llama-swap-orchestrator.md`)
+и ADR-0007 (`docs/adr/0007-strata-llamaswap-sequential.md` — Strata, три
+публичных ID, последовательный доступ); проверка на живом железе —
+`docs/research/0014`, `0015` (роутер), `docs/research/0016` (Strata);
+доказательства — `.scratch/llama-swap-orchestrator/assets/` и
+`.scratch/strata-integration/assets/`.
 
 ## Единый контракт
 
 Конфигурация роутера: `router/config.yaml` (глобалы, hooks, профили с пинами)
-+ `router/config.d/10-llama.yaml` и `20-ninfer.yaml` (по одному движку на
-файл). Изменение любого из них требует `docker compose restart llama-swap`.
++ `router/config.d/10-llama.yaml`, `20-ninfer.yaml` и `30-strata.yaml` (по
+одному движку на файл). Изменение любого из них требует `docker compose
+restart llama-swap` (для правок `router/config.yaml` подменой файла —
+`up -d --force-recreate`, см. «Команды»).
 
-- Публичный ID один — `qwen3.8-27b`; в `/v1/models` ровно эта запись.
-  `status: unloaded` у пин-записи — косметика llama-swap (hardcode для пинов,
-  v265 api.go); правдивое состояние — `GET /api/profiles`, SSE `/api/events`
-  или `/health` upstream-порта (issues/12, ADR-0006).
+- Публичных ID три — `qwen3.8-27b`, `strata-iq3`, `strata-iq2`; все видны в
+  `/v1/models` (под страта-профилем — две записи: родитель исчезает из
+  листинга при пине `~`, семантика пинов v265). `status: unloaded` у
+  пин-записи — косметика llama-swap (hardcode для пинов, v265 api.go);
+  правдивое состояние — `GET /api/profiles`, SSE `/api/events` или
+  `/health` upstream-порта (issues/12, ADR-0006).
 - Backend-модели `backend-llama`/`backend-ninfer` скрыты (`unlisted: true`) и
   закрыты пином `~` в неактивном профиле (прямой запрос → `404`).
 - Старт: `hooks.on_startup` — активен `ninfer` с прелоадом `backend-ninfer`
@@ -69,11 +75,32 @@ vLLM, выведенный из текущей топологии. Прикла�
   CLI-флаг `--reasoning on` в `cmd` инжектит `enable_thinking: true`, который
   побеждает; разбор — `docs/research/0015`). Невалидное значение → `500`
   (llama) / `400` (NInfer).
+- Контракт strata-ID (детали — «Движок Strata», ADR-0007): словарь reasoning
+  движка `none|low|medium|high` (top-level и `chat_template_kwargs` через
+  `:8080` работают оба; `xhigh` принимается, но неотличим от `high` — не
+  предлагается), невалидное значение → `400`; tool calls работают
+  (forced tool choice → 200), structured output + tools → `400`. Strata
+  отрабатывает любой `model` запроса (`useModelName` шимам не нужен), но
+  поле `model` в **ответе** — канон native-ID
+  (`qwen3.8-flash-next-iq3_xxs`/`…-iq2_xs`), llama-swap его не переписывает:
+  не сверять `model` ответа с запрошенным ID. `repetition_penalty`
+  стрипается и на страта-шимах. Диагностика отказов strata-ID: `404 no model
+  id could be identified` — активен родительский профиль (пины `~`), strata-ID
+  через opencode/UI напрямую недостижимы — переключить роль
+  `scripts/strata/strata-use.sh strata-iq3|strata-iq2`; `500 upstream command
+  exited prematurely` (~1.5 c) — профиль strata активен, но нативный юнит не
+  запущен (llama-swap не умеет стартовать процессы хоста) — та же команда.
+  Выбор модели в opencode/UI переключателем ролей НЕ является.
 - opencode v2 управляет reasoning вариантами модели, конфиг
-  `~/.config/opencode/opencode.jsonc` (issues/14, доп. 2026-10-18). Два пути
-  к локальной модели: `providers.llama-swap` (`http://localhost:8080/v1`, ID
-  `qwen3.8-27b`) — варианты `body.chat_template_kwargs`: `off` (instruct) и
-  `low|medium|xhigh` (`reasoning_effort`); `providers.self-hosted`
+  `~/.config/opencode/opencode.jsonc` (issues/14, доп. 2026-10-18; страта-ID
+  добавлены 2026-10-19, тикет 03 карты strata-integration). Три модели в
+  `providers.llama-swap` (`http://localhost:8080/v1`): `qwen3.8-27b` —
+  варианты `body.chat_template_kwargs`: `off` (instruct) и `low|medium|xhigh`
+  (`reasoning_effort`); `strata-iq3` (context 131072) и `strata-iq2`
+  (262144) — варианты top-level `reasoning_effort`: `off`→`none`,
+  `low|medium|high` (словарь движка; `xhigh` не даётся), у обеих
+  `compatibility.reasoningField: "reasoning_content"`. Второй путь к
+  родителю: `providers.self-hosted`
   (bifrost-шлюз `http://192.168.17.69:9000/v1`, ID `llama/qwen3.8-27b`) —
   шлюз стрипует `chat_template_kwargs`/`options`, поэтому variants только
   `low|medium|xhigh` на top-level `reasoning_effort` (единственное, что шлюз
@@ -103,15 +130,21 @@ vLLM, выведенный из текущей топологии. Прикла�
   (ADR-0004, ADR-0006); миграция внешних потребителей выполнена (opencode,
   `bench.py`).
 
-## Переключение движков
+## Переключение ролей
+
+Роли: `llama`, `ninfer`, `strata-iq3`, `strata-iq2`, `off`. **Обычный путь —
+всегда `scripts/strata/strata-use.sh <роль>`** — единственная точка правды
+(коды выхода 0–7, идемпотентен; RAM-гейты, health-дискриминатор и порядок
+внутри; см. «Движок Strata» и `scripts/strata/README.md`). Ручной путь ниже —
+только для родительских ролей `llama`/`ninfer`, когда трогается исключительно
+профиль llama-swap:
 
 1. Убедиться, что текущие генерации завершились (выполняющийся запрос
    продолжается на старом движке).
 2. `curl -X PUT http://localhost:8080/api/profiles/active -H 'Content-Type:
    application/json' -d '{"name":"llama"}'` (или `"ninfer"`, или UI llama-swap
    на `:8080`).
-3. Проверка: `GET /api/profiles` (поле `active`), `GET /v1/models` (ровно
-   `qwen3.8-27b`).
+3. Проверка: `GET /api/profiles` (поле `active`), `GET /v1/models`.
 4. Смена профиля сам движок не грузит: swap происходит на первом запросе к
    `qwen3.8-27b`, и он платит загрузку весов — llama.cpp 40–60 c, NInfer ~6 c;
    при `sendLoadingState: false` запрос молчит, индикатор — только логи
@@ -120,6 +153,17 @@ vLLM, выведенный из текущей топологии. Прикла�
    старта нового. При OOM/зависании — логи контейнера и `nvidia-smi` (красная
    линия: ≥ 512 MiB свободной VRAM на дисплейной GPU1). Порт `8080` общий с
    vLLM-профилем — одновременно не запускать.
+
+### Аварийный ручной путь
+
+Когда `strata-use.sh` недоступен или отказал (exit 1–7) — переключение
+ролей руками, строго в порядке runbook: останов/старт юнита `systemctl`,
+unload родителя `POST /api/models/unload`, RAM-гейты, симлинк
+`/etc/strata/active.json`, ожидание `/health` на `172.17.0.1:8081` с нужным
+`model`+`loaded`, затем `PUT /api/profiles/active`. Пошагово —
+`docs/runbook-strata.md`; метрики и логи — там же (`journalctl -u strata`,
+файл-лог движка, красные линии). Нарушение порядка = OOM VRAM или
+рассинхрон «профиль ↔ резидентный размер».
 
 ## Движок llama.cpp (backend-llama)
 
@@ -233,6 +277,82 @@ GPU1 (9 KV-слоёв): проверенный стабильный максим
 glfenix-артефакте, минимум свободной VRAM на `auto`/640/H=4 — тикеты
 `.scratch/ninfer-tp2/`.
 
+## Движок Strata (нативный, strata-iq3 / strata-iq2)
+
+- Движок — нативная установка Strata (Qwen3.8-Flash-Next) на хосте
+  `/opt/strata`, сборка 0.1.44-линейки на CUDA 13.3; llama-swap его **не
+  запускает и не останавливает** — подключение через shim-модели
+  (`router/config.d/30-strata.yaml`): `cmd` — watchdog-пустышка
+  (`while curl /health …`), `proxy: http://host.docker.internal:8081`,
+  `checkEndpoint: /health`. Fast-fail при остановленном движке даёт сам
+  watchdog (~2 c → `prematureExit`): пер-модельный `healthCheckTimeout` в
+  v265 не работает (`config/load.go:136` перезаписывает его глобальными
+  600 c). Сеть: движок привязан к `172.17.0.1` (docker0) — с LAN не виден;
+  контейнер достаёт через `extra_hosts: host-gateway`. Решение — ADR-0007,
+  выбор размеров — `docs/research/0016-strata-flash-next-selection.md`.
+- Два размера (выбор 0016; последовательный доступ — эксперты 43 + 35.5 GB
+  не живут резидентно вместе при 59 ГиБ RAM):
+  `strata-iq3` = IQ3_XXS @131072 (конфиг `/opt/strata/strata-iq3_xxs.json`,
+  native-ID `qwen3.8-flash-next-iq3_xxs`) и `strata-iq2` = IQ2_XS @262144
+  (`/opt/strata/strata-iq2_xs.json`, `qwen3.8-flash-next-iq2_xs`).
+  IQ3_S (`strata-iq3_s.json`) — runner-up, вне карты: возвращается отдельным
+  тикетом при починке апстрим-блокера `--resident-experts`. Конфиги движка
+  (port 8081, host 172.17.0.1, model_name) зафиксированы — `scripts/strata`
+  их не изменяет.
+- Единственный формат запуска: `python serve/server.py --engine strata
+  --config <json> --port 8081` (из `/opt/strata`). HTTP-порт берётся
+  **только из CLI** (дефолт 8095 — `--port 8081` обязателен), host —
+  **только из конфига** (172.17.0.1).
+- Юнит `strata.service` (`scripts/strata/`, установлен симлинками в
+  `/etc/systemd/system/`): **linked, НЕ enabled** (после ребута VRAM не
+  захватывается в обход родительского профиля — проверено cold-имитацией),
+  `Restart=no`; `ExecStartPre` отказывается без симлинка
+  `/etc/strata/active.json` → конфиг размера (ставит только скрипт).
+  `ExecStop` (`/usr/local/sbin/strata-stop` ← `scripts/strata/strata-stop`)
+  добивает дерево: TERM (server.py, engine/strata, strata-vision) →
+  ждать ≤ 10 c → KILL, + `KillMode=control-group`, `TimeoutStopSec=25`
+  (SIGTERM server.py однажды проглотился, движок-ребёнок держал VRAM/RAM).
+- Оркестратор — **единственная точка правды переключения**:
+  `scripts/strata/strata-use.sh {llama|ninfer|strata-iq3|strata-iq2|off}`
+  (идемпотентен). Порядок перехода на Strata обязателен: останов юнита →
+  `POST /api/models/unload` (убивает родителя, page-locked RAM 47/36 ГиБ
+  уходит за секунды; при резидентном родителе старт = OOM VRAM) → RAM-гейт
+  available ≥ **46 ГиБ** (iq3) / **36 ГиБ** (iq2), иначе exit 5 → симлинк →
+  `systemctl start strata` → ждать `/health :8081` с **нужным** `model` +
+  `loaded: true` (дискриминатор рассинхрона: `/health` отвечает 200 при
+  любом размере; iq3 ~20–24 c, iq2 ~14 c) → только затем `PUT` профиля.
+  Коды выхода: 0 ок · 1 аргумент · 2 API/профиль · 3 юнит/конфиг ·
+  4 дерево не добито · 5 RAM-порог · 6 таймаут /health · 7 VRAM не
+  освободилась.
+- RAM/VRAM-рамки: 59 ГиБ RAM; page-locked 47/36 ГиБ; после переходов
+  available 52–57 ГиБ; красная линия GPU1 ≥ 512 MiB держится (под Strata
+  1671–1707 MiB, минимум цикла 709 MiB при резидентном ninfer). Своп —
+  только транзиентные si/so-всплески 2–3 c на старте iq3.
+- Проверено верификацией (тикет 04, цикл ×2, 10/10 шагов): тайминги
+  воспроизводимы (iq3 26–29 c, iq2 20 c на переход; родители ~4 c + прогрев
+  8–12 c), санити-decode iq3 132–133 / iq2 134–138 tok/s (нормы 130/145
+  ±20 %), admission MTP 72–81 %, гэп-профиль совпадает с 0016, vision smoke
+  на CPU-энкодере корректен (`strata-vision` на CPU — наш стандарт, GPU не
+  занимает; mmproj Q8_0).
+- Нюансы reasoning: словарь движка **`none|low|medium|high`**; `xhigh`
+  принимается (200), но статистически неотличим от `high` (6 сэмплов:
+  3799 vs 3806 completion tokens) — в opencode для strata-ID не даётся.
+  Невалидное значение → `400`. Обе механики через `:8080` работают
+  (top-level `reasoning_effort` и `chat_template_kwargs`).
+- Лимиты и риски (0016 §6; у нас не воспроизведены, но относимы):
+  CJK-коллапс на длинных выводах; агрессивный thinking — обрыв ответа внутри
+  `</think>` без закрытия → агент молча останавливается; задавать
+  `max_tokens` с запасом ≥ 12–16K; деградации под RAM-пресурой на длинных
+  сессиях. **Каждая смена версии движка — новая точка калибровки** и
+  smoke-check кванта. Наблюдение пилота: следить за деградациями #1944-типа
+  (single-token после ~12K), CJK, thinking-обрывами, RAM-прессурой.
+- Метрики: `journalctl -u strata -f` (логи server.py: запуск/останов,
+  decode/admission-строки) + файл-лог движка `/opt/strata/strata-*.log` +
+  собственный мониторинг движка. llm-monitoring (promtail/Loki/Grafana)
+  выключен (7 контейнеров stopped, `unless-stopped`) и вне топологии; его
+  останов освободил `:8081` — при возврате сначала увести его cadvisor с
+  8081.
+
 ## Профиль vLLM
 
 - Единственный сервис `vllm-server` напрямую публикует `:8000` контейнера на
@@ -270,20 +390,30 @@ glfenix-артефакте, минимум свободной VRAM на `auto`/6
 ## Команды
 
 ```bash
-# Роутер (llama.cpp + NInfer; сервис без compose-профилей)
+# Роутер (llama.cpp + NInfer + strata-шимы; сервис без compose-профилей)
 docker compose up -d --wait --wait-timeout 1800
 docker compose logs -f llama-swap
 docker compose restart llama-swap     # после изменения router/config*.yaml
 docker compose build llama-swap       # после смены пинов в router/Dockerfile
 docker compose down --remove-orphans  # остановит и vLLM, если поднят
 
+# Переключение ролей (единственный обычный путь; sudo сам, коды выхода 0-7)
+scripts/strata/strata-use.sh llama|ninfer|strata-iq3|strata-iq2|off
+
 # Скачивание артефакта NInfer
 ./router/fetch-model.sh
 ```
 
-Публичный API роутера: `http://localhost:8080`. Переключение движка —
-`PUT /api/profiles/active` (см. «Переключение движков»); compose-профилей,
-выбирающих движок, больше нет.
+Внимание: `router/config.yaml` смонтирован **одиночным файлом** — правка
+подменой файла (rename редактором) меняет инод, и `docker compose restart`
+продолжает видеть старое содержимое. Если правили подменой —
+`docker compose up -d --force-recreate llama-swap`. `config.d/` смонтирован
+директорией — там проблема невозможна, достаточно `restart`.
+
+Публичный API роутера: `http://localhost:8080` (три ID). Переключение ролей —
+`scripts/strata/strata-use.sh` (см. «Переключение ролей»); ручной
+`PUT /api/profiles/active` — только для родительских ролей и аварийного пути
+(`docs/runbook-strata.md`); compose-профилей, выбирающих движок, больше нет.
 
 ## Хост: патченный драйвер и P2P
 
@@ -324,8 +454,11 @@ ops-ранбук (смена драйвера, обновление ядра, о
 
 ## Сопутствующие проекты
 
-- `scripts/port-forwarding-rules.ps1` запускается в PowerShell Windows-хоста,
-  не внутри WSL или контейнера.
+- `scripts/port-forwarding-rules.ps1` (PowerShell Windows-хоста) — **устарел
+  и не используется** (решение пользователя, 2026-10-19): достаточно, чтобы
+  `:8080` был доступен по локальной сети — все три публичных ID идут через
+  один порт роутера. Специального прохода к Strata `:8081` снаружи не
+  требуется (и невозможен без DNAT: движок слушает только docker0).
 
 ## Agent skills
 
