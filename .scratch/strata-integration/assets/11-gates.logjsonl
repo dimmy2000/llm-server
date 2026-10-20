@@ -1,0 +1,6 @@
+{"pre": {"profile": "ninfer", "models": ["qwen3.8-27b", "strata-iq2", "strata-iq3"], "gpu_free": [1741, 702], "ram_avail_mib": 34572}, "t": "2026-10-20T06:53:05.030"}
+{"gate_iq3": {"req_model": "strata-iq3", "http": 500, "wall": 2.15, "error": "<HTTPError 500: 'Internal Server Error'>", "body_head": "{\"src\":\"llama-swap\",\"error\":{\"message\":\"unspecific error: upstream command exited prematurely\",\"type\":\"server_error\",\"param\":null,\"code\":\"internal_error\"}}"}, "t": "2026-10-20T06:53:07.182"}
+{"gate_iq2": {"req_model": "strata-iq2", "http": 500, "wall": 0.27, "error": "<HTTPError 500: 'Internal Server Error'>", "body_head": "{\"src\":\"llama-swap\",\"error\":{\"message\":\"unspecific error: upstream command exited prematurely\",\"type\":\"server_error\",\"param\":null,\"code\":\"internal_error\"}}"}, "t": "2026-10-20T06:53:07.451"}
+{"mid": {"profile": "ninfer", "models": ["qwen3.8-27b", "strata-iq2", "strata-iq3"], "gpu_free": [15919, 14769], "ram_avail_mib": 35907}, "t": "2026-10-20T06:53:07.471"}
+{"recover": {"req_model": "qwen3.8-27b", "http": 200, "wall": 7.42, "content": "Привет", "model_resp": "qwen3.8-27b", "completion_tokens": 4}, "t": "2026-10-20T06:53:14.893"}
+{"post": {"profile": "ninfer", "models": ["qwen3.8-27b", "strata-iq2", "strata-iq3"], "gpu_free": [1749, 709], "ram_avail_mib": 32201}, "t": "2026-10-20T06:53:14.913"}

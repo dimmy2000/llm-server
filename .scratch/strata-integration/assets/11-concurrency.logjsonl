@@ -1,0 +1,9 @@
+{"conc_probe_start": "mid-swap", "t": "2026-10-20T06:49:16.712"}
+{"conc_probe": "mid-swap-start", "t": "2026-10-20T06:49:39.954"}
+{"conc_probe": "mid-swap-start", "t": "2026-10-20T06:50:29.521"}
+{"conc_probe": "mid-swap-qwen-during-iq3-cold", "result": {"req_model": "qwen3.8-27b", "http": 200, "wall": 22.6, "content": "Привет", "model_resp": "qwen3.8-27b", "completion_tokens": 4}, "t": "2026-10-20T06:50:52.123"}
+{"conc_swap_result": {"req_model": "strata-iq3", "http": 200, "wall": 18.53, "content": "Привет", "model_resp": "qwen3.8-flash-next-iq3_xxs", "completion_tokens": 4}, "t": "2026-10-20T06:50:52.123"}
+{"conc_probe2": "iq3-request-during-iq2-swap", "result": {"req_model": "strata-iq3", "http": 200, "wall": 15.79, "content": "Привет", "model_resp": "qwen3.8-flash-next-iq3_xxs", "completion_tokens": 4}, "t": "2026-10-20T06:51:07.913"}
+{"conc_swap2_result": {"req_model": "strata-iq2", "http": 200, "wall": 28.95, "content": "привет", "model_resp": "qwen3.8-flash-next-iq2_xs", "completion_tokens": 4}, "t": "2026-10-20T06:51:21.070"}
+{"probe_home": {"profile": "ninfer", "models": ["qwen3.8-27b", "strata-iq2", "strata-iq3"], "gpu_free": [2159, 1700], "ram_avail_mib": 16731}, "t": "2026-10-20T06:51:21.089"}
+{"result_home": {"req_model": "qwen3.8-27b", "http": 200, "wall": 7.97, "content": "Привет", "model_resp": "qwen3.8-27b", "completion_tokens": 4}, "t": "2026-10-20T06:51:29.062"}
