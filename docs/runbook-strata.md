@@ -1,144 +1,84 @@
-# Runbook: Strata — аварийное ручное переключение ролей
+# Runbook: Strata — контейнерный движок, диагностика и контейнерные операции
 
-Нормальный путь переключения ролей — **только**
-`scripts/strata/strata-use.sh {llama|ninfer|strata-iq3|strata-iq2|off}`
-(нуль ручных шагов; подробности — `scripts/strata/README.md`, ADR-0007).
-Этот ранбук — аварийный путь руками, когда скрипт недоступен или отказал
-(коды выхода 1–7: см. шапку скрипта). Порядок шагов нарушать нельзя:
-при резидентном родительском движке старт Strata падает OOM VRAM.
+Страта — третий движок роутер-контейнера наравне с llama.cpp и NInfer
+(ADR-0008): llama-swap стартует и останавливает её сам, по запросу к
+`strata-iq3`/`strata-iq2`, в безопасном порядке unload→start дефолтной
+exclusive-группы. **Ручных шагов переключения нет и быть не может** — выбор
+ID в клиенте или UI (`:8080`) и есть переключение. Этот ранбук — про
+диагностику отказов и надзор за красными линиями, не про переключение.
 
-Константы: llama-swap `:8080`; нативная Strata `172.17.0.1:8081`
-(bind docker0 — с LAN не виден); юнит `strata` (linked, НЕ enabled,
-`Restart=no`); симлинк конфига `/etc/strata/active.json`; RAM-гейты
-46 ГиБ (iq3) / 36 ГиБ (iq2); красная линия VRAM — ≥ 512 MiB на дисплейной
-GPU1. Native-ID для `/health`: `qwen3.8-flash-next-iq3_xxs` /
-`qwen3.8-flash-next-iq2_xs`.
+Константы: llama-swap `:8080` (контейнер `llama-swap`, образ
+`llm-server/router:v265-strata1`); RAM-гейты лаунчера 46 ГиБ (iq3) / 36 ГиБ
+(iq2); красная линия VRAM — ≥ 512 MiB на дисплейной GPU1; метки конфигов
+Strata — `router/strata/*.container.json`, лаунчер —
+`router/strata/strata-launch.sh`.
 
-## Переход с Strata на родителя (llama | ninfer)
+## Окна молчания и тайминги (выдержка, полные данные — ADR-0008 и assets/11)
 
-1. Убедиться, что текущие генерации завершились.
-2. Остановить юнит и дождаться добивания дерева:
+| Бэкенд | Холодный старт (платит первый запрос) | Резидентный ответ |
+|---|---|---|
+| NInfer | ~6–7 c | 0.05–0.12 c |
+| Strata iq3 | 17.8–20.9 c (норма 15–25) | быстрый |
+| Strata iq2 | 12.7–13.8 c | быстрый |
+| llama.cpp | 7–9 c на тёплом page cache; до 40–60 c на холодном диске | быстрый |
 
-   ```bash
-   sudo systemctl stop strata
-   # ExecStop (strata-stop) TERM → ≤10 c → KILL всё дерево (server.py,
-   # engine/strata, strata-vision); TimeoutStopSec=25.
-   ```
+При `sendLoadingState: false` холодный запрос молчит без индикатора — это
+ожидаемо, не зависание: индикатор только в логах контейнера. Клиентские
+таймауты менять не нужно (`healthCheckTimeout: 600` глобальный, отсчёт
+сбрасывается на прогрессе загрузки).
 
-3. Дождаться ухода процессов и VRAM (до 60 c):
-
-   ```bash
-   pgrep -af 'opt/strata/(serve/server|engine/strata)'          # пусто
-   nvidia-smi --query-compute-apps=pid,process_name --format=csv,noheader
-   # строк со strata быть не должно; после ухода подождать ~2 c —
-   # драйвер отпускает VRAM. Если процессы висят: /usr/local/sbin/strata-stop
-   ```
-
-4. Выставить профиль:
-
-   ```bash
-   curl -X PUT http://localhost:8080/api/profiles/active \
-        -H 'Content-Type: application/json' -d '{"name":"ninfer"}'  # или "llama"
-   curl -s http://localhost:8080/api/profiles | jq -r .active
-   ```
-
-5. Движок родителя стартует на **первом запросе** к `qwen3.8-27b`
-   (llama.cpp 40–60 c, NInfer ~6 c; при `sendLoadingState: false` запрос
-   молчит — индикатор только в логах контейнера). Прогреть при желании
-   коротким запросом.
-
-## Переход на Strata (iq3 | iq2) — вручную
-
-1. Убедиться, что генерации завершились; запомнить активный профиль
-   (`curl -s http://localhost:8080/api/profiles | jq -r .active`).
-2. Остановить родительский бэкенд и освободить RAM — `POST
-   /api/models/unload` = unload-all (оба родительских бэкенда + shim-процессы,
-   идемпотентно): убивает процесс родителя, page-locked RAM (47/36 ГиБ)
-   уходит за секунды:
-
-   ```bash
-   curl -X POST http://localhost:8080/api/models/unload
-   ```
-
-3. RAM-гейт (иначе старт Strata уйдёт в своп/отказ):
-
-   ```bash
-   free -m | awk '/^Mem:/{print $7}'   # available MiB ≥ 46000 (iq3) / 36000 (iq2)
-   ```
-
-   Если порог не достигнут — проверить, что родительский процесс убит
-   (`pgrep -af 'llama-server|ninfer-serve'`) и idle-cache llama.cpp
-   (`--cache-ram 40960`) ушёл вместе с процессом. Не достигается —
-   эскалировать, старт не выполнять.
-
-4. Выставить симлинк конфига размера (без него ExecStartPre откажет):
-
-   ```bash
-   sudo ln -sfn /opt/strata/strata-iq3_xxs.json /etc/strata/active.json   # iq3
-   # или /opt/strata/strata-iq2_xs.json                                   # iq2
-   readlink -f /etc/strata/active.json
-   ```
-
-5. Старт юнита и ожидание готовности:
-
-   ```bash
-   sudo systemctl start strata
-   # Готовность: /health 200 с НУЖНЫМ model и loaded=true
-   # (iq3 ~20-24 c, iq2 ~14 c; дискриминатор размера — поле model:
-   curl -s http://172.17.0.1:8081/health | jq
-   # ждать {"status":"ok","model":"qwen3.8-flash-next-iq3_xxs","loaded":true}
-   ```
-
-   Поле `model` обязано совпасть с конфигом: `/health` отвечает 200 при
-   любом размере — совпадение единственная защита от рассинхрона
-   «профиль ↔ резидентный размер».
-
-6. Выставить strata-профиль:
-
-   ```bash
-   curl -X PUT http://localhost:8080/api/profiles/active \
-        -H 'Content-Type: application/json' -d '{"name":"strata-iq3"}'  # или "strata-iq2"
-   curl -s http://localhost:8080/api/profiles | jq -r .active
-   ```
-
-7. Проверка: запрос к `strata-iq3`/`strata-iq2` через `:8080` отвечает;
-   поле `model` в ответе — native canon (не сверять с запрошенным ID);
-   `nvidia-smi` — GPU1 свободно ≥ 512 MiB (под Strata норма ~1.7 ГиБ).
-
-## Смена размера внутри Strata (iq3 ↔ iq2)
-
-Сначала полный переход на родителя или `off` (шаги 1–3 второго раздела
-наоборот не работают: оба размера резидентно не живут) — фактически:
-`systemctl stop strata` → дождаться VRAM → симлинк на другой конфиг →
-`systemctl start strata` → `/health` с новым native-ID → профиль соседнего
-размера не забыть (профиль и резидентный размер должны совпадать).
-
-## Типовые отказы strata-ID (диагностика от клиента)
+## Типовые отказы (диагностика от клиента) и первая помощь
 
 | Симптом | Причина | Действие |
 |---|---|---|
-| `404 no model id could be identified` (мгновенно) | активен родительский профиль — strata-ID закрыты пинами `~` | `strata-use.sh strata-iq3\|strata-iq2` |
-| `500 upstream command exited prematurely` (~1.5 c) | strata-профиль активен, но юнит не запущен — shim-watchdog умер | `strata-use.sh strata-iq3\|strata-iq2` |
-| UI llama-swap: модель «unloaded», кнопка включения не помогает | llama-swap стартует только shim (умирает без `/health`), нативный юнит поднять не может | только `strata-use.sh <роль>` |
-| opencode: модель видна в списке, запрос падает 404 | то же, что строка 1 — выбор модели в клиенте не переключает профиль | `strata-use.sh <роль>` перед сессией |
+| `500 upstream command exited prematurely` за ~2 c, в логах `strata: RAM gate: need …GiB, MemAvailable …MiB` | RAM-гейт не пройден: посторонние процессы съели память (резидентный бэкенд выгружается до гейта — при недостижимом пороге память занята вне инференса) | жёсткий быстрый отказ, лежит в природе автомата; освободить RAM на хосте и повторить запрос. Ретраев llama-swap нет — по дизайну |
+| `500 upstream command exited prematurely`, traceback движка в логах | провал старта/health-check движка (битые маунты весов, конфиг, OOM VRAM) | `docker logs llama-swap --tail 200`; смотреть причину. Маунты/конфиги чинить на хосте, пересоздать контейнер |
+| Запрос к strata-ID висит сотни секунд без ответа | не гейт: глобальный `healthCheckTimeout: 600` при прогрессирующем старте — норма ожидания свапа (+ холодная загрузка) | ждать; индикация — логи контейнера |
+| `404 no model id could be identified` | этого отказа больше нет (старые пины `~` удалены); если воспроизводится — конфиги откатились к пред-автоматной версии | проверить `git status` роутера-содержимого и активную сборку образа |
 
-Переключение ролей из opencode/UI невозможно по архитектуре (ADR-0007):
-нативный юнит — процесс хоста вне досягаемости llama-swap, последовательный
-доступ обеспечивает только оркестратор.
+## Логи и метрики
 
-## Метрики и логи
+- Server.py и движок — stdout контейнера:
 
-- Логи/метрики движка: `journalctl -u strata -f` (логи server.py: запуск,
-  останов, decode/admission-строки движка) и файл-лог движка
-  `/opt/strata/strata-*.log`.
-- Собственный мониторинг Strata — первичный источник метрик; llm-monitoring
-  (promtail/Loki/Grafana) выключен (7 контейнеров stopped, `unless-stopped`)
-  и вне текущей топологии; его возврат требует сначала увести его cadvisor
-  с занятого `:8081`.
-- Состояние роутера: `GET /api/profiles` (поле `active`), SSE `/api/events`;
-  `GET /v1/models` под strata-профилем показывает 2 записи — это семантика
-  пинов v265, не регресс.
-- Красные линии: VRAM GPU1 ≥ 512 MiB (`nvidia-smi --query-gpu=index,memory.free
-  --format=csv,noheader`); RAM — без постоянного свопа (транзиентные
-  si/so-всплески 2–3 c на старте iq3 — норма). Нарушение линии VRAM —
-  останов лишнего резидента, не игнорировать.
+  ```bash
+  docker logs -f llama-swap          # старт/останов/decode/admission-строки
+  ```
+
+- Файл-лог движка — внутри контейнера (маунта на хост нет):
+
+  ```bash
+  docker exec llama-swap cat /opt/strata/strata-iq3_xxs.log
+  docker exec llama-swap cat /opt/strata/strata-iq2_xs.log
+  ```
+
+- Состояние роутера: `GET /api/profiles` (поле `active`), SSE `/api/events`,
+  `GET /v1/models` — три ID в любом состоянии.
+  `status: unloaded` в `/v1/models` — косметика llama-swap (hardcode для
+  пинов); реальное состояние — `/api/profiles`, `/api/events` или `/health`
+  upstream-порта.
+
+- Красные линии: VRAM GPU1 ≥ 512 MiB — `nvidia-smi --query-gpu=index,memory.free
+  --format=csv,noheader`; RAM — без постоянного свопа (транзиентные si/so
+  всплески 2–3 c на старте iq3 — норма). Нарушение линии VRAM — увести
+  резидента (запрос к другому ID или PowerOff в UI), не игнорировать.
+
+## Контейнерные операции (аварийные, вместо прежнего ручного пути)
+
+`strata-use.sh`, `strata.service`, `strata-stop`, симлинк
+`/etc/strata/active.json` — демонтированы (ADR-0008, тик 10); нативная
+`/opt/strata` на хосте осталась как база отката в первую итерацию
+(инструкция отката — комментарий Answer тика 10). Все аварийные действия
+сейчас — контейнерные:
+
+```bash
+docker compose restart llama-swap       # после правок config.d/ или router/strata/
+docker compose up -d --force-recreate llama-swap   # после правки router/config.yaml подменой файла
+docker compose build llama-swap         # после смены пинов движков/исходников Strata в Dockerfile
+```
+
+UI llama-swap на `:8080` — полноправное управление страта-движком: Play
+стартует движок, PowerOff посылает SIGTERM (graceful QUIT движка).
+`PUT /api/profiles/active` — только выбор движка родителя llama/ninfer
+(предпочтение производительности, не условие работоспособности).
+
+llm-monitoring (promtail/Loki/Grafana) выключен и вне топологии.
