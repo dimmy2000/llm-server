@@ -1,18 +1,17 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/mostlygeek/llama-swap/refs/heads/main/config-schema.json
 #
-# backend-ninfer — NInfer TP=2 v0.4.6 как дочерний процесс llama-swap.
+# qwen3.8-27b — NInfer TP=2 v0.4.6 как дочерний процесс llama-swap
+# (единственный движок родителя; llama.cpp и профили убраны, ADR-0009).
 # Параметры движка задаются здесь и только здесь. Sampling-пресет не трогаем:
 # движок сам выбирает его по выведенному режиму thinking (thinking
 # 1.0/0.95/20/0/0, non-thinking 0.7/0.80/20/0/1.5). См. router/config.yaml
-# (пины, профили) и ADR-0006.
+# (on_startup-прелоад) и ADR-0006.
 
 models:
-  backend-ninfer:
+  qwen3.8-27b:
     name: "NInfer TP=2"
-    unlisted: true
-    # ninfer-serve отклоняет запрос, если request.model != --model-id, поэтому
-    # llama-swap обязан переписать имя модели (в т.ч. из пина) на каноническое.
-    useModelName: qwen3.8-27b
+    # Имя модели совпадает с --model-id в cmd, поэтому useModelName не нужен:
+    # ninfer-serve принимает request.model = qwen3.8-27b без переписывания.
     # /opt/ninfer/lib обязан быть первым: своего RPATH у бинарника нет, иначе
     # подхватывается libcudart.so.13 из CUDA 13.3 (см. router/Dockerfile).
     env:

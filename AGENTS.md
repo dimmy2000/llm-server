@@ -1,10 +1,11 @@
 # AGENTS.md
 
-Docker-стек локального LLM-инференса: единый маршрутизатор llama-swap с тремя
-взаимоисключающими движками-«детьми» в одном контейнере роутера (llama.cpp,
-NInfer и Strata) — плюс отдельный compose-профиль vLLM, выведенный из текущей
-топологии. Прикладного кода, тестов, CI и линтинга нет. Не выдумывать `make`,
-`npm`, `pytest` и подобные команды.
+Docker-стек локального LLM-инференса: единый маршрутизатор llama-swap с двумя
+взаимоисключающими движками-«детьми» в одном контейнере роутера (NInfer и
+Strata) — без профилей llama-swap (ADR-0009): три прямые `cmd`-модели,
+переключение автоматически по запрошенному ID. Профиль vLLM удалён.
+Прикладного кода, тестов, CI и линтинга нет. Не выдумывать `make`, `npm`,
+`pytest` и подобные команды.
 
 ## Коммиты
 
@@ -22,46 +23,51 @@ NInfer и Strata) — плюс отдельный compose-профиль vLLM, �
 ## Общая архитектура
 
 Корневой `docker-compose.yaml` задает имя проекта `llm-server` и через
-`include` подключает `router/docker-compose.yaml` и `vllm/docker-compose.yaml`.
+`include` подключает `router/docker-compose.yaml`.
 
 - Единственный сервис роутера `llama-swap` поднимается всегда (сервис без ключа
-  `profiles:`), контейнер — `llama-swap`, образ — `llm-server/router:v265-strata1`
-  (собирается из `router/Dockerfile`). В образе запинены llama-swap **v265**,
-  llama.cpp **b10438**, NInfer **v0.4.6** и Strata **0.1.45** (build-стадия
-  по upstream-пути `/opt/strata/Dockerfile`); все три движка запускаются
-  llama-swap как дочерние процессы через `cmd`. Отдельных контейнеров движков
-  нет, `docker.sock` не монтируется.
+  `profiles:`), контейнер — `llama-swap`, образ —
+  `llm-server/router:v265-strata1-nollama` (собирается из `router/Dockerfile`).
+  В образе запинены llama-swap **v265**, NInfer **v0.4.6** и Strata **0.1.45**
+  (build-стадия по upstream-пути `/opt/strata/Dockerfile`); оба движка
+  запускаются llama-swap как дочерние процессы через `cmd`. Бинарник
+  llama.cpp в образ больше не идёт (ADR-0009): из ggml-образа
+  `server-cuda13-b10438@sha256:bb81f3e4…6283` копируется только
+  `/usr/local/cuda-13.3/lib64` — CUDA 13.3 runtime-библиотеки, на которые
+  линкуются NInfer и Strata. Отдельных контейнеров движков нет, `docker.sock`
+  не монтируется.
 - Публичный API — `http://localhost:8080`, три model-ID: `qwen3.8-27b`
-  (llama.cpp или NInfer по активному профилю `llama`/`ninfer`) и `strata-iq3` /
-  `strata-iq2` (контейнерная Strata, см. «Движок Strata»). Движки никогда
-  не работают параллельно — доступ строго последовательный, ровно один бэкенд
-  резидентен. **Переключение автоматическое по запросу**: любой запрос к любому
-  из трёх ID сам приводит систему в нужное состояние (дефолтная
-  exclusive-группа llama-swap гарантирует порядок unload→start); ручных шагов
-  нет — ни скрипта, ни sudo, ни обязательного `PUT /api/profiles/active`
-  (ADR-0008).
-- Профили llama-swap — только для движка родителя: `llama`
-  (`qwen3.8-27b → backend-llama`) и `ninfer` (дефолт, `qwen3.8-27b →
-  backend-ninfer`), каждый с ровно одним пином. Strata-ID нигде не запинены
-  (`router/config.d/30-strata.yaml` — реальные `cmd`-модели); пинов `~` и
-  шим-моделей больше нет — 404-ловушек пин-схемы не существует, `/v1/models`
-  всегда показывает три рабочих ID. Выбор llama.cpp ↔ NInfer — ручной
-  (`PUT`/пикер UI), но это предпочтение производительности, а не условие
-  работоспособности.
-- Профиль `vllm` (сервис `vllm-server`) — отдельная топология на том же
-  `:8080` и тех же GPU; вне текущего усилия, одновременно с роутером не
-  запускать.
-- Пины версий: llama-swap v265 (SHA-256 архива в build-args), llama.cpp
-  `server-cuda13-b10438@sha256:bb81f3e4…6283` (образ ggml-org), NInfer
+  (NInfer) и `strata-iq3` / `strata-iq2` (контейнерная Strata, см. «Движок
+  Strata»). Движки никогда не работают параллельно — доступ строго
+  последовательный, ровно один бэкенд резидентен. **Переключение автоматическое
+  по запросу**: любой запрос к любому из трёх ID сам приводит систему в нужное
+  состояние (дефолтная exclusive-группа llama-swap гарантирует порядок
+  unload→start); ручных шагов нет — ни скрипта, ни sudo, ни профилей
+  (ADR-0008, ADR-0009).
+- Профилей llama-swap больше нет (ADR-0009): `qwen3.8-27b` — прямая
+  `cmd`-модель (`router/config.d/20-ninfer.yaml`) наравне со strata-ID
+  (`router/config.d/30-strata.yaml`); все три модели в одной дефолтной
+  exclusive-группе, 404-ловушек нет — `/v1/models` всегда показывает три
+  рабочих ID. `hooks.on_startup` пре-лоадит `qwen3.8-27b` (~6 c) — активного
+  профиля при старте нет.
+- Профиль vLLM удалён (ADR-0009): каталог `vllm/` и include в корневом compose
+  снесены; модель хоста `/opt/models/Qwen3.8-27B-NVFP4/` сохранена.
+- Пины версий: llama-swap v265 (SHA-256 архива в build-args), NInfer
   `ninfer-tp2 v0.4.6` (SHA-256 архива), Strata — исходники `/opt/strata`
-  (additional context `strata-src`, `CUDA_ARCHITECTURES=120`). Обновление
-  движка = новый пин/тег/сорсы в `router/Dockerfile` + новые build-args +
+  (additional context `strata-src`, `CUDA_ARCHITECTURES=120`). CUDA 13.3
+  runtime-библиотеки — из ggml-образа
+  `server-cuda13-b10438@sha256:bb81f3e4…6283` (последний опубликованный
+  cuda13-образ с CUDA 13.3; с b11706 ggml-org перешёл на 13.4 — смена бита
+  библиотек была бы новой точкой калибровки). Обновление движка = новый
+  пин/тег/сорсы в `router/Dockerfile` + новые build-args +
   `docker compose build llama-swap`.
 
-Решения — ADR-0006 (`docs/adr/0006-single-endpoint-llama-swap-orchestrator.md`),
-ADR-0008 (`docs/adr/0008-strata-containerized-auto-swap.md` — контейнерная
-Strata, автоматический swap, демонтаж ручного пути; supersede механическую
-часть ADR-0007) и ADR-0007 (`docs/adr/0007-strata-llamaswap-sequential.md` —
+Решения — ADR-0009 (`docs/adr/0009-profile-free-three-model-topology.md` —
+убраны профили и бэкенд llama.cpp, vLLM вынесен, новый образ), ADR-0006
+(`docs/adr/0006-single-endpoint-llama-swap-orchestrator.md`), ADR-0008
+(`docs/adr/0008-strata-containerized-auto-swap.md` — контейнерная Strata,
+автоматический swap, демонтаж ручного пути; supersede механическую часть
+ADR-0007) и ADR-0007 (`docs/adr/0007-strata-llamaswap-sequential.md` —
 superseded, но первоисточник размеров и контракта strata-ID); проверка на
 живом железе — `docs/research/0014`, `0015` (роутер), `docs/research/0016`
 (Strata, размеры); доказательства — `.scratch/llama-swap-orchestrator/assets/`
@@ -69,38 +75,31 @@ superseded, но первоисточник размеров и контракт
 
 ## Единый контракт
 
-Конфигурация роутера: `router/config.yaml` (глобалы, hooks, профили с пинами)
-+ `router/config.d/10-llama.yaml`, `20-ninfer.yaml` и `30-strata.yaml` (по
-одному движку на файл). Изменение любого из них требует `docker compose
-restart llama-swap` (для правок `router/config.yaml` подменой файла —
-`up -d --force-recreate`, см. «Команды»).
+Конфигурация роутера: `router/config.yaml` (глобалы, on_startup-прелоад;
+профилей нет, ADR-0009) + `router/config.d/20-ninfer.yaml` и
+`30-strata.yaml` (по одному движку на файл). Изменение любого из них требует
+`docker compose restart llama-swap` (для правок `router/config.yaml`
+подменой файла — `up -d --force-recreate`, см. «Команды»).
 
 - Публичных ID три — `qwen3.8-27b`, `strata-iq3`, `strata-iq2`; все три
-  всегда видны в `/v1/models` (листинг честный: 404-ловушек пин-схемы нет,
-  ADR-0008). `status: unloaded` у записи — косметика llama-swap (hardcode
-  v265 api.go); правдивое состояние — `GET /api/profiles`, SSE `/api/events`
-  или `/health` upstream-порта (issues/12, ADR-0006).
-- Backend-модели `backend-llama`/`backend-ninfer` скрыты (`unlisted: true`),
-  но нигде не запинены — прямой запрос к ним работает как к обычной модели
-  exclusive-группы (снаружи API только localhost/LAN).
-- Старт: `hooks.on_startup` — активен `ninfer` с прелоадом `backend-ninfer`
-  (~6 c), публичный ID есть сразу. Строки `[ERROR] failed to preload model
-  backend-ninfer: status 404` в старте — косметика: у NInfer нет
-  warmup-эндпоинта, прелоад при этом запускает и прогревает движок.
+  всегда видны в `/v1/models` (листинг честный: 404-ловушек нет, ADR-0008/0009).
+  `status: unloaded` у записи — косметика llama-swap (hardcode v265 api.go);
+  правдивое состояние — SSE `/api/events` или `/health` upstream-порта
+  (issues/12, ADR-0006).
+- Старт: `hooks.on_startup` — прелоад `qwen3.8-27b` (~6 c), публичный ID есть
+  сразу. Строки `[ERROR] failed to preload model qwen3.8-27b: status 404` в
+  старте — косметика: у NInfer нет warmup-эндпоинта, прелоад при этом запускает
+  и прогревает движок.
 - `sendLoadingState: false` (issues/13, ADR-0006): баннер загрузки llama-swap
   стримится только в `delta.reasoning_content` — канал зашит в код
   (`internal/router/loading.go`), потребителей нет. Плата: холодный запрос
-  молчит без in-stream индикатора — llama.cpp до 40–60 c (на холодном диске;
-  7–9 c на тёплом page cache), Strata 13–21 c, NInfer ~6 c; индикатор —
+  молчит без in-stream индикатора — Strata 13–21 c, NInfer ~6 c; индикатор —
   только логи контейнера (`docs/runbook-strata.md`).
 - Reasoning задаёт клиент; сервер мнения не задаёт. Голый ID = дефолт chat
-  template (thinking + `xhigh`) на обоих движках. Переносимый контракт:
-  выключить thinking — `chat_template_kwargs: {"enable_thinking": false}`;
-  уровень — `reasoning_effort: low|medium|xhigh` (top-level или в kwargs).
-  Top-level `none` выключает thinking только на NInfer (на llama.cpp инертен:
-  CLI-флаг `--reasoning on` в `cmd` инжектит `enable_thinking: true`, который
-  побеждает; разбор — `docs/research/0015`). Невалидное значение → `500`
-  (llama) / `400` (NInfer).
+  template (thinking + `xhigh`) у NInfer. Переносимый контракт: выключить
+  thinking — `chat_template_kwargs: {"enable_thinking": false}`; уровень —
+  `reasoning_effort: low|medium|xhigh` (top-level или в kwargs); top-level
+  `none` выключает thinking. Невалидное значение → `400` (NInfer).
 - Контракт strata-ID (детали — «Движок Strata», ADR-0007/0008): словарь
   reasoning движка `none|low|medium|high` (top-level и `chat_template_kwargs`
   через `:8080` работают оба; `xhigh` принимается, но неотличим от `high` — не
@@ -133,23 +132,20 @@ restart llama-swap` (для правок `router/config.yaml` подменой �
   `providers` (legacy-блок `provider` для этого ID не работает: варианты
   ложатся под `options.body`, при конфликте ID v2 выигрывает и legacy-блок
   пропускается); `provider.openai` в legacy-форме оставлен.
-- Sampling — серверный дефолт движка, клиентские поля перекрывают: пресет
-  llama.cpp — CLI-флаги в `cmd` (`--temp 1.0 --top-p 0.95 --top-k 20 --min-p 0
-  --presence-penalty 0 --repeat-penalty 1.0`), NInfer — mode-aware пресет
-  движка (thinking `1.0/0.95/20/0/0`, non-thinking `0.7/0.80/20/0/1.5`).
-  llama-swap тело запроса правит только `stripParams: repetition_penalty` на
-  обоих и `useModelName: qwen3.8-27b` на `backend-ninfer`.
-- Безопасное подмножество параметров клиента (оба движка; полная таблица —
+- Sampling — серверный дефолт движка, клиентские поля перекрывают: NInfer —
+  mode-aware пресет движка (thinking `1.0/0.95/20/0/0`, non-thinking
+  `0.7/0.80/20/0/1.5`). llama-swap тело запроса правит только
+  `stripParams: repetition_penalty` (у всех трёх моделей).
+- Безопасное подмножество параметров клиента (NInfer; полная таблица —
   ADR-0006, сводка — `docs/research/0013`): `temperature` `[0,1]`, `top_p`
   `(0,1]`, `top_k` `1..20` (не 0 — на NInfer это cap top-20), `min_p` `[0,1]`,
   `presence_penalty`/`frequency_penalty` `[-2,2]`, `seed`, `max_tokens ≥ 1`,
   `reasoning_effort` из `none|low|medium|xhigh`,
   `chat_template_kwargs.{enable_thinking, preserve_thinking}` (bool).
-  Непереносимо: `repetition_penalty` (стрипается), `repeat_penalty`
-  (llama.cpp-only, NInfer молча игнорирует), `top_k: 0`, `reasoning_effort`
-  вне словаря, NInfer-несовместимые фичи (`response_format: json_object`,
-  `logit_bias`, `logprobs`, `strict`, `parallel_tool_calls: false`, named tool
-  choice).
+  Непереносимо: `repetition_penalty` (стрипается), `top_k: 0`,
+  `reasoning_effort` вне словаря, NInfer-несовместимые фичи
+  (`response_format: json_object`, `logit_bias`, `logprobs`, `strict`,
+  `parallel_tool_calls: false`, named tool choice).
 - Старые публичные ID (`qwen3.8`, `qwen3.8-27b-instruct`, алиасы
   `-chat-*`/`-agent-*`, а также `ornith-9b*`) удалены без backcompat-алиасов
   (ADR-0004, ADR-0006); миграция внешних потребителей выполнена (opencode,
@@ -157,29 +153,25 @@ restart llama-swap` (для правок `router/config.yaml` подменой �
 
 ## Переключение движков
 
-**Переключения как отдельного действия нет** (ADR-0008): любой запрос к любому
-из трёх ID сам приводит систему в нужное состояние — поднимает Strata,
-вытесняет её обратно на родителя, переключает `iq3`↔`iq2`. Выбор ID в клиенте
-или UI llama-swap (`:8080`) и есть переключение; контракт клиентов не меняется.
-После холодного старта запрос платит загрузку весов: llama.cpp 40–60 c
-(холодный диск), Strata 13–21 c, NInfer ~6 c; при `sendLoadingState: false`
-запрос молчит — индикатор только в логах контейнера.
+**Переключения как отдельного действия нет** (ADR-0008, ADR-0009): любой
+запрос к любому из трёх ID сам приводит систему в нужное состояние —
+поднимает Strata, вытесняет её обратно на NInfer, переключает `iq3`↔`iq2`.
+Выбор ID в клиенте или UI llama-swap (`:8080`) и есть переключение; контракт
+клиентов не меняется. После холодного старта запрос платит загрузку весов:
+Strata 13–21 c, NInfer ~6 c; при `sendLoadingState: false` запрос молчит —
+индикатор только в логах контейнера.
 
-Что остаётся ручным (предпочтения, не условия работоспособности):
+Что остаётся ручным:
 
-- **Движок родителя** — `PUT /api/profiles/active {"name":"llama"|"ninfer"}`
-  или пикер UI llama-swap; дефолт `ninfer` (`hooks.on_startup`). После смены
-  профиля движок грузится на первом запросе к `qwen3.8-27b`. Проверка:
-  `GET /api/profiles` (поле `active`), `GET /v1/models`.
 - **UI-старт/стоп Strata** — Play стартует движок заранее, PowerOff посылает
-  SIGTERM (graceful QUIT); список моделей всегда три ID.
+  SIGTERM (graceful QUIT); список моделей всегда три ID. Выбор движка — только
+  через ID (`qwen3.8-27b` — NInfer, strata-ID — Strata).
 
 Конкурентность: запрос к другому ID во время идущего свапа — 200 с ожиданием
 (FIFO-сериализация v265); co-residency двух тяжёлых бэкендов исключена
 семантикой exclusive-группы (старт целевого после выхода вытесненных).
 При OOM/зависании — логи контейнера и `nvidia-smi` (красная линия: ≥ 512 MiB
-свободной VRAM на дисплейной GPU1). Порт `8080` общий с vLLM-профилем —
-одновременно не запускать.
+свободной VRAM на дисплейной GPU1).
 
 ### Аварийный путь — контейнерные операции
 
@@ -193,37 +185,18 @@ force-recreate / build / логи) — пошагово и с таблицей �
 (коммит `7cc3ac8` + образ `llm-server/router:v265`, нативная `/opt/strata`
 сохранена).
 
-## Движок llama.cpp (backend-llama)
+## Движок llama.cpp — выключен (ADR-0009)
 
-- Параметры ядра — только в `router/config.d/10-llama.yaml` (секция `cmd`);
-  конфигурация модели и пинов — в `router/config.yaml`.
-- Пин llama.cpp **b10438** — бамп с b10068 ради top-level `reasoning_effort`
-  (issues/11); A/B на протоколе 0005 регресса не показало (prefill +5–7 %,
-  decode в пределах разброса, wall-clock равен или лучше) — `docs/research/0015`.
+Бинарник и конфигурация (бывшие `router/config.d/10-llama.yaml`, профиль
+`llama`) удалены из образа и роутера. Историческое: пин b10438 (бамп с b10068
+ради top-level `reasoning_effort`, issues/11; A/B без регресса —
+`docs/research/0015`), модель `/opt/models/Qwen3.8-27B-NVFP4-MTP-GGUF/`
+(сохранена на хосте), проверенный максимум `--ctx-size 180224` (на 196608
+первый decode OOM), красная линия GPU1 min 1345 MiB на b10438
+(`.scratch/llama-swap-orchestrator/assets/15-verify-b10438/`) — детали в
+git-истории AGENTS.md и ADR-0006.
 
-Модель хоста:
-`/opt/models/Qwen3.8-27B-NVFP4-MTP-GGUF/Qwen3.8-27B-NVFP4-MTP-HIGH.gguf`,
-внутри контейнера
-`/models/Qwen3.8-27B-NVFP4-MTP-GGUF/Qwen3.8-27B-NVFP4-MTP-HIGH.gguf`.
-
-Qwen3.8-27B: 65 слоёв, полное внимание каждые 4 слоя (17 слоёв с KV-cache,
-остальные SSM без KV). NVFP4-MTP квантизация тира HIGH (файл ~17.6 GB) со
-спекулятивным декодированием (`--spec-type draft-mtp,ngram-mod` …): ngram-mod
-(приоритет 4) работает первым, draft-mtp (приоритет 8) — fallback. MTP-draft
-KV — отдельный `llama_kv_cache` на один слой nextn, глубиной в полный ctx,
-целиком на GPU1; `--spec-draft-type-k/v q8_0` ужимает его. Требуются
-`--split-mode tensor` и `--tensor-split 50,50` в паре: дефолтный LAYER-режим
-копит KV на дисплейной GPU1 и при большом ctx падает OOM на первом decode.
-`--parallel 1`: один слот, KV строго под ctx. Узкое место VRAM — дисплейная
-GPU1 (9 KV-слоёв): проверенный стабильный максимум — `--ctx-size 180224`, на
-196608 первый decode падает OOM (flash-attn workspace). Под пиковой нагрузкой
-(жатренный prefill 62–159k + генерация) GPU0 ~1.26 GiB свободно, GPU1
-~1.75 GiB. `--cache-idle-slots` и `--cache-ram 40960` сериализуют KV в RAM при
-завершении запроса (prefix reuse), но НЕ освобождают VRAM. `--ctx-checkpoints`
-не включены; `--fit off`: контекст задаётся явно. Красная линия подтверждена
-на b10438: GPU1 min 1345 MiB (`assets/15-verify-b10438/`).
-
-## Движок NInfer TP=2 (backend-ninfer)
+## Движок NInfer TP=2 (qwen3.8-27b)
 
 - Движок — релиз `ninfer-tp2 v0.4.6` из форка `ValerioDolci/ninfer-tp2`
   (upstream `Neroued/ninfer` одноплатовый); по C++-дереву v0.4.6 == v0.4.7
@@ -235,8 +208,8 @@ GPU1 (9 KV-слоёв): проверенный стабильный максим
   `docker compose build llama-swap`.
 - Аргументы `ninfer-serve` — только в `router/config.d/20-ninfer.yaml`
   (секция `cmd`); `ninfer-serve` отклоняет запрос, если `request.model` не
-  равен `--model-id`, поэтому на записи обязателен
-  `useModelName: qwen3.8-27b`; пер-модельный `env` обязан ставить
+  равен `--model-id` — имя модели уже `qwen3.8-27b`, переписывание
+  (`useModelName`) не нужно; пер-модельный `env` обязан ставить
   `/opt/ninfer/lib` первым в `LD_LIBRARY_PATH` (своего RPATH у бинарника нет,
   иначе подхватывает `libcudart.so.13` из CUDA 13.3).
 - Модель хоста:
@@ -307,9 +280,9 @@ glfenix-артефакте, минимум свободной VRAM на `auto`/6
 
 ## Движок Strata (контейнерный, strata-iq3 / strata-iq2)
 
-- Движок — как llama.cpp и NInfer: обычный ребёнок llama-swap в
-  роутер-контейнере (ADR-0008; supersede нативный юнит + shim-механику
-  ADR-0007). Сборка — build-стадия `strata-build` в `router/Dockerfile`
+- Движок — как NInfer: обычный ребёнок llama-swap в роутер-контейнере
+  (ADR-0008; supersede нативный юнит + shim-механику ADR-0007; llama.cpp
+  выключен, ADR-0009). Сборка — build-стадия `strata-build` в `router/Dockerfile`
   по upstream-пути (`/opt/strata` как additional context `strata-src`,
   `CUDA_ARCHITECTURES=120`); в рантайм идут `engine/`, `serve/`, `tools/`
   и venv; контейнерному `strata-vision` в образ добавлен `libnccl.so.2`.
@@ -369,49 +342,22 @@ glfenix-артефакте, минимум свободной VRAM на `auto`/6
   (promtail/Loki/Grafana) выключен (7 контейнеров stopped, `unless-stopped`)
   и вне топологии.
 
-## Профиль vLLM
+## Профиль vLLM — удалён (ADR-0009)
 
-- Единственный сервис `vllm-server` напрямую публикует `:8000` контейнера на
-  `:8080` хоста.
-- Compose-настройки находятся в `vllm/docker-compose.yaml`.
-- Аргументы `vllm serve` находятся в `vllm/config.yaml`.
-- Модель хоста: `/opt/models/Qwen3.8-27B-NVFP4/`, внутри контейнера
-  `/models/Qwen3.8-27B-NVFP4`.
-- Публичный model-ID: `qwen3.8-27b`.
-- Используются обе RTX 5070 Ti через tensor parallelism 2.
-- Vision encoder отключен флагом `language-model-only`, чтобы оставить VRAM
-  под FP8 KV-cache.
-- Базовый профиль использует `max-model-len: 49152`,
-  `max-num-seqs: 1`, `max-num-batched-tokens: 1024` и
-  `gpu-memory-utilization: 0.85`, чтобы оставить место графической сессии на
-  второй GPU. Под пиковой нагрузкой на GPU1 должно оставаться не менее 512 MiB
-  физически свободной VRAM.
-- FlashInfer autotune отключен: его временная аллокация вызывает OOM и
-  зависание startup на GPU с графической сессией.
-- Клиентские sampling-параметры не удаляются.
-- Thinking включен шаблоном модели по умолчанию и управляется через
-  `reasoning_effort` или `chat_template_kwargs.enable_thinking`.
-- Tool calls разбираются parser `qwen3_xml`, reasoning parser `qwen3`.
-
-Не включать MTP, TurboQuant KV-cache, prefix caching или FlashInfer autotune
-без отдельной проверки длинных streaming-ответов и запаса VRAM.
-`max-num-seqs: 1` означает, что второй конкурентный запрос ожидает scheduler.
-Не повышать `gpu-memory-utilization` только ради startup-проверки KV cache.
-Максимальный стабильный context limit определяется отдельным cold-start и
-нагрузочным тестом. На текущей машине проверен limit `49152`; `65536` не
-проходит startup из-за недостаточного KV cache.
-
-Изменение `vllm/config.yaml` требует перезапуска `vllm-server`.
+Compose-профиль `vllm` (каталог `vllm/`, include в корневом compose, сервис
+`vllm-server`) удалён; модель хоста `/opt/models/Qwen3.8-27B-NVFP4/`
+сохранена. Исторический профиль (TP=2, `max-model-len: 49152`, FP8 KV-cache,
+FlashInfer autotune отключён) — в git-истории AGENTS.md.
 
 ## Команды
 
 ```bash
-# Роутер (llama.cpp + NInfer + Strata; сервис без compose-профилей)
+# Роутер (NInfer + Strata; сервис без compose-профилей)
 docker compose up -d --wait --wait-timeout 1800
 docker compose logs -f llama-swap
 docker compose restart llama-swap     # после изменения router/config*.yaml и router/strata/*
 docker compose build llama-swap       # после смены пинов/сорсов движков в router/Dockerfile
-docker compose down --remove-orphans  # остановит и vLLM, если поднят
+docker compose down --remove-orphans
 
 # Скачивание артефакта NInfer
 ./router/fetch-model.sh
@@ -425,9 +371,8 @@ docker compose down --remove-orphans  # остановит и vLLM, если п�
 достаточно `restart`.
 
 Публичный API роутера: `http://localhost:8080` (три ID). Переключение —
-автоматическое по запросу (ADR-0008); ручной `PUT /api/profiles/active` —
-только выбор движка родителя llama/ninfer (предпочтение производительности);
-compose-профилей, выбирающих движок, больше нет.
+автоматическое по запросу (ADR-0008, ADR-0009); профилей llama-swap нет,
+ручных шагов выбора движка тоже.
 
 ## Хост: патченный драйвер и P2P
 

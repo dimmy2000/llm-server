@@ -1,13 +1,13 @@
 services:
   # Сервис без ключа `profiles:` — поднимается всегда, в т.ч. при вызове с
-  # любым `--profile`. Профилей, выражающих «какой движок», больше нет:
-  # выбор движка живёт внутри контейнера (активный профиль llama-swap,
-  # см. config.yaml).
+  # любым `--profile`. Движков-детей три (NInfer, Strata iq3/iq2): выбор —
+  # автоматически по запрошенному ID, активных профилей llama-swap нет
+  # (ADR-0009, см. config.yaml).
   #
   # Имя контейнера — `llama-swap`: по нему работают `docker logs/exec/restart
   # llama-swap` и UI llama-swap.
   llama-swap:
-    image: llm-server/router:v265-strata1
+    image: llm-server/router:v265-strata1-nollama
     build:
       context: .
       dockerfile: Dockerfile

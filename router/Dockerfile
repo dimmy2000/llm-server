@@ -1,10 +1,11 @@
-# Единый образ-оркестратор: llama-swap v265 + два движка (llama.cpp b10438,
-# NInfer TP=2 v0.4.6).
+# Единый образ-оркестратор: llama-swap v265 + движки-дети (NInfer TP=2
+# v0.4.6, Strata 0.1.45). Бинарник llama.cpp в образ больше не идёт (ADR-0009).
 #
 # База — ubuntu:26.04: готовые бинарники ninfer-tp2 собраны под glibc 2.42 /
-# FFmpeg 8 (libavcodec62). Бинарники и CUDA-библиотеки llama.cpp копируются
-# из запиненного образа ghcr.io/ggml-org/llama.cpp:server-cuda13-b10438
-# (Ubuntu 24.04 + CUDA 13.3, бинарники в /app). llama-swap — запиненный
+# FFmpeg 8 (libavcodec62). CUDA 13.3 runtime-библиотеки (libcudart/libcublas
+# .so.13, на которые линкуются NInfer и Strata) копируются из запиненного
+# образа ghcr.io/ggml-org/llama.cpp:server-cuda13-b10438 (Ubuntu 24.04 +
+# CUDA 13.3). llama-swap — запиненный
 # релиз v265; бинарник и тарбол NInfer проверяются по SHA-256 при сборке.
 #
 # Оба движка родителя и Strata запускаются llama-swap как дочерние процессы
@@ -113,15 +114,17 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         python3-venv \
     && rm -rf /var/lib/apt/lists/*
 
-# llama.cpp b10438 (пин тикета 11, бамп с b10068 тикета «Выбор версии образа
-# llama-swap»): первая публикация образа cuda13 с обработкой OAI
-# `reasoning_effort` — b10121 (`none` выключает thinking) + b10434 (остальные
-# значения уходят в шаблон как `chat_template_kwargs.reasoning_effort`).
-# База та же (CUDA 13.3), поэтому путь к библиотекам не меняется; с b11706
-# ggml-org перешёл на CUDA 13.4 и путь стал бы /usr/local/cuda-13.4/lib64.
+# CUDA 13.3 runtime-библиотеки (ADR-0009): движок llama.cpp убран — из
+# ggml-образа идёт только /usr/local/cuda-13.3/lib64 (те же бита, что у
+# работающего образа v265-strata1: digest-пин не менялся). Пин b10438
+# (тикет 11) выбран по библиотекам: это последний опубликованный cuda13-образ
+# с CUDA 13.3 — с b11706 ggml-org перешёл на CUDA 13.4 и путь стал бы
+# /usr/local/cuda-13.4/lib64; на 13.3 рассчитаны lib_dirs конфигов Strata и
+# LD_LIBRARY_PATH NInfer. mkdir /app — под распаковку llama-swap ниже
+# (tar -C /app): раньше директорию создавал COPY бинарника llama.cpp.
 # Индекс образа ghcr.io/ggml-org/llama.cpp:server-cuda13-b10438@sha256:bb81f3e4…6283,
 # amd64-ребёнок sha256:551298ae…564e.
-COPY --from=ghcr.io/ggml-org/llama.cpp:server-cuda13-b10438@sha256:bb81f3e4ef93697f025156849e55b8d6a92ef10b7cae3460bf0cf8a4d6ea6283 /app /app
+RUN mkdir -p /app
 COPY --from=ghcr.io/ggml-org/llama.cpp:server-cuda13-b10438@sha256:bb81f3e4ef93697f025156849e55b8d6a92ef10b7cae3460bf0cf8a4d6ea6283 /usr/local/cuda-13.3/lib64 /usr/local/cuda-13.3/lib64
 
 # llama-swap v265: релизный бинарник (member llama-swap), проверяется по SHA-256.

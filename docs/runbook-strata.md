@@ -1,16 +1,17 @@
 # Runbook: Strata — контейнерный движок, диагностика и контейнерные операции
 
-Страта — третий движок роутер-контейнера наравне с llama.cpp и NInfer
-(ADR-0008): llama-swap стартует и останавливает её сам, по запросу к
-`strata-iq3`/`strata-iq2`, в безопасном порядке unload→start дефолтной
-exclusive-группы. **Ручных шагов переключения нет и быть не может** — выбор
-ID в клиенте или UI (`:8080`) и есть переключение. Этот ранбук — про
-диагностику отказов и надзор за красными линиями, не про переключение.
+Страта — второй движок роутер-контейнера наравне с NInfer (ADR-0008,
+ADR-0009; llama.cpp выключен): llama-swap стартует и останавливает её сам,
+по запросу к `strata-iq3`/`strata-iq2`, в безопасном порядке unload→start
+дефолтной exclusive-группы. **Ручных шагов переключения нет и быть не
+может** — выбор ID в клиенте или UI (`:8080`) и есть переключение. Этот
+ранбук — про диагностику отказов и надзор за красными линиями, не про
+переключение.
 
 Константы: llama-swap `:8080` (контейнер `llama-swap`, образ
-`llm-server/router:v265-strata1`); RAM-гейты лаунчера 46 ГиБ (iq3) / 36 ГиБ
-(iq2); красная линия VRAM — ≥ 512 MiB на дисплейной GPU1; метки конфигов
-Strata — `router/strata/*.container.json`, лаунчер —
+`llm-server/router:v265-strata1-nollama`); RAM-гейты лаунчера 46 ГиБ (iq3) /
+36 ГиБ (iq2); красная линия VRAM — ≥ 512 MiB на дисплейной GPU1; метки
+конфигов Strata — `router/strata/*.container.json`, лаунчер —
 `router/strata/strata-launch.sh`.
 
 ## Окна молчания и тайминги (выдержка, полные данные — ADR-0008 и assets/11)
@@ -20,7 +21,6 @@ Strata — `router/strata/*.container.json`, лаунчер —
 | NInfer | ~6–7 c | 0.05–0.12 c |
 | Strata iq3 | 17.8–20.9 c (норма 15–25) | быстрый |
 | Strata iq2 | 12.7–13.8 c | быстрый |
-| llama.cpp | 7–9 c на тёплом page cache; до 40–60 c на холодном диске | быстрый |
 
 При `sendLoadingState: false` холодный запрос молчит без индикатора — это
 ожидаемо, не зависание: индикатор только в логах контейнера. Клиентские
@@ -51,11 +51,10 @@ Strata — `router/strata/*.container.json`, лаунчер —
   docker exec llama-swap cat /opt/strata/strata-iq2_xs.log
   ```
 
-- Состояние роутера: `GET /api/profiles` (поле `active`), SSE `/api/events`,
-  `GET /v1/models` — три ID в любом состоянии.
-  `status: unloaded` в `/v1/models` — косметика llama-swap (hardcode для
-  пинов); реальное состояние — `/api/profiles`, `/api/events` или `/health`
-  upstream-порта.
+- Состояние роутера: SSE `/api/events`, `GET /v1/models` — три ID в любом
+  состоянии. `status: unloaded` в `/v1/models` — косметика llama-swap
+  (hardcode v265); реальное состояние — `/api/events` или `/health`
+  upstream-порта. Профилей нет (ADR-0009) — `GET /api/profiles` пуст.
 
 - Красные линии: VRAM GPU1 ≥ 512 MiB — `nvidia-smi --query-gpu=index,memory.free
   --format=csv,noheader`; RAM — без постоянного свопа (транзиентные si/so
@@ -77,8 +76,7 @@ docker compose build llama-swap         # после смены пинов дв�
 ```
 
 UI llama-swap на `:8080` — полноправное управление страта-движком: Play
-стартует движок, PowerOff посылает SIGTERM (graceful QUIT движка).
-`PUT /api/profiles/active` — только выбор движка родителя llama/ninfer
-(предпочтение производительности, не условие работоспособности).
+стартует движок, PowerOff посылает SIGTERM (graceful QUIT движка). Профилей
+llama-swap больше нет (ADR-0009) — `PUT /api/profiles/active` не нужен.
 
 llm-monitoring (promtail/Loki/Grafana) выключен и вне топологии.

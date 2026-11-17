@@ -2,4 +2,3 @@ name: llm-server
 
 include:
   - ./router/docker-compose.yaml
-  - ./vllm/docker-compose.yaml
