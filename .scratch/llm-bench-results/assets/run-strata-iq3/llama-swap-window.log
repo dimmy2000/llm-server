@@ -1,0 +1,375 @@
+2026-11-17T15:49:22.603399225Z [strata] done: 6147 tokens in 65 s (140.3 tok/s) (stop, cancel=False), expert cache 96.8% hit (+0.1% of the routed experts over PCIe)
+2026-11-17T15:49:22.622649853Z [INFO] Request 172.19.0.1 "POST /v1/responses HTTP/1.1" 200 1549368 "omp/18.22.0" 1m4.726348111s
+2026-11-17T15:49:23.457042020Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 7.25µs
+2026-11-17T15:49:24.060623101Z [strata] reading the prompt: 4,096 of 40,041 tokens, 1 s so far
+2026-11-17T15:49:25.602546363Z [strata] reading the prompt: 12,288 of 40,041 tokens, 3 s so far
+2026-11-17T15:49:27.095604977Z [strata] reading the prompt: 20,480 of 40,041 tokens, 4 s so far
+2026-11-17T15:49:28.477213885Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.53µs
+2026-11-17T15:49:28.547455537Z [strata] reading the prompt: 28,672 of 40,041 tokens, 6 s so far
+2026-11-17T15:49:30.047384172Z [strata] reading the prompt: 36,864 of 40,041 tokens, 7 s so far
+2026-11-17T15:49:30.910309435Z [strata] done: 4 tokens in 8 s (133.7 tok/s) (length, cancel=False), expert cache 56.9% hit (+3.2% of the routed experts over PCIe)
+2026-11-17T15:49:30.911089328Z [INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 1935 "" 8.201259342s
+2026-11-17T15:49:32.445559577Z [strata] reading the prompt: 4,096 of 39,791 tokens, 2 s so far
+2026-11-17T15:49:33.499442516Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.77µs
+2026-11-17T15:49:34.129487757Z [strata] reading the prompt: 12,288 of 39,791 tokens, 3 s so far
+2026-11-17T15:49:35.750543818Z [strata] reading the prompt: 20,480 of 39,791 tokens, 5 s so far
+2026-11-17T15:49:37.346537943Z [strata] reading the prompt: 28,672 of 39,791 tokens, 6 s so far
+2026-11-17T15:49:38.521298117Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.741µs
+2026-11-17T15:49:39.053083541Z [strata] reading the prompt: 36,864 of 39,791 tokens, 8 s so far
+2026-11-17T15:49:40.071010022Z [strata] answering: 14 of max 128 tokens, 71.8 tok/s, 9 s
+2026-11-17T15:49:41.075714803Z [strata] answering: 125 of max 128 tokens, 104.2 tok/s, 10 s
+2026-11-17T15:49:41.102977785Z [strata] done: 128 tokens in 10 s (104.3 tok/s) (length, cancel=False), expert cache 87.6% hit (+0.4% of the routed experts over PCIe)
+2026-11-17T15:49:41.103158826Z [INFO] <strata-iq3> recovered from upstream disconnection during streaming
+2026-11-17T15:49:41.105793294Z [INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 30320 "" 10.194386395s
+2026-11-17T15:49:42.627252824Z [strata] reading the prompt: 4,096 of 39,907 tokens, 2 s so far
+2026-11-17T15:49:43.541849543Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.15µs
+2026-11-17T15:49:44.299576989Z [strata] reading the prompt: 12,288 of 39,907 tokens, 3 s so far
+2026-11-17T15:49:45.895518464Z [strata] reading the prompt: 20,480 of 39,907 tokens, 5 s so far
+2026-11-17T15:49:47.503532675Z [strata] reading the prompt: 28,672 of 39,907 tokens, 6 s so far
+2026-11-17T15:49:48.563211832Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.82µs
+2026-11-17T15:49:49.150336043Z [strata] reading the prompt: 36,864 of 39,907 tokens, 8 s so far
+2026-11-17T15:49:50.156730739Z [strata] answering: 23 of max 128 tokens, 123.8 tok/s, 9 s
+2026-11-17T15:49:51.096807245Z [strata] done: 128 tokens in 10 s (113.7 tok/s) (length, cancel=False), expert cache 96.8% hit
+2026-11-17T15:49:51.096940926Z [INFO] <strata-iq3> recovered from upstream disconnection during streaming
+2026-11-17T15:49:51.100189285Z [INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 30036 "" 9.996048466s
+2026-11-17T15:49:52.596678260Z [strata] reading the prompt: 4,096 of 40,080 tokens, 1 s so far
+2026-11-17T15:49:53.583276487Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.24µs
+2026-11-17T15:49:54.274525982Z [strata] reading the prompt: 12,288 of 40,080 tokens, 3 s so far
+2026-11-17T15:49:55.888658472Z [strata] reading the prompt: 20,480 of 40,080 tokens, 5 s so far
+2026-11-17T15:49:57.512096059Z [strata] reading the prompt: 28,672 of 40,080 tokens, 6 s so far
+2026-11-17T15:49:58.604403205Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 14.38µs
+2026-11-17T15:49:59.145052596Z [strata] reading the prompt: 36,864 of 40,080 tokens, 8 s so far
+2026-11-17T15:50:00.149157845Z [strata] answering: 21 of max 128 tokens, 115.8 tok/s, 9 s
+2026-11-17T15:50:01.094355327Z [strata] done: 128 tokens in 10 s (113.6 tok/s) (length, cancel=False), expert cache 98.4% hit
+2026-11-17T15:50:01.094478947Z [INFO] <strata-iq3> recovered from upstream disconnection during streaming
+2026-11-17T15:50:01.097769677Z [INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 29840 "" 10.000062209s
+2026-11-17T15:50:02.600331990Z [strata] reading the prompt: 4,096 of 40,175 tokens, 1 s so far
+2026-11-17T15:50:03.626154295Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.441µs
+2026-11-17T15:50:04.270900130Z [strata] reading the prompt: 12,288 of 40,175 tokens, 3 s so far
+2026-11-17T15:50:05.882873283Z [strata] reading the prompt: 20,480 of 40,175 tokens, 5 s so far
+2026-11-17T15:50:07.536083210Z [strata] reading the prompt: 28,672 of 40,175 tokens, 6 s so far
+2026-11-17T15:50:08.648634867Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.45µs
+2026-11-17T15:50:09.172005616Z [strata] reading the prompt: 36,864 of 40,175 tokens, 8 s so far
+2026-11-17T15:50:10.028659820Z [strata] done: 2 tokens in 9 s (90.0 tok/s) (stop, cancel=False), expert cache 88.9% hit (+0.9% of the routed experts over PCIe)
+2026-11-17T15:50:10.028893021Z [INFO] <strata-iq3> recovered from upstream disconnection during streaming
+2026-11-17T15:50:10.032283591Z [INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 1249 "" 8.936841071s
+2026-11-17T15:50:11.530118110Z [strata] reading the prompt: 4,096 of 39,779 tokens, 1 s so far
+2026-11-17T15:50:13.210523589Z [strata] reading the prompt: 12,288 of 39,779 tokens, 3 s so far
+2026-11-17T15:50:13.670387797Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.51µs
+2026-11-17T15:50:14.871529140Z [strata] reading the prompt: 20,480 of 39,779 tokens, 5 s so far
+2026-11-17T15:50:16.460365534Z [strata] reading the prompt: 28,672 of 39,779 tokens, 6 s so far
+2026-11-17T15:50:18.090492932Z [strata] reading the prompt: 36,864 of 39,779 tokens, 8 s so far
+2026-11-17T15:50:18.690651092Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 7.37µs
+2026-11-17T15:50:18.926612104Z [strata] done: 2 tokens in 9 s (88.7 tok/s) (stop, cancel=False), expert cache 91.8% hit (+0.4% of the routed experts over PCIe)
+2026-11-17T15:50:18.926831765Z [INFO] <strata-iq3> recovered from upstream disconnection during streaming
+2026-11-17T15:50:18.930328295Z [INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 1248 "" 8.900607562s
+2026-11-17T15:50:20.416595769Z [strata] reading the prompt: 4,096 of 40,071 tokens, 1 s so far
+2026-11-17T15:50:22.156504238Z [strata] reading the prompt: 12,288 of 40,071 tokens, 3 s so far
+2026-11-17T15:50:23.710864017Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.7µs
+2026-11-17T15:50:23.756451235Z [strata] reading the prompt: 20,480 of 40,071 tokens, 5 s so far
+2026-11-17T15:50:25.365195698Z [strata] reading the prompt: 28,672 of 40,071 tokens, 6 s so far
+2026-11-17T15:50:26.991925926Z [strata] reading the prompt: 36,864 of 40,071 tokens, 8 s so far
+2026-11-17T15:50:27.837571247Z [strata] done: 2 tokens in 9 s (98.5 tok/s) (stop, cancel=False), expert cache 93.6% hit (+0.3% of the routed experts over PCIe)
+2026-11-17T15:50:27.837808258Z [INFO] <strata-iq3> recovered from upstream disconnection during streaming
+2026-11-17T15:50:27.842082881Z [INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 1249 "" 8.914439814s
+2026-11-17T15:50:28.731140102Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.44µs
+2026-11-17T15:50:29.179455569Z [strata] reading the prompt: 4,096 of 120,050 tokens, 1 s so far
+2026-11-17T15:50:30.640723672Z [strata] reading the prompt: 12,288 of 120,050 tokens, 3 s so far
+2026-11-17T15:50:32.104478812Z [strata] reading the prompt: 20,480 of 120,050 tokens, 4 s so far
+2026-11-17T15:50:33.620566085Z [strata] reading the prompt: 28,672 of 120,050 tokens, 6 s so far
+2026-11-17T15:50:33.751141029Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.58µs
+2026-11-17T15:50:35.113328565Z [strata] reading the prompt: 36,864 of 120,050 tokens, 7 s so far
+2026-11-17T15:50:36.622563806Z [strata] reading the prompt: 45,056 of 120,050 tokens, 9 s so far
+2026-11-17T15:50:38.125595068Z [strata] reading the prompt: 53,248 of 120,050 tokens, 10 s so far
+2026-11-17T15:50:38.773310252Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.19µs
+2026-11-17T15:50:39.639977805Z [strata] reading the prompt: 61,440 of 120,050 tokens, 12 s so far
+2026-11-17T15:50:41.185585008Z [strata] reading the prompt: 69,632 of 120,050 tokens, 13 s so far
+2026-11-17T15:50:42.720370258Z [strata] reading the prompt: 77,824 of 120,050 tokens, 15 s so far
+2026-11-17T15:50:43.793870951Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.47µs
+2026-11-17T15:50:44.291589071Z [strata] reading the prompt: 86,016 of 120,050 tokens, 16 s so far
+2026-11-17T15:50:45.955504721Z [strata] reading the prompt: 94,208 of 120,050 tokens, 18 s so far
+2026-11-17T15:50:47.558934444Z [strata] reading the prompt: 102,400 of 120,050 tokens, 20 s so far
+2026-11-17T15:50:48.815464433Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.54µs
+2026-11-17T15:50:49.167531292Z [strata] reading the prompt: 110,592 of 120,050 tokens, 21 s so far
+2026-11-17T15:50:50.819212884Z [strata] reading the prompt: 118,784 of 120,050 tokens, 23 s so far
+2026-11-17T15:50:51.632031010Z [strata] done: 4 tokens in 24 s (96.9 tok/s) (length, cancel=False), expert cache 94.9% hit
+2026-11-17T15:50:51.632812133Z [INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 2215 "" 23.79327719s
+2026-11-17T15:50:53.181130235Z [strata] reading the prompt: 4,096 of 120,005 tokens, 1 s so far
+2026-11-17T15:50:53.837126305Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.02µs
+2026-11-17T15:50:54.749589359Z [strata] reading the prompt: 12,288 of 120,005 tokens, 3 s so far
+2026-11-17T15:50:56.351585007Z [strata] reading the prompt: 20,480 of 120,005 tokens, 5 s so far
+2026-11-17T15:50:57.967238488Z [strata] reading the prompt: 28,672 of 120,005 tokens, 6 s so far
+2026-11-17T15:50:58.858111455Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.52µs
+2026-11-17T15:50:59.592582378Z [strata] reading the prompt: 36,864 of 120,005 tokens, 8 s so far
+2026-11-17T15:51:01.243578808Z [strata] reading the prompt: 45,056 of 120,005 tokens, 10 s so far
+2026-11-17T15:51:02.926587837Z [strata] reading the prompt: 53,248 of 120,005 tokens, 11 s so far
+2026-11-17T15:51:03.878110692Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 27.39µs
+2026-11-17T15:51:04.567133694Z [strata] reading the prompt: 61,440 of 120,005 tokens, 13 s so far
+2026-11-17T15:51:06.269903664Z [strata] reading the prompt: 69,632 of 120,005 tokens, 15 s so far
+2026-11-17T15:51:07.965582902Z [strata] reading the prompt: 77,824 of 120,005 tokens, 16 s so far
+2026-11-17T15:51:08.898463540Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.28µs
+2026-11-17T15:51:09.694586904Z [strata] reading the prompt: 86,016 of 120,005 tokens, 18 s so far
+2026-11-17T15:51:11.486654410Z [strata] reading the prompt: 94,208 of 120,005 tokens, 20 s so far
+2026-11-17T15:51:13.240046697Z [strata] reading the prompt: 102,400 of 120,005 tokens, 22 s so far
+2026-11-17T15:51:13.920369922Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.89µs
+2026-11-17T15:51:14.975499028Z [strata] reading the prompt: 110,592 of 120,005 tokens, 23 s so far
+2026-11-17T15:51:16.728753194Z [strata] reading the prompt: 118,784 of 120,005 tokens, 25 s so far
+2026-11-17T15:51:17.731327068Z [strata] answering: 26 of max 128 tokens, 112.7 tok/s, 26 s
+2026-11-17T15:51:18.655014586Z [strata] done: 128 tokens in 27 s (110.9 tok/s) (length, cancel=False), expert cache 98.6% hit
+2026-11-17T15:51:18.655137487Z [INFO] <strata-iq3> recovered from upstream disconnection during streaming
+2026-11-17T15:51:18.661101115Z [INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 30351 "" 27.026962088s
+2026-11-17T15:51:18.940720640Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.42µs
+2026-11-17T15:51:20.211625124Z [strata] reading the prompt: 4,096 of 119,944 tokens, 2 s so far
+2026-11-17T15:51:21.783818320Z [strata] reading the prompt: 12,288 of 119,944 tokens, 3 s so far
+2026-11-17T15:51:23.381985056Z [strata] reading the prompt: 20,480 of 119,944 tokens, 5 s so far
+2026-11-17T15:51:23.962946484Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 13.16µs
+2026-11-17T15:51:24.983919004Z [strata] reading the prompt: 28,672 of 119,944 tokens, 6 s so far
+2026-11-17T15:51:26.606061475Z [strata] reading the prompt: 36,864 of 119,944 tokens, 8 s so far
+2026-11-17T15:51:28.238675448Z [strata] reading the prompt: 45,056 of 119,944 tokens, 10 s so far
+2026-11-17T15:51:28.985316548Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 15.09µs
+2026-11-17T15:51:29.894591293Z [strata] reading the prompt: 53,248 of 119,944 tokens, 11 s so far
+2026-11-17T15:51:31.565576564Z [strata] reading the prompt: 61,440 of 119,944 tokens, 13 s so far
+2026-11-17T15:51:33.290606933Z [strata] reading the prompt: 69,632 of 119,944 tokens, 15 s so far
+2026-11-17T15:51:34.007206751Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 27.06µs
+2026-11-17T15:51:34.984584596Z [strata] reading the prompt: 77,824 of 119,944 tokens, 16 s so far
+2026-11-17T15:51:36.688574790Z [strata] reading the prompt: 86,016 of 119,944 tokens, 18 s so far
+2026-11-17T15:51:38.513407358Z [strata] reading the prompt: 94,208 of 119,944 tokens, 20 s so far
+2026-11-17T15:51:39.028552432Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.85µs
+2026-11-17T15:51:40.306540357Z [strata] reading the prompt: 102,400 of 119,944 tokens, 22 s so far
+2026-11-17T15:51:42.049811763Z [strata] reading the prompt: 110,592 of 119,944 tokens, 23 s so far
+2026-11-17T15:51:43.829587511Z [strata] reading the prompt: 118,784 of 119,944 tokens, 25 s so far
+2026-11-17T15:51:44.048707800Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 15.07µs
+2026-11-17T15:51:44.842132725Z [strata] answering: 24 of max 128 tokens, 99.2 tok/s, 26 s
+2026-11-17T15:51:45.784975193Z [strata] done: 128 tokens in 27 s (108.0 tok/s) (length, cancel=False), expert cache 97.6% hit
+2026-11-17T15:51:45.785134544Z [INFO] <strata-iq3> recovered from upstream disconnection during streaming
+2026-11-17T15:51:45.791361943Z [INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 30589 "" 27.13415257s
+2026-11-17T15:51:47.334323438Z [strata] reading the prompt: 4,096 of 119,930 tokens, 2 s so far
+2026-11-17T15:51:48.910600247Z [strata] reading the prompt: 12,288 of 119,930 tokens, 3 s so far
+2026-11-17T15:51:49.070318301Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.8µs
+2026-11-17T15:51:50.522618726Z [strata] reading the prompt: 20,480 of 119,930 tokens, 5 s so far
+2026-11-17T15:51:52.099709847Z [strata] reading the prompt: 28,672 of 119,930 tokens, 6 s so far
+2026-11-17T15:51:53.717093053Z [strata] reading the prompt: 36,864 of 119,930 tokens, 8 s so far
+2026-11-17T15:51:54.092598345Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 13.06µs
+2026-11-17T15:51:55.346719707Z [strata] reading the prompt: 45,056 of 119,930 tokens, 10 s so far
+2026-11-17T15:51:56.997074664Z [strata] reading the prompt: 53,248 of 119,930 tokens, 11 s so far
+2026-11-17T15:51:58.648108654Z [strata] reading the prompt: 61,440 of 119,930 tokens, 13 s so far
+2026-11-17T15:51:59.114311427Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 13.92µs
+2026-11-17T15:52:00.322748857Z [strata] reading the prompt: 69,632 of 119,930 tokens, 14 s so far
+2026-11-17T15:52:02.003589650Z [strata] reading the prompt: 77,824 of 119,930 tokens, 16 s so far
+2026-11-17T15:52:03.699591809Z [strata] reading the prompt: 86,016 of 119,930 tokens, 18 s so far
+2026-11-17T15:52:04.136530851Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.91µs
+2026-11-17T15:52:05.518924759Z [strata] reading the prompt: 94,208 of 119,930 tokens, 20 s so far
+2026-11-17T15:52:07.240037616Z [strata] reading the prompt: 102,400 of 119,930 tokens, 21 s so far
+2026-11-17T15:52:08.997377675Z [strata] reading the prompt: 110,592 of 119,930 tokens, 23 s so far
+2026-11-17T15:52:09.158786585Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.63µs
+2026-11-17T15:52:10.796903515Z [strata] reading the prompt: 118,784 of 119,930 tokens, 25 s so far
+2026-11-17T15:52:11.806451209Z [strata] answering: 29 of max 128 tokens, 120.1 tok/s, 26 s
+2026-11-17T15:52:12.711153049Z [strata] done: 128 tokens in 27 s (111.7 tok/s) (length, cancel=False), expert cache 97.6% hit
+2026-11-17T15:52:12.711274180Z [INFO] <strata-iq3> recovered from upstream disconnection during streaming
+2026-11-17T15:52:12.717799300Z [INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 30625 "" 26.93071393s
+2026-11-17T15:52:14.180966248Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.07µs
+2026-11-17T15:52:14.262036869Z [strata] reading the prompt: 4,096 of 120,544 tokens, 2 s so far
+2026-11-17T15:52:15.853604065Z [strata] reading the prompt: 12,288 of 120,544 tokens, 3 s so far
+2026-11-17T15:52:17.450241167Z [strata] reading the prompt: 20,480 of 120,544 tokens, 5 s so far
+2026-11-17T15:52:19.061575614Z [strata] reading the prompt: 28,672 of 120,544 tokens, 6 s so far
+2026-11-17T15:52:19.202109139Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.75µs
+2026-11-17T15:52:20.743010408Z [strata] reading the prompt: 36,864 of 120,544 tokens, 8 s so far
+2026-11-17T15:52:22.343184880Z [strata] reading the prompt: 45,056 of 120,544 tokens, 10 s so far
+2026-11-17T15:52:23.997606261Z [strata] reading the prompt: 53,248 of 120,544 tokens, 11 s so far
+2026-11-17T15:52:24.224758024Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.41µs
+2026-11-17T15:52:25.638453979Z [strata] reading the prompt: 61,440 of 120,544 tokens, 13 s so far
+2026-11-17T15:52:27.328924531Z [strata] reading the prompt: 69,632 of 120,544 tokens, 15 s so far
+2026-11-17T15:52:29.047354810Z [strata] reading the prompt: 77,824 of 120,544 tokens, 16 s so far
+2026-11-17T15:52:29.245405923Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.45µs
+2026-11-17T15:52:30.739595148Z [strata] reading the prompt: 86,016 of 120,544 tokens, 18 s so far
+2026-11-17T15:52:32.518127362Z [strata] reading the prompt: 94,208 of 120,544 tokens, 20 s so far
+2026-11-17T15:52:34.265633531Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.68µs
+2026-11-17T15:52:34.290989999Z [strata] reading the prompt: 102,400 of 120,544 tokens, 22 s so far
+2026-11-17T15:52:36.024952346Z [strata] reading the prompt: 110,592 of 120,544 tokens, 23 s so far
+2026-11-17T15:52:37.818453877Z [strata] reading the prompt: 118,784 of 120,544 tokens, 25 s so far
+2026-11-17T15:52:38.624266572Z [strata] done: 2 tokens in 26 s (105.4 tok/s) (stop, cancel=False), expert cache 97.4% hit
+2026-11-17T15:52:38.624473402Z [INFO] <strata-iq3> recovered from upstream disconnection during streaming
+2026-11-17T15:52:38.630379540Z [INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 1533 "" 25.917360515s
+2026-11-17T15:52:39.286801192Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.13µs
+2026-11-17T15:52:40.188159692Z [strata] reading the prompt: 4,096 of 120,572 tokens, 2 s so far
+2026-11-17T15:52:41.797090801Z [strata] reading the prompt: 12,288 of 120,572 tokens, 3 s so far
+2026-11-17T15:52:43.400519344Z [strata] reading the prompt: 20,480 of 120,572 tokens, 5 s so far
+2026-11-17T15:52:44.307190610Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.08µs
+2026-11-17T15:52:45.013590176Z [strata] reading the prompt: 28,672 of 120,572 tokens, 6 s so far
+2026-11-17T15:52:46.646587551Z [strata] reading the prompt: 36,864 of 120,572 tokens, 8 s so far
+2026-11-17T15:52:48.297905841Z [strata] reading the prompt: 45,056 of 120,572 tokens, 10 s so far
+2026-11-17T15:52:49.327498178Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.93µs
+2026-11-17T15:52:49.950766947Z [strata] reading the prompt: 53,248 of 120,572 tokens, 11 s so far
+2026-11-17T15:52:51.623578614Z [strata] reading the prompt: 61,440 of 120,572 tokens, 13 s so far
+2026-11-17T15:52:53.297442005Z [strata] reading the prompt: 69,632 of 120,572 tokens, 15 s so far
+2026-11-17T15:52:54.347960516Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.27µs
+2026-11-17T15:52:54.978486148Z [strata] reading the prompt: 77,824 of 120,572 tokens, 16 s so far
+2026-11-17T15:52:56.694590709Z [strata] reading the prompt: 86,016 of 120,572 tokens, 18 s so far
+2026-11-17T15:52:58.527550642Z [strata] reading the prompt: 94,208 of 120,572 tokens, 20 s so far
+2026-11-17T15:52:59.368714415Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.64µs
+2026-11-17T15:53:00.274761020Z [strata] reading the prompt: 102,400 of 120,572 tokens, 22 s so far
+2026-11-17T15:53:02.030083012Z [strata] reading the prompt: 110,592 of 120,572 tokens, 23 s so far
+2026-11-17T15:53:03.792339937Z [strata] reading the prompt: 118,784 of 120,572 tokens, 25 s so far
+2026-11-17T15:53:04.388335271Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.05µs
+2026-11-17T15:53:04.597802399Z [strata] done: 2 tokens in 26 s (109.4 tok/s) (stop, cancel=False), expert cache 98.0% hit
+2026-11-17T15:53:04.597979620Z [INFO] <strata-iq3> recovered from upstream disconnection during streaming
+2026-11-17T15:53:04.603873928Z [INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 1532 "" 25.977823061s
+2026-11-17T15:53:06.167651208Z [strata] reading the prompt: 4,096 of 120,351 tokens, 2 s so far
+2026-11-17T15:53:07.791772415Z [strata] reading the prompt: 12,288 of 120,351 tokens, 3 s so far
+2026-11-17T15:53:09.397027793Z [strata] reading the prompt: 20,480 of 120,351 tokens, 5 s so far
+2026-11-17T15:53:09.408969160Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.35µs
+2026-11-17T15:53:11.039377346Z [strata] reading the prompt: 28,672 of 120,351 tokens, 6 s so far
+2026-11-17T15:53:12.661613227Z [strata] reading the prompt: 36,864 of 120,351 tokens, 8 s so far
+2026-11-17T15:53:14.318780466Z [strata] reading the prompt: 45,056 of 120,351 tokens, 10 s so far
+2026-11-17T15:53:14.430174931Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.66µs
+2026-11-17T15:53:15.973124746Z [strata] reading the prompt: 53,248 of 120,351 tokens, 11 s so far
+2026-11-17T15:53:17.624568987Z [strata] reading the prompt: 61,440 of 120,351 tokens, 13 s so far
+2026-11-17T15:53:19.308097828Z [strata] reading the prompt: 69,632 of 120,351 tokens, 15 s so far
+2026-11-17T15:53:19.449901937Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.82µs
+2026-11-17T15:53:20.994685818Z [strata] reading the prompt: 77,824 of 120,351 tokens, 16 s so far
+2026-11-17T15:53:22.694627259Z [strata] reading the prompt: 86,016 of 120,351 tokens, 18 s so far
+2026-11-17T15:53:24.470665166Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.72µs
+2026-11-17T15:53:24.500834779Z [strata] reading the prompt: 94,208 of 120,351 tokens, 20 s so far
+2026-11-17T15:53:26.237203023Z [strata] reading the prompt: 102,400 of 120,351 tokens, 22 s so far
+2026-11-17T15:53:27.981785293Z [strata] reading the prompt: 110,592 of 120,351 tokens, 23 s so far
+2026-11-17T15:53:29.492749030Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.591µs
+2026-11-17T15:53:29.762152464Z [strata] reading the prompt: 118,784 of 120,351 tokens, 25 s so far
+2026-11-17T15:53:30.561891069Z [strata] done: 2 tokens in 26 s (108.9 tok/s) (stop, cancel=False), expert cache 98.4% hit
+2026-11-17T15:53:30.562122889Z [INFO] <strata-iq3> recovered from upstream disconnection during streaming
+2026-11-17T15:53:30.568703710Z [INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 1533 "" 25.968839404s
+2026-11-17T15:53:30.882829102Z [strata] done: 2 tokens in 0 s (81.4 tok/s) (stop, cancel=False), expert cache 89.8% hit (+0.7% of the routed experts over PCIe)
+2026-11-17T15:53:30.883562414Z [INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 1112 "" 281.415131ms
+2026-11-17T15:53:32.396686077Z [strata] reading the prompt: 4,096 of 39,900 tokens, 1 s so far
+2026-11-17T15:53:34.072643475Z [strata] reading the prompt: 12,288 of 39,900 tokens, 3 s so far
+2026-11-17T15:53:34.514343232Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.26µs
+2026-11-17T15:53:35.690221641Z [strata] reading the prompt: 20,480 of 39,900 tokens, 5 s so far
+2026-11-17T15:53:37.283833463Z [strata] reading the prompt: 28,672 of 39,900 tokens, 6 s so far
+2026-11-17T15:53:38.922094244Z [strata] reading the prompt: 36,864 of 39,900 tokens, 8 s so far
+2026-11-17T15:53:39.534153618Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.79µs
+2026-11-17T15:53:39.925248708Z [strata] answering: 21 of max 128 tokens, 112.7 tok/s, 9 s
+2026-11-17T15:53:40.858841088Z [strata] done: 128 tokens in 10 s (114.3 tok/s) (length, cancel=False), expert cache 98.1% hit
+2026-11-17T15:53:40.859007348Z [INFO] <strata-iq3> recovered from upstream disconnection during streaming
+2026-11-17T15:53:40.861715487Z [INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 29842 "" 9.976164516s
+2026-11-17T15:53:42.381597431Z [strata] reading the prompt: 4,096 of 40,112 tokens, 2 s so far
+2026-11-17T15:53:44.106515019Z [strata] reading the prompt: 12,288 of 40,112 tokens, 3 s so far
+2026-11-17T15:53:44.555706270Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.61µs
+2026-11-17T15:53:45.717534106Z [strata] reading the prompt: 20,480 of 40,112 tokens, 5 s so far
+2026-11-17T15:53:47.341550532Z [strata] reading the prompt: 28,672 of 40,112 tokens, 6 s so far
+2026-11-17T15:53:48.984022055Z [strata] reading the prompt: 36,864 of 40,112 tokens, 8 s so far
+2026-11-17T15:53:49.575966867Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.79µs
+2026-11-17T15:53:49.988689505Z [strata] answering: 23 of max 128 tokens, 128.8 tok/s, 9 s
+2026-11-17T15:53:50.819533866Z [strata] done: 128 tokens in 10 s (126.8 tok/s) (length, cancel=False), expert cache 97.8% hit
+2026-11-17T15:53:50.819697007Z [INFO] <strata-iq3> recovered from upstream disconnection during streaming
+2026-11-17T15:53:50.822879917Z [INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 30086 "" 9.962426223s
+2026-11-17T15:53:52.364373497Z [strata] reading the prompt: 4,096 of 40,074 tokens, 1 s so far
+2026-11-17T15:53:54.053506145Z [strata] reading the prompt: 12,288 of 40,074 tokens, 3 s so far
+2026-11-17T15:53:54.598355421Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.31µs
+2026-11-17T15:53:55.680444631Z [strata] reading the prompt: 20,480 of 40,074 tokens, 5 s so far
+2026-11-17T15:53:57.275628288Z [strata] reading the prompt: 28,672 of 40,074 tokens, 6 s so far
+2026-11-17T15:53:58.900088965Z [strata] reading the prompt: 36,864 of 40,074 tokens, 8 s so far
+2026-11-17T15:53:59.620435845Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.11µs
+2026-11-17T15:53:59.910300822Z [strata] answering: 20 of max 128 tokens, 107.0 tok/s, 9 s
+2026-11-17T15:54:00.811856152Z [strata] done: 128 tokens in 10 s (117.6 tok/s) (length, cancel=False), expert cache 98.0% hit
+2026-11-17T15:54:00.812023223Z [INFO] <strata-iq3> recovered from upstream disconnection during streaming
+2026-11-17T15:54:00.815255613Z [INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 30096 "" 9.993682031s
+2026-11-17T15:54:02.322787589Z [strata] reading the prompt: 4,096 of 39,867 tokens, 2 s so far
+2026-11-17T15:54:04.022982551Z [strata] reading the prompt: 12,288 of 39,867 tokens, 3 s so far
+2026-11-17T15:54:04.641693326Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 12.97µs
+2026-11-17T15:54:05.653630618Z [strata] reading the prompt: 20,480 of 39,867 tokens, 5 s so far
+2026-11-17T15:54:07.277147702Z [strata] reading the prompt: 28,672 of 39,867 tokens, 6 s so far
+2026-11-17T15:54:08.912295423Z [strata] reading the prompt: 36,864 of 39,867 tokens, 8 s so far
+2026-11-17T15:54:09.663000137Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.83µs
+2026-11-17T15:54:09.918262597Z [strata] answering: 25 of max 128 tokens, 129.8 tok/s, 9 s
+2026-11-17T15:54:10.779131711Z [strata] done: 128 tokens in 10 s (121.5 tok/s) (length, cancel=False), expert cache 97.7% hit
+2026-11-17T15:54:10.779281572Z [INFO] <strata-iq3> recovered from upstream disconnection during streaming
+2026-11-17T15:54:10.782591212Z [INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 30290 "" 19.9610177s
+2026-11-17T15:54:12.297115659Z [strata] reading the prompt: 4,096 of 40,145 tokens, 1 s so far
+2026-11-17T15:54:13.983550499Z [strata] reading the prompt: 12,288 of 40,145 tokens, 3 s so far
+2026-11-17T15:54:14.684792459Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.02µs
+2026-11-17T15:54:15.609214460Z [strata] reading the prompt: 20,480 of 40,145 tokens, 5 s so far
+2026-11-17T15:54:17.244413031Z [strata] reading the prompt: 28,672 of 40,145 tokens, 6 s so far
+2026-11-17T15:54:18.877127374Z [strata] reading the prompt: 36,864 of 40,145 tokens, 8 s so far
+2026-11-17T15:54:19.706442041Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 7.69µs
+2026-11-17T15:54:19.885823466Z [strata] answering: 23 of max 128 tokens, 127.1 tok/s, 9 s
+2026-11-17T15:54:20.797146857Z [strata] done: 128 tokens in 10 s (117.2 tok/s) (length, cancel=False), expert cache 98.8% hit
+2026-11-17T15:54:20.802274213Z [INFO] <strata-iq3> recovered from upstream disconnection during streaming
+2026-11-17T15:54:20.805714583Z [INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 30049 "" 10.024504566s
+2026-11-17T15:54:22.294103351Z [strata] reading the prompt: 4,096 of 40,037 tokens, 1 s so far
+2026-11-17T15:54:24.000559483Z [strata] reading the prompt: 12,288 of 40,037 tokens, 3 s so far
+2026-11-17T15:54:24.728422055Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.6µs
+2026-11-17T15:54:25.627405558Z [strata] reading the prompt: 20,480 of 40,037 tokens, 5 s so far
+2026-11-17T15:54:27.237523601Z [strata] reading the prompt: 28,672 of 40,037 tokens, 6 s so far
+2026-11-17T15:54:28.876498994Z [strata] reading the prompt: 36,864 of 40,037 tokens, 8 s so far
+2026-11-17T15:54:29.749852927Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.3µs
+2026-11-17T15:54:29.876743569Z [strata] answering: 20 of max 128 tokens, 109.8 tok/s, 9 s
+2026-11-17T15:54:30.784425579Z [strata] done: 128 tokens in 10 s (117.4 tok/s) (length, cancel=False), expert cache 99.0% hit
+2026-11-17T15:54:30.784540069Z [INFO] <strata-iq3> recovered from upstream disconnection during streaming
+2026-11-17T15:54:30.787671379Z [INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 30076 "" 20.006634812s
+2026-11-17T15:54:31.090111805Z [strata] done: 2 tokens in 0 s (74.2 tok/s) (stop, cancel=False), expert cache 85.3% hit (+1.4% of the routed experts over PCIe)
+2026-11-17T15:54:31.090761227Z [INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 1113 "" 262.288792ms
+2026-11-17T15:54:32.619292448Z [strata] reading the prompt: 4,096 of 39,931 tokens, 1 s so far
+2026-11-17T15:54:34.291160042Z [strata] reading the prompt: 12,288 of 39,931 tokens, 3 s so far
+2026-11-17T15:54:34.771393018Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.01µs
+2026-11-17T15:54:35.877735202Z [strata] reading the prompt: 20,480 of 39,931 tokens, 5 s so far
+2026-11-17T15:54:37.498034247Z [strata] reading the prompt: 28,672 of 39,931 tokens, 6 s so far
+2026-11-17T15:54:39.115975555Z [strata] reading the prompt: 36,864 of 39,931 tokens, 8 s so far
+2026-11-17T15:54:39.792055327Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.17µs
+2026-11-17T15:54:40.131507028Z [strata] answering: 18 of max 128 tokens, 90.2 tok/s, 9 s
+2026-11-17T15:54:40.938249695Z [strata] done: 128 tokens in 10 s (127.2 tok/s) (length, cancel=False), expert cache 98.7% hit
+2026-11-17T15:54:40.938382705Z [INFO] <strata-iq3> recovered from upstream disconnection during streaming
+2026-11-17T15:54:40.941637475Z [INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 30114 "" 9.848403381s
+2026-11-17T15:54:42.450616895Z [strata] reading the prompt: 4,096 of 40,077 tokens, 2 s so far
+2026-11-17T15:54:44.135976842Z [strata] reading the prompt: 12,288 of 40,077 tokens, 3 s so far
+2026-11-17T15:54:44.814162841Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 11.06µs
+2026-11-17T15:54:45.768898465Z [strata] reading the prompt: 20,480 of 40,077 tokens, 5 s so far
+2026-11-17T15:54:47.380765374Z [strata] reading the prompt: 28,672 of 40,077 tokens, 6 s so far
+2026-11-17T15:54:49.011809782Z [strata] reading the prompt: 36,864 of 40,077 tokens, 8 s so far
+2026-11-17T15:54:49.836332704Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 9.05µs
+2026-11-17T15:54:50.015532319Z [strata] answering: 20 of max 128 tokens, 110.6 tok/s, 9 s
+2026-11-17T15:54:50.925647075Z [strata] done: 128 tokens in 10 s (117.3 tok/s) (length, cancel=False), expert cache 98.6% hit
+2026-11-17T15:54:50.925761306Z [INFO] <strata-iq3> recovered from upstream disconnection during streaming
+2026-11-17T15:54:50.928968006Z [INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 30293 "" 19.835825252s
+2026-11-17T15:54:52.473550156Z [strata] reading the prompt: 4,096 of 39,839 tokens, 1 s so far
+2026-11-17T15:54:54.135527600Z [strata] reading the prompt: 12,288 of 39,839 tokens, 3 s so far
+2026-11-17T15:54:54.858810149Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.651µs
+2026-11-17T15:54:55.736529005Z [strata] reading the prompt: 20,480 of 39,839 tokens, 5 s so far
+2026-11-17T15:54:57.369071688Z [strata] reading the prompt: 28,672 of 39,839 tokens, 6 s so far
+2026-11-17T15:54:58.988484840Z [strata] reading the prompt: 36,864 of 39,839 tokens, 8 s so far
+2026-11-17T15:54:59.881207243Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.49µs
+2026-11-17T15:54:59.995828508Z [strata] answering: 24 of max 128 tokens, 127.5 tok/s, 9 s
+2026-11-17T15:55:00.770528785Z [strata] done: 128 tokens in 10 s (132.9 tok/s) (length, cancel=False), expert cache 98.2% hit
+2026-11-17T15:55:00.770689856Z [INFO] <strata-iq3> recovered from upstream disconnection during streaming
+2026-11-17T15:55:00.773895066Z [INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 30051 "" 9.846311624s
+2026-11-17T15:55:02.278703403Z [strata] reading the prompt: 4,096 of 39,845 tokens, 2 s so far
+2026-11-17T15:55:03.938365650Z [strata] reading the prompt: 12,288 of 39,845 tokens, 3 s so far
+2026-11-17T15:55:04.902365183Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 19.62µs
+2026-11-17T15:55:05.578181835Z [strata] reading the prompt: 20,480 of 39,845 tokens, 5 s so far
+2026-11-17T15:55:07.203673606Z [strata] reading the prompt: 28,672 of 39,845 tokens, 6 s so far
+2026-11-17T15:55:08.830906932Z [strata] reading the prompt: 36,864 of 39,845 tokens, 8 s so far
+2026-11-17T15:55:09.836288654Z [strata] answering: 22 of max 128 tokens, 116.8 tok/s, 9 s
+2026-11-17T15:55:09.925309450Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.85µs
+2026-11-17T15:55:10.706345017Z [strata] done: 128 tokens in 10 s (120.9 tok/s) (length, cancel=False), expert cache 97.5% hit
+2026-11-17T15:55:10.706461647Z [INFO] <strata-iq3> recovered from upstream disconnection during streaming
+2026-11-17T15:55:10.709630897Z [INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 29613 "" 19.782054006s
+2026-11-17T15:55:12.252782343Z [strata] reading the prompt: 4,096 of 39,969 tokens, 1 s so far
+2026-11-17T15:55:13.937530669Z [strata] reading the prompt: 12,288 of 39,969 tokens, 3 s so far
+2026-11-17T15:55:14.946251371Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 34.471µs
+2026-11-17T15:55:15.553721521Z [strata] reading the prompt: 20,480 of 39,969 tokens, 5 s so far
+2026-11-17T15:55:17.165605410Z [strata] reading the prompt: 28,672 of 39,969 tokens, 6 s so far
+2026-11-17T15:55:18.801428453Z [strata] reading the prompt: 36,864 of 39,969 tokens, 8 s so far
+2026-11-17T15:55:19.802835442Z [strata] answering: 27 of max 128 tokens, 150.8 tok/s, 9 s
+2026-11-17T15:55:19.968547965Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.62µs
+2026-11-17T15:55:20.718824927Z [strata] done: 128 tokens in 10 s (116.9 tok/s) (length, cancel=False), expert cache 98.6% hit
+2026-11-17T15:55:20.718959157Z [INFO] <strata-iq3> recovered from upstream disconnection during streaming
+2026-11-17T15:55:20.722038117Z [INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 30276 "" 10.013725344s
+2026-11-17T15:55:22.220535865Z [strata] reading the prompt: 4,096 of 40,041 tokens, 2 s so far
+2026-11-17T15:55:23.904968178Z [strata] reading the prompt: 12,288 of 40,041 tokens, 3 s so far
+2026-11-17T15:55:24.991741452Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 10.32µs
+2026-11-17T15:55:25.510944478Z [strata] reading the prompt: 20,480 of 40,041 tokens, 5 s so far
+2026-11-17T15:55:27.116898569Z [strata] reading the prompt: 28,672 of 40,041 tokens, 6 s so far
+2026-11-17T15:55:28.741942468Z [strata] reading the prompt: 36,864 of 40,041 tokens, 8 s so far
+2026-11-17T15:55:29.752218175Z [strata] answering: 25 of max 128 tokens, 133.1 tok/s, 9 s
+2026-11-17T15:55:30.014181036Z [INFO] Request ::1 "GET / HTTP/1.1" 302 0 "curl/8.18.0" 8.85µs
+2026-11-17T15:55:30.599136117Z [strata] done: 128 tokens in 10 s (123.7 tok/s) (length, cancel=False), expert cache 98.8% hit
+2026-11-17T15:55:30.599272907Z [INFO] <strata-iq3> recovered from upstream disconnection during streaming
+2026-11-17T15:55:30.601962105Z [INFO] Request 172.19.0.1 "POST /v1/chat/completions HTTP/1.1" 200 30307 "" 19.893641142s

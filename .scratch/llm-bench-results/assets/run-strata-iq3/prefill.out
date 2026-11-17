@@ -1,0 +1,46 @@
+model   strata-iq3
+url     http://localhost:8080
+data    /home/dimmy/projects/00 infra/llm-bench/realdata/chunks
+depths  [40000, 120000]  runs/depth=3  max_tokens=16  thinking=off  rates=engine (CLIENT=1 for both)
+
+========== REAL-PREFILL-40K (depth=40000, 3 chunk(s), one per run) ==========
+
+=== decode probe [real-prefill-40k] (continuation, target=128 tokens) ===
+  dec-1  40000-d1.txt    comp= 128  decode= 103.4 tok/s (engine)  ttft=   8965ms  MTP acc=47/69 (68%)  cached=0/0
+  dec-2  40000-d2.txt    comp= 128  decode= 112.7 tok/s (engine)  ttft=   8867ms  MTP acc=41/73 (56%)  cached=0/0
+  dec-3  40000-d3.txt    comp= 128  decode= 112.6 tok/s (engine)  ttft=   8871ms  MTP acc=38/67 (57%)  cached=0/0
+
+=== summary [real-prefill-40k-decode] (n=3) ===
+  decode tok/s   mean=   109.6  std=    5.4  CV= 4.89%   (timings predicted_n/predicted_ms)
+  MTP accept     mean= 60.3%
+=== prefill measured ===
+  run-1  40000-a.txt     ptok= 40,175  ttft=    8911ms  engine= 4526.5 tok/s  cached=0/0
+  run-2  40000-b.txt     ptok= 39,779  ttft=    8875ms  engine= 4498.9 tok/s  cached=0/0
+  run-3  40000-c.txt     ptok= 40,071  ttft=    8890ms  engine= 4524.3 tok/s  cached=0/0
+
+=== summary [real-prefill-40k] (n=3) ===
+  engine tok/s   mean=  4516.5  std=   15.4  CV= 0.34%   (timings prompt_n/prompt_ms)
+  TTFT           mean=    8892ms  min=8875ms  max=8911ms
+  prompt tokens  mean=40,008
+  cache reuse    clean (no cache reuse)
+
+========== REAL-PREFILL-120K (depth=120000, 3 chunk(s), one per run) ==========
+
+=== decode probe [real-prefill-120k] (continuation, target=128 tokens) ===
+  dec-1  120000-d1.txt   comp= 128  decode= 109.9 tok/s (engine)  ttft=  25867ms  MTP acc=38/65 (58%)  cached=0/0
+  dec-2  120000-d2.txt   comp= 128  decode= 107.1 tok/s (engine)  ttft=  25943ms  MTP acc=35/67 (52%)  cached=0/0
+  dec-3  120000-d3.txt   comp= 128  decode= 110.7 tok/s (engine)  ttft=  25778ms  MTP acc=43/87 (49%)  cached=0/0
+
+=== summary [real-prefill-120k-decode] (n=3) ===
+  decode tok/s   mean=   109.2  std=    1.9  CV= 1.72%   (timings predicted_n/predicted_ms)
+  MTP accept     mean= 53.4%
+=== prefill measured ===
+  run-1  120000-a.txt    ptok=120,544  ttft=   25893ms  engine= 4667.0 tok/s  cached=0/0
+  run-2  120000-b.txt    ptok=120,572  ttft=   25954ms  engine= 4657.0 tok/s  cached=0/0
+  run-3  120000-c.txt    ptok=120,351  ttft=   25944ms  engine= 4650.1 tok/s  cached=0/0
+
+=== summary [real-prefill-120k] (n=3) ===
+  engine tok/s   mean=  4658.0  std=    8.5  CV= 0.18%   (timings prompt_n/prompt_ms)
+  TTFT           mean=   25930ms  min=25893ms  max=25954ms
+  prompt tokens  mean=120,489
+  cache reuse    clean (no cache reuse)

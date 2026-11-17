@@ -1,0 +1,18 @@
+model   strata-iq3
+url     http://localhost:8080
+data    /home/dimmy/projects/00 infra/llm-bench/realdata/chunks
+depths  [120000]  runs/depth=3  max_tokens=16  thinking=off  rates=engine (CLIENT=1 for both)
+
+========== REAL-PREFILL-120K (depth=120000, 3 chunk(s), one per run) ==========
+
+=== decode probe [real-prefill-120k] (continuation, target=128 tokens) ===
+  dec-1  120000-d1.txt   comp= 128  decode= 110.8 tok/s (engine)  ttft=  89047ms  MTP acc=54/75 (72%)  cached=0/0
+  dec-2  120000-d2.txt   comp= 128  decode=  99.5 tok/s (engine)  ttft=  88359ms  MTP acc=37/64 (58%)  cached=0/0
+  dec-3  120000-d3.txt   comp= 128  decode=  99.7 tok/s (engine)  ttft=  89588ms  MTP acc=37/64 (58%)  cached=0/0
+
+=== summary [real-prefill-120k-decode] (n=3) ===
+  decode tok/s   mean=   103.3  std=    6.5  CV= 6.27%   (timings predicted_n/predicted_ms)
+  MTP accept     mean= 62.5%
+=== prefill measured ===
+  run-1  120000-a.txt    ptok=120,009  ttft=   92443ms  engine= 4620.0 tok/s  cached=0/0
+  run-2  120000-b.txt    ptok=119,519  ttft=   97269ms  engine= 4614.8 tok/s  cached=0/0

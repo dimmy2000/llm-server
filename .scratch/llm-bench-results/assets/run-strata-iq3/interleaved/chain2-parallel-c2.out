@@ -1,0 +1,21 @@
+model   strata-iq3
+url     http://localhost:8080
+потоков 2  прогонов 3  max_tokens=128  промпт=реальные чанки 40000
+
+=== parallel x2 (3 прогонов) ===
+  par-1-1  decode= 114.3 tok/s  ttft=   8884ms  MTP acc=55%
+  par-1-2  decode= 112.7 tok/s  ttft=  18852ms  MTP acc=57%
+  [par-1] aggregate=  12.8 tok/s  (сумма потоков= 227.0)  ttft max=18852ms
+  [par-1] MTP accept  mean= 56.0%
+  par-2-1  decode= 116.8 tok/s  ttft=   8880ms  MTP acc=62%
+  par-2-2  decode= 117.4 tok/s  ttft=  18816ms  MTP acc=60%
+  [par-2] aggregate=  12.9 tok/s  (сумма потоков= 234.2)  ttft max=18816ms
+  [par-2] MTP accept  mean= 61.2%
+  par-3-1  decode= 122.3 tok/s  ttft=   8904ms  MTP acc=60%
+  par-3-2  decode= 122.4 tok/s  ttft=  18813ms  MTP acc=60%
+  [par-3] aggregate=  12.9 tok/s  (сумма потоков= 244.7)  ttft max=18813ms
+  [par-3] MTP accept  mean= 60.5%
+
+=== summary [parallel x2] (n=3) ===
+  aggregate     mean=    12.9 tok/s  min=12.8  max=12.9
+  сумма потоков mean=   235.3 tok/s (aggregate ниже — потоки ждут друг друга на сплите)

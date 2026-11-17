@@ -1,0 +1,15 @@
+cursors (24 чанков на диске учтено): war_and_peace@1,940,691 moby_dick@946,107 dracula@740,956 monte_cristo@2,133,204 don_quixote@1,393,369 les_miserables@2,177,650
+слотов 12, уже есть 0, строю 12
+40000-0      40,155 tok  book=war_and_peace  chars@1,940,779  (1/12)
+40000-1      39,946 tok  book=war_and_peace  chars@2,106,328  (2/12)
+40000-2      40,182 tok  book=les_miserables chars@2,179,346  (3/12)
+40000-3      39,869 tok  book=war_and_peace  chars@2,274,055  (4/12)
+40000-100    40,038 tok  book=don_quixote    chars@1,393,371  (5/12)
+40000-101    39,917 tok  book=les_miserables chars@2,337,164  (6/12)
+40000-102    39,848 tok  book=war_and_peace  chars@2,437,225  (7/12)
+40000-103    40,008 tok  book=don_quixote    chars@1,551,177  (8/12)
+40000-104    40,134 tok  book=les_miserables chars@2,493,304  (9/12)
+40000-105    40,067 tok  book=war_and_peace  chars@2,604,025  (10/12)
+40000-200    40,033 tok  book=don_quixote    chars@1,707,308  (11/12)
+40000-201    40,071 tok  book=les_miserables chars@2,651,821  (12/12)
+manifest: /home/dimmy/projects/00 infra/llm-bench/realdata/manifest.json  худшее отклонение по глубине: 0.5 %

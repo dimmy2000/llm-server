@@ -1,0 +1,32 @@
+have  war_and_peace (3359610 bytes)
+have  moby_dick (1276315 bytes)
+have  dracula (890348 bytes)
+have  don_quixote (2391678 bytes)
+have  monte_cristo (2787124 bytes)
+have  les_miserables (3369207 bytes)
+book don_quixote: 2,299,289 chars
+book dracula: 845,889 chars
+book les_miserables: 3,231,377 chars
+book moby_dick: 1,218,973 chars
+book monte_cristo: 2,627,256 chars
+book war_and_peace: 3,208,272 chars
+  40000-a   39,924 tok  book=war_and_peace chars@15
+  40000-b   39,819 tok  book=moby_dick     chars@12
+  40000-c   40,001 tok  book=dracula       chars@9
+ 150000-a  150,303 tok  book=moby_dick     chars@152,761
+ 150000-b  149,827 tok  book=monte_cristo  chars@27
+ 150000-c  149,419 tok  book=dracula       chars@157,850
+ 200000-a  200,476 tok  book=war_and_peace chars@159,853
+ 200000-b  200,310 tok  book=monte_cristo  chars@590,232
+ 200000-c  199,989 tok  book=war_and_peace chars@966,332
+  40000-d1   39,969 tok  book=monte_cristo  chars@1,390,130
+  40000-d2   40,118 tok  book=war_and_peace chars@1,776,213
+  40000-d3   39,967 tok  book=moby_dick     chars@745,942
+ 150000-d1  149,706 tok  book=don_quixote   chars@15
+ 150000-d2  149,609 tok  book=monte_cristo  chars@1,547,752
+ 150000-d3  150,312 tok  book=les_miserables chars@16
+ 200000-d1  200,880 tok  book=don_quixote   chars@591,408
+ 200000-d2  199,432 tok  book=les_miserables chars@593,106
+ 200000-d3  199,016 tok  book=les_miserables chars@1,390,728
+
+manifest: /home/dimmy/projects/00 infra/llm-bench/realdata/manifest.json

@@ -1,0 +1,50 @@
+model   strata-iq2
+url     http://localhost:8080
+потоков 2  прогонов 2  max_tokens=128  промпт=реальные чанки 40000
+
+=== solo (1 поток, 2 прогонов) ===
+  solo-1-1  decode= 120.9 tok/s  ttft=   8748ms  MTP acc=66%
+  [solo-1] aggregate=  13.1 tok/s  (сумма потоков= 120.9)  ttft max=8748ms
+  [solo-1] MTP accept  mean= 65.5%
+  solo-2-1  decode= 128.7 tok/s  ttft=   8787ms  MTP acc=69%
+  [solo-2] aggregate=  13.1 tok/s  (сумма потоков= 128.7)  ttft max=8787ms
+  [solo-2] MTP accept  mean= 69.2%
+
+  solo baseline: aggregate mean=13.1 tok/s (n=2)
+
+=== parallel x2 (2 прогонов) ===
+  par-1-1  decode= 137.5 tok/s  ttft=  18564ms  MTP acc=72%
+  par-1-2  decode= 135.7 tok/s  ttft=   8828ms  MTP acc=78%
+  [par-1] aggregate=  13.1 tok/s  (сумма потоков= 273.2)  ttft max=18564ms
+  [par-1] MTP accept  mean= 74.7%
+  par-2-1  decode= 125.0 tok/s  ttft=   8820ms  MTP acc=60%
+  par-2-2  decode= 115.4 tok/s  ttft=  18569ms  MTP acc=66%
+  [par-2] aggregate=  13.0 tok/s  (сумма потоков= 240.4)  ttft max=18569ms
+  [par-2] MTP accept  mean= 62.8%
+
+=== summary [parallel x2] (n=2) ===
+  aggregate     mean=    13.1 tok/s  min=13.0  max=13.1
+  vs solo       13.1 -> 13.1 tok/s  x1.00 (-0%)
+  на поток      6.5 tok/s (одиночный давал 13.1)
+  сумма потоков mean=   256.8 tok/s (aggregate ниже — потоки ждут друг друга на сплите)
+model   strata-iq2
+url     http://localhost:8080
+потоков 2  прогонов 3  max_tokens=128  промпт=реальные чанки 40000
+
+=== parallel x2 (3 прогонов) ===
+  par-1-1  decode= 125.1 tok/s  ttft=   8771ms  MTP acc=61%
+  par-1-2  decode= 147.5 tok/s  ttft=  18554ms  MTP acc=86%
+  [par-1] aggregate=  13.2 tok/s  (сумма потоков= 272.6)  ttft max=18554ms
+  [par-1] MTP accept  mean= 73.6%
+  par-2-1  decode= 113.0 tok/s  ttft=   8771ms  MTP acc=60%
+  par-2-2  decode= 116.7 tok/s  ttft=  18634ms  MTP acc=73%
+  [par-2] aggregate=  13.0 tok/s  (сумма потоков= 229.7)  ttft max=18634ms
+  [par-2] MTP accept  mean= 66.7%
+  par-3-1  decode= 123.6 tok/s  ttft=   8773ms  MTP acc=64%
+  par-3-2  decode= 113.4 tok/s  ttft=  18582ms  MTP acc=54%
+  [par-3] aggregate=  13.0 tok/s  (сумма потоков= 237.0)  ttft max=18582ms
+  [par-3] MTP accept  mean= 58.9%
+
+=== summary [parallel x2] (n=3) ===
+  aggregate     mean=    13.1 tok/s  min=13.0  max=13.2
+  сумма потоков mean=   246.4 tok/s (aggregate ниже — потоки ждут друг друга на сплите)

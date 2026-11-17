@@ -1,0 +1,66 @@
+diff --git a/bench-real-prefill-prepare.sh b/bench-real-prefill-prepare.sh
+index 1fb7053..6f09602 100755
+--- a/bench-real-prefill-prepare.sh
++++ b/bench-real-prefill-prepare.sh
+@@ -80,7 +80,7 @@ DEPTHS = [int(x) for x in os.environ["DEPTHS"].split(",") if x.strip()]
+ 
+ def count_tokens(text: str) -> int:
+     body = json.dumps({
+-        "model": "bench-prepare",
++        "model": "qwen3.8-27b",
+         "messages": [{"role": "user", "content": text}],
+     }).encode()
+     req = urllib.request.Request(
+@@ -206,7 +206,7 @@ _r = random.Random(99)
+ # a fixed word count can overshoot the 262144 served context (HTTP 400)
+ _words_txt = " ".join(_r.choice(_words) for _ in range(160_000))
+ def _count(t):
+-    _b = json.dumps({"model": "bench-prepare",
++    _b = json.dumps({"model": "qwen3.8-27b",
+                      "messages": [{"role": "user", "content": t}]}).encode()
+     _q = urllib.request.Request(f"{URL}/v1/messages/count_tokens", data=_b,
+                                 headers={"Content-Type": "application/json"})
+@@ -216,7 +216,7 @@ _n = _count(_words_txt)
+ _cut = int(len(_words_txt) * min(1.0, 235_000 / max(_n, 1)))
+ _filler = _words_txt[:_cut]
+ _body = json.dumps({
+-    "model": "bench-prepare",
++    "model": "qwen3.8-27b",
+     "messages": [{"role": "user", "content": f"[flush] {_filler}"}],
+     "max_tokens": 1,
+ }).encode()
+diff --git a/bench-real-prefill.sh b/bench-real-prefill.sh
+index 37f2bb3..cee85e2 100755
+--- a/bench-real-prefill.sh
++++ b/bench-real-prefill.sh
+@@ -159,7 +159,7 @@ def warmup(depth):
+     # on strata (seen: 67s TTFT on the first 40k run, 4x cold) — a 2k warmup
+     # does not absorb it. Filler is unrelated text, never a chunk.
+     filler = ("warmup pass for the real-text prefill bench, plain on purpose. "
+-              * (depth // 12 + 1))
++              * (depth // 15 + 1))
+     stream_completion(f"[warm {salt()}] {filler}", 4)
+ 
+ manifest = {}
+diff --git a/make-chunks.py b/make-chunks.py
+index eedaed8..c73d9b4 100755
+--- a/make-chunks.py
++++ b/make-chunks.py
+@@ -63,7 +63,7 @@ def strip_gutenberg(t):
+ def make_counter(url):
+     def count(text):
+         body = json.dumps({
+-            "model": "bench-prepare",
++            "model": "qwen3.8-27b",
+             "messages": [{"role": "user", "content": text}],
+         }).encode()
+         req = urllib.request.Request(
+@@ -91,7 +91,7 @@ def flush_cache(url, count):
+     txt = " ".join(r.choice(words) for _ in range(160_000))
+     n = count(txt)
+     txt = txt[:int(len(txt) * min(1.0, 235_000 / max(n, 1)))]
+-    body = json.dumps({"model": "bench-prepare",
++    body = json.dumps({"model": "qwen3.8-27b",
+                        "messages": [{"role": "user",
+                                      "content": f"[flush] {txt}"}],
+                        "max_tokens": 1}).encode()

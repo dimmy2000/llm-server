@@ -1,0 +1,31 @@
+model strata-iq3  url http://localhost:8080
+books: an-american-tragedy 1,955,083, dombey-and-son 1,962,602, don_quixote 2,299,289, dracula 845,889, les_miserables 3,231,377, middlemarch 1,755,754, moby_dick 1,218,973, monte_cristo 2,627,256, war_and_peace 3,208,272
+archived 24 чанков -> /home/dimmy/projects/00 infra/llm-bench/realdata/chunks-attempt1/ (диапазоны перенесены в manifest)
+cursors (12 чанков на диске учтено): an-american-tragedy@0 dombey-and-son@0 don_quixote@1,862,712 dracula@740,956 les_miserables@2,812,984 middlemarch@0 moby_dick@946,107 monte_cristo@2,133,204 war_and_peace@2,769,513
+120000-a     120,548 tok  book=dombey-and-son       NEW  chars@16  (1/24)
+120000-b     120,576 tok  book=an-american-tragedy  NEW  chars@21  (2/24)
+120000-c     120,355 tok  book=middlemarch          NEW  chars@13  (3/24)
+120000-d1    119,976 tok  book=dombey-and-son       NEW  chars@501,983  (4/24)
+120000-d2    119,914 tok  book=an-american-tragedy  NEW  chars@516,887  (5/24)
+120000-d3    119,902 tok  book=middlemarch          NEW  chars@522,995  (6/24)
+40000-a      40,178 tok  book=dombey-and-son       NEW  chars@999,501  (7/24)
+40000-b      39,782 tok  book=an-american-tragedy  NEW  chars@1,044,954  (8/24)  off +0.55%
+40000-c      40,075 tok  book=dombey-and-son       NEW  chars@1,166,160  (9/24)
+40000-d1     39,761 tok  book=an-american-tragedy  NEW  chars@1,211,030  (10/24)  off +0.60%
+40000-d2     39,878 tok  book=middlemarch          NEW  chars@1,038,622  (11/24)
+40000-d3     40,050 tok  book=dombey-and-son       NEW  chars@1,330,298  (12/24)
+40000-0      39,838 tok  book=an-american-tragedy  NEW  chars@1,380,841  (13/24)
+40000-1      40,044 tok  book=middlemarch          NEW  chars@1,208,701  (14/24)
+40000-2      40,009 tok  book=monte_cristo         tail chars@2,133,538  (15/24)
+40000-3      40,116 tok  book=dombey-and-son       NEW  chars@1,495,946  (16/24)
+40000-100    39,901 tok  book=war_and_peace        tail chars@2,769,588  (17/24)
+40000-101    40,048 tok  book=don_quixote          tail chars@1,863,275  (18/24)
+40000-102    39,810 tok  book=les_miserables       tail chars@2,813,667  (19/24)
+40000-103    39,816 tok  book=an-american-tragedy  NEW  chars@1,551,902  (20/24)
+40000-104    40,013 tok  book=middlemarch          NEW  chars@1,382,962  (21/24)
+40000-105    39,940 tok  book=monte_cristo         tail chars@2,292,627  (22/24)
+40000-200    39,871 tok  book=dombey-and-son       NEW  chars@1,659,050  (23/24)
+40000-201    40,082 tok  book=don_quixote          tail chars@2,022,362  (24/24)
+manifest: /home/dimmy/projects/00 infra/llm-bench/realdata/manifest.json  худшее отклонение по глубине: 0.60 %
+cursor после сборки: an-american-tragedy@1,717,360 dombey-and-son@1,824,172 don_quixote@2,180,697 dracula@740,956 les_miserables@2,971,411 middlemarch@1,557,935 moby_dick@946,107 monte_cristo@2,452,300 war_and_peace@2,935,881
+engine context cache flushed (strata-iq3, unrelated 125,458-token request, 26 s)

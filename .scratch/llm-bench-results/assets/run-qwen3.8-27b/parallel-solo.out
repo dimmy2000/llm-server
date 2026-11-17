@@ -1,0 +1,29 @@
+model   qwen3.8-27b
+url     http://localhost:8080
+потоков 2  прогонов 2  max_tokens=128  промпт=реальные чанки 40000
+
+=== solo (1 поток, 2 прогонов) ===
+  solo-1-1  decode= 109.6 tok/s  ttft=   7482ms  MTP acc=20%
+  [solo-1] aggregate=  14.8 tok/s  (сумма потоков= 109.6)  ttft max=7482ms
+  [solo-1] MTP accept  mean= 20.0%
+  solo-2-1  decode= 107.5 tok/s  ttft=   7503ms  MTP acc=19%
+  [solo-2] aggregate=  14.7 tok/s  (сумма потоков= 107.5)  ttft max=7503ms
+  [solo-2] MTP accept  mean= 19.4%
+
+  solo baseline: aggregate mean=14.8 tok/s (n=2)
+
+=== parallel x2 (2 прогонов) ===
+  par-1-1  decode=  15.5 tok/s  ttft=   7492ms  MTP acc=32%
+  par-1-2  decode=  98.6 tok/s  ttft=  15790ms  MTP acc=17%
+  [par-1] aggregate=  15.0 tok/s  (сумма потоков= 114.1)  ttft max=15790ms
+  [par-1] MTP accept  mean= 24.2%
+  par-2-1  decode=  14.6 tok/s  ttft=   7522ms  MTP acc=17%
+  par-2-2  decode= 110.5 tok/s  ttft=  15806ms  MTP acc=22%
+  [par-2] aggregate=  15.1 tok/s  (сумма потоков= 125.1)  ttft max=15806ms
+  [par-2] MTP accept  mean= 19.1%
+
+=== summary [parallel x2] (n=2) ===
+  aggregate     mean=    15.0 tok/s  min=15.0  max=15.1
+  vs solo       14.8 -> 15.0 tok/s  x1.02 (+2%)
+  на поток      7.5 tok/s (одиночный давал 14.8)
+  сумма потоков mean=   119.6 tok/s (aggregate ниже — потоки ждут друг друга на сплите)

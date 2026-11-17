@@ -1,0 +1,36 @@
+
+40k
+  dec-1  decode= 111.4 tok/s  ttft=   7487ms
+  dec-2  decode= 115.5 tok/s  ttft=   7449ms
+  dec-3  decode= 166.6 tok/s  ttft=   7411ms
+  decode tok/s   mean=   131.2
+  MTP accept     mean= 26.0%
+  run-1  prefill= 5386.6 tok/s  ttft=    7431ms
+  run-2  prefill= 5404.8 tok/s  ttft=    7386ms
+  run-3  prefill= 4765.2 tok/s  ttft=    8413ms
+  prefill tok/s  mean=  5185.5
+  TTFT           mean=    7744ms  min=7386ms  max=8413ms
+
+150k
+  dec-1  decode=  54.0 tok/s  ttft=  57408ms
+  dec-2  decode=  57.1 tok/s  ttft=  49293ms
+  dec-3  decode= 109.2 tok/s  ttft=  48860ms
+  decode tok/s   mean=    73.4
+  MTP accept     mean= 21.4%
+  run-1  prefill= 3082.2 tok/s  ttft=   48859ms
+  run-2  prefill= 2991.6 tok/s  ttft=   51133ms
+  run-3  prefill= 3074.2 tok/s  ttft=   48698ms
+  prefill tok/s  mean=  3049.3
+  TTFT           mean=   49563ms  min=48698ms  max=51133ms
+
+200k
+  dec-1  decode=  69.0 tok/s  ttft=  89072ms
+  dec-2  decode=  62.9 tok/s  ttft=  79873ms
+  dec-3  decode=  78.4 tok/s  ttft=  78706ms
+  decode tok/s   mean=    70.1
+  MTP accept     mean= 19.4%
+  run-1  prefill= 2537.9 tok/s  ttft=   79135ms
+  run-2  prefill= 2547.1 tok/s  ttft=   78799ms
+  run-3  prefill= 2536.8 tok/s  ttft=   79076ms
+  prefill tok/s  mean=  2540.6
+  TTFT           mean=   79003ms  min=78799ms  max=79135ms

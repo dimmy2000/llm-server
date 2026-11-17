@@ -1,0 +1,3 @@
+monitor: nvidia-smi --query-gpu=index,memory.free --format=csv,noheader -l 5 (service vram_mon_iq2, killed at 19:24:08 MSK, up 17m21s)
+start / anchor: 19:06:53 MSK; 209 samples per GPU (418 lines) — timestamps not in the log, phases mapped by 5 s cadence + exact phase boundaries from the router request log
+per-phase GPU1 min: 40k 1646, 150k 1630, 200k 1610, solo 1602, c2 1598 (min за прогоны 1598 @ 19:18:38); post-run idle dip 1544 @ 19:31:18; GPU0 min 2401

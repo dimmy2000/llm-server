@@ -1,0 +1,17 @@
+bench chain start 2026-11-17T15:13:49+0000 (local 18:13:49 MSK)
+prefill exit=0 end 15:19:06Z
+parallel-solo exit=0 end 15:20:06Z
+parallel-c2 exit=0 end 15:23:02Z
+clean rerun start 2026-11-17T15:26:46Z
+prefill exit=0 end 15:36:28Z
+parallel-solo exit=0 end 15:37:28Z
+parallel-c2 exit=0 end 15:38:28Z
+chain3 (clean attempt) start 2026-11-17T15:39:32Z / local 18:39:32 MSK
+prefill exit=0 end 15:44:54Z
+parallel-solo exit=0 end 15:45:54Z
+parallel-c2 exit=0 end 15:48:17Z
+chain4 (service, no self-contention) start 2026-11-17T15:49:22Z
+prefill exit=0 end 15:53:30Z
+parallel-solo exit=0 end 15:54:30Z
+parallel-c2 exit=0 end 15:55:30Z
+monitor killed 15:56:23Z
