@@ -9,9 +9,9 @@ llama-swap по запросу к любому из трёх публичных 
 stateDiagram-v2
     [*] --> Cold: docker compose up -d
     Cold: Контейнер поднимается, движки ещё не загружены
-    Cold --> ParentReady: hooks.on_startup - профиль ninfer и прелоад backend-ninfer
+    Cold --> ParentReady: hooks.on_startup - прелоад qwen3.8-27b (NInfer)
 
-    ParentReady: Резидентен движок родителя, llama или ninfer по активному профилю
+    ParentReady: Резидентен NInfer (qwen3.8-27b)
     StrataReady: Резидентен Strata, iq3 или iq2
     Swapping: Exclusive-группа выгружает резидентный движок (SIGTERM)
     Starting: Целевой движок грузит веса, идёт health-check
@@ -27,9 +27,7 @@ stateDiagram-v2
     Starting --> Refused: RAM-гейт не пройден или движок упал на старте
     Refused --> Swapping: повторный запрос после освобождения RAM
     StrataReady --> Stopped: PowerOff в UI, SIGTERM и graceful QUIT движка
-    ParentReady --> ParentReady: PUT /api/profiles/active - выбор llama или ninfer
 ```
 
-Единственный ручной переход — смена профиля родителя (`llama` или `ninfer`):
-это предпочтение производительности, а не условие работоспособности. Профиль
-сам движок не грузит, загрузку платит первый запрос к `qwen3.8-27b`.
+Ручных переходов нет: выбор ID в клиенте или UI llama-swap и есть управление;
+PowerOff в UI — единственный ручной стоп.

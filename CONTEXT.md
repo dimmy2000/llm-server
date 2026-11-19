@@ -1,96 +1,75 @@
 # LLM Server
 
 Docker-стек локального LLM-инференса: единый маршрутизатор llama-swap
-(`http://localhost:8080`) с тремя взаимоисключающими движками-«детьми» в одном
-контейнере роутера — llama.cpp, NInfer и Strata — на двух NVIDIA GPU по 16 ГиБ.
-Публичный контракт — три model-ID: `qwen3.8-27b` (родитель, llama.cpp/NInfer
-по активному профилю) и `strata-iq3`/`strata-iq2` (Strata). Переключения как
-отдельного действия нет: любой запрос к любому из трёх ID сам приводит
-систему в нужное состояние (автоматический swap дефолтной exclusive-группы,
-ADR-0008); доступ строго последовательный — ровно один бэкенд резидентен.
-Решения — ADR-0006 (роутер, контракт reasoning), ADR-0008 (Strata сейчас) и
-ADR-0007 (superseded; первоисточник размеров и контракта strata-ID).
-Отдельный compose-профиль `vllm` остался в репозитории, но выведен из
-текущей топологии.
+(`http://localhost:8080`) с двумя взаимоисключающими движками-«детьми» в одном
+контейнере роутера (образ `router:v265-strata1-nollama`) — NInfer и Strata —
+на двух NVIDIA GPU по 16 ГиБ. Публичный контракт — три model-ID:
+`qwen3.8-27b` (NInfer) и `strata-iq3`/`strata-iq2` (Strata). Топология
+безпрофильная (ADR-0009): три прямые `cmd`-модели в одной дефолтной
+exclusive-группе. Переключения как отдельного действия нет: любой запрос к
+любому из трёх ID сам приводит систему в нужное состояние (автоматический
+swap, ADR-0008); доступ строго последовательный — ровно один бэкенд
+резидентен. Решения — ADR-0006 (роутер, контракт reasoning), ADR-0008
+(Strata сейчас) и ADR-0007 (superseded; первоисточник размеров и контракта
+strata-ID); последнее решение — ADR-0009 (безпрофильная топология).
 
 ## Language
 
 **Маршрутизатор**:
 llama-swap: процесс, который принимает запросы на `:8080`, держит конфигурацию
 публичных model-ID и запускает нужный движок как дочерний процесс. Один
-контейнер (`llama-swap`, образ `router:v265-strata1` из `router/Dockerfile`)
-с тремя движками внутри.
+контейнер (`llama-swap`, образ `router:v265-strata1-nollama` из
+`router/Dockerfile`) с двумя движками внутри (NInfer, Strata).
 _Avoid_: прокси, шлюз, бэкенд
 
-**Профиль**:
-Активный профиль llama-swap (`llama` или `ninfer` — эти двое и есть все
-профили): определяет движок за `qwen3.8-27b`. Единственный пин профиля —
-`qwen3.8-27b → backend-*`; strata-ID нигде не запинены и обслуживаются
-автоматом. Выбор профиля — ручной (`PUT /api/profiles/active` или пикер UI)
-и отвечает за предпочтение производительности, не за работоспособность
-(ADR-0008). Не путать с compose-профилем: у сервиса роутера compose-профилей
-нет (compose-профиль `vllm` — единственный оставшийся и он вне текущей
-топологии).
-_Avoid_: роль, режим, compose-профиль
-
 **Движок**:
-Программа, которая держит модель в VRAM и обрабатывает запросы: `llama-server`,
-`ninfer-serve`, `engine/strata` — все три запускаются llama-swap как дочерние
-процессы через `cmd` в роутер-контейнере. Strata стартует по запросу к
+Программа, которая держит модель в VRAM и обрабатывает запросы: `ninfer-serve`,
+`engine/strata` — оба запускаются llama-swap как дочерние процессы через
+`cmd` в роутер-контейнере. Strata стартует по запросу к
 strata-ID и останавливается вытеснением или PowerOff в UI (ADR-0008).
 Движки никогда не работают параллельно (дефолтная exclusive-группа,
 последовательный доступ).
 _Avoid_: runtime, бэкенд
 
-**Backend-модель**:
-Внутренняя запись движка родителя в конфиге llama-swap (`backend-llama`,
-`backend-ninfer`): `unlisted: true` (не видна в `/v1/models`), нигде не
-запинена — прямой запрос работает как к обычной модели exclusive-группы.
-_Avoid_: бэкенд, модель
-
-**Пин**:
-Запись профиля llama-swap, связывающая публичный model-ID с backend-моделью
-(`qwen3.8-27b` → движок). Единственные пины в конфиге — по одному в профиле
-`llama`/`ninfer`; запрещающих пинов `~` больше нет (ADR-0008). Пины
-применяются до алиасов.
-_Avoid_: маппинг, привязка
-
 **Публичный model-ID**:
 Строка, которую клиент передаёт в поле `model` запроса и видит в `/v1/models`.
-Ровно три — `qwen3.8-27b`, `strata-iq3`, `strata-iq2` (ADR-0007); все три
-всегда в листинге (ADR-0008), алиасов-режимов нет (ADR-0006).
+Ровно три — `qwen3.8-27b` (NInfer),
+`strata-iq3`/`strata-iq2` (Strata) (ADR-0007); все три всегда в листинге
+(ADR-0008), алиасов-режимов нет (ADR-0006).
 `status: unloaded` в `/v1/models` — косметика llama-swap; правдивое состояние
-смотрите в `/api/profiles`.
+— SSE `/api/events` или `/health` upstream-порта (профилей нет, ADR-0009).
+Display-имя модели (поле `name` в конфиге llama-swap, видно в UI и
+`/v1/models`) — `Qwen 3.8 27b NVFP4`, `Strata IQ3_XXS`, `Strata IQ2_XS` —
+не путать с ID.
 _Avoid_: имя модели, идентификатор модели, роль
 
 **Дефолт шаблона**:
 Поведение голого запроса (без reasoning-полей): chat template артефакта даёт
-thinking on + effort `xhigh` на родительских движках. Серверного мнения о
+thinking on + effort `xhigh` на NInfer (`qwen3.8-27b`). Серверного мнения о
 reasoning нет — режим задаёт клиент.
 _Avoid_: instruct-режим, серверный режим
 
 **Reasoning-контракт**:
-Переносимый способ управления reasoning от клиента (проверен на родительских
-движках): выключить thinking — `chat_template_kwargs: {"enable_thinking":
-false}`; уровень — `reasoning_effort: low|medium|xhigh` (top-level или в
-kwargs). Top-level `none` выключает thinking только на NInfer (на llama.cpp
-инертен). Невалидное значение → `500` (llama.cpp) / `400` (NInfer). Словарь
-Strata — своя четверка `none|low|medium|high`.
+Способ управления reasoning от клиента (проверен на NInfer): выключить
+thinking — `chat_template_kwargs: {"enable_thinking": false}`; уровень —
+`reasoning_effort: low|medium|xhigh` (top-level или в kwargs). Top-level
+`none` выключает thinking на NInfer. Невалидное значение → `400` (NInfer).
+Словарь Strata — своя четверка `none|low|medium|high`.
 _Avoid_: уровень reasoning, режим reasoning
 
 **Безопасное подмножество**:
-Набор полей запроса, безразличных обоим родительским движкам (сводка 0013,
-таблица в ADR-0006): sampling-поля в переносимых диапазонах (`top_k` не 0),
+Набор полей запроса, работающих на NInfer и Strata (сводка 0013, таблица в
+ADR-0006): sampling-поля в переносимых диапазонах (`top_k` не 0),
 `reasoning_effort` из `none|low|medium|xhigh`,
 `chat_template_kwargs.{enable_thinking, preserve_thinking}` (bool). Вне
-подмножества: `repetition_penalty` (стрипается llama-swap), `repeat_penalty`
-(llama.cpp-only), `top_k: 0`, NInfer-несовместимые фичи.
+подмножества: `repetition_penalty` (стрипается llama-swap), `top_k: 0`,
+NInfer-несовместимые фичи.
 _Avoid_: общий словарь, контракт sampling
 
 **Пресет sampling**:
-Серверный дефолт сэмплирования, живущий в `cmd` движка: CLI-флаги llama.cpp в
-`router/config.d/10-llama.yaml`, mode-aware пресет NInfer. Поля запроса его
-перекрывают.
+Серверный дефолт сэмплирования, живущий в `cmd` движка: mode-aware пресет
+NInfer (thinking `1.0/0.95/20/0/0`, non-thinking `0.7/0.80/20/0/1.5`),
+пресет движка Strata. Поля запроса его перекрывают.
 _Avoid_: режим сэмплирования, setParamsByID
 
 **RAM-гейт**:
@@ -101,9 +80,9 @@ _Avoid_: режим сэмплирования, setParamsByID
 _Avoid_: проверка памяти, порог
 
 **Артефакт модели**:
-Файл с весами в формате конкретного движка: `.gguf` для llama.cpp, `.ninfer`
-для NInfer, каталог safetensors для vLLM. Артефакт NInfer — единый файл,
-содержащий текстовый транк, Vision, MTP и DFlash2-драфтер.
+Файл с весами в формате конкретного движка: `.ninfer` для NInfer, каталог
+весов + expert-паки для Strata. Артефакт NInfer — единый файл, содержащий
+текстовый транк, Vision, MTP и DFlash2-драфтер.
 _Avoid_: веса, чекпоинт, модель
 
 **Загрузка GPU**:

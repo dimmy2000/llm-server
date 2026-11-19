@@ -14,7 +14,7 @@
 
 | Параметр | Значение |
 | :--- | :--- |
-| Роутер | llama-swap v265 (exclusive-группа: unload → start), образ `llm-server/router:v265-strata1` |
+| Роутер | llama-swap v265 (exclusive-группа: unload → start), образ `llm-server/router:v265-strata1-nollama` |
 | Движки | NInfer v0.4.6 TP=2 (DFlash2, `--max-context 262144`), Strata 0.1.45 |
 | Модели | `qwen3.8-27b` — NInfer, Qwen3.8-27B NVFP4 + DFlash2-drafter, ctx 262144; `strata-iq3` — IQ3_XXS, ctx 131072; `strata-iq2` — IQ2_XS (native-ID `qwen3.8-flash-next-iq2_xs`), ctx 262144 |
 | Железо | 2× RTX 5070 Ti 16 GiB (GPU1 — дисплейная, красная линия ≥ 512 MiB), 59 GiB RAM |

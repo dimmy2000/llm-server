@@ -3,53 +3,48 @@
 ## Описание
 
 Docker-стек локального инференса с единой точкой входа `http://localhost:8080`.
-Один контейнер `llama-swap` (образ `llm-server/router:v265-strata1` из
-`router/Dockerfile`: llama-swap **v265**, llama.cpp **b10438**, NInfer TP=2
-**v0.4.6**, Strata **0.1.45**) публикует три OpenAI-совместимых model-ID —
-`qwen3.8-27b` (движок родителя: NInfer или llama.cpp по активному профилю),
-`strata-iq3` и `strata-iq2` (Strata: Qwen3.8-Flash-Next в квантах IQ3_XXS и
-IQ2_XS). Все три движка — дочерние процессы llama-swap, запускаемые через `cmd`;
+Один контейнер `llama-swap` (образ `llm-server/router:v265-strata1-nollama` из
+`router/Dockerfile`: llama-swap **v265**, NInfer TP=2 **v0.4.6**, Strata
+**0.1.45**) публикует три OpenAI-совместимых model-ID — `qwen3.8-27b`
+(NInfer TP=2), `strata-iq3` и `strata-iq2` (Strata: Qwen3.8-Flash-Next в
+квантах IQ3_XXS и IQ2_XS). Два движка — дочерние процессы llama-swap,
+запускаемые через `cmd`;
 они никогда не работают параллельно: резидентен ровно один бэкенд, а порядок
 unload → start даёт дефолтная exclusive-группа v265. **Переключения как
 отдельного действия нет** — запрос к любому из трёх ID сам приводит систему в
-нужное состояние (ADR-0008). Стек рассчитан на две RTX 5070 Ti по 16 GiB
-(одна дисплейная) и 59 GiB RAM.
+нужное состояние (ADR-0008, ADR-0009). Стек рассчитан на две RTX 5070 Ti
+по 16 GiB (одна дисплейная) и 59 GiB RAM.
 
 Решения зафиксированы в ADR-0006 (единый endpoint и контракт reasoning),
 ADR-0008 (контейнерная Strata и автоматический swap; supersede механику
-ADR-0007, который остаётся первоисточником размеров и контракта strata-ID);
-проверка на живом железе — `docs/research/0014`, `0015`, `0016` и
-`.scratch/*/assets/`. Отдельно в репозитории лежит `vllm/` — compose-профиль
-vLLM, выведенный из текущей топологии: тот же порт `8080` и те же GPU,
-одновременно с роутером не запускать.
+ADR-0007, который остаётся первоисточником размеров и контракта strata-ID)
+и ADR-0009 (безпрофильная топология: llama.cpp и vLLM вынесены из роутера,
+три прямые cmd-модели); проверка на живом железе — `docs/research/0014`,
+`0015`, `0016` и `.scratch/*/assets/`.
 
 ## Структура проекта
 
 ```text
 llm-server/
-├── docker-compose.yaml              # имя проекта llm-server, include роутера и vLLM
+├── docker-compose.yaml              # имя проекта llm-server, include роутера
 ├── AGENTS.md                        # контракт работы агента: архитектура, лимиты, команды
-├── CONTEXT.md                       # доменный словарь (профиль, пин, движок, RAM-гейт…)
+├── CONTEXT.md                       # доменный словарь (маршрутизатор, движок, model-ID, RAM-гейт…)
 ├── router/
-│   ├── Dockerfile                   # образ llm-server/router:v265-strata1: llama-swap +
-│   │                                # llama.cpp + NInfer + build-стадия Strata
+│   ├── Dockerfile                   # образ llm-server/router:v265-strata1-nollama:
+│   │                                # llama-swap + NInfer + build-стадия Strata
 │   ├── docker-compose.yaml          # сервис llama-swap: порты, GPU, ulimits, RO-маунты
-│   ├── config.yaml                  # глобалы, hooks, профили llama/ninfer с пинами
+│   ├── config.yaml                  # глобалы, hooks.on_startup-прелоад
 │   ├── config.d/
-│   │   ├── 10-llama.yaml            # models.backend-llama (llama.cpp b10438)
-│   │   ├── 20-ninfer.yaml           # models.backend-ninfer (NInfer TP=2 v0.4.6)
+│   │   ├── 20-ninfer.yaml           # models.qwen3.8-27b (NInfer TP=2 v0.4.6)
 │   │   └── 30-strata.yaml           # models.strata-iq3 / strata-iq2 (Strata 0.1.45)
 │   ├── strata/
 │   │   ├── strata-launch.sh         # лаунчер движка: RAM-гейт по MemAvailable, exec server.py
 │   │   ├── strata-iq3_xxs.container.json
 │   │   ├── strata-iq2_xs.container.json   # копии нативных конфигов, готовка только host
 │   └── fetch-model.sh             # скачивание артефакта NInfer с проверкой SHA-256
-├── vllm/                            # compose-профиль vLLM, вне текущей топологии
-│   ├── docker-compose.yaml
-│   └── config.yaml
 ├── .scratch/                        # локальный issue-трекер: карты усилий, тикеты, assets/ с доказательствами
 ├── docs/
-│   ├── adr/                         # ADR-0001…ADR-0008
+│   ├── adr/                         # ADR-0001…ADR-0009
 │   ├── research/                    # отчёты 0001…0016 с замерами на живом железе
 │   ├── runbook-strata.md            # диагностика отказов Strata, логи, красные линии
 │   ├── NVIDIA_SETUP.md, NVIDIA_P2P.md   # драйвер, P2P, откаты и soak
@@ -86,12 +81,10 @@ Dockerfile, compose-файлы и конфигурации движков.
   хоста — open-модули `615.71.09-p2p` форка `aikitoria/open-gpu-kernel-modules`
   (ADR-0005, `docs/NVIDIA_P2P.md`).
 - llama-swap v265 — маршрутизатор и менеджер жизненного цикла движков, UI на `:8080`.
-- llama.cpp `server-cuda13-b10438` — движок профиля `llama`.
 - NInfer TP=2 v0.4.6 (форк `ValerioDolci/ninfer-tp2`, upstream `Neroued/ninfer`)
-  — движок профиля `ninfer`.
+  — движок модели `qwen3.8-27b`.
 - Strata 0.1.45 (`Niko1221/Strata`) — движок MoE-модели Qwen3.8-Flash-Next,
   собирается в образ из checkout `/opt/strata`.
-- vLLM — профиль `vllm`, вне текущей топологии.
 - OpenCode v2 — основной потребитель API (`providers.llama-swap` и
   `providers.self-hosted` в `~/.config/opencode/opencode.jsonc`).
 
@@ -104,14 +97,12 @@ Dockerfile, compose-файлы и конфигурации движков.
 
 | Источник | Описание | Путь на хосте (RO-маунт в контейнер) |
 | :--- | :--- | :--- |
-| Артефакт llama.cpp | Qwen3.8-27B NVFP4-MTP, тир HIGH, ~17.6 GB + mmproj BF16 | `/opt/models/Qwen3.8-27B-NVFP4-MTP-GGUF/` → `/models/…` |
 | Артефакт NInfer | `glfenix/Qwen3.8-27B-nvfp4-DFlash2NVFP4drafter-NInfer`, 21.54 GB, скачивается `./router/fetch-model.sh` с проверкой SHA-256 | `/opt/models/Qwen3.8-27B-nvfp4-DFlash2NV-MTPNV-NInfer/qwen3_8_27b_nvfp4.ninfer` → `/models/…` |
 | Веса Strata | Qwen3.8-Flash-Next IQ3_XXS и IQ2_XS, по два shard'а (второй — PLE), mmproj Q8_0 | `/opt/strata/models/` → `/opt/strata/models/` |
 | Эксперт-паки Strata | pack'и `iq3_xxs` и `iq2_xs` (+ tokenizer) | `/opt/strata/packs/` → `/opt/strata/packs/` |
 | MTP-драфт Strata | драфт-слой `rt` для спекулятивного декодирования | `/opt/strata/mtp/` → `/opt/strata/mtp/` |
 | Expert-profile | профиль обращения к экспертам (`--expert-profile`) | `/opt/strata/data/` → `/opt/strata/data/` |
 | Конфиги и лаунчер Strata | контейнерные копии конфигов и лаунчер с RAM-гейтом | `router/strata/` → `/app/strata/` |
-| Артефакт vLLM (вне топологии) | safetensors-каталог Qwen3.8-27B-NVFP4 | `/opt/models/Qwen3.8-27B-NVFP4/` → `/models/…` |
 
 Модели и артефакты в Git не добавляются; все маунты — read-only.
 
@@ -134,7 +125,7 @@ Dockerfile, compose-файлы и конфигурации движков.
 2. Две GPU по 16+ GiB VRAM и ~59 GiB RAM. Strata держит в RAM page-locked
    эксперты 47 GiB (IQ3_XXS) / 36 GiB (IQ2_XS) — двух тяжёлых бэкендов
    одновременно не хватает, отсюда последовательный доступ.
-3. Артефакты моделей на хосте (см. «Источники данных»): GGUF llama.cpp,
+3. Артефакты моделей на хосте (см. «Источники данных»):
    `./router/fetch-model.sh` для NInfer, каталоги `/opt/strata/{models,packs,mtp,data}`
    для Strata.
 4. Сборка образа: `docker compose build llama-swap` (образ ~6.9 GB).
@@ -143,9 +134,9 @@ Dockerfile, compose-файлы и конфигурации движков.
 
 ### Настройка
 
-- Параметры движков — только в `router/config.d/` (секции `cmd`), профили и
-  пины — в `router/config.yaml`, контейнерные настройки Strata —
-  в `router/strata/*.container.json`.
+- Параметры движков — только в `router/config.d/` (секции `cmd`), глобалы и
+  `hooks.on_startup`-прелоад — в `router/config.yaml`, контейнерные настройки
+  Strata — в `router/strata/*.container.json`.
 - Любая правка требует `docker compose restart llama-swap`. Исключение:
   `router/config.yaml` смонтирован одиночным файлом — если редактор заменил
   файл (rename), инод меняется и `restart` видит старое содержимое; тогда
@@ -170,8 +161,8 @@ docker compose logs -f llama-swap
 ```
 
 Сервис роутера поднимается всегда (compose-профилей у него нет). Старт:
-активен профиль `ninfer`, `backend-ninfer` прелоадится (~6 c), публичные ID
-доступны сразу. Строки `[ERROR] failed to preload model backend-ninfer:
+`hooks.on_startup` прелоадит `qwen3.8-27b` (~6 c), публичные ID доступны
+сразу. Строки `[ERROR] failed to preload model qwen3.8-27b:
 status 404` в стартовом логе — косметика: у NInfer нет warmup-эндпоинта,
 прелоад при этом запускает и прогревает движок (ADR-0006).
 
@@ -179,41 +170,43 @@ status 404` в стартовом логе — косметика: у NInfer н�
 
 ```bash
 curl -s http://localhost:8080/v1/models | tr ',' '\n' | grep '"id"'   # три ID
-curl -s http://localhost:8080/api/profiles                            # поле active
 ```
+
+Правдивое состояние бэкендов — SSE `/api/events` или `/health` upstream-порта;
+профилей больше нет, профильный эндпоинт пуст (ADR-0009).
 
 ## Публичный контракт
 
 ### Три model-ID
 
-| ID | Движок | Артефакт | Контекст | Reasoning-словарь |
-| :--- | :--- | :--- | :--- | :--- |
-| `qwen3.8-27b` | NInfer TP=2 (профиль `ninfer`, дефолт) или llama.cpp (профиль `llama`) | `.ninfer` / `.gguf` | 262144 (NInfer) / 180224 (llama.cpp) | `low\|medium\|xhigh`, `none` только через kwargs |
-| `strata-iq3` | Strata 0.1.45 | IQ3_XXS | 131072 | `none\|low\|medium\|high` |
-| `strata-iq2` | Strata 0.1.45 | IQ2_XS | 262144 | `none\|low\|medium\|high` |
+| ID | Имя в UI | Движок | Артефакт | Контекст | Reasoning-словарь |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `qwen3.8-27b` | Qwen 3.8 27b NVFP4 | NInfer TP=2 v0.4.6 | `.ninfer` (NVFP4 + DFlash2-драфтер) | 262144 | `low\|medium\|xhigh`, top-level `none` выключает thinking |
+| `strata-iq3` | Strata IQ3_XXS | Strata 0.1.45 | IQ3_XXS | 131072 | `none\|low\|medium\|high` |
+| `strata-iq2` | Strata IQ2_XS | Strata 0.1.45 | IQ2_XS | 262144 | `none\|low\|medium\|high` |
 
-Все три ID принимают текст и изображения (vision: mmproj у llama.cpp,
-`--vision` на плате без дисплея у NInfer, CPU-энкодер `strata-vision` у Strata)
-и поддерживают tool calls.
+Колонка «Имя в UI» — поле `name` в конфиге llama-swap, видно в UI и
+`/v1/models`; публичный ID при этом нигде не меняется.
+
+Все три ID принимают текст и изображения (vision: `--vision` на плате
+без дисплея у NInfer, CPU-энкодер `strata-vision` у Strata) и поддерживают
+tool calls.
 
 Все три ID всегда видны в `/v1/models` (404-ловушек прежней пин-схемы больше
 нет). `status: unloaded` у записи — косметика llama-swap (hardcode v265);
-правдивое состояние — `GET /api/profiles`, SSE `/api/events` или `/health`
-upstream-порта. Backend-модели `backend-llama`/`backend-ninfer` скрыты
-(`unlisted: true`), но не запинены — прямой запрос к ним работает как к обычной
-модели exclusive-группы (API доступен только из localhost/LAN).
+правдивое состояние — SSE `/api/events` или `/health` upstream-порта.
 
 ### Reasoning
 
 Режим задаёт клиент, серверного мнения нет: голый ID отдаёт дефолт chat
-template (thinking + `xhigh` у родителя).
+template (thinking + `xhigh` у NInfer).
 
 | Цель | Что слать клиент | `qwen3.8-27b` | `strata-iq3` / `strata-iq2` |
 | :--- | :--- | :--- | :--- |
 | выключить thinking | `chat_template_kwargs: {"enable_thinking": false}` | да | да (или top-level `none`) |
 | уровень reasoning | `reasoning_effort: low\|medium\|high\|xhigh` | да | да, но `xhigh` неотличим от `high` и не предлагается |
-| выключить thinking top-level | `reasoning_effort: "none"` | только NInfer (на llama.cpp инертен) | да |
-| невалидное значение | — | `500` (llama) / `400` (NInfer) | `400` |
+| выключить thinking top-level | `reasoning_effort: "none"` | да | да |
+| невалидное значение | — | `400` | `400` |
 
 Нюансы strata-ID: движок отрабатывает любой `model` в запросе (`useModelName`
 не нужен), но поле `model` в **ответе** — канон native-ID
@@ -223,23 +216,20 @@ template (thinking + `xhigh` у родителя).
 
 ### Sampling
 
-Серверный дефолт движка, клиентские поля его перекрывают: у llama.cpp — CLI-флаги
-в `cmd` (`--temp 1.0 --top-p 0.95 --top-k 20 --min-p 0 --presence-penalty 0
---repeat-penalty 1.0`), у NInfer — mode-aware пресет движка (thinking
-`1.0/0.95/20/0/0`, non-thinking `0.7/0.80/20/0/1.5`), у Strata — пресет движка.
-llama-swap правит тело запроса только `stripParams: repetition_penalty` (на всех
-трёх) и `useModelName: qwen3.8-27b` на `backend-ninfer`.
+Серверный дефолт движка, клиентские поля его перекрывают: у NInfer —
+mode-aware пресет движка (thinking `1.0/0.95/20/0/0`, non-thinking
+`0.7/0.80/20/0/1.5`), у Strata — пресет движка. llama-swap правит тело
+запроса только `stripParams: repetition_penalty` (на всех трёх).
 
-Безопасное подмножество (переносимо между родительскими движками; полная
-таблица — ADR-0006, сводка — `docs/research/0013`): `temperature` `[0,1]`,
+Безопасное подмножество (работает на NInfer и Strata; полная таблица —
+ADR-0006, сводка — `docs/research/0013`): `temperature` `[0,1]`,
 `top_p` `(0,1]`, `top_k` `1..20` (не 0), `min_p` `[0,1]`,
 `presence_penalty`/`frequency_penalty` `[-2,2]`, `seed`, `max_tokens ≥ 1`,
 `reasoning_effort` из словаря движка, `chat_template_kwargs.{enable_thinking,
 preserve_thinking}` (bool).
 
-Непереносимо: `repetition_penalty` (стрипается), `repeat_penalty`
-(llama.cpp-only, NInfer молча игнорирует), `top_k: 0`, `reasoning_effort` вне
-словаря, NInfer-несовместимые фичи (`response_format: json_object`,
+Непереносимо: `repetition_penalty` (стрипается), `top_k: 0`,
+`reasoning_effort` вне словаря, NInfer-несовместимые фичи (`response_format: json_object`,
 `logit_bias`, `logprobs`, `strict`, `parallel_tool_calls: false`, named tool
 choice).
 
@@ -252,23 +242,13 @@ choice).
 (`http://localhost:8080`) и есть переключение. Конкурентный запрос, пришедший
 во время свапа, отвечает 200 с ожиданием (FIFO-сериализация v265).
 
-Ручным остаётся только выбор движка родителя — предпочтение производительности,
-не условие работоспособности:
-
-```bash
-curl -X PUT http://localhost:8080/api/profiles/active \
-  -H 'Content-Type: application/json' \
-  -d '{"name":"llama"}'   # или "ninfer"
-```
-
 Первый запрос после свапа платит холодную загрузку весов; при
 `sendLoadingState: false` он молчит без in-stream баннера — индикатор только в
 логах контейнера (ADR-0006, `docs/runbook-strata.md`).
 
 | Бэкенд | Холодный старт (платит первый запрос) |
 | :--- | :--- |
-| NInfer | ~6–7 c (прелоадится на старте контейнера) |
-| llama.cpp | 7–9 c на тёплом page cache, до 40–60 c на холодном диске |
+| NInfer `qwen3.8-27b` | ~6–7 c (прелоадится на старте контейнера) |
 | Strata `strata-iq3` | 17.8–20.9 c |
 | Strata `strata-iq2` | 12.7–13.8 c |
 
@@ -276,24 +256,15 @@ curl -X PUT http://localhost:8080/api/profiles/active \
 command exited prematurely` с точной причиной в логах контейнера; ретраев нет по
 дизайну — освободить память или повторить запрос.
 
-## Движок llama.cpp (профиль `llama`)
+## Бэкенды, выключенные из роутера
 
-Параметры ядра — только в `router/config.d/10-llama.yaml`. Qwen3.8-27B
-(NVFP4-MTP, тир HIGH, ~17.6 GB) с контекстом 180224 и спекулятивным
-декодированием `--spec-type draft-mtp,ngram-mod` (ngram-mod приоритетнее,
-draft-mtp — fallback). Обязательна пара `--split-mode tensor` +
-`--tensor-split 50,50`: дефолтный LAYER-режим копит KV на дисплейной GPU1 и
-падает OOM на первом decode. Узкое место VRAM — дисплейная GPU1 (9 KV-слоёв):
-проверенный стабильный максимум — `--ctx-size 180224`, на 196608 первый decode
-падает OOM. `--cache-idle-slots` и `--cache-ram 40960` сериализуют KV в RAM при
-завершении запроса (prefix reuse), но VRAM не освобождают; `--fit off` —
-контекст задаётся явно.
+llama.cpp (пин b10438) и vLLM выключены из роутера и из образа (ADR-0009):
+движок и его конфиг удалены, каталог `vllm/` снесён; модели хоста
+(`/opt/models/Qwen3.8-27B-NVFP4-MTP-GGUF/`, `/opt/models/Qwen3.8-27B-NVFP4/`)
+сохранены. История — в git-истории репозитория, ADR-0009 и
+`docs/research/0015`.
 
-Пин llama.cpp — **b10438** (бамп с b10068 ради top-level `reasoning_effort`);
-A/B на протоколе `docs/research/0005` регресса не показал — `docs/research/0015`.
-Подробный разбор профиля — `docs/research/0008`.
-
-## Движок NInfer TP=2 (профиль `ninfer`)
+## Движок NInfer TP=2
 
 Релиз `ninfer-tp2 v0.4.6` (по C++-дереву == v0.4.7; published-ассетов у v0.4.7
 нет), SHA-256 архива зафиксирован и проверяется на сборке. Артефакт —
@@ -304,10 +275,14 @@ A/B на протоколе `docs/research/0005` регресса не пока�
 Базовый профиль: `--tp 2 --devices 0,1`, KV `nvfp4`, `--max-context 262144`,
 `--kv-capacity auto --vram-headroom-mib 640`, `--max-concurrency 2`,
 `--device-state-slots 4`, `--spec dflash2 --draft-tokens 7 --lm-head-draft`,
-`--vision --vision-device 0`, `--embedding-host`, `--default-max-tokens 16384`.
-`ninfer-serve` отклоняет запрос, если `request.model` не равен `--model-id`,
-поэтому на записи обязателен `useModelName: qwen3.8-27b`; пер-модельный `env`
-обязан ставить `/opt/ninfer/lib` первым в `LD_LIBRARY_PATH`.
+`--vision --vision-device 0 --max-vision-tokens 4096`, `--embedding-host`,
+`--default-max-tokens 16384`, `--pending-timeout-ms 600000`.
+`ninfer-serve` отклоняет запрос, если `request.model` не равен `--model-id`;
+у записи имя совпадает с `--model-id qwen3.8-27b`, так что `useModelName`
+не нужен. Публичное display-имя модели (поле `name` в конфиге; видно в UI
+llama-swap и `/v1/models`) — `Qwen 3.8 27b NVFP4`. Пер-модельный `env`
+обязан ставить `/opt/ninfer/lib` первым в `LD_LIBRARY_PATH` (своего RPATH
+у бинарника нет, иначе подхватится `libcudart.so.13` из CUDA 13.3).
 
 Одиночный запрос достигает модельных 262144 токенов, промпт сверх ёмкости
 отклоняется чистым `400 context_length_exceeded`. `--host-state-slots` и
@@ -318,7 +293,7 @@ A/B на протоколе `docs/research/0005` регресса не пока�
 
 ## Движок Strata (`strata-iq3` / `strata-iq2`)
 
-Третий движок роутер-контейнера наравне с llama.cpp и NInfer (ADR-0008):
+Второй движок роутер-контейнера наравне с NInfer (ADR-0008):
 обычный `cmd`-бэкенд llama-swap, автостарт по запросу к strata-ID, останов —
 вытеснением или PowerOff в UI (SIGTERM, graceful QUIT). `cmd` исполняется без
 shell, поэтому RAM-гейт живёт в лаунчере `router/strata/strata-launch.sh`:
@@ -352,33 +327,30 @@ admission 71–79 %).
 docker logs --tail 200 llama-swap
 nvidia-smi --query-gpu=index,memory.free --format=csv,noheader
 free -m
-curl -s http://localhost:8080/api/profiles
 ```
 
 - Красная линия VRAM: ≥ 512 MiB свободной VRAM на дисплейной GPU1 под пиковой
   нагрузкой. Верификационный цикл автомата (тикет 11 карты
-  `.scratch/strata-integration/`) держал минимум 710 MiB; на ninfer-профиле
+  `.scratch/strata-integration/`) держал минимум 710 MiB; на NInfer-профиле
   под долгими диалогами в device-state слотах + 90k-префиллами зафиксирован
   провал до 19 MiB — нарушение принято как документированный регресс текущего
   профиля (`docs/research/0010`, H10; `docs/adr/0005`). Запас над линией мал —
   следить за свободной VRAM при любом изменении профиля.
 - RAM: постоянного свопа быть не должно; транзиентные si/so-всплески 2–3 c на
   старте iq3 — норма.
-- Порт `8080` общий с vLLM-профилем — одновременно их не запускать.
 - После ребута или обновления ядра — `scripts/nvidia-p2p/p2p-verify.sh`
   (пересборка модулей: `scripts/nvidia-p2p/rebuild-modules.sh`).
 
 ## Ручной smoke-набор
 
-Автоматических тестов в репозитории нет; проверка после смены конфига, профиля
+Автоматических тестов в репозитории нет; проверка после смены конфига
 или версии движка — руками (верификационные проходы задокументированы в
 `.scratch/llama-swap-orchestrator/` и `.scratch/strata-integration/`, тик 11).
 Минимальный прогон:
 
 ```bash
-# листинг и состояние
+# листинг
 curl -s http://localhost:8080/v1/models
-curl -s http://localhost:8080/api/profiles
 
 # каждый ID: обычный ответ, reasoning, tools, холодный старт после свапа
 curl -s http://localhost:8080/v1/chat/completions -H 'Content-Type: application/json' \
@@ -412,36 +384,16 @@ admission с нормами `docs/research/0016` и прогонять длин�
 - Сетевая экспозиция: `8080` опубликован на всех интерфейсах без аутентификации
   (см. «Настройка»).
 
-## Профиль vLLM (вне текущей топологии)
-
-`vllm/` остался в репозитории, но выведен из текущей топологии (ADR-0006):
-публикует OpenAI API самого vLLM на том же `:8080`, поэтому одновременно с
-роутером не запускать.
-
-```bash
-docker compose down --remove-orphans
-docker compose --profile vllm up -d --wait --wait-timeout 1800
-docker compose --profile vllm logs -f vllm-server
-```
-
-Публичный model-ID — `qwen3.8-27b`. Конфигурация: text-only на двух GPU с FP8
-KV-cache, контекст 49152 (`65536` не проходит startup), `max-num-seqs: 1`,
-`gpu-memory-utilization: 0.85` под графическую сессию; FlashInfer autotune
-отключён. Thinking управляется клиентом. MTP, TurboQuant KV-cache, prefix
-caching и FlashInfer autotune намеренно не включены — только после отдельной
-проверки длинных streaming-ответов и запаса VRAM. Изменение `vllm/config.yaml`
-требует перезапуска `vllm-server`.
-
 ## Управление
 
 ```bash
-# Роутер (llama.cpp + NInfer + Strata; сервис без compose-профилей)
+# Роутер (NInfer + Strata; сервис без compose-профилей)
 docker compose up -d --wait --wait-timeout 1800
 docker compose logs -f llama-swap
 docker compose restart llama-swap       # после правок router/config*.yaml и router/strata/*
 docker compose up -d --force-recreate llama-swap   # после подмены router/config.yaml
 docker compose build llama-swap         # после смены пинов/исходников движков в router/Dockerfile
-docker compose down --remove-orphans    # остановит и vLLM, если поднят
+docker compose down --remove-orphans
 
 # Скачивание артефакта NInfer с проверкой SHA-256
 ./router/fetch-model.sh

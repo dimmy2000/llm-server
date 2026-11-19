@@ -57,8 +57,9 @@ nvidia-smi topo -p2p r
 ```
 
 В текущей машине GPU соединены через PCIe Host Bridge (`PHB`), а P2P
-помечен `CNS`. Поэтому профиль vLLM использует tensor parallelism 2 через
-NCCL и задаёт `NCCL_P2P_DISABLE=1`.
+помечен `CNS`. Исторически это проверялось на профиле vLLM (tensor
+parallelism 2 через NCCL с `NCCL_P2P_DISABLE=1`; профиль удалён, ADR-0009);
+текущий потребитель P2P — NInfer TP=2.
 
 ## Установка nvidia-container-toolkit
 
@@ -128,39 +129,23 @@ docker run --rm --gpus all ubuntu nvidia-smi
 | Docker runtime | `nvidia` зарегистрирован |
 | Тестовый контейнер `--gpus all` | проходит |
 
-## Требования профилей инференса
+## Требования роутера
 
-Профиль `llama` рассчитан на NVIDIA GPU с 16+ ГиБ VRAM. Роутер
-(`router/`, llama.cpp и NInfer) и vLLM-профиль для Qwen3.8-27B NVFP4 требуют
-обе RTX 5070 Ti: размер checkpoint больше памяти одной карты, поэтому
-используется `tensor-parallel-size: 2`.
+Роутер (`router/`, NInfer TP=2 + Strata, образ
+`llm-server/router:v265-strata1-nollama`) рассчитан на NVIDIA GPU с
+16+ ГиБ VRAM и требует обе RTX 5070 Ti: NInfer идёт `--tp 2` (размер
+checkpoint больше памяти одной карты), Strata держит в RAM page-locked
+эксперты 47/36 ГиБ.
 
-Одна из GPU обслуживает графическую сессию и может занимать около 1 ГиБ VRAM.
-Безопасный базовый профиль vLLM использует `gpu-memory-utilization: 0.85`,
-`max-model-len: 49152`, `max-num-seqs: 1` и
-`max-num-batched-tokens: 1024`; публичный model-ID: `qwen3.8-27b`. Второй
-конкурентный запрос ожидает scheduler. Под пиковой нагрузкой на GPU1 должно
-оставаться не менее 512 MiB физически свободной памяти. FlashInfer autotune
-отключен. Не повышать utilization только ради прохождения startup-проверки KV
-cache; максимальный стабильный context limit выбирается отдельным cold-start и
-нагрузочным тестом. На текущей машине `49152` прошёл проверку, а `65536` не
-прошёл startup из-за недостаточного KV cache; поэтому максимальный проверенный
-context limit равен `49152`.
+Одна из GPU обслуживает графическую сессию и может занимать около 1 ГиБ
+VRAM. Под пиковой нагрузкой на GPU1 должно оставаться не менее 512 MiB
+физически свободной памяти (красная линия, `docs/runbook-strata.md`).
 
-Обе топологии занимают порт `8080` и все GPU. Роутер поднимается всегда
-(без compose-профилей); vLLM — отдельный профиль, одновременно с роутером не
-запускать:
+Роутер поднимается всегда (без compose-профилей):
 
 ```bash
-docker compose down --remove-orphans
-```
-
-После этого запускается только одна топология:
-
-```bash
-# vLLM
-docker compose --profile vllm up -d --wait --wait-timeout 1800
-
-# Роутер (llama.cpp / NInfer за llama-swap)
 docker compose up -d --wait --wait-timeout 1800
 ```
+
+Профиль vLLM и бэкенд llama.cpp из этой секции удалены (ADR-0009):
+параметры vLLM и замеры — в git-истории, ADR-0009 и `docs/research/`.

@@ -7,9 +7,7 @@ graph TD
     A["Клиент: OpenAI-совместимый запрос на :8080"] --> B["llama-swap v265: разбор model-ID"]
     B --> C{"Запрошен qwen3.8-27b или strata-ID?"}
 
-    C -- "qwen3.8-27b" --> D{"Активный профиль llama-swap"}
-    D -- "ninfer (дефолт)" --> E["backend-ninfer: ninfer-serve TP=2"]
-    D -- "llama (ручной выбор)" --> F["backend-llama: llama-server"]
+    C -- "qwen3.8-27b" --> E["NInfer: ninfer-serve TP=2 (qwen3.8-27b)"]
 
     C -- "strata-iq3 или strata-iq2" --> G["strata-launch.sh (cmd без shell)"]
     G --> H{"RAM-гейт: MemAvailable >= порога 46 GiB (iq3) / 36 GiB (iq2)?"}
@@ -24,7 +22,6 @@ graph TD
     L -- "да" --> C
 
     E --> N["Health-check целевого движка, прокси запроса"]
-    F --> N
     K --> N
     N --> O["Ответ клиенту, cold-start платит первый запрос"]
 ```
