@@ -9,7 +9,7 @@
 
 models:
   qwen3.8-27b:
-    name: "NInfer TP=2"
+    name: "Qwen 3.8 27b NVFP4"
     # Имя модели совпадает с --model-id в cmd, поэтому useModelName не нужен:
     # ninfer-serve принимает request.model = qwen3.8-27b без переписывания.
     # /opt/ninfer/lib обязан быть первым: своего RPATH у бинарника нет, иначе
